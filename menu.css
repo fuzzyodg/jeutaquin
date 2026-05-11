@@ -1,0 +1,128 @@
+/* ============================================
+   A'KADI - Styles spécifiques: menu.html
+   ============================================ */
+
+/* Filter */
+.menu-filter {
+  background: var(--color-white);
+  padding: var(--spacing-lg) 0;
+  position: sticky; top: 70px; z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.filter__categories {
+  display: flex; flex-wrap: wrap; gap: var(--spacing-sm);
+  justify-content: center; overflow-x: auto; scrollbar-width: none;
+}
+.filter__categories::-webkit-scrollbar { display: none; }
+.filter__btn {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--color-text); background: var(--color-bg);
+  border: 1px solid var(--color-border); border-radius: var(--radius-full);
+  cursor: pointer; transition: var(--transition-fast); white-space: nowrap;
+}
+.filter__btn:hover, .filter__btn.active {
+  background: var(--color-primary); color: var(--color-white); border-color: var(--color-primary);
+}
+.allergen-filter {
+  margin-top: var(--spacing-md);
+  display: flex; flex-wrap: wrap; gap: var(--spacing-sm); justify-content: center;
+}
+.allergen-label { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #666; cursor: pointer; }
+.allergen-checkbox { width: 16px; height: 16px; accent-color: var(--color-primary); }
+
+/* Menu infinite scroll (wood background) */
+.menu-infinite {
+  position: relative; padding: var(--spacing-2xl) 0; overflow: hidden;
+}
+.menu-infinite::before {
+  content: ''; position: absolute; inset: 0;
+  background: #5a1d08;
+}
+
+.menu-infinite .container { position: relative; z-index: 2; }
+.menu-infinite__title { text-align: center; margin-bottom: 10px; }
+.menu-infinite__title h2 { color: var(--color-gold); font-size: 2rem; margin-bottom: var(--spacing-xs); }
+.menu-infinite__title p { color: rgba(255,255,255,0.9); font-size: 1.1rem; }
+
+.infinite-scroll { position: relative; width: 100%; overflow: hidden; padding: var(--spacing-md) 0; }
+.infinite-scroll__track {
+  display: flex; gap: var(--spacing-lg);
+  animation: scroll-left 30s linear infinite;
+  width: max-content; touch-action: pan-x; -webkit-overflow-scrolling: touch;
+}
+.infinite-scroll__track:hover { animation-play-state: paused; }
+@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.food-card {
+  flex-shrink: 0; width: 220px;
+  background: var(--color-white); border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: var(--transition-normal);
+}
+.food-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3); }
+.food-card__image { width: 100%; height: 160px; object-fit: cover; }
+.food-card__content { padding: var(--spacing-sm); }
+.food-card__category { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--color-secondary); letter-spacing: 1px; }
+.food-card__name { font-size: 1rem; font-weight: 700; color: var(--color-primary); margin: 4px 0; }
+.food-card__price { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); }
+
+/* Menu Full Grid — 4 colonnes */
+.menu-full { padding: var(--spacing-2xl) 0; }
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* mobile: 2 colonnes */
+  gap: var(--spacing-md);
+}
+
+.menu-item {
+  background: var(--color-white); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition-normal);
+  display: flex; flex-direction: column;
+}
+.menu-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.menu-item.hidden { display: none; }
+.menu-item__image { width: 100%; height: 200px; object-fit: cover; }
+.menu-item__content { padding: var(--spacing-md); flex: 1; display: flex; flex-direction: column; }
+.menu-item__category { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--color-secondary); letter-spacing: 1px; margin-bottom: var(--spacing-xs); }
+.menu-item__name { font-size: 1rem; margin-bottom: var(--spacing-xs); }
+.menu-item__description { font-size: 0.85rem; color: #666; margin-bottom: var(--spacing-sm); flex: 1; }
+.menu-item__price { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); }
+.menu-item__badges { display: flex; gap: var(--spacing-xs); flex-wrap: wrap; margin-top: var(--spacing-sm); }
+
+/* Bouton ajouter au panier dans menu-item */
+.menu-item__add-btn {
+  margin-top: var(--spacing-sm);
+  width: 100%;
+  padding: 8px var(--spacing-sm);
+  background: var(--color-primary); color: var(--color-white);
+  border: none; border-radius: var(--radius-md);
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.menu-item__add-btn:hover { background: #5a1d08; transform: translateY(-1px); }
+.menu-item__add-btn svg { width: 15px; height: 15px; }
+
+/* Responsive menu grid */
+@media (min-width: 600px) {
+  .menu-grid { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg); }
+}
+@media (min-width: 900px) {
+  .menu-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1100px) {
+  .menu-grid { grid-template-columns: repeat(4, 1fr); }
+  .menu-item__image { height: 180px; }
+}
+
+@media (min-width: 768px) {
+  .food-card { width: 260px; }
+  .food-card__image { height: 180px; }
+}
+@media (max-width: 767px) {
+  .infinite-scroll__track { animation: none; }
+  .filter__categories { flex-wrap: nowrap; justify-content: flex-start; padding-bottom: 0.5rem; }
+  .filter__btn { flex-shrink: 0; }
+  .menu-grid { grid-template-columns: 1fr; }
+}

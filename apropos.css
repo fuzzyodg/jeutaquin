@@ -1,0 +1,17 @@
+/* ============================================
+   A'KADI - Styles spécifiques: apropos.html
+   ============================================ */
+
+.about-hero { display: grid; grid-template-columns: 1fr; gap: var(--spacing-xl); align-items: center; }
+.about-hero__image { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); }
+.about-hero__image img { width: 100%; height: auto; }
+.about-hero__content h2 { margin-bottom: var(--spacing-md); }
+.about-hero__content p { color: #555; }
+
+.story { background: var(--color-white); }
+.story__content { max-width: 800px; margin: 0 auto; text-align: center; }
+.story__content p { color: #555; line-height: 1.8; }
+
+@media (min-width: 768px) {
+  .about-hero { grid-template-columns: 1fr 1fr; }
+}

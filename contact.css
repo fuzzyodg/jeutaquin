@@ -1,0 +1,18 @@
+/* ============================================
+   A'KADI - Styles spécifiques: contact.html
+   ============================================ */
+
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-xl); }
+.contact-info { background: var(--color-white); padding: var(--spacing-xl); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+.contact-info__title { margin-bottom: var(--spacing-lg); }
+.contact-info__item { display: flex; align-items: flex-start; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); }
+.contact-info__icon { width: 40px; height: 40px; background: var(--color-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0; }
+.contact-info__text h4 { font-size: 1rem; margin-bottom: 4px; }
+.contact-info__text p { font-size: 0.9rem; color: #666; margin: 0; }
+
+.reservation-form { background: var(--color-white); padding: var(--spacing-xl); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+.form__title { margin-bottom: var(--spacing-lg); }
+
+@media (min-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr 1.5fr; }
+}

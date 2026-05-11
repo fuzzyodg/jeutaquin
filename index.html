@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A'kadi - Restaurant Burkinabé à Ouagadougou. Saveurs traditionnelles africaines et cuisine moderne. L'authenticité dans chaque bouchée.">
+  <title>A'kadi | Restaurant Burkinabé - Ouagadougou</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="common.css">
+
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <!-- Chef Hat SVG Icon -->
+        <svg class="logo__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 4C18.745 4 8 14.745 8 28c0 2.21 0.3 4.35 0.87 6.38L8 60l26-14.26c2.04 0.56 4.18 0.86 6.39 0.86 13.25 0 24-10.75 24-24S45.25 4 32 4z" fill="#6f240a"/>
+          <ellipse cx="32" cy="26" rx="18" ry="16" fill="#fbf9f4"/>
+          <path d="M14 26c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="#6f240a" stroke-width="3" fill="none"/>
+          <path d="M20 22l4 4 10-10" stroke="#6f240a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="logo__text">
+          <span class="logo__name">A'kadi</span>
+          <span class="logo__tagline">Saveurs du terroir burkinabè</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="nav-desktop">
+        <ul class="nav-desktop__list">
+          <li><a href="index.html" class="nav-desktop__link active">Accueil</a></li>
+          <li><a href="menu.html" class="nav-desktop__link">Menu</a></li>
+          <li><a href="apropos.html" class="nav-desktop__link">À propos</a></li>
+          <li><a href="evenement.html" class="nav-desktop__link">Événements</a></li>
+          <li><a href="contact.html" class="nav-desktop__link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__right">
+        <!-- Bouton panier -->
+        <button class="cart-btn" id="cart-btn" aria-label="Mon panier">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <button class="burger" aria-label="Menu">
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="nav-mobile">
+    <ul class="nav-mobile__list">
+      <li><a href="index.html" class="nav-mobile__link active">Accueil</a></li>
+      <li><a href="menu.html" class="nav-mobile__link">Menu</a></li>
+      <li><a href="apropos.html" class="nav-mobile__link">À propos</a></li>
+      <li><a href="evenements.html" class="nav-mobile__link">Événements</a></li>
+      <li><a href="contact.html" class="nav-mobile__link">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-overlay"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__slides">
+      <div class="hero__slide active">
+        <img src="plats/famille.jpeg" alt="Plat signature A'kadi - Cuisine burkinabé">
+      </div>
+      <div class="hero__slide">
+        <img src="plats/cadre/exterieur.jpg" alt="Ambiance restaurant A'kadi">
+      </div>
+      <div class="hero__slide">
+        <img src="plats/yassa.jpg" alt="Spécialités africaines">
+      </div>
+      <div class="hero__slide">
+        <img src="plats/dessert/liane.jpg" alt="plat">
+      </div>
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1 class="hero__slogan">L'authenticité dans chaque bouchée</h1>
+      <p class="hero__subtitle">Découvrez les saveurs traditionnelles du Burkina Faso et de la sous-région ouest-africaine</p>
+      <a href="menu.html" class="btn btn--gold">Découvrir notre menu</a>
+    </div>
+    <div class="hero__dots">
+      <span class="hero__dot active" data-slide="0"></span>
+      <span class="hero__dot" data-slide="1"></span>
+      <span class="hero__dot" data-slide="2"></span>
+      <span class="hero__dot" data-slide="3"></span>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section features">
+    <div class="container">
+      <div class="features__grid">
+        <div class="feature-card animate-slide-up stagger-1">
+          <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <h3 class="feature-card__title">Cuisine Traditionnelle</h3>
+          <p class="feature-card__text">Recettes authentique de nos grands-mères, transmises de génération en génération</p>
+        </div>
+        <div class="feature-card animate-slide-up stagger-2">
+          <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          <h3 class="feature-card__title">Produits Locaux</h3>
+          <p class="feature-card__text">Engagement envers les producteurs locaux et l'agriculture durable</p>
+        </div>
+        <div class="feature-card animate-slide-up stagger-3">
+          <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          <h3 class="feature-card__title">Ambiance Unique</h3>
+          <p class="feature-card__text">Un cadre chaleureux inspiré du Faso Dan Fani</p>
+        </div>
+        <div class="feature-card animate-slide-up stagger-4">
+          <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <h3 class="feature-card__title">Nutrition Saine</h3>
+          <p class="feature-card__text">Des plats équilibrés pour le bien-être et la santé</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+        <section class="presentation-plats">
+            <div class="conteneur">
+                <h2 class="titre-section">Nos Spécialités</h2>
+                <p class="texte-centre mb-40">Une sélection méticuleuse de nos plats phares qui font la fierté d'A'kadii.</p>
+                
+                <!-- Grille de présentation avec effet quinconce -->
+                <div class="grille-quinconce">
+                    
+                    <!-- Colonne Gauche -->
+                    <div class="colonne-gauche">
+                        <article class="plat-rond">
+                            <img src="plats/specialites/zamnin.jpeg" alt="zamne/zamnin" class="image-ronde">
+                            <h3 class="titre-plat-rond">zamne/zamnin</h3>
+                            <p class="description-plat-rond">Un classique burkinabè revisité.</p>
+                        </article>
+
+                        <article class="plat-rond">
+                            <img src="plats/soupe de tripe.jpg" alt="Délice de Baobab & Mangue" class="image-ronde">
+                            <h3 class="titre-plat-rond">soupe de tripe </h3>
+                            <p class="description-plat-rond">Mousse légère au pain de singe surmontée d'un coulis de mangue fraîche.</p>
+                        </article>
+                    </div>
+
+                    <!-- Colonne Droite (Décalée vers le bas) -->
+                    <div class="colonne-droite">
+                        <article class="plat-rond">
+                            <img src="plats/atieke.jpg" alt="attieke" class="image-ronde">
+                            <h3 class="titre-plat-rond">Capitaine Braisé</h3>
+                            <p class="description-plat-rond"><p>semoule de manioc accompagné de poisson braisé au feu de bois, d'Alloco doré.</p>
+                        </article>
+
+                        <article class="plat-rond">
+                            <img src="plats/gombo.jpg" alt="Symphonie Végétale" class="image-ronde">
+                            <h3 class="titre-plat-rond">to sauce gombo</h3>
+                            <p class="description-plat-rond">farine de maïs cuite accompagnée d'une onctueuse sauce de gombo fraiche.</p>
+                        </article>
+                    </div>
+
+                </div>
+
+                <div class="texte-centre mt-40" style="margin-top: 60px;">
+                    <a href="menu.html" class="bouton bouton-secondaire">Voir toute la carte</a>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+  <!--Gallery Section-->
+  <section class="section gallery">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Galerie Photos</h2>
+        <p class="section__subtitle">Découvrez l'ambiance de notre restaurant et nos plats</p>
+      </div>
+      <div class="gallery__grid">
+        <div class="gallery__item">
+          <img src="plats/gombo.jpg" alt="nos plats ">
+          <div class="gallery__overlay"></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/grillade/brochette.jpg" alt="nos plats">
+          <div class="gallery__overlay"></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/specialites/riz au soubal.jpeg" alt="nos plats">
+          <div class="gallery__overlay"></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/boissons/jus_bissap.jpg" alt="nos plats">
+          <div class="gallery__overlay">></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/dessert/liane.jpg" alt="Dessert">
+          <div class="gallery__overlay"><span></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/cadre/interieur.jpg" alt="interieur">
+          <div class="gallery__overlay"><span></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/cadre/salle principale.jpg" alt="salle principale">
+          <div class="gallery__overlay"></div>
+        </div>
+        <div class="gallery__item">
+          <img src="plats/cadre/exterieur.jpg" alt="exterieur">
+          <div class="gallery__overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="section reviews">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Avis Clients</h2>
+        <p class="section__subtitle">Ce que nos clients disent de nous</p>
+      </div>
+      <div class="reviews__grid">
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">M</div>
+            <div class="review-card__info">
+              <h4>Mariam Sawadogo</h4>
+              <span class="review-card__verified">✓ Avis vérifié</span>
+            </div>
+          </div>
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"Une expérience culinaire exceptionnelle ! Le poulet flambe est exactement comme ma grand-mère le préparait. Je recommande fortement ce restaurant pour l'authenticité de la cuisine burkinabé."</p>
+          <span class="review-card__date">15 Avril 2024</span>
+        </div>
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">B</div>
+            <div class="review-card__info">
+              <h4>Boureima Ouédraogo</h4>
+              <span class="review-card__verified">✓ Avis vérifié</span>
+            </div>
+          </div>
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"Le meilleur endroit pour déguster la vraie cuisine du Burkina. Le to sauce gombo est délicieux et les produits sont vraiment locaux. Bravo pour ce travail de qualité !"</p>
+          <span class="review-card__date">8 Mars 2026</span>
+        </div>
+        <div class="review-card">
+          <div class="review-card__header">
+            <div class="review-card__avatar">F</div>
+            <div class="review-card__info">
+              <h4>Fatou Diallo</h4>
+              <span class="review-card__verified">✓ Avis vérifié</span>
+            </div>
+          </div>
+          <div class="review-card__stars">★★★★☆</div>
+          <p class="review-card__text">"J'ai découvert ce restaurant lors de mon séjour à Ouagadougou. L'ambiance est chaleureuse et le service impeccable. Les plats de la sous-région sont un vrai délice !"</p>
+          <span class="review-card__date">22 Février 2024</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section - Local Producers -->
+  <section class="section map-section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Nos Producteurs Locaux</h2>
+        <p class="section__subtitle">Une chaîne alimentaire responsable du Burkina</p>
+      </div>
+      <div class="map-container">
+        <div class="map-visual">
+          <div class="producer-markers">
+            <div class="producer-marker producer-marker--meat" style="top: 20%; left: 30%;">
+              <div class="producer-marker__dot"></div>
+              <span class="producer-marker__label">Élevages Kombissiri</span>
+            </div>
+            <div class="producer-marker producer-marker--eggs" style="top: 40%; left: 60%;">
+              <div class="producer-marker__dot"></div>
+              <span class="producer-marker__label">Ferme avicole Poulet Faso</span>
+            </div>
+            <div class="producer-marker producer-marker--sorrel" style="top: 60%; left: 25%;">
+              <div class="producer-marker__dot"></div>
+              <span class="producer-marker__label">Jardins de Gounghin</span>
+            </div>
+            <div class="producer-marker producer-marker--corn" style="top: 75%; left: 70%;">
+              <div class="producer-marker__dot"></div>
+              <span class="producer-marker__label">Coopérative maizeurs</span>
+            </div>
+            <div class="producer-marker producer-marker--vegetables" style="top: 35%; left: 45%;">
+              <div class="producer-marker__dot"></div>
+              <span class="producer-marker__label">Maraîchers de Ouagadougou</span>
+            </div>
+          </div>
+          <div class="map-legend">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #c0392b;"></span>
+              <span>Viande</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #f39c12;"></span>
+              <span>Œufs</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #27ae60;"></span>
+              <span>Feuille d'oseille</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #f1c40f;"></span>
+              <span>Maïs</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #16a085;"></span>
+              <span>Légumes</span>
+            </div>
+          </div>
+        </div>
+        <div class="map-info">
+          <h3 class="map-info__title">Engagement Local</h3>
+          <p class="map-info__text">Nous collaborons avec des producteurs locaux pour garantir la fraîcheur et la qualité de nos ingrédients. Chaque plat raconte l'histoire de notre terre.</p>
+          <div class="producer-list">
+            <div class="producer-item">
+              <div class="producer-item__icon" style="background: #fce4e4;">🥩</div>
+              <div>
+                <div class="producer-item__name">Élevages Kombissiri</div>
+                <div class="producer-item__type">Viande de qualité</div>
+              </div>
+            </div>
+            <div class="producer-item">
+              <div class="producer-item__icon" style="background: #fef3e2;">🥚</div>
+              <div>
+                <div class="producer-item__name">Ferme Poulet Faso</div>
+                <div class="producer-item__type">Poules & œufs fermiers</div>
+              </div>
+            </div>
+            <div class="producer-item">
+              <div class="producer-item__icon" style="background: #e8f5e9;">🌿</div>
+              <div>
+                <div class="producer-item__name">Jardins de Gounghin</div>
+                <div class="producer-item__type">Feuilles & légumes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta">
+    <div class="container">
+      <h2 class="cta__title">Réservez Votre Table</h2>
+      <p class="cta__text">Venez découvrir les saveurs authentiques du Burkina dans notre restaurant</p>
+      <a href="contact.html" class="btn btn--gold">Réserver maintenant</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <!-- Chef Hat SVG Icon -->
+        <svg class="logo__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 4C18.745 4 8 14.745 8 28c0 2.21 0.3 4.35 0.87 6.38L8 60l26-14.26c2.04 0.56 4.18 0.86 6.39 0.86 13.25 0 24-10.75 24-24S45.25 4 32 4z" fill="#6f240a"/>
+          <ellipse cx="32" cy="26" rx="18" ry="16" fill="#fbf9f4"/>
+          <path d="M14 26c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="#6f240a" stroke-width="3" fill="none"/>
+          <path d="M20 22l4 4 10-10" stroke="#6f240a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+            <div class="logo__text">
+              <span class="logo__name">A'kadi</span>
+              <span class="logo__tagline">Saveurs du terroir  burkinabè</span>
+            </div>
+          </div>
+          <p class="footer__description">Restaurant burkinabé traditionnel moderne à Ouagadougou. L'authenticité dans chaque bouchée.</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Navigation</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">Accueil</a></li>
+            <li><a href="menu.html" class="footer__link">Notre Menu</a></li>
+            <li><a href="apropos.html" class="footer__link">À propos</a></li>
+            <li><a href="evenement.html" class="footer__link">Événements</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Horaires</h4>
+          <ul class="footer__links">
+            <li class="footer__link">Lun - Jeu: 10h - 22h</li>
+            <li class="footer__link">Ven - Sam: 11h - 23h</li>
+            <li class="footer__link">Dimanche: 11h - 00h</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Contact</h4>
+          <div class="footer__contact-item">
+            <span>📍</span>
+            <span>Ouagadougou, Burkina Faso</span>
+          </div>
+          <div class="footer__contact-item">
+            <span>📞</span>
+            <span>+226 70 00 00 00</span>
+          </div>
+          <div class="footer__contact-item">
+            <span>✉️</span>
+            <span>contact@akadi.bf</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+  <p class="footer__copyright">© 2026 A'kadi Restaurant. Tous droits réservés.</p>
+  <div class="footer__socials">
+    <a href="https://www.instagram.com/akadi_restaurant/" target="_blank" class="footer__social-link" aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      Instagram
+    </a>
+  </div>
+</div>
+    </div>
+  </footer>
+
+  <!-- Panier dépliable -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Panier">
+    <div class="cart-panel__header">
+      <span class="cart-panel__title">🛒 Mon Panier</span>
+      <button class="cart-panel__close" id="cart-close">✕</button>
+    </div>
+    <div class="cart-panel__body" id="cart-body">
+      <div class="cart-empty">
+        <div class="cart-empty__icon">🛒</div>
+        <p>Votre panier est vide</p>
+        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+      </div>
+    </div>
+    <div class="cart-panel__footer">
+      <div class="cart-total">
+        <span class="cart-total__label">Total</span>
+        <span class="cart-total__amount" id="cart-total">0 CFA</span>
+      </div>
+      <button class="cart-checkout" id="cart-checkout">Commander par téléphone</button>
+      <button class="cart-clear" id="cart-clear">Vider le panier</button>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>

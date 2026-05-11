@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="À propos du restaurant A'kadi - Notre histoire, nos valeurs et notre engagement pour la cuisine burkinabé">
+  <title>À propos | A'kadi Restaurant - Ouagadougou</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="apropos.css">
+  <link rel="stylesheet" href="common.css">
+
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <svg class="logo__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 4C18.745 4 8 14.745 8 28c0 2.21 0.3 4.35 0.87 6.38L8 60l26-14.26c2.04 0.56 4.18 0.86 6.39 0.86 13.25 0 24-10.75 24-24S45.25 4 32 4z" fill="#6f240a"/>
+          <ellipse cx="32" cy="26" rx="18" ry="16" fill="#fbf9f4"/>
+          <path d="M14 26c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="#6f240a" stroke-width="3" fill="none"/>
+          <path d="M20 22l4 4 10-10" stroke="#6f240a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="logo__text">
+          <span class="logo__name">A'kadi</span>
+          <span class="logo__tagline">Saveurs du terroir burkinabè</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop">
+        <ul class="nav-desktop__list">
+          <li><a href="index.html" class="nav-desktop__link">Accueil</a></li>
+          <li><a href="menu.html" class="nav-desktop__link">Menu</a></li>
+          <li><a href="apropos.html" class="nav-desktop__link active">À propos</a></li>
+          <li><a href="evenement.html" class="nav-desktop__link">Événements</a></li>
+          <li><a href="contact.html" class="nav-desktop__link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__right">
+        <!-- Bouton panier -->
+        <button class="cart-btn" id="cart-btn" aria-label="Mon panier">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <button class="burger" aria-label="Menu">
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+        </button>
+    </div>
+  </header>
+
+  <nav class="nav-mobile">
+    <ul class="nav-mobile__list">
+      <li><a href="index.html" class="nav-mobile__link">Accueil</a></li>
+      <li><a href="menu.html" class="nav-mobile__link">Menu</a></li>
+      <li><a href="apropos.html" class="nav-mobile__link active">À propos</a></li>
+      <li><a href="evenement.html" class="nav-mobile__link">Événements</a></li>
+      <li><a href="contact.html" class="nav-mobile__link">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-overlay"></div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero__title">Notre Histoire</h1>
+      <p class="page-hero__subtitle">L'authenticité burkinabè au service de votre palais</p>
+    </div>
+  </section>
+
+  <!-- About Hero -->
+  <section class="section">
+    <div class="container">
+      <div class="about-hero">
+        <div class="about-hero__image">
+          <img src="plats/equipe.jpg" alt="Restaurant A'kadi - Notre équipe">
+        </div>
+        <div class="about-hero__content">
+          <h2>Une Passion Culinaire</h2>
+          <p>Fondé avec la conviction que la cuisine traditionnelle burkinabé mérite une place de choix, A'kadi est né d'une famille de cuisiniers passionnés. Nous croyons fermement que les recettes de nos grand-mères contiennent une sagesse culinaire inestimable.</p>
+          <p>Notre restaurant combine l'authenticité des plats traditionnels avec une présentation moderne, créant ainsi une expérience culinaire unique qui honore nos racines tout en regardant vers l'avenir.</p>
+          <p>Chaque plat préparé chez A'kadi raconte une histoire - celle de notre terre, de nos producteurs locaux et de notre héritage culturel.</p>
+          <p><strong>A'kadi n'est pas simplement un restaurant :</strong> nous sommes également un service traiteur complet pour vos événements. Que vous organisiez une réception, une cérémonie familiale ou un événement professionnel, notre cadre élégant et notre équipe dévouée sont à votre entière disposition. Dotés d'un service de livraison efficient, nous vous permettons de savourer nos délices où que vous soyez. De plus, A'kadi s'engage dans la formation des jeunes, en les initiant aux métiers de la restauration et en leur offrant une expérience professionnelle unique.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="section" style="background: var(--color-white);">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Nos Valeurs</h2>
+        <p class="section__subtitle">Ce qui guide chacune de nos actions</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-card__icon">🌱</div>
+          <h3 class="value-card__title">Nutrition Saine</h3>
+          <p class="value-card__text">Nous privilégions les ingrédients frais et locaux pour créer des plats équilibrés qui nourrissent le corps et l'esprit. Chaque recette est conçue pour préserver les valeurs nutritionnelles de nos ingrédients.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">🤝</div>
+          <h3 class="value-card__title">Partage</h3>
+          <p class="value-card__text">La cuisine africaine est avant tout une cuisine de partage. Chez A'kadi, nous créons des moments de convivialité où famille et amis se retrouvent autour de plats généreux.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">👵</div>
+          <h3 class="value-card__title">Tradition</h3>
+          <p class="value-card__text">Nos recettes sont inspirées de celles de nos grand-mères, transmises de génération en génération. Nous préservons ces techniques culinaires ancestrales.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">🌍</div>
+          <h3 class="value-card__title">Local & Durable</h3>
+          <p class="value-card__text">Nous soutenons les producteurs locaux et pratiquons une agriculture responsable. Chaque ingredient est sélectionné avec soin pour sa qualité et sa provenance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section: Maman A'kadi -->
+  <section class="section story" style="background: linear-gradient(135deg, #e7e1d1 0%, #b77212 100%);">
+    <div class="container">
+      <div class="story__content">
+        <h2>L'Histoire de Maman A'kadi</h2>
+        
+        <p style="font-size: 1.1rem; line-height: 1.9; color: #444; margin-bottom:1.5rem;">
+          <strong style="color: var(--color-primary);">Tout a commencé par une femme remarquable...</strong>
+        </p>
+        
+        <p style="font-size: 1rem; line-height: 1.9; color: #555; margin-bottom: 1rem;">
+          Maman A'kadi cuisinait et travaillait  dans les foyers, préparant de délicieux repas pour les résidents. C'était son quotidien, sa passion et sa manière de subvenir aux besoins de sa famille. Mais un jour, les foyers ont cessé de recruter et Maman A'kadi s'est retrouvée au chômage.
+        </p>
+        
+        <p style="font-size: 1rem; line-height: 1.9; color: #555; margin-bottom: 1rem;">
+          Face à cette épreuve, elle n'a pas abandonné. Avec détermination, elle a suivi des formations pour relancer sa carrière. C'est ainsi qu'elle a appris, en plus de la cuisine africaine traditionnelle, <strong>la cuisine moderne</strong> — l'art de revisiter les classiques avec une touche contemporaine.
+        </p>
+        
+        <p style="font-size: 1rem; line-height: 1.9; color: #555; margin-bottom: 1.5rem;">
+          <strong>Son fils</strong>, témoin de son courage et de son talent, voulait réaliser le rêve de sa maman : avoir son propre restaurant où elle pourrait préparer elle-même ses plats et apporter de la joie aux autres. C'est ainsi qu'est né <strong>A'kadi</strong> — un restaurant créé par amour, pour honorer cette femme exceptionnelle.
+        </p>
+        
+        <div style="background: var(--color-primary); color: rgb(147, 124, 124); padding: 1.5rem; border-radius: 72px; margin: 2rem 0; text-align: center;">
+          <p style="font-size: 1.1rem; font-style: italic; margin:0px;">
+            "A'kadi, c'est plus qu'un restaurant : c'est un restaurant communautaire, un restaurant qui a la main sur le cœur."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section class="section" style="background: var(--color-white);">
+    <div class="container">
+      <div class="story__content">
+        <h2>Une Cuisine Engagée</h2>
+        
+        <p style="font-size: 1rem; line-height: 1.9; color: #201f1f; margin-bottom: 1rem;">
+          Chez A'kadi, nous croyons que la bonne cuisine commence par de bons produits. C'est pourquoi nous privilégions <strong>les producteurs locaux</strong> — en particulier les femmes maraîchères qui pratiquent l'agriculture près des barrages.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+          <div style="text-align: center; padding: 1.5rem; background: #fbf9f4; border-radius: 12px;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌿</div>
+            <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Feuille d'Oseille</h4>
+            <p style="font-size: 0.9rem; color: #666; margin: 0;">Produite par les femmes maraîchères</p>
+          </div>
+          
+          <div style="text-align: center; padding: 1.5rem; background: #fbf9f4; border-radius: 12px;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌶️</div>
+            <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Épices Locales</h4>
+            <p style="font-size: 0.9rem; color: #666; margin: 0;">Épices traditionnelles du Burkina</p>
+          </div>
+          
+          <div style="text-align: center; padding: 1.5rem; background: #fbf9f4; border-radius: 12px;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🥩</div>
+            <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Viande Locale</h4>
+            <p style="font-size: 0.9rem; color: #666; margin: 0;">Provenant de fermes burkinabè</p>
+          </div>
+          
+          <div style="text-align: center; padding: 1.5rem; background: #fbf9f4; border-radius: 12px;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🥚</div>
+            <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Œufs Frais</h4>
+            <p style="font-size: 0.9rem; color: #666; margin: 0;">Élevages locaux</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="section story">
+    <div class="container">
+      <div class="story__content">
+        <h2>Notre Engagement</h2>
+        <p>Chez A'kadi, nous nous engageons à offrir plus qu'un simple repas - nous proposons une expérience culturelle. Notre carte met à l'honneur les spécialités du Burkina Faso tout en intégrant des influences de la sous-région ouest-africaine.</p>
+        <p>Nous collaborons directement avec des fermes locales à Kombissiri pour la viande, des élevages avicoles pour nos œufs frais, et des maraîchers de Gounghin pour nos légumes et feuilles d'oseille. Cette chaîne alimentaire courte garantit la fraîcheur de nos ingrédients et soutient l'économie locale.</p>
+        <p>Notre chef, formé aux techniques traditionnelles et modernes, réinterprète avec talent les classiques de la cuisine burkinabé. Du poulet flambe au tô sauce corète, chaque plat est préparé avec le même souci du détail et le même amour pour notre patrimoine culinaire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="section" style="background: var(--color-primary); color: var(--color-white);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-lg); text-align: center;">
+        <div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-title);">10+</div>
+          <div style="opacity: 0.9;">Années d'expérience</div>
+        </div>
+        <div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-title);">30+</div>
+          <div style="opacity: 0.9;">Plats au menu</div>
+        </div>
+        <div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-title);">15</div>
+          <div style="opacity: 0.9;">Producteurs locaux</div>
+        </div>
+        <div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-title);">10K+</div>
+          <div style="opacity: 0.9;">Clients satisfaits</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Notre Équipe</h2>
+        <p class="section__subtitle">Les artisans de votre expérience culinaire</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-card__icon">👨‍🍳</div>
+          <h3 class="value-card__title">Chef Mamadou (alias notre koassa) </h3>
+          <p class="value-card__text">Fils de boucher, il a appris à lire la viande avant même de savoir lire les livres. Depuis l'enfance, entre les étals de son père et les premières braises, il a développé un instinct rare — celui de savoir exactement quand la viande est à son apogée. Aujourd'hui reconnu dans tout le Burkina Faso, il est devenu une référence incontournable de la grillade locale. Mouton, bœuf, poulet du terroir — entre ses mains, chaque pièce devient une expérience. La braise est son outil, les épices locales son langage, et la satisfaction de ses clients sa seule mesure. C'est lui qui est derrière chaque grillade que vous dégustez chez A'kadi.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">👩‍🍳</div>
+          <h3 class="value-card__title">Maman A'kadi</h3>
+          <p class="value-card__text">La gerante et Spécialiste des plats Burkinabé, elle apporte de la douceur et de l'amour dans chacun de ses plats. on dit meme qu'aucun goumin ne resiste a ses saveurs 😜.  Alors qu'attends-tu pour oublier ton ex ?</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">🧑‍🌾</div>
+          <h3 class="value-card__title">Producteurs</h3>
+          <p class="value-card__text">15 partenaires locaux qui fournissent chaque jour nos ingrédients frais et de qualité.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta">
+    <div class="container">
+      <h2 class="cta__title">Venez Nous Rencontrer</h2>
+      <p class="cta__text">Découvrez par vous-même l'authenticité de notre cuisine</p>
+      <a href="contact.html" class="btn btn--gold">Réserver une table</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <svg class="logo__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;">
+              <path d="M32 4C18.745 4 8 14.745 8 28c0 2.21 0.3 4.35 0.87 6.38L8 60l26-14.26c2.04 0.56 4.18 0.86 6.39 0.86 13.25 0 24-10.75 24-24S45.25 4 32 4z" fill="#fed65b"/>
+              <ellipse cx="32" cy="26" rx="18" ry="16" fill="#fbf9f4"/>
+              <path d="M14 26c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="#6f240a" stroke-width="3" fill="none"/>
+              <path d="M20 22l4 4 10-10" stroke="#6f240a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="logo__text">
+              <span class="logo__name">A'kadi</span>
+              <span class="logo__tagline">Saveurs du terroir burkinabè</span>
+            </div>
+          </div>
+          <p class="footer__description">Restaurant burkinabé traditionnel moderne à Ouagadougou. L'authenticité dans chaque bouchée.</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Navigation</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">Accueil</a></li>
+            <li><a href="menu.html" class="footer__link">Notre Menu</a></li>
+            <li><a href="apropos.html" class="footer__link">À propos</a></li>
+            <li><a href="evenement.html" class="footer__link">Événements</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Horaires</h4>
+          <ul class="footer__links">
+            <li class="footer__link">Lun - Jeu: 10h - 22h</li>
+            <li class="footer__link">Ven - Sam: 11h - 23h</li>
+            <li class="footer__link">Dimanche: 11h - 00h</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Contact</h4>
+          <div class="footer__contact-item">
+            <span>📍</span>
+            <span>Ouagadougou, Burkina Faso</span>
+          </div>
+          <div class="footer__contact-item">
+            <span>📞</span>
+            <span>+226 70 00 00 00</span>
+          </div>
+          <div class="footer__contact-item">
+            <span>✉️</span>
+            <span>contact@akadi.bf</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+  <p class="footer__copyright">© 2026 A'kadi Restaurant. Tous droits réservés.</p>
+  <div class="footer__socials">
+    <a href="https://www.instagram.com/akadi_restaurant/" target="_blank" class="footer__social-link" aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      Instagram
+    </a>
+  </div>
+</div>
+    </div>
+  </footer>
+
+  <!-- Panier dépliable -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Panier">
+    <div class="cart-panel__header">
+      <span class="cart-panel__title">🛒 Mon Panier</span>
+      <button class="cart-panel__close" id="cart-close">✕</button>
+    </div>
+    <div class="cart-panel__body" id="cart-body">
+      <div class="cart-empty">
+        <div class="cart-empty__icon">🛒</div>
+        <p>Votre panier est vide</p>
+        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+      </div>
+    </div>
+    <div class="cart-panel__footer">
+      <div class="cart-total">
+        <span class="cart-total__label">Total</span>
+        <span class="cart-total__amount" id="cart-total">0 CFA</span>
+      </div>
+      <button class="cart-checkout" id="cart-checkout">Commander par téléphone</button>
+      <button class="cart-clear" id="cart-clear">Vider le panier</button>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>

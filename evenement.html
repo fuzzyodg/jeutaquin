@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Événements au restaurant A'kadi - Finale LDC, Fête du 11 Décembre, Brunch du Dimanche, Soirée Internationale">
+  <title>Événements | A'kadi Restaurant - Ouagadougou</title>
+  
+  <!-- Google Fonts - Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,450;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="evenement.css">
+  <link rel="stylesheet" href="common.css">
+
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <svg class="logo__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 4C18.745 4 8 14.745 8 28c0 2.21 0.3 4.35 0.87 6.38L8 60l26-14.26c2.04 0.56 4.18 0.86 6.39 0.86 13.25 0 24-10.75 24-24S45.25 4 32 4z" fill="#8B4513"/>
+          <ellipse cx="32" cy="26" rx="18" ry="16" fill="#FAF8F5"/>
+          <path d="M14 26c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="#8B4513" stroke-width="3" fill="none"/>
+          <path d="M20 22l4 4 10-10" stroke="#8B4513" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="logo__text">
+          <span class="logo__name">A'kadi</span>
+          <span class="logo__tagline">Saveurs du terroir burkinabè</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop">
+        <ul class="nav-desktop__list">
+          <li><a href="index.html" class="nav-desktop__link">Accueil</a></li>
+          <li><a href="menu.html" class="nav-desktop__link">Menu</a></li>
+          <li><a href="apropos.html" class="nav-desktop__link">À propos</a></li>
+          <li><a href="evenement.html" class="nav-desktop__link active">Événements</a></li>
+          <li><a href="contact.html" class="nav-desktop__link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__right">
+        <!-- Bouton panier -->
+        <button class="cart-btn" id="cart-btn" aria-label="Mon panier">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <button class="burger" aria-label="Menu">
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+        </button>
+    </div>
+  </header>
+
+  <nav class="nav-mobile">
+    <ul class="nav-mobile__list">
+      <li><a href="accueil.html" class="nav-mobile__link">Accueil</a></li>
+      <li><a href="menu.html" class="nav-mobile__link">Menu</a></li>
+      <li><a href="apropos.html" class="nav-mobile__link">À propos</a></li>
+      <li><a href="evenement.html" class="nav-mobile__link active">Événements</a></li>
+      <li><a href="contact.html" class="nav-mobile__link">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-overlay"></div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero__title">Événements</h1>
+      <p class="page-hero__subtitle">Rejoignez-nous pour des moments inoubliables</p>
+    </div>
+  </section>
+
+  <!-- Events Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Nos Événements à Venir</h2>
+        <p class="section__subtitle">Des soirées spéciales pour tous les goûts</p>
+      </div>
+      
+      <div class="events-grid">
+        <!-- Event 1: Finale LDC -->
+        <div class="event-card">
+          <div class="event-card__image">
+            <img src="plats/ldc.jpg" alt="Finale Ligue des Champions">
+            <span class="event-card__date">Mai 2026</span>
+          </div>
+          <div class="event-card__content">
+            <h3 class="event-card__title">Soirée Finale LDC</h3>
+            <p class="event-card__description">Vivez l'émotion du football africain dans notre restaurant avec écran giant, ambiance garantie et menu spécial match !</p>
+            <div class="event-card__details">
+              <span class="event-card__detail">📅 Date: 30 mai 2026</span>
+              <span class="event-card__detail">🕐 Horaire: 18h00</span>
+              <span class="event-card__detail">🎉 Ambiance: Football & Goodies</span>
+            </div>
+            <button class="btn btn--primary">Je suis intéressé(e)</button>
+          </div>
+        </div>
+
+        <!-- Event 2: Fête du 11 Décembre -->
+        <div class="event-card">
+          <div class="event-card__image">
+            <img src="plats/faso.jpg" alt="Fête du 11 Décembre">
+            <span class="event-card__date">5 Aout</span>
+          </div>
+          <div class="event-card__content">
+            <h3 class="event-card__title">Fête de l'independance</h3>
+            <p class="event-card__description">Célébration nationale avec un menu spécial découverte des provinces du Burkina. Musique traditionnelle et danse.</p>
+            <div class="event-card__details">
+              <span class="event-card__detail">📅 Date: 5 Aout 2025</span>
+              <span class="event-card__detail">🕐 Horaire: 19h00 - 22h00</span>
+              <span class="event-card__detail">🎭 Animation: Danses traditionnelles</span>
+            </div>
+            <button class="btn btn--primary">Je suis intéressé(e)</button>
+          </div>
+        </div>
+
+        <!-- Event 3: Brunch du Dimanche -->
+        <div class="event-card">
+          <div class="event-card__image">
+            <img src="plats/brunch.jpg" alt="Brunch du Dimanche">
+            <span class="event-card__date">Tous les Dimanches</span>
+          </div>
+          <div class="event-card__content">
+            <h3 class="event-card__title">Brunch du Dimanche</h3>
+            <p class="event-card__description">Un brunch familial avec un buffet varié: plats burkinabé, viennoiseries, fruits frais et jus naturels.</p>
+            <div class="event-card__details">
+              <span class="event-card__detail">📅 Date: Chaque Dimanche</span>
+              <span class="event-card__detail">🕐 Horaire: 10h00 - 14h00</span>
+              <span class="event-card__detail">👨‍👩‍👧‍👦 Enfant: -50% (-12 ans)</span>
+            </div>
+            <button class="btn btn--primary">Je suis intéressé(e)</button>
+          </div>
+        </div>
+
+        <!-- Event 4: Soirée 8 Mars -->
+        <div class="event-card">
+          <div class="event-card__image">
+            <img src="plats/femme.jpg" alt="Soirée 8 Mars">
+            <span class="event-card__date">8 Mars</span>
+          </div>
+          <div class="event-card__content">
+            <h3 class="event-card__title">Soirée Internationale de la femme</h3>
+            <p class="event-card__description">Une soirée spéciale dédiée aux femmes avec un menu gastronomique, cocktails exclusifs et animation musicale.</p>
+            <div class="event-card__details">
+              <span class="event-card__detail">📅 Date: 8 Mars 2026</span>
+              <span class="event-card__detail">🕐 Horaire: 19h00 - 00h00</span>
+              <span class="event-card__detail">🎁 Surprise: Cadeaux pour les dames</span>
+            </div>
+            <button class="btn btn--primary">Je suis intéressé(e)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regular Events -->
+  <section class="section" style="background: var(--color-white);">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Événements Réguliers</h2>
+        <p class="section__subtitle">Des rendez-vous hebdomadaires</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-card__icon">🎵</div>
+          <h3 class="value-card__title">Soirée karaoke</h3>
+          <p class="value-card__text">Tous les samedis soir, la scene est a vous!. venez profitez et partager des moments inoubliables.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">👨‍👩‍👧</div>
+          <h3 class="value-card__title">planche holidays</h3>
+          <p class="value-card__text">Le samedi et dimanche pendant les vacances, venez profitez d'un menu spécial grillade à prix réduit.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card__icon">🎀</div>
+          <h3 class="value-card__title">vos evenements</h3>
+          <p class="value-card__text"> notre cadre vous est ouvert pour toutes sortes d'evenements. anniversaire, ceremonie de graduation, etc. Nous vous accompagnons pour rendre ces moments inoubliables </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta">
+    <div class="container">
+      <h2 class="cta__title">Réservez Votre Place</h2>
+      <p class="cta__text">Les événements sont limités, réservez vite !</p>
+      <a href="contact.html" class="btn btn--gold">Réserver maintenant</a>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="event-modal" class="modal">
+    <div class="modal__content">
+      <button class="modal__close">&times;</button>
+      <h3 class="modal__title">Je suis intéressé(e)</h3>
+      <form class="modal__form">
+        <input type="hidden" name="event" value="">
+        <div class="form__group">
+          <label class="form__label" for="modal-name">Nom complet *</label>
+          <input type="text" id="modal-name" name="name" class="form__input" required placeholder="Votre nom">
+        </div>
+        <div class="form__group">
+          <label class="form__label" for="modal-phone">Téléphone *</label>
+          <input type="tel" id="modal-phone" name="phone" class="form__input" required placeholder="+226 70 00 00 00">
+        </div>
+        <button type="submit" class="btn btn--primary form__submit" style="width: 100%;">Envoyer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <svg class="logo__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;">
+              <path d="M32 4C18.745 4 8 14.745 8 28c0 2.21 0.3 4.35 0.87 6.38L8 60l26-14.26c2.04 0.56 4.18 0.86 6.39 0.86 13.25 0 24-10.75 24-24S45.25 4 32 4z" fill="#fed65b"/>
+              <ellipse cx="32" cy="26" rx="18" ry="16" fill="#fbf9f4"/>
+              <path d="M14 26c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="#6f240a" stroke-width="3" fill="none"/>
+              <path d="M20 22l4 4 10-10" stroke="#6f240a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="logo__text">
+              <span class="logo__name">A'kadi</span>
+              <span class="logo__tagline">Saveurs du terroir burkinabè</span>
+            </div>
+          </div>
+          <p class="footer__description">Restaurant burkinabé traditionnel moderne à Ouagadougou. L'authenticité dans chaque bouchée.</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Navigation</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">Accueil</a></li>
+            <li><a href="menu.html" class="footer__link">Notre Menu</a></li>
+            <li><a href="apropos.html" class="footer__link">À propos</a></li>
+            <li><a href="evenement.html" class="footer__link">Événements</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Horaires</h4>
+          <ul class="footer__links">
+            <li class="footer__link">Lun - Jeu: 10h - 22h</li>
+            <li class="footer__link">Ven - Sam: 11h - 23h</li>
+            <li class="footer__link">Dimanche: 11h - 00h</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Contact</h4>
+          <div class="footer__contact-item">
+            <span>📍</span>
+            <span>Ouagadougou, Burkina Faso</span>
+          </div>
+          <div class="footer__contact-item">
+            <span>📞</span>
+            <span>+226 70 00 00 00</span>
+          </div>
+          <div class="footer__contact-item">
+            <span>✉️</span>
+            <span>contact@akadi.bf</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+  <p class="footer__copyright">© 2026 A'kadi Restaurant. Tous droits réservés.</p>
+  <div class="footer__socials">
+    <a href="https://www.instagram.com/akadi_restaurant/" target="_blank" class="footer__social-link" aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      Instagram
+    </a>
+  </div>
+</div>
+    </div>
+  </footer>
+
+  <!-- Panier dépliable -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Panier">
+    <div class="cart-panel__header">
+      <span class="cart-panel__title">🛒 Mon Panier</span>
+      <button class="cart-panel__close" id="cart-close">✕</button>
+    </div>
+    <div class="cart-panel__body" id="cart-body">
+      <div class="cart-empty">
+        <div class="cart-empty__icon">🛒</div>
+        <p>Votre panier est vide</p>
+        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+      </div>
+    </div>
+    <div class="cart-panel__footer">
+      <div class="cart-total">
+        <span class="cart-total__label">Total</span>
+        <span class="cart-total__amount" id="cart-total">0 CFA</span>
+      </div>
+      <button class="cart-checkout" id="cart-checkout">Commander par téléphone</button>
+      <button class="cart-clear" id="cart-clear">Vider le panier</button>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
