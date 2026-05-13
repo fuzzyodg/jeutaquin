@@ -106,7 +106,7 @@
   </section>
 
   <!-- Features Section -->
-  <section class="section features">
+  <section class="section features animate-on-scroll">
     <div class="container">
       <div class="features__grid">
         <div class="feature-card animate-slide-up stagger-1">
@@ -144,48 +144,50 @@
 
 
 
-        <section class="presentation-plats">
-            <div class="conteneur">
-                <h2 class="titre-section">Nos Spécialités</h2>
-                <p class="texte-centre mb-40">Une sélection méticuleuse de nos plats phares qui font la fierté d'A'kadii.</p>
+        <section class="section specialties animate-on-scroll">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Nos Spécialités</h2>
+                    <p class="section__subtitle">Une sélection méticuleuse de nos plats phares qui font la fierté d'A'kadi.</p>
+                </div>
                 
                 <!-- Grille de présentation avec effet quinconce -->
-                <div class="grille-quinconce">
+                <div class="specialties__grid">
                     
                     <!-- Colonne Gauche -->
-                    <div class="colonne-gauche">
-                        <article class="plat-rond">
-                            <img src="plats/specialites/zamnin.jpeg" alt="zamne/zamnin" class="image-ronde">
-                            <h3 class="titre-plat-rond">zamne/zamnin</h3>
-                            <p class="description-plat-rond">Un classique burkinabè revisité.</p>
+                    <div class="specialties__col specialties__col--left">
+                        <article class="specialty-card">
+                            <img src="plats/specialites/zamnin.jpeg" alt="zamne/zamnin" class="specialty-card__img">
+                            <h3 class="specialty-card__title">zamne/zamnin</h3>
+                            <p class="specialty-card__text">Un classique burkinabè revisité.</p>
                         </article>
 
-                        <article class="plat-rond">
-                            <img src="plats/soupe de tripe.jpg" alt="Délice de Baobab & Mangue" class="image-ronde">
-                            <h3 class="titre-plat-rond">soupe de tripe </h3>
-                            <p class="description-plat-rond">Mousse légère au pain de singe surmontée d'un coulis de mangue fraîche.</p>
+                        <article class="specialty-card">
+                            <img src="plats/soupe de tripe.jpg" alt="Délice de Baobab & Mangue" class="specialty-card__img">
+                            <h3 class="specialty-card__title">soupe de tripe </h3>
+                            <p class="specialty-card__text">Mousse légère au pain de singe surmontée d'un coulis de mangue fraîche.</p>
                         </article>
                     </div>
 
                     <!-- Colonne Droite (Décalée vers le bas) -->
-                    <div class="colonne-droite">
-                        <article class="plat-rond">
-                            <img src="plats/atieke.jpg" alt="attieke" class="image-ronde">
-                            <h3 class="titre-plat-rond">Capitaine Braisé</h3>
-                            <p class="description-plat-rond"><p>semoule de manioc accompagné de poisson braisé au feu de bois, d'Alloco doré.</p>
+                    <div class="specialties__col specialties__col--right">
+                        <article class="specialty-card">
+                            <img src="plats/atieke.jpg" alt="attieke" class="specialty-card__img">
+                            <h3 class="specialty-card__title">Capitaine Braisé</h3>
+                            <p class="specialty-card__text">semoule de manioc accompagné de poisson braisé au feu de bois, d'Alloco doré.</p>
                         </article>
 
-                        <article class="plat-rond">
-                            <img src="plats/gombo.jpg" alt="Symphonie Végétale" class="image-ronde">
-                            <h3 class="titre-plat-rond">to sauce gombo</h3>
-                            <p class="description-plat-rond">farine de maïs cuite accompagnée d'une onctueuse sauce de gombo fraiche.</p>
+                        <article class="specialty-card">
+                            <img src="plats/gombo.jpg" alt="Symphonie Végétale" class="specialty-card__img">
+                            <h3 class="specialty-card__title">to sauce gombo</h3>
+                            <p class="specialty-card__text">farine de maïs cuite accompagnée d'une onctueuse sauce de gombo fraiche.</p>
                         </article>
                     </div>
 
                 </div>
 
-                <div class="texte-centre mt-40" style="margin-top: 60px;">
-                    <a href="menu.html" class="bouton bouton-secondaire">Voir toute la carte</a>
+                <div class="text-center mt-3">
+                    <a href="menu.html" class="btn btn--secondary">Voir toute la carte</a>
                 </div>
             </div>
         </section>
@@ -195,7 +197,7 @@
 
 
   <!--Gallery Section-->
-  <section class="section gallery">
+  <section class="section gallery animate-on-scroll">
     <div class="container">
       <div class="section__header">
         <h2 class="section__title">Galerie Photos</h2>
@@ -203,43 +205,43 @@
       </div>
       <div class="gallery__grid">
         <div class="gallery__item">
-          <img src="plats/gombo.jpg" alt="nos plats ">
-          <div class="gallery__overlay"></div>
+          <img src="plats/gombo.jpg" alt="To Sauce Gombo">
+          <div class="gallery__overlay"><span>Voir le plat</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/grillade/brochette.jpg" alt="nos plats">
-          <div class="gallery__overlay"></div>
+          <img src="plats/grillade/brochette.jpg" alt="Brochettes Braisées">
+          <div class="gallery__overlay"><span>Nos Grillades</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/specialites/riz au soubal.jpeg" alt="nos plats">
-          <div class="gallery__overlay"></div>
+          <img src="plats/specialites/riz au soubal.jpeg" alt="Riz au Soumbala">
+          <div class="gallery__overlay"><span>Spécialités</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/boissons/jus_bissap.jpg" alt="nos plats">
-          <div class="gallery__overlay">></div>
+          <img src="plats/boissons/jus_bissap.jpg" alt="Jus de Bissap">
+          <div class="gallery__overlay"><span>Boissons Locales</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/dessert/liane.jpg" alt="Dessert">
-          <div class="gallery__overlay"><span></div>
+          <img src="plats/dessert/liane.jpg" alt="Saba Senegalensis">
+          <div class="gallery__overlay"><span>Desserts</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/cadre/interieur.jpg" alt="interieur">
-          <div class="gallery__overlay"><span></div>
+          <img src="plats/cadre/interieur.jpg" alt="Décoration Intérieure">
+          <div class="gallery__overlay"><span>L'Ambiance</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/cadre/salle principale.jpg" alt="salle principale">
-          <div class="gallery__overlay"></div>
+          <img src="plats/cadre/salle principale.jpg" alt="Salle de Restaurant">
+          <div class="gallery__overlay"><span>Le Cadre</span></div>
         </div>
         <div class="gallery__item">
-          <img src="plats/cadre/exterieur.jpg" alt="exterieur">
-          <div class="gallery__overlay"></div>
+          <img src="plats/cadre/exterieur.jpg" alt="Terrasse Extérieure">
+          <div class="gallery__overlay"><span>Terrasse</span></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Reviews Section -->
-  <section class="section reviews">
+  <section class="section reviews animate-on-scroll">
     <div class="container">
       <div class="section__header">
         <h2 class="section__title">Avis Clients</h2>
@@ -287,7 +289,7 @@
   </section>
 
   <!-- Map Section - Local Producers -->
-  <section class="section map-section">
+  <section class="section map-section animate-on-scroll">
     <div class="container">
       <div class="section__header">
         <h2 class="section__title">Nos Producteurs Locaux</h2>

@@ -222,6 +222,20 @@ const Cart = (function () {
   document.addEventListener('DOMContentLoaded', () => {
     render();
 
+    // Scroll reveal
+    const reveal = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    };
+    reveal();
+
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
