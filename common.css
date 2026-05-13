@@ -73,7 +73,17 @@ p { margin-bottom: 1rem; }
 
 /* Logo */
 .logo { display: flex; align-items: center; gap: var(--spacing-xs); }
-.logo__icon { width: 40px; height: 40px; }
+.logo__icon {
+  width: 40px; height: 40px;
+  animation: logo-pulse 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 .logo__text { display: flex; flex-direction: column; }
 .logo__name { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; color: var(--color-primary); letter-spacing: 1px; }
 .logo__tagline { font-family: var(--font-body); font-size: 0.65rem; font-weight: 500; color: var(--color-secondary); letter-spacing: 3px; text-transform: uppercase; }
