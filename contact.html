@@ -298,6 +298,42 @@
     <p class="form-success__text" id="form-success-text">Merci pour votre réservation. Un email de confirmation a été envoyé à votre adresse email. Nous avons hâte de vous accueillir !</p>
   </div>
 </div>
+
+<!-- Feedback Section -->
+<div class="feedback-form mt-3" id="feedback-section">
+    <h2 class="form__title">Votre Avis Nous Importe</h2>
+    <p class="mb-2">Vous avez déjà mangé chez nous ? Partagez votre expérience !</p>
+
+    <form id="feedback-form">
+        <div class="form__group">
+            <label class="form__label">Notez votre expérience *</label>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" required /><label for="star5" title="Excellent">★</label>
+                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Très bien">★</label>
+                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Bien">★</label>
+                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Moyen">★</label>
+                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Mauvais">★</label>
+            </div>
+        </div>
+
+        <div class="form__group">
+            <label class="form__label" for="feedback-name">Nom</label>
+            <input type="text" id="feedback-name" name="feedback_name" class="form__input" placeholder="Votre nom">
+        </div>
+
+        <div class="form__group">
+            <label class="form__label" for="comment">Commentaire *</label>
+            <textarea id="comment" name="comment" class="form__textarea" required placeholder="Dites-nous ce que vous avez aimé..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--secondary form__submit">Envoyer mon avis</button>
+    </form>
+
+    <div id="feedback-success" class="form-success" style="padding: var(--spacing-md);">
+        <div class="form-success__icon" style="width:50px;height:50px;font-size:1.2rem;">✓</div>
+        <p>Merci pour votre précieux avis !</p>
+    </div>
+</div>
 </div>
 </div>
 </section>
