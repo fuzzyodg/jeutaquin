@@ -16,3 +16,44 @@
 @media (min-width: 768px) {
   .contact-grid { grid-template-columns: 1fr 1.5fr; }
 }
+
+/* Star Rating */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: var(--color-gold);
+}
+
+.feedback-form {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-light);
+}
+
+#feedback-success {
+    display: none;
+}
+
+#feedback-success.show {
+    display: block;
+}
