@@ -121,7 +121,7 @@
   .food-card__image { height: 180px; }
 }
 @media (max-width: 767px) {
-  .infinite-scroll__track { animation: none; }
+  /* .infinite-scroll__track { animation: none; } */
   .filter__categories { flex-wrap: nowrap; justify-content: flex-start; padding-bottom: 0.5rem; }
   .filter__btn { flex-shrink: 0; }
   .menu-grid { grid-template-columns: 1fr; }

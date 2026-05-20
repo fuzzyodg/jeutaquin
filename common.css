@@ -4,6 +4,7 @@
 
 /* --- Variables CSS --- */
 :root {
+  /* Mode Clair (Original) */
   --color-primary: #6f240a;
   --color-secondary: #735c00;
   --color-gold: #fed65b;
@@ -12,6 +13,9 @@
   --color-border: #89726c;
   --color-white: #ffffff;
   --color-light: #f5f2eb;
+  --color-footer-bg: #1a1a1a;
+  --color-footer-text: #ffffff;
+  --color-cart-bg: #ffffff;
 
   --font-title: 'Noto Serif', Georgia, serif;
   --font-body: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
@@ -35,6 +39,21 @@
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-full: 50%;
+}
+
+[data-theme="dark"] {
+  /* Mode Sombre (Sahara Luxueux) */
+  --color-primary: #fed65b; /* Gold */
+  --color-secondary: #c24d2c; /* Ocre */
+  --color-gold: #fed65b;
+  --color-bg: #12100e; /* Noir profond / Terre */
+  --color-text: #f5f2eb; /* Sable clair */
+  --color-border: #4a342e; /* Brun terreux */
+  --color-white: #1a1714; /* Sombre */
+  --color-light: #24201c; /* Sombre plus clair */
+  --color-footer-bg: #0a0908;
+  --color-footer-text: #f5f2eb;
+  --color-cart-bg: #1a1714;
 }
 
 /* --- Reset & Base --- */
@@ -145,7 +164,7 @@ p { margin-bottom: 1rem; }
 /* --- Panier dépliable --- */
 .cart-panel {
   position: fixed; top: 0; right: -420px; width: 400px; max-width: 95vw;
-  height: 100vh; background: var(--color-white);
+  height: 100vh; background: var(--color-cart-bg);
   box-shadow: var(--shadow-lg);
   z-index: 2000; transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
   display: flex; flex-direction: column;
@@ -272,6 +291,29 @@ p { margin-bottom: 1rem; }
 /* Header nav right group */
 .header__right { display: flex; align-items: center; gap: var(--spacing-sm); }
 
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  transition: var(--transition-fast);
+  background: var(--color-light);
+}
+.theme-toggle:hover {
+  transform: scale(1.1);
+  background: var(--color-border);
+}
+.theme-toggle img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+[data-theme="dark"] .theme-toggle img {
+  filter: drop-shadow(0 0 5px var(--color-gold));
+}
+
 /* --- Buttons --- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -307,7 +349,7 @@ padding: 20px;
 .cta__text { opacity: 0.9; margin-bottom: var(--spacing-lg); }
 
 /* --- Footer --- */
-.footer { background: #1a1a1a; color: var(--color-white); padding: var(--spacing-2xl) 0 var(--spacing-lg); }
+.footer { background: var(--color-footer-bg); color: var(--color-footer-text); padding: var(--spacing-2xl) 0 var(--spacing-lg); }
 .footer__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
 .footer__brand { display: flex; flex-direction: column; gap: var(--spacing-sm); }
 .footer__logo { 
@@ -372,6 +414,34 @@ padding: 20px;
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
+
+/* --- Sahara Decorative Elements --- */
+.trad-icon {
+  display: flex;
+  justify-content: center;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+.trad-icon svg {
+  width: 60px;
+  height: auto;
+}
+.title-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+.title-svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-gold);
+}
+
+/* Texture Bogolan pour le mode sombre */
+[data-theme="dark"] .section, [data-theme="dark"] .hero {
+  background-image: radial-gradient(var(--color-border) 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+}
 
 /* --- Utility --- */
 .text-center { text-align: center; }

@@ -21,6 +21,35 @@
   setInterval(() => goTo(current + 1), 4000);
 })();
 
+/* ---- Theme Toggle (Mode Clair/Sombre) ---- */
+(function () {
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const htmlElement = document.documentElement;
+
+  // Charger le thème sauvegardé
+  const savedTheme = localStorage.getItem('akadi_theme') || 'light';
+  htmlElement.setAttribute('data-theme', savedTheme);
+  updateIcon(savedTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('akadi_theme', newTheme);
+      updateIcon(newTheme);
+    });
+  }
+
+  function updateIcon(theme) {
+    if (!themeIcon) return;
+    // Si vous voulez changer l'image selon le mode, démentez ici
+    // themeIcon.src = theme === 'dark' ? 'lampe_on.png' : 'lampe.png';
+  }
+})();
+
 /* ---- Burger / Nav mobile ---- */
 (function () {
   const burger  = document.querySelector('.burger');
@@ -45,14 +74,53 @@
 /* ---- Scroll infini tactile ---- */
 (function () {
   const track = document.querySelector('.infinite-scroll__track');
-  if (!track || window.innerWidth >= 768) return;
-  let isDown = false, startX, scrollLeft;
-  track.addEventListener('touchstart', e => { isDown = true; startX = e.touches[0].pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
-  track.addEventListener('touchend', () => isDown = false);
-  track.addEventListener('touchmove', e => {
+  if (!track) return;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  // Pour mobile: mettre l'animation en pause quand on touche
+  track.addEventListener('touchstart', (e) => {
+    isDown = true;
+    track.style.animationPlayState = 'paused';
+    startX = e.touches[0].pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  }, { passive: true });
+
+  track.addEventListener('touchend', () => {
+    isDown = false;
+    track.style.animationPlayState = 'running';
+  });
+
+  track.addEventListener('touchmove', (e) => {
     if (!isDown) return;
-    const x = e.touches[0].pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 2;
+    // On laisse le scroll naturel ou on peut implémenter un drag manuel
+    // Mais avec l'animation active, le scrollLeft manuel peut être capricieux.
+    // Pour une meilleure expérience mobile, on garde l'animation automatique et on permet de "freiner/stopper" au toucher.
+  }, { passive: true });
+
+  // Optionnel: Drag à la souris aussi sur desktop
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    track.style.animationPlayState = 'paused';
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  track.addEventListener('mouseleave', () => {
+    isDown = false;
+    track.style.animationPlayState = 'running';
+  });
+  track.addEventListener('mouseup', () => {
+    isDown = false;
+    track.style.animationPlayState = 'running';
+  });
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 2;
+    track.scrollLeft = scrollLeft - walk;
   });
 })();
 
