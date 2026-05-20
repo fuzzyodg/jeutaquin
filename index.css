@@ -57,6 +57,10 @@
 
 
 
+.presentation-plats {
+    padding: 100px 0;
+    background-color: black;
+    background-image: var(--pattern-bogolan);
 .specialties {
     background-color: #1a1513;
     background-image: radial-gradient(circle at 50% 50%, rgba(111, 36, 10, 0.15) 0%, transparent 100%);
@@ -111,6 +115,18 @@
     transform: translateX(50px);
 }
 
+.plat-rond {
+    text-align: center;
+    background-color: var(--color-white);
+    padding: 40px 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    border: 1px solid transparent;
+}
+[data-theme="dark"] .plat-rond {
+    background-color: #1a1816;
+    border-color: var(--ochre-sahara);
 .specialty-card--slider.active {
     opacity: 1;
     pointer-events: all;
