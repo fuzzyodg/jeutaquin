@@ -197,11 +197,11 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-action="decrease" data-name="${esc(item.name)}" aria-label="Diminuer la quantité de ${item.name}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="increase" data-name="${esc(item.name)}" aria-label="Augmenter la quantité de ${item.name}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-action="remove" data-name="${esc(item.name)}" aria-label="Supprimer ${item.name} du panier">🗑</button>
       </div>`).join('');
   }
 
@@ -282,6 +282,21 @@ const Cart = (function () {
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
+
+    // Gestion du panier par délégation d'événements
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+      const name = btn.dataset.name;
+
+      if (!action || !name) return;
+
+      if (action === 'increase') changeQty(name, 1);
+      else if (action === 'decrease') changeQty(name, -1);
+      else if (action === 'remove') remove(name);
+    });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
   const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');

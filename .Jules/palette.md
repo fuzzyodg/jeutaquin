@@ -1,0 +1,3 @@
+## 2025-05-15 - [Navigation & Cart Accessibility]
+**Learning:** In a multi-page vanilla JavaScript application, broken internal links (e.g., `accueil.html` instead of `index.html`) significantly degrade the user experience. Additionally, using non-semantic elements like `span` for interactive actions (like cart removal) and relying on inline `onclick` attributes violates both accessibility best practices and strict project coding standards.
+**Action:** Always verify internal links across all pages and use semantic `button` elements with ARIA labels for all interactive components. Use event delegation to handle dynamically generated content while staying compliant with 'no inline JS' standards.
