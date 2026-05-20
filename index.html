@@ -23,18 +23,18 @@
       <a href="index.html" class="logo">
         <!-- New Restaurant Logo -->
         <svg class="logo__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" stroke="#6f240a" stroke-width="0.5" opacity="0.3"/>
-          <circle cx="50" cy="50" r="38" stroke="#6f240a" stroke-width="4"/>
-          <path d="M44 32c0-4 3-4 3-8M50 30c0-4 3-4 3-8M56 32c0-4 3-4 3-8" stroke="#6f240a" stroke-width="2" stroke-linecap="round"/>
-          <rect x="35" y="48" width="30" height="20" rx="2" fill="#fed65b" stroke="#6f240a" stroke-width="2"/>
-          <rect x="33" y="44" width="34" height="4" rx="2" fill="#6f240a"/>
-          <circle cx="50" cy="41" r="2.5" fill="#6f240a"/>
-          <rect x="65" y="55" width="10" height="4" rx="1.5" fill="#6f240a"/>
-          <rect x="21" y="58" width="4" height="18" rx="2" fill="#6f240a"/>
-          <path d="M18 44h10v10c0 2-1.5 4-5 4s-5-2-5-4V44z" fill="#6f240a"/>
-          <path d="M21 38v6M23 38v6M25 38v6" stroke="#fbf9f4" stroke-width="1.2" stroke-linecap="round"/>
-          <rect x="75" y="58" width="4" height="18" rx="2" fill="#6f240a"/>
-          <path d="M75 38l7 5v15h-7V38z" fill="#6f240a"/>
+          <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+          <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="4"/>
+          <path d="M44 32c0-4 3-4 3-8M50 30c0-4 3-4 3-8M56 32c0-4 3-4 3-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <rect x="35" y="48" width="30" height="20" rx="2" fill="var(--color-gold)" stroke="currentColor" stroke-width="2"/>
+          <rect x="33" y="44" width="34" height="4" rx="2" fill="currentColor"/>
+          <circle cx="50" cy="41" r="2.5" fill="currentColor"/>
+          <rect x="65" y="55" width="10" height="4" rx="1.5" fill="currentColor"/>
+          <rect x="21" y="58" width="4" height="18" rx="2" fill="currentColor"/>
+          <path d="M18 44h10v10c0 2-1.5 4-5 4s-5-2-5-4V44z" fill="currentColor"/>
+          <path d="M21 38v6M23 38v6M25 38v6" stroke="var(--color-bg)" stroke-width="1.2" stroke-linecap="round"/>
+          <rect x="75" y="58" width="4" height="18" rx="2" fill="currentColor"/>
+          <path d="M75 38l7 5v15h-7V38z" fill="currentColor"/>
         </svg>
         <div class="logo__text">
           <span class="logo__name">A'kadi</span>
@@ -54,6 +54,10 @@
       </nav>
 
       <div class="header__right">
+        <!-- Bouton theme -->
+        <button class="theme-toggle" id="theme-toggle" aria-label="Changer de mode">
+          <img src="lampe.png" alt="Mode Sombre" id="theme-icon">
+        </button>
         <!-- Bouton panier -->
         <button class="cart-btn" id="cart-btn" aria-label="Mon panier">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
