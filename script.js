@@ -81,7 +81,7 @@
   document.querySelectorAll('.nav-mobile__link').forEach(l => l.addEventListener('click', close));
 })();
 
-/* ---- Scroll infini tactile ---- */
+/* ---- Scroll infini mobile (Pause au toucher) ---- */
 (function () {
   const track = document.querySelector('.infinite-scroll__track');
   if (!track) return;
@@ -89,6 +89,13 @@
   // Pause animation on touch
   track.addEventListener('touchstart', () => {
     track.style.animationPlayState = 'paused';
+  // Sur mobile, on permet de mettre en pause l'animation au toucher
+  track.addEventListener('touchstart', () => {
+    track.style.animationPlayState = 'paused';
+  });
+
+  track.addEventListener('touchend', () => {
+    track.style.animationPlayState = 'running';
   });
 
   track.addEventListener('touchend', () => {
@@ -284,6 +291,62 @@ const Cart = (function () {
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     render();
+
+    /* ---- Specialties Slider ---- */
+    (function() {
+      const slides = document.querySelectorAll('.specialty-card--slider');
+      const dots = document.querySelectorAll('.specialties__dot');
+      const prevBtn = document.querySelector('.specialties__nav--prev');
+      const nextBtn = document.querySelector('.specialties__nav--next');
+      if (!slides.length) return;
+
+      let current = 0;
+      let timer;
+
+      function goTo(idx) {
+        slides[current].classList.remove('active');
+        slides[current].classList.add('exit');
+        if (dots[current]) dots[current].classList.remove('active');
+
+        // Remove exit class after animation
+        const prev = current;
+        setTimeout(() => {
+          slides[prev].classList.remove('exit');
+        }, 800);
+
+        current = (idx + slides.length) % slides.length;
+
+        slides[current].classList.add('active');
+        if (dots[current]) dots[current].classList.add('active');
+
+        resetTimer();
+      }
+
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), 5000);
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+      dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+      resetTimer();
+    })();
+
+    // Scroll reveal
+    const reveal = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    };
+    reveal();
 
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
@@ -499,5 +562,18 @@ function showToast(msg) {
         }
       });
     }
+  }
+})();
+
+/* ---- Formulaire Avis (Feedback) ---- */
+(function () {
+  const feedbackForm = document.getElementById('feedback-form');
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', e => {
+      e.preventDefault();
+      feedbackForm.style.display = 'none';
+      const success = document.getElementById('feedback-success');
+      if (success) success.classList.add('show');
+    });
   }
 })();
