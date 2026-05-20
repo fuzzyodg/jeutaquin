@@ -42,17 +42,18 @@
   document.querySelectorAll('.nav-mobile__link').forEach(l => l.addEventListener('click', close));
 })();
 
-/* ---- Scroll infini tactile ---- */
+/* ---- Scroll infini mobile (Pause au toucher) ---- */
 (function () {
   const track = document.querySelector('.infinite-scroll__track');
-  if (!track || window.innerWidth >= 768) return;
-  let isDown = false, startX, scrollLeft;
-  track.addEventListener('touchstart', e => { isDown = true; startX = e.touches[0].pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
-  track.addEventListener('touchend', () => isDown = false);
-  track.addEventListener('touchmove', e => {
-    if (!isDown) return;
-    const x = e.touches[0].pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 2;
+  if (!track) return;
+
+  // Sur mobile, on permet de mettre en pause l'animation au toucher
+  track.addEventListener('touchstart', () => {
+    track.style.animationPlayState = 'paused';
+  });
+
+  track.addEventListener('touchend', () => {
+    track.style.animationPlayState = 'running';
   });
 })();
 
