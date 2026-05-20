@@ -367,5 +367,5 @@
   .reviews__grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 767px) {
-  .infinite-scroll__track { animation: none; }
+  .infinite-scroll__track { animation: scroll-left 25s linear infinite; }
 }
