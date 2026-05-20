@@ -87,7 +87,23 @@
 .food-card__price { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); }
 
 /* Menu Full Grid — 4 colonnes */
-.menu-full { padding: var(--spacing-2xl) 0; }
+.menu-full {
+  padding: var(--spacing-2xl) 0;
+  position: relative;
+}
+.menu-full::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 150px; height: 150px;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,10 L90,80 L10,80 Z' fill='%23c24d2c' fill-opacity='0.05'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+[data-theme="dark"] .menu-full::after {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,10 L90,80 L10,80 Z' fill='%23fed65b' fill-opacity='0.1'/%3E%3C/svg%3E");
+}
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* mobile: 2 colonnes */
@@ -120,7 +136,7 @@
   transition: var(--transition-fast);
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.menu-item__add-btn:hover { background: #5a1d08; transform: translateY(-1px); }
+.menu-item__add-btn:hover { background: var(--color-primary); filter: brightness(1.1); transform: translateY(-1px); }
 .menu-item__add-btn svg { width: 15px; height: 15px; }
 
 /* Responsive menu grid */
@@ -140,7 +156,9 @@
   .food-card__image { height: 180px; }
 }
 @media (max-width: 767px) {
-  .infinite-scroll__track { animation: scroll-left 20s linear infinite; }
+  .infinite-scroll__track {
+    animation: scroll-left 25s linear infinite;
+  }
   .filter__categories { flex-wrap: nowrap; justify-content: flex-start; padding-bottom: 0.5rem; }
   .filter__btn { flex-shrink: 0; }
   .menu-grid { grid-template-columns: 1fr; }

@@ -81,49 +81,56 @@
   document.querySelectorAll('.nav-mobile__link').forEach(l => l.addEventListener('click', close));
 })();
 
-/* ---- Scroll infini mobile (Pause au toucher) ---- */
+/* ---- Scroll infini mobile (Optimisation) ---- */
 (function () {
   const track = document.querySelector('.infinite-scroll__track');
   if (!track) return;
 
-  // Pause animation on touch
-  track.addEventListener('touchstart', () => {
-    track.style.animationPlayState = 'paused';
-  // Sur mobile, on permet de mettre en pause l'animation au toucher
-  track.addEventListener('touchstart', () => {
-    track.style.animationPlayState = 'paused';
-  });
+  // Pause animation on touch/hover
+  const pause = () => { track.style.animationPlayState = 'paused'; };
+  const play  = () => { track.style.animationPlayState = 'running'; };
 
-  track.addEventListener('touchend', () => {
-    track.style.animationPlayState = 'running';
-  });
+  track.addEventListener('touchstart', pause);
+  track.addEventListener('touchend', play);
+  track.addEventListener('mouseenter', pause);
+  track.addEventListener('mouseleave', play);
 
-  track.addEventListener('touchend', () => {
-    track.style.animationPlayState = 'running';
-  });
+  // Drag-to-scroll functionality for mobile and desktop
+  let isDown = false;
+  let startX;
+  let scrollLeft;
 
-  // Manual scroll for mobile if animation is disabled or for better control
-  if (window.innerWidth < 768) {
-    let isDown = false, startX, scrollLeft;
-    track.addEventListener('touchstart', e => {
-      isDown = true;
-      startX = e.touches[0].pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-      track.style.animation = 'none'; // Stop animation during manual drag
-    });
-    track.addEventListener('touchend', () => {
-      isDown = false;
-      // Restart animation after a delay or based on user preference
-      setTimeout(() => {
-        track.style.animation = '';
-      }, 1000);
-    });
-    track.addEventListener('touchmove', e => {
-      if (!isDown) return;
-      const x = e.touches[0].pageX - track.offsetLeft;
-      track.scrollLeft = scrollLeft - (x - startX) * 2;
-    });
-  }
+  const startDrag = (e) => {
+    isDown = true;
+    track.classList.add('active');
+    startX = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    pause();
+  };
+
+  const endDrag = () => {
+    isDown = false;
+    track.classList.remove('active');
+    play();
+  };
+
+  const moveDrag = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = (e.pageX || e.touches[0].pageX) - track.offsetLeft;
+    const walk = (x - startX) * 2;
+    track.scrollLeft = scrollLeft - walk;
+  };
+
+  track.addEventListener('mousedown', startDrag);
+  track.addEventListener('touchstart', startDrag, { passive: false });
+
+  track.addEventListener('mouseleave', endDrag);
+  track.addEventListener('mouseup', endDrag);
+  track.addEventListener('touchend', endDrag);
+
+  track.addEventListener('mousemove', moveDrag);
+  track.addEventListener('touchmove', moveDrag, { passive: false });
 })();
 
 /* ---- Filtre menu ---- */
