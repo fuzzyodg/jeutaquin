@@ -48,6 +48,7 @@
 .presentation-plats {
     padding: 100px 0;
     background-color: black;
+    background-image: var(--pattern-bogolan);
 }
 
 .grille-quinconce {
@@ -81,11 +82,16 @@ color: rgb(193, 67, 0);
 
 .plat-rond {
     text-align: center;
-    background-color: var(--couleur-fond);
+    background-color: var(--color-white);
     padding: 40px 30px;
-    border-radius: var(--arrondi);
-    box-shadow: var(--ombre-legere);
-    transition: transform var(--transition-douce), box-shadow var(--transition-douce);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    border: 1px solid transparent;
+}
+[data-theme="dark"] .plat-rond {
+    background-color: #1a1816;
+    border-color: var(--ochre-sahara);
 }
 
 .plat-rond:hover {

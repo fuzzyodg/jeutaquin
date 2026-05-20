@@ -2,6 +2,45 @@
    A'KADI - Script principal
    ============================================ */
 
+/* ---- Dark Mode / Sahara Luxury Theme ---- */
+(function () {
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const html = document.documentElement;
+
+  // Load saved theme
+  const savedTheme = localStorage.getItem('akadi_theme') || 'light';
+  html.setAttribute('data-theme', savedTheme);
+  updateToggleIcon(savedTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('akadi_theme', newTheme);
+      updateToggleIcon(newTheme);
+
+      // Animation feedback
+      themeToggle.style.transform = 'scale(0.9) rotate(15deg)';
+      setTimeout(() => {
+        themeToggle.style.transform = '';
+      }, 200);
+    });
+  }
+
+  function updateToggleIcon(theme) {
+    if (!themeIcon) return;
+    // We use the same icon (lamp/africa) but could swap if needed.
+    // For now, let's keep it consistent as requested.
+    themeIcon.style.opacity = '0';
+    setTimeout(() => {
+      themeIcon.style.opacity = '1';
+    }, 100);
+  }
+})();
+
 /* ---- Slideshow (accueil) ---- */
 (function () {
   const slides = document.querySelectorAll('.hero__slide');
@@ -45,15 +84,39 @@
 /* ---- Scroll infini tactile ---- */
 (function () {
   const track = document.querySelector('.infinite-scroll__track');
-  if (!track || window.innerWidth >= 768) return;
-  let isDown = false, startX, scrollLeft;
-  track.addEventListener('touchstart', e => { isDown = true; startX = e.touches[0].pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
-  track.addEventListener('touchend', () => isDown = false);
-  track.addEventListener('touchmove', e => {
-    if (!isDown) return;
-    const x = e.touches[0].pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 2;
+  if (!track) return;
+
+  // Pause animation on touch
+  track.addEventListener('touchstart', () => {
+    track.style.animationPlayState = 'paused';
   });
+
+  track.addEventListener('touchend', () => {
+    track.style.animationPlayState = 'running';
+  });
+
+  // Manual scroll for mobile if animation is disabled or for better control
+  if (window.innerWidth < 768) {
+    let isDown = false, startX, scrollLeft;
+    track.addEventListener('touchstart', e => {
+      isDown = true;
+      startX = e.touches[0].pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+      track.style.animation = 'none'; // Stop animation during manual drag
+    });
+    track.addEventListener('touchend', () => {
+      isDown = false;
+      // Restart animation after a delay or based on user preference
+      setTimeout(() => {
+        track.style.animation = '';
+      }, 1000);
+    });
+    track.addEventListener('touchmove', e => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - track.offsetLeft;
+      track.scrollLeft = scrollLeft - (x - startX) * 2;
+    });
+  }
 })();
 
 /* ---- Filtre menu ---- */
