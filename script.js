@@ -8,10 +8,9 @@
   const themeIcon = document.getElementById('theme-icon');
   const html = document.documentElement;
 
-  // Load saved theme
+  // Load saved theme or prefer dark if it's evening? (Optional, let's stick to saved)
   const savedTheme = localStorage.getItem('akadi_theme') || 'light';
   html.setAttribute('data-theme', savedTheme);
-  updateToggleIcon(savedTheme);
 
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
@@ -20,24 +19,13 @@
 
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('akadi_theme', newTheme);
-      updateToggleIcon(newTheme);
 
       // Animation feedback
-      themeToggle.style.transform = 'scale(0.9) rotate(15deg)';
+      themeToggle.style.transform = 'scale(0.8) rotate(20deg)';
       setTimeout(() => {
         themeToggle.style.transform = '';
-      }, 200);
+      }, 250);
     });
-  }
-
-  function updateToggleIcon(theme) {
-    if (!themeIcon) return;
-    // We use the same icon (lamp/africa) but could swap if needed.
-    // For now, let's keep it consistent as requested.
-    themeIcon.style.opacity = '0';
-    setTimeout(() => {
-      themeIcon.style.opacity = '1';
-    }, 100);
   }
 })();
 
@@ -86,16 +74,8 @@
   const track = document.querySelector('.infinite-scroll__track');
   if (!track) return;
 
-  // Pause animation on touch
   track.addEventListener('touchstart', () => {
     track.style.animationPlayState = 'paused';
-  // Sur mobile, on permet de mettre en pause l'animation au toucher
-  track.addEventListener('touchstart', () => {
-    track.style.animationPlayState = 'paused';
-  });
-
-  track.addEventListener('touchend', () => {
-    track.style.animationPlayState = 'running';
   });
 
   track.addEventListener('touchend', () => {
@@ -113,7 +93,6 @@
     });
     track.addEventListener('touchend', () => {
       isDown = false;
-      // Restart animation after a delay or based on user preference
       setTimeout(() => {
         track.style.animation = '';
       }, 1000);
@@ -154,7 +133,7 @@
       applyFilters();
     });
   });
-  checks.forEach(c => c.addEventListener('change', applyFilters));
+  if (checks.length) checks.forEach(c => c.addEventListener('change', applyFilters));
 })();
 
 /* ---- Modal événements ---- */
@@ -165,7 +144,8 @@
   const interestBtns = document.querySelectorAll('.event-card .btn--primary');
 
   function openModal(eventName) {
-    modal.querySelector('input[name="event"]').value = eventName || '';
+    const eventInput = modal.querySelector('input[name="event"]');
+    if (eventInput) eventInput.value = eventName || '';
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -191,14 +171,6 @@
       showToast('Votre intérêt a bien été enregistré !');
     });
   }
-})();
-
-/* ---- Formulaire réservation (contact) ---- */
-(function () {
-  const form = document.getElementById('reservation-form');
-  if (!form) return;
-  // La gestion du formulaire est maintenant faite dans contact.html
-  // Cette fonction reste ici au cas où on aurait besoin, mais elle ne fait rien
 })();
 
 /* ============================================
@@ -308,7 +280,6 @@ const Cart = (function () {
         slides[current].classList.add('exit');
         if (dots[current]) dots[current].classList.remove('active');
 
-        // Remove exit class after animation
         const prev = current;
         setTimeout(() => {
           slides[prev].classList.remove('exit');
@@ -353,12 +324,12 @@ const Cart = (function () {
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
-  if (count() === 0) return;
-  const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
-  localStorage.setItem('akadi_order', JSON.stringify({ items, summary }));
-  close();
-  window.location.href = 'contact.html';
-});
+      if (count() === 0) return;
+      const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
+      localStorage.setItem('akadi_order', JSON.stringify({ items, summary }));
+      close();
+      window.location.href = 'contact.html';
+    });
 
     // Boutons "Ajouter au panier" dans menu-item
     document.querySelectorAll('.menu-item__add-btn').forEach(btn => {
@@ -395,18 +366,15 @@ function showToast(msg) {
    FORMULAIRE RÉSERVATION/COMMANDE (contact.html)
    ============================================ */
 (function () {
-  // Pré-remplir la date avec aujourd'hui
   const dateInput = document.getElementById('date');
   if (dateInput) {
     const today = new Date().toISOString().split('T')[0];
     dateInput.value = today;
   }
 
-  // Afficher le résumé de commande si venu du panier
   const order = JSON.parse(localStorage.getItem('akadi_order') || 'null');
   
   if (order) {
-    // === MODE COMMANDE ===
     const block = document.getElementById('order-summary-block');
     const text  = document.getElementById('order-summary-text');
     if (block && text) {
@@ -414,7 +382,6 @@ function showToast(msg) {
       text.textContent = order.summary;
     }
 
-    // Masquer la section réservation, afficher la section commande
     const reservationSection = document.getElementById('reservation-section');
     const orderTimeSection = document.getElementById('order-time-section');
     const guestsGroup = document.getElementById('guests-group');
@@ -423,13 +390,11 @@ function showToast(msg) {
     if (orderTimeSection) orderTimeSection.style.display = 'block';
     if (guestsGroup) guestsGroup.style.display = 'none';
 
-    // Rendre l'heure de réservation non requise
     const reservationTimeSelect = document.getElementById('reservation-time');
     if (reservationTimeSelect) {
       reservationTimeSelect.required = false;
     }
 
-    // Afficher/masquer les champs selon le mode choisi
     document.querySelectorAll('input[name="mode"]').forEach(radio => {
       radio.addEventListener('change', () => {
         const addr = document.getElementById('address-block');
@@ -438,39 +403,34 @@ function showToast(msg) {
         const pickupSelect = document.getElementById('pickup-time');
         const deliverySelect = document.getElementById('delivery-time');
 
-        // Affichage conditionnel des blocs
         if (radio.value === 'livraison') {
-          addr.style.display = 'block';
-          pickupBlock.style.display = 'none';
-          deliveryBlock.style.display = 'block';
+          if (addr) addr.style.display = 'block';
+          if (pickupBlock) pickupBlock.style.display = 'none';
+          if (deliveryBlock) deliveryBlock.style.display = 'block';
 
-          // Rendre obligatoires les champs de livraison
           const input = document.getElementById('delivery-address');
-          input.required = true;
-          deliverySelect.required = true;
-          pickupSelect.required = false;
-        } else { // sur_place
-          addr.style.display = 'none';
-          pickupBlock.style.display = 'block';
-          deliveryBlock.style.display = 'none';
+          if (input) input.required = true;
+          if (deliverySelect) deliverySelect.required = true;
+          if (pickupSelect) pickupSelect.required = false;
+        } else {
+          if (addr) addr.style.display = 'none';
+          if (pickupBlock) pickupBlock.style.display = 'block';
+          if (deliveryBlock) deliveryBlock.style.display = 'none';
 
-          // Rendre obligatoire le champ de récupération, pas la livraison
           const input = document.getElementById('delivery-address');
-          input.required = false;
-          pickupSelect.required = true;
-          deliverySelect.required = false;
+          if (input) input.required = false;
+          if (pickupSelect) pickupSelect.required = true;
+          if (deliverySelect) deliverySelect.required = false;
         }
       });
     });
 
-    // Initialiser l'état au chargement (mode par défaut: sur_place)
     const defaultMode = document.querySelector('input[name="mode"]:checked');
     if (defaultMode) {
       const event = new Event('change', { bubbles: true });
       defaultMode.dispatchEvent(event);
     }
 
-    // Gérer la soumission du formulaire
     const form = document.getElementById('reservation-form');
     if (form) {
       form.addEventListener('submit', e => {
@@ -481,52 +441,42 @@ function showToast(msg) {
           const err = field.nextElementSibling;
           if (!field.value.trim()) {
             field.classList.add('error');
-            if (err) err.classList.add('show');
+            if (err && err.classList.contains('form__error')) err.classList.add('show');
             valid = false;
           } else {
             field.classList.remove('error');
-            if (err) err.classList.remove('show');
+            if (err && err.classList.contains('form__error')) err.classList.remove('show');
           }
         });
 
         if (valid) {
-          // Déterminer le mode (récupération ou livraison)
           const mode = document.querySelector('input[name="mode"]:checked')?.value || 'sur_place';
           let successMessage = '';
 
           if (mode === 'livraison') {
-            const address = document.getElementById('delivery-address').value;
-            const time = document.getElementById('delivery-time').value;
-            successMessage = `Réservation faite. Le livreur passera à ${address}, à ${time}.`;
+            const address = document.getElementById('delivery-address')?.value || '';
+            const time = document.getElementById('delivery-time')?.value || '';
+            successMessage = `Commande confirmée. Le livreur passera à ${address} vers ${time}.`;
           } else {
-            const time = document.getElementById('pickup-time').value;
-            successMessage = `Réservation faite. Merci de respecter l'heure de récupération : ${time}.`;
+            const time = document.getElementById('pickup-time')?.value || '';
+            successMessage = `Commande confirmée. Merci de passer récupérer votre plat à ${time}.`;
           }
 
-          // Afficher le message personnalisé
           const successText = document.getElementById('form-success-text');
-          if (successText) {
-            successText.textContent = successMessage;
-          }
+          if (successText) successText.textContent = successMessage;
 
-          // Masquer le formulaire et afficher le message de succès
           form.style.display = 'none';
           const success = document.getElementById('form-success');
           if (success) success.classList.add('show');
 
-          // Vider le panier
           Cart.clear();
-
-          // Nettoyer le localStorage
           localStorage.removeItem('akadi_order');
         }
       });
     }
 
-    // Nettoyer le localStorage après lecture
     localStorage.removeItem('akadi_order');
   } else {
-    // === MODE RÉSERVATION (accès direct au formulaire) ===
     const form = document.getElementById('reservation-form');
     if (form) {
       form.addEventListener('submit', e => {
@@ -537,25 +487,23 @@ function showToast(msg) {
           const err = field.nextElementSibling;
           if (!field.value.trim()) {
             field.classList.add('error');
-            if (err) err.classList.add('show');
+            if (err && err.classList.contains('form__error')) err.classList.add('show');
             valid = false;
           } else {
             field.classList.remove('error');
-            if (err) err.classList.remove('show');
+            if (err && err.classList.contains('form__error')) err.classList.remove('show');
           }
         });
 
         if (valid) {
-          const reservationTime = document.getElementById('reservation-time').value;
-          const guestCount = document.getElementById('guests').value || 'non spécifié';
+          const reservationTime = document.getElementById('reservation-time')?.value || '';
+          const guestCount = document.getElementById('guests')?.value || 'non spécifié';
           
-          // Message de succès pour réservation
           const successText = document.getElementById('form-success-text');
           if (successText) {
             successText.textContent = `Réservation confirmée pour ${guestCount} personne(s) à ${reservationTime}. Merci pour votre confiance !`;
           }
 
-          // Masquer le formulaire et afficher le message de succès
           form.style.display = 'none';
           const success = document.getElementById('form-success');
           if (success) success.classList.add('show');
