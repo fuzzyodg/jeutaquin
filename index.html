@@ -77,7 +77,7 @@
       <li><a href="index.html" class="nav-mobile__link active">Accueil</a></li>
       <li><a href="menu.html" class="nav-mobile__link">Menu</a></li>
       <li><a href="apropos.html" class="nav-mobile__link">À propos</a></li>
-      <li><a href="evenements.html" class="nav-mobile__link">Événements</a></li>
+      <li><a href="evenement.html" class="nav-mobile__link">Événements</a></li>
       <li><a href="contact.html" class="nav-mobile__link">Contact</a></li>
     </ul>
   </nav>
@@ -492,13 +492,14 @@
   <aside class="cart-panel" id="cart-panel" aria-label="Panier">
     <div class="cart-panel__header">
       <span class="cart-panel__title">🛒 Mon Panier</span>
-      <button class="cart-panel__close" id="cart-close">✕</button>
+      <button class="cart-panel__close" id="cart-close" aria-label="Fermer le panier">✕</button>
     </div>
     <div class="cart-panel__body" id="cart-body">
       <div class="cart-empty">
         <div class="cart-empty__icon">🛒</div>
         <p>Votre panier est vide</p>
-        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;margin-bottom:15px;">Ajoutez des plats depuis le menu</p>
+        <a href="menu.html" class="btn btn--gold" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Voir le menu</a>
       </div>
     </div>
     <div class="cart-panel__footer">
