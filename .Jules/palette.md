@@ -1,0 +1,3 @@
+## 2025-05-15 - [Accessibility & Navigation Consistency]
+**Learning:** In a vanilla JS multi-page environment, dynamic UI updates (like the shopping cart) often fail to provide a "way out" when empty, leading to dead-ends. Additionally, string-interpolated HTML in `script.js` is prone to breaking DOM attributes if names/prices contain quotes, which also impacts accessibility labels.
+**Action:** Always include a primary CTA (e.g., "Back to Menu") in empty states. Use double-quote escaping for any content injected into `aria-label` or `alt` attributes to prevent broken markup and ensure screen reader reliability. Cross-reference file names (index.html vs accueil.html) across all navigation components to prevent 404s.
