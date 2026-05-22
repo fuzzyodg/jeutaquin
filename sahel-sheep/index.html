@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SahelSheep Connect - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="status-bar">
+                <span class="battery"><i class="fas fa-battery-three-quarters"></i> 85%</span>
+                <span class="signal"><i class="fas fa-satellite-dish"></i> LoRa: OK</span>
+                <span class="gsm"><i class="fas fa-signal"></i> GSM: 4G</span>
+            </div>
+            <h1>SahelSheep <span class="logo-icon">🐑</span></h1>
+        </header>
+
+        <main class="dashboard">
+            <!-- Global Stats -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total</span>
+                    <span class="stat-value">42</span>
+                </div>
+                <div class="stat-card success">
+                    <span class="stat-label">Présents</span>
+                    <span class="stat-value">41</span>
+                </div>
+                <div class="stat-card warning">
+                    <span class="stat-label">Alertes</span>
+                    <span class="stat-value">2</span>
+                </div>
+            </section>
+
+            <!-- Water Resource -->
+            <section class="section water-section">
+                <h2><i class="fas fa-tint"></i> Recherche d'Eau</h2>
+                <div class="water-card">
+                    <div class="water-info">
+                        <span class="label">Sonde N°1 (Zone Nord)</span>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%;"></div>
+                        </div>
+                        <span class="value">Humidité : 75% (Potentiel Élevé)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Health Monitoring -->
+            <section class="section health-section">
+                <h2><i class="fas fa-heartbeat"></i> Santé du Troupeau</h2>
+                <div class="sheep-list">
+                    <!-- Sheep Alert -->
+                    <div class="sheep-item danger">
+                        <div class="sheep-id">ID: #012</div>
+                        <div class="sheep-stats">
+                            <span class="temp"><i class="fas fa-thermometer-half"></i> 40.5°C</span>
+                            <span class="activity"><i class="fas fa-running"></i> Faible</span>
+                        </div>
+                        <div class="alert-msg">Fièvre détectée !</div>
+                    </div>
+
+                    <div class="sheep-item warning">
+                        <div class="sheep-id">ID: #028</div>
+                        <div class="sheep-stats">
+                            <span class="temp"><i class="fas fa-thermometer-half"></i> 39.2°C</span>
+                            <span class="activity"><i class="fas fa-running"></i> Immobilité</span>
+                        </div>
+                        <div class="alert-msg">Absence de mouvement (1h)</div>
+                    </div>
+
+                    <div class="sheep-item">
+                        <div class="sheep-id">ID: #005</div>
+                        <div class="sheep-stats">
+                            <span class="temp"><i class="fas fa-thermometer-half"></i> 38.5°C</span>
+                            <span class="activity"><i class="fas fa-running"></i> Normal</span>
+                        </div>
+                    </div>
+
+                    <div class="sheep-item">
+                        <div class="sheep-id">ID: #019</div>
+                        <div class="sheep-stats">
+                            <span class="temp"><i class="fas fa-thermometer-half"></i> 38.7°C</span>
+                            <span class="activity"><i class="fas fa-running"></i> Normal</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active"><i class="fas fa-home"></i><span>Accueil</span></a>
+            <a href="#" class="nav-item"><i class="fas fa-search-location"></i><span>Eau</span></a>
+            <a href="#" class="nav-item"><i class="fas fa-clipboard-list"></i><span>Inventaire</span></a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i><span>Paramètres</span></a>
+        </nav>
+    </div>
+</body>
+</html>
