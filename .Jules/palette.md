@@ -1,0 +1,3 @@
+## 2025-05-15 - [Accessible & Semantic Shopping Cart]
+**Learning:** Using non-semantic elements (like `<span>` or `<div>`) for interactive triggers without ARIA roles or labels makes the UI inaccessible to screen reader and keyboard users. Additionally, inconsistent internal links (e.g., mixing `.html` filenames) breaks the multi-page navigation flow.
+**Action:** Always use semantic `<button>` elements for interactive actions, provide descriptive `aria-label` attributes for icon-only buttons, and use `aria-live` to announce dynamic content updates. Standardize internal navigation links site-wide to ensure consistency.
