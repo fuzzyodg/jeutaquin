@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Accueil - Hero & Identité",
+    "image": "screenshots/accueil_hero.png",
+    "code_html": "<section class=\"hero\">\n  <div class=\"hero__slides\">\n    <div class=\"hero__slide active\">...</div>\n  </div>\n  <div class=\"hero__content\">\n    <h1>L'authenticité...</h1>\n  </div>\n</section>",
+    "code_css": ".hero__slide {\n  opacity: 0;\n  transition: opacity 1s;\n}\n.hero__slide.active {\n  opacity: 1;\n}",
+    "code_js": "function goTo(idx) {\n  slides[current].classList.remove('active');\n  current = idx % slides.length;\n  slides[current].classList.add('active');\n}",
+    "explanation": "La bannière d'accueil utilise un système de diapositives (slides) géré en JavaScript. Le CSS assure une transition fluide par opacité (fade-in) entre les images pour un rendu luxueux et moderne."
+  },
+  {
+    "title": "Accueil - Spécialités Animées",
+    "image": "screenshots/accueil_specialties.png",
+    "code_html": "<article class=\"specialty-card specialty-card--slider active\">\n  <img src=\"zamnin.jpeg\" />\n  <div class=\"specialty-card__content\">\n    <h3>Zamne</h3>\n  </div>\n</article>",
+    "code_css": ".specialty-card {\n  transition: transform 0.8s, opacity 0.8s;\n}\n.specialty-card.exit {\n  transform: translateX(-100%);\n}",
+    "code_js": "slides[current].classList.add('exit');\nsetTimeout(() => {\n  slides[prev].classList.remove('exit');\n}, 800);",
+    "explanation": "Le curseur des spécialités combine des classes d'état (active, exit) pour créer un mouvement de glissement élégant. L'utilisation de setTimeout permet de synchroniser le retrait des anciennes cartes."
+  },
+  {
+    "title": "Menu - Bandeau Défilant Infini",
+    "image": "screenshots/menu_infinite.png",
+    "code_html": "<div class=\"infinite-scroll__track\">\n  <!-- Groupe 1 -->\n  <div class=\"food-card\">...</div>\n  <!-- Groupe 2 (Copie) -->\n  <div class=\"food-card\">...</div>\n</div>",
+    "code_css": "@keyframes scroll {\n  0% { transform: translateX(0); }\n  100% { transform: translateX(-50%); }\n}\n.infinite-scroll__track {\n  animation: scroll 40s linear infinite;\n}",
+    "explanation": "Le défilement infini est réalisé en CSS pur. En doublant les éléments dans le HTML et en déplaçant le conteneur de 50%, on crée une boucle parfaite sans interruption visuelle."
+  },
+  {
+    "title": "Menu - Filtrage Dynamique",
+    "image": "screenshots/menu_list.png",
+    "code_html": "<button class=\"filter__btn\" data-category=\"grillades\">Grillades</button>\n<div class=\"menu-item\" data-category=\"grillades\">...</div>",
+    "code_js": "items.forEach(item => {\n  const catOk = cat === 'all' || itemCat === cat;\n  item.classList.toggle('hidden', !catOk);\n});",
+    "code_css": ".hidden {\n  display: none;\n  opacity: 0;\n}",
+    "explanation": "Le filtrage utilise des attributs de données (data-attributes). Le JavaScript masque ou affiche les plats instantanément sans recharger la page, offrant une navigation fluide aux clients."
+  },
+  {
+    "title": "À propos - Histoire et Valeurs",
+    "image": "screenshots/apropos_story.png",
+    "code_html": "<section class=\"story\">\n  <h2>L'Histoire de Maman A'kadi</h2>\n  <p>Tout a commencé par...</p>\n</section>",
+    "code_css": ".story {\n  background: linear-gradient(135deg, #e7e1d1, #b77212);\n  padding: 4rem 0;\n}",
+    "explanation": "Le design de la page 'À propos' utilise des dégradés de couleurs inspirés du Sahel. La mise en page sémantique (section, article) assure une bonne accessibilité et un référencement optimal."
+  },
+  {
+    "title": "Événements - Grille et Modales",
+    "image": "screenshots/evenement_list.png",
+    "code_html": "<div id=\"event-modal\" class=\"modal\">\n  <div class=\"modal__content\">...</div>\n</div>",
+    "code_js": "function openModal(eventName) {\n  modal.classList.add('active');\n  document.body.style.overflow = 'hidden';\n}",
+    "code_css": ".modal.active {\n  opacity: 1;\n  visibility: visible;\n}",
+    "explanation": "La gestion des événements utilise des fenêtres modales pour les inscriptions. Le JavaScript contrôle l'état d'affichage et verrouille le défilement du corps de la page pour une meilleure UX."
+  },
+  {
+    "title": "Contact - Logique de Réservation",
+    "image": "screenshots/contact_form.png",
+    "code_html": "<input type=\"radio\" name=\"mode\" value=\"livraison\" />\n<div id=\"address-block\" style=\"display:none\">...</div>",
+    "code_js": "radio.addEventListener('change', () => {\n  const isDelivery = radio.value === 'livraison';\n  addrBlock.style.display = isDelivery ? 'block' : 'none';\n});",
+    "explanation": "Le formulaire est intelligent : il affiche dynamiquement les champs selon le mode choisi (livraison ou sur place). Le JavaScript gère l'affichage conditionnel pour ne pas encombrer l'utilisateur."
+  },
+  {
+    "title": "Gestion du Panier - LocalStorage",
+    "image": "screenshots/accueil_hero.png",
+    "code_js": "let items = JSON.parse(localStorage.getItem('akadi_cart') || '[]');\nfunction save() {\n  localStorage.setItem('akadi_cart', JSON.stringify(items));\n}",
+    "explanation": "Le panier est persistant grâce à l'API LocalStorage du navigateur. Les choix du client sont sauvegardés localement, même s'il rafraîchit la page ou change de section."
+  },
+  {
+    "title": "Design System - Variables CSS",
+    "image": "screenshots/accueil_features.png",
+    "code_css": ":root {\n  --color-primary: #6f240a;\n  --color-gold: #fed65b;\n  --pattern-bogolan: url(\"...\");\n}\n[data-theme=\"dark\"] {\n  --color-bg: #12100e;\n}",
+    "explanation": "L'utilisation de variables CSS centralisées permet de maintenir une cohérence visuelle parfaite. Le passage au mode sombre (Sahara Luxury) se fait simplement en changeant les valeurs de ces variables."
+  }
+]
