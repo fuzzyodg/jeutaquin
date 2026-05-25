@@ -198,11 +198,11 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn js-cart-qty" data-name="${esc(item.name)}" data-delta="-1" aria-label="Diminuer la quantité de ${item.name.replace(/"/g, '&quot;')}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn js-cart-qty" data-name="${esc(item.name)}" data-delta="1" aria-label="Augmenter la quantité de ${item.name.replace(/"/g, '&quot;')}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove js-cart-remove" data-name="${esc(item.name)}" aria-label="Retirer ${item.name.replace(/"/g, '&quot;')} du panier">🗑</button>
       </div>`).join('');
   }
 
@@ -283,6 +283,24 @@ const Cart = (function () {
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
+
+    // Délégation d'événements pour le panier
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const qtyBtn = e.target.closest('.js-cart-qty');
+      if (qtyBtn) {
+        const name = qtyBtn.dataset.name;
+        const delta = parseInt(qtyBtn.dataset.delta, 10);
+        Cart.changeQty(name, delta);
+        return;
+      }
+
+      const removeBtn = e.target.closest('.js-cart-remove');
+      if (removeBtn) {
+        const name = removeBtn.dataset.name;
+        Cart.remove(name);
+        return;
+      }
+    });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
   const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');

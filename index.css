@@ -43,8 +43,9 @@
   animation: fadeIn 0.8s ease-out 0.5s forwards;
 }
 .hero__dots { position: absolute; bottom: var(--spacing-lg); left: 50%; transform: translateX(-50%); display: flex; gap: var(--spacing-xs); z-index: 20; }
-.hero__dot { width: 12px; height: 12px; border-radius: var(--radius-full); background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition-fast); }
+.hero__dot { width: 12px; height: 12px; border-radius: var(--radius-full); background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition-fast); border: none; }
 .hero__dot.active, .hero__dot:hover { background: var(--color-gold); transform: scale(1.2); }
+.hero__dot:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
 /* --- Features --- */
 .features { background: var(--color-white); }
@@ -197,11 +198,17 @@
     background: rgba(254, 214, 91, 0.3);
     cursor: pointer;
     transition: var(--transition-fast);
+    border: none;
 }
 
 .specialties__dot.active {
     background: var(--color-gold);
     transform: scale(1.3);
+}
+
+.specialties__dot:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
 }
 
 .specialties__nav {
