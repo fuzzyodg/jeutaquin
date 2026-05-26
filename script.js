@@ -184,11 +184,14 @@ const Cart = (function () {
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
           <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="cart-empty__link" id="cart-view-menu" style="display:inline-block; margin-top:15px; color:var(--color-primary); font-weight:600; text-decoration:underline;">Voir le menu</a>
         </div>`;
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const safeName = esc(item.name);
+      return `
       <div class="cart-item">
         ${item.imgSrc
           ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
@@ -198,15 +201,19 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-name="${safeName}" data-action="qty" data-delta="-1" aria-label="Diminuer la quantité de ${safeName}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-name="${safeName}" data-action="qty" data-delta="1" aria-label="Augmenter la quantité de ${safeName}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button class="cart-item__remove" data-name="${safeName}" data-action="remove" aria-label="Supprimer ${safeName} du panier">🗑</button>
+      </div>`;
+    }).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function esc(s) {
+    if (!s) return '';
+    return s.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +289,30 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    const cartBody = document.getElementById('cart-body');
+    if (cartBody) {
+      cartBody.addEventListener('click', (e) => {
+        const target = e.target.closest('button, a');
+        if (!target) return;
+
+        if (target.id === 'cart-view-menu') {
+          close();
+          return;
+        }
+
+        const name = target.dataset.name;
+        const action = target.dataset.action;
+
+        if (action === 'qty') {
+          const delta = parseInt(target.dataset.delta, 10);
+          changeQty(name, delta);
+        } else if (action === 'remove') {
+          remove(name);
+        }
+      });
+    }
+
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;

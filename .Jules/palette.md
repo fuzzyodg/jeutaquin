@@ -1,0 +1,3 @@
+## 2025-05-15 - [Shopping Cart UX & Accessibility]
+**Learning:** For dynamic components in vanilla JS environments, event delegation on a stable parent container is more robust and cleaner than injecting inline `onclick` handlers, which violates project standards. Providing a "Call to Action" in empty states (like the shopping cart) significantly improves the navigation flow by guiding users back to meaningful content.
+**Action:** Use event delegation for all dynamically rendered interactive elements. Always verify that icon-only buttons have descriptive `aria-label` attributes and that internal links do not use `target="_blank"`.
