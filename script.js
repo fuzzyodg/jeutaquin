@@ -183,7 +183,7 @@ const Cart = (function () {
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <button class="cart-empty__sub" data-action="close-cart">Voir le menu</button>
         </div>`;
       return;
     }
@@ -198,11 +198,11 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-action="decrease" data-name="${esc(item.name)}" aria-label="Diminuer la quantité de ${item.name}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="increase" data-name="${esc(item.name)}" aria-label="Augmenter la quantité de ${item.name}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-action="remove" data-name="${esc(item.name)}" aria-label="Supprimer ${item.name} du panier">🗑</button>
       </div>`).join('');
   }
 
@@ -282,6 +282,21 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Event delegation pour les actions du panier
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+      const name = btn.dataset.name;
+
+      if (action === 'increase') changeQty(name, 1);
+      else if (action === 'decrease') changeQty(name, -1);
+      else if (action === 'remove') remove(name);
+      else if (action === 'close-cart') close();
+    });
+
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
