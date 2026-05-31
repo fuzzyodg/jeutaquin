@@ -181,7 +181,21 @@ p { margin-bottom: 1rem; }
   color: #999;
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
-.cart-empty p { font-size: 1rem; }
+.cart-empty p { font-size: 1rem; margin-bottom: var(--spacing-sm); }
+.cart-empty__link {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+}
+.cart-empty__link:hover {
+  background: #5a1d08;
+  transform: translateY(-2px);
+}
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
