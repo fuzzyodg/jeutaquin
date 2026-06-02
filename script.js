@@ -183,30 +183,41 @@ const Cart = (function () {
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="cart-empty__cta">Voir le menu</a>
         </div>`;
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const nameEsc = escAttr(item.name);
+      return `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${nameEsc}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${escAttr(item.name)}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-action="qty" data-delta="-1" data-name="${nameEsc}" aria-label="Diminuer la quantité de ${nameEsc}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="qty" data-delta="1" data-name="${nameEsc}" aria-label="Augmenter la quantité de ${nameEsc}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button class="cart-item__remove" data-action="remove" data-name="${nameEsc}" aria-label="Supprimer ${nameEsc} du panier">🗑</button>
+      </div>`;
+    }).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return "";
+    return s.toString()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +293,29 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Délégation d'événements pour le panier
+    document.getElementById('cart-body')?.addEventListener('click', e => {
+      const btn = e.target.closest('button, .cart-empty__cta');
+      if (!btn) return;
+
+      if (btn.classList.contains('cart-empty__cta')) {
+        close();
+        return;
+      }
+
+      const action = btn.dataset.action;
+      const name = btn.dataset.name;
+      if (!name) return;
+
+      if (action === 'qty') {
+        const delta = parseInt(btn.dataset.delta, 10);
+        changeQty(name, delta);
+      } else if (action === 'remove') {
+        remove(name);
+      }
+    });
+
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
