@@ -1,0 +1,4 @@
+## 2025-05-14 - Improved Shopping Cart Interaction & Accessibility
+**Learning:** In dynamically updated components like a shopping cart, replacing inline 'onclick' handlers with event delegation on a stable parent element improves maintainability and security. To ensure micro-animations (like a 'bump' effect) trigger reliably on every interaction, even when triggered rapidly, using a force reflow (`element.offsetWidth`) is an effective technique. Additionally, empty states are most effective when they provide a direct, contextual path back to the primary user flow (e.g., a "Voir le menu" link that closes the cart panel).
+
+**Action:** Always use event delegation for dynamic UI elements. Ensure CSS animations are reset correctly for repeated triggers. Always include a CTA in empty states to prevent dead ends.
