@@ -188,25 +188,31 @@ const Cart = (function () {
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const nameEsc = escAttr(item.name);
+      return `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${nameEsc}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${nameEsc}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-name="${nameEsc}" data-delta="-1" aria-label="Diminuer la quantité de ${nameEsc}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" data-name="${nameEsc}" data-delta="1" aria-label="Augmenter la quantité de ${nameEsc}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button class="cart-item__remove" data-name="${nameEsc}" aria-label="Supprimer ${nameEsc} du panier">🗑</button>
+      </div>`;
+    }).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return "";
+    return s.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +288,18 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Cart Event Delegation
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const name = btn.dataset.name;
+      if (btn.classList.contains('cart-item__qty-btn')) {
+        changeQty(name, parseInt(btn.dataset.delta, 10));
+      } else if (btn.classList.contains('cart-item__remove')) {
+        remove(name);
+      }
+    });
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;

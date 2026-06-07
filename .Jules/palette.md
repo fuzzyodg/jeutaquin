@@ -1,0 +1,3 @@
+## 2025-05-15 - Improving Shopping Cart Accessibility
+**Learning:** In a multi-page vanilla JS application, dynamically generated UI components (like a shopping cart) are prone to accessibility gaps. Common issues include using non-semantic elements for interactive triggers (e.g., `<span>` instead of `<button>`) and failing to announce dynamic content changes.
+**Action:** Always use semantic `<button>` elements for interactive triggers. Implement event delegation on a stable parent element to manage dynamic content efficiently and avoid forbidden inline `onclick` handlers. Use `aria-live="polite"` on numerical values that change based on user interaction to ensure screen reader users are informed of updates.
