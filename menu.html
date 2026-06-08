@@ -106,13 +106,14 @@
   <aside class="cart-panel" id="cart-panel" aria-label="Panier">
     <div class="cart-panel__header">
       <span class="cart-panel__title">🛒 Mon Panier</span>
-      <button class="cart-panel__close" id="cart-close">✕</button>
+      <button class="cart-panel__close" id="cart-close" aria-label="Fermer le panier">✕</button>
     </div>
     <div class="cart-panel__body" id="cart-body">
       <div class="cart-empty">
         <div class="cart-empty__icon">🛒</div>
         <p>Votre panier est vide</p>
-        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+        <p class="cart-empty__sub">Parcourez notre carte pour découvrir nos spécialités.</p>
+        <a href="menu.html" class="cart-empty__cta" id="cart-go-menu">Voir le menu</a>
       </div>
     </div>
     <div class="cart-panel__footer">
