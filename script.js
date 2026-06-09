@@ -145,6 +145,14 @@ const Cart = (function () {
     if (existing) { existing.qty++; }
     else { items.push({ name, price, imgSrc, qty: 1 }); }
     save(); render(); showToast(`${name} ajouté au panier`);
+
+    // Animation bump sur le bouton panier
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+      cartBtn.classList.remove('cart-bump');
+      void cartBtn.offsetWidth; // Force reflow
+      cartBtn.classList.add('cart-bump');
+    }
   }
 
   function remove(name) {
@@ -184,6 +192,7 @@ const Cart = (function () {
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
           <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="cart-empty__cta" data-action="close-cart" style="display:inline-block;margin-top:15px;color:var(--color-primary);font-weight:600;text-decoration:underline;">Voir le menu</a>
         </div>`;
       return;
     }
@@ -194,19 +203,19 @@ const Cart = (function () {
           ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${esc(item.name)}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-name="${esc(item.name)}" data-action="decrease" aria-label="Diminuer la quantité de ${esc(item.name)}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" data-name="${esc(item.name)}" data-action="increase" aria-label="Augmenter la quantité de ${esc(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-name="${esc(item.name)}" data-action="remove" aria-label="Supprimer ${esc(item.name)} du panier" style="background:none;border:none;cursor:pointer;font-size:1.1rem;">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function esc(s) { return s ? String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m])) : ''; }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -222,6 +231,23 @@ const Cart = (function () {
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     render();
+
+    // Event delegation pour le panier
+    const cartBody = document.getElementById('cart-body');
+    if (cartBody) {
+      cartBody.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-action]');
+        if (!target) return;
+
+        const action = target.dataset.action;
+        const name = target.dataset.name;
+
+        if (action === 'increase') changeQty(name, 1);
+        else if (action === 'decrease') changeQty(name, -1);
+        else if (action === 'remove') remove(name);
+        else if (action === 'close-cart') close();
+      });
+    }
 
     /* ---- Specialties Slider ---- */
     (function() {
