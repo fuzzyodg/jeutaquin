@@ -1,0 +1,3 @@
+## 2025-05-15 - [Enhanced Shopping Cart Accessibility and Feedback]
+**Learning:** For interactive UI components that persist state (like a shopping cart), small visual cues like the "cart-bump" animation combined with screen-reader friendly updates (aria-live) and a clear empty-state CTA significantly reduce friction and cognitive load. Event delegation is also preferred over inline handlers for better maintainability and security.
+**Action:** Always include aria-live for dynamic values and prefer semantic <button> elements over spans for actions. Ensure empty states are actionable with a clear CTA.
