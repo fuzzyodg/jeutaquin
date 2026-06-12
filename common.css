@@ -182,6 +182,21 @@ p { margin-bottom: 1rem; }
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
 .cart-empty p { font-size: 1rem; }
+.cart-empty__cta {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+}
+.cart-empty__cta:hover {
+  background: #5a1d08;
+  transform: translateY(-2px);
+}
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
@@ -376,6 +391,15 @@ padding: var(--spacing-xl) 0;
 .form-success__text { color: #666; }
 
 /* --- Animations --- */
+@keyframes cart-bump {
+  0% { transform: scale(1); }
+  10% { transform: scale(1.2); }
+  30% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.cart-bump { animation: cart-bump 0.4s ease-out; }
+
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 .animate-fade-in { animation: fadeIn 0.6s ease forwards; }

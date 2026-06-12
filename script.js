@@ -145,6 +145,14 @@ const Cart = (function () {
     if (existing) { existing.qty++; }
     else { items.push({ name, price, imgSrc, qty: 1 }); }
     save(); render(); showToast(`${name} ajouté au panier`);
+
+    // Animation bump du bouton panier
+    const btn = document.getElementById('cart-btn');
+    if (btn) {
+      btn.classList.remove('cart-bump');
+      void btn.offsetWidth; // Force reflow
+      btn.classList.add('cart-bump');
+    }
   }
 
   function remove(name) {
@@ -174,6 +182,7 @@ const Cart = (function () {
     const n = count();
     if (badge) {
       badge.textContent = n;
+      badge.setAttribute('aria-live', 'polite');
       badge.classList.toggle('visible', n > 0);
     }
     if (totalEl) totalEl.textContent = total().toLocaleString('fr-FR') + ' CFA';
@@ -184,26 +193,34 @@ const Cart = (function () {
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
           <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="cart-empty__cta" id="cart-view-menu">Voir le menu</a>
         </div>`;
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const escapedName = escAttr(item.name);
+      return `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${escapedName}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
           <div class="cart-item__name">${item.name}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="decrease" data-name="${escapedName}" aria-label="Diminuer la quantité de ${escapedName}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" data-action="increase" data-name="${escapedName}" aria-label="Augmenter la quantité de ${escapedName}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button class="cart-item__remove" data-action="remove" data-name="${escapedName}" aria-label="Supprimer ${escapedName} du panier">🗑</button>
+      </div>`;
+    }).join('');
+  }
+
+  function escAttr(s) {
+    return s.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
   }
 
   function esc(s) { return s.replace(/'/g, "\\'"); }
@@ -283,6 +300,27 @@ const Cart = (function () {
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
+
+    // Délégation d'événements pour le panier
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const target = e.target;
+
+      // Lien "Voir le menu"
+      if (target.id === 'cart-view-menu') {
+        close();
+        return;
+      }
+
+      const btn = target.closest('button[data-action]');
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+      const name = btn.dataset.name.replace(/&apos;/g, "'").replace(/&quot;/g, '"');
+
+      if (action === 'increase') changeQty(name, 1);
+      else if (action === 'decrease') changeQty(name, -1);
+      else if (action === 'remove') remove(name);
+    });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
   const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
