@@ -145,6 +145,14 @@ const Cart = (function () {
     if (existing) { existing.qty++; }
     else { items.push({ name, price, imgSrc, qty: 1 }); }
     save(); render(); showToast(`${name} ajouté au panier`);
+
+    // Animation du bouton panier
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+      cartBtn.classList.remove('cart-bump');
+      void cartBtn.offsetWidth; // Trigger reflow
+      cartBtn.classList.add('cart-bump');
+    }
   }
 
   function remove(name) {
@@ -198,15 +206,23 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="decrease" data-name="${escAttr(item.name)}" aria-label="Diminuer la quantité de ${item.name}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" data-action="increase" data-name="${escAttr(item.name)}" aria-label="Augmenter la quantité de ${item.name}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-action="remove" data-name="${escAttr(item.name)}" aria-label="Supprimer ${item.name} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return "";
+    return s.toString()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -222,6 +238,23 @@ const Cart = (function () {
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     render();
+
+    // Gestion des actions du panier par délégation d'événements
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+      const name = btn.dataset.name;
+
+      if (action === 'increase') {
+        Cart.changeQty(name, 1);
+      } else if (action === 'decrease') {
+        Cart.changeQty(name, -1);
+      } else if (action === 'remove') {
+        Cart.remove(name);
+      }
+    });
 
     /* ---- Specialties Slider ---- */
     (function() {
