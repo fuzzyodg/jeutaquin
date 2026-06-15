@@ -181,7 +181,28 @@ p { margin-bottom: 1rem; }
   color: #999;
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
-.cart-empty p { font-size: 1rem; }
+.cart-empty p { font-size: 1rem; margin-bottom: 0; }
+.cart-empty__sub { font-size: 0.85rem; margin-top: 8px; color: #bbb; }
+.cart-empty__cta {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Interaction Feedback */
+@keyframes cart-bump {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.cart-bump {
+  animation: cart-bump 0.4s ease-out;
+}
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
