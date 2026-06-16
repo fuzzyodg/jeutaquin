@@ -138,6 +138,19 @@ p { margin-bottom: 1rem; }
 }
 .cart-btn:hover { background: #5a1d08; transform: translateY(-1px); }
 .cart-btn svg { width: 22px; height: 22px; }
+
+@keyframes cart-bump {
+  0% { transform: scale(1); }
+  10% { transform: scale(1.2); }
+  30% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.cart-bump {
+  animation: cart-bump 0.3s ease-out;
+}
+
 .cart-count {
   position: absolute; top: -6px; right: -6px;
   background: var(--color-gold); color: var(--color-secondary);
