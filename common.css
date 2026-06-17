@@ -91,6 +91,15 @@ p { margin-bottom: 1rem; }
   50% { transform: scale(1.1); }
 }
 
+@keyframes cart-bump {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(0.9); }
+  75% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.cart-bump { animation: cart-bump 0.4s ease-out; }
+
 .logo__text { display: flex; flex-direction: column; }
 .logo__name { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; color: var(--color-primary); letter-spacing: 1px; }
 .logo__tagline { font-family: var(--font-body); font-size: 0.65rem; font-weight: 500; color: var(--color-secondary); letter-spacing: 3px; text-transform: uppercase; }
@@ -182,6 +191,7 @@ p { margin-bottom: 1rem; }
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
 .cart-empty p { font-size: 1rem; }
+.cart-empty__sub { font-size: 0.85rem; margin-top: 8px; color: #bbb; }
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
