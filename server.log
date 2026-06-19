@@ -1,0 +1,4 @@
+127.0.0.1 - - [19/Jun/2026 17:19:06] "GET /anglais-5eme/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jun/2026 17:19:06] "GET /anglais-5eme/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jun/2026 17:19:06] "GET /anglais-5eme/data.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jun/2026 17:19:06] "GET /anglais-5eme/app.js HTTP/1.1" 200 -

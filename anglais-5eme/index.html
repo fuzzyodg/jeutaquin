@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Academy - 5ème</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Latérale -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-uk">🇬🇧</span>
+                    <h1>English Academy</h1>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-section="home">
+                    <button>🏠 Accueil</button>
+                </li>
+                <li data-section="pronouns">
+                    <button>👥 Pronoms</button>
+                </li>
+                <li data-section="adjectives">
+                    <button>🎨 Adjectifs</button>
+                </li>
+                <li data-section="prepositions">
+                    <button>📍 Prépositions</button>
+                </li>
+                <li data-section="verbs">
+                    <button>⚙️ Verbes</button>
+                </li>
+                <li data-section="conjugation">
+                    <button>⏳ Conjugaison</button>
+                </li>
+                <li data-section="translation">
+                    <button>🔄 Traduction</button>
+                </li>
+                <li data-section="active-passive">
+                    <button>⚖️ Actif/Passif</button>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="reset-api-key" class="btn-small">🔑 Ma Clé API</button>
+            </div>
+        </nav>
+
+        <!-- Contenu Principal -->
+        <main class="content">
+            <header class="top-bar">
+                <div class="section-title">
+                    <h2 id="current-section-name">Accueil</h2>
+                </div>
+                <div class="user-stats">
+                    <div class="score-display">
+                        <span class="star-icon">★</span>
+                        <span id="global-score">0</span>
+                    </div>
+                </div>
+            </header>
+
+            <section id="section-container" class="section-fade">
+                <!-- Les sections seront injectées ici par app.js -->
+                <div class="loader-container">
+                    <div class="spinner"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modale API Key -->
+    <div id="api-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Bienvenue sur English Academy !</h2>
+            <p>Pour profiter de la synthèse vocale ultra-réaliste, saisis ta clé API ElevenLabs.</p>
+            <div class="api-instructions">
+                <small>Ta clé est stockée localement dans ton navigateur.</small>
+            </div>
+            <input type="password" id="api-key-input" placeholder="Saisis ta clé xi-api-key...">
+            <div class="modal-actions">
+                <button id="save-api-key" class="btn-primary">Commencer l'aventure</button>
+            </div>
+            <p class="api-help">Besoin d'une clé ? <a href="https://elevenlabs.io/" target="_blank">Crée un compte gratuit sur ElevenLabs</a></p>
+        </div>
+    </div>
+
+    <!-- Modale Audio Loading -->
+    <div id="audio-loading" class="audio-spinner hidden">
+        <div class="spinner-small"></div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
