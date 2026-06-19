@@ -145,6 +145,14 @@ const Cart = (function () {
     if (existing) { existing.qty++; }
     else { items.push({ name, price, imgSrc, qty: 1 }); }
     save(); render(); showToast(`${name} ajouté au panier`);
+
+    // Animation bump sur le bouton panier
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+      cartBtn.classList.remove('cart-bump');
+      void cartBtn.offsetWidth; // Trigger reflow
+      cartBtn.classList.add('cart-bump');
+    }
   }
 
   function remove(name) {
@@ -183,7 +191,8 @@ const Cart = (function () {
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p style="font-size:0.85rem;margin-top:8px;margin-bottom:15px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="btn btn--secondary btn--sm" id="cart-empty-cta">Voir le menu</a>
         </div>`;
       return;
     }
@@ -198,15 +207,22 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn"
+                  data-action="minus" data-name="${escAttr(item.name)}"
+                  aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn"
+                  data-action="plus" data-name="${escAttr(item.name)}"
+                  aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove"
+                data-action="remove" data-name="${escAttr(item.name)}"
+                aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
   function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) { return s.replace(/"/g, "&quot;").replace(/'/g, "&apos;"); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +298,21 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Délégation d'événements pour le corps du panier
+    document.getElementById('cart-body')?.addEventListener('click', e => {
+      const btn = e.target.closest('button, a');
+      if (!btn) return;
+
+      const name = btn.dataset.name;
+      const action = btn.dataset.action;
+
+      if (action === 'minus') changeQty(name, -1);
+      else if (action === 'plus') changeQty(name, 1);
+      else if (action === 'remove') remove(name);
+      else if (btn.id === 'cart-empty-cta') close();
+    });
+
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
