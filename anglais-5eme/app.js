@@ -35,10 +35,25 @@ function initApp() {
         if (key) {
             localStorage.setItem('el_api_key', key);
             apiModal.classList.add('hidden');
+            // Petit test audio après sauvegarde
+            playAudio("API Key saved successfully. Let's learn English!");
         } else {
             alert('Veuillez saisir une clé valide.');
         }
     });
+
+    // Bouton de test dans la modale
+    const testAudioBtn = document.createElement('button');
+    testAudioBtn.innerText = "🔊 Tester l'audio";
+    testAudioBtn.className = "btn-small";
+    testAudioBtn.style.marginTop = "10px";
+    testAudioBtn.onclick = () => {
+        const key = apiKeyInput.value.trim();
+        if (!key) return alert("Saisis d'abord une clé.");
+        localStorage.setItem('el_api_key', key);
+        playAudio("Hello, I am Rachel. If you hear me, your API key is working perfectly!");
+    };
+    document.querySelector('.modal-actions').appendChild(testAudioBtn);
 }
 
 function checkApiKey() {
@@ -87,8 +102,8 @@ async function playAudio(text) {
         return;
     }
 
-    const cleanText = text.replace(/'/g, "\\'");
-    const cacheKey = 'audio_' + btoa(unescape(encodeURIComponent(cleanText))).slice(0, 40);
+    // On utilise le texte brut pour le cache et l'API (pas d'échappement ici)
+    const cacheKey = 'audio_' + btoa(unescape(encodeURIComponent(text))).slice(0, 40);
     const cached = localStorage.getItem(cacheKey);
 
     try {
@@ -96,7 +111,6 @@ async function playAudio(text) {
         if (cached) {
             const parsed = JSON.parse(cached);
             audioData = parsed.data;
-            // Optionnel: rafraîchir le timestamp pour marquer l'utilisation récente
             try {
                 parsed.ts = Date.now();
                 localStorage.setItem(cacheKey, JSON.stringify(parsed));
@@ -110,7 +124,8 @@ async function playAudio(text) {
                     method: 'POST',
                     headers: {
                         'xi-api-key': apiKey,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'accept': 'audio/mpeg'
                     },
                     body: JSON.stringify({
                         text: text,
@@ -120,7 +135,10 @@ async function playAudio(text) {
                 }
             );
 
-            if (!response.ok) throw new Error('API Error');
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ detail: 'Erreur inconnue' }));
+                throw new Error(errorData.detail?.message || errorData.detail || 'Erreur API');
+            }
 
             const blob = await response.blob();
             audioData = await blobToBase64(blob);
@@ -129,19 +147,18 @@ async function playAudio(text) {
             try {
                 localStorage.setItem(cacheKey, JSON.stringify(cacheEntry));
             } catch(e) {
-                console.warn('Cache plein, nettoyage...');
                 clearOldestCache();
                 try { localStorage.setItem(cacheKey, JSON.stringify(cacheEntry)); } catch(e2) {}
             }
         }
 
         const audio = new Audio(audioData);
-        audio.play();
+        await audio.play().catch(e => console.warn("Lecture auto bloquée par le navigateur, clic nécessaire."));
         showAudioLoading(false);
     } catch (err) {
         console.error('ElevenLabs error:', err);
         showAudioLoading(false);
-        alert('Erreur audio. Vérifie ta clé API ou ta connexion.');
+        alert('Erreur ElevenLabs : ' + err.message + '\nVérifie ta clé API (xi-api-key) et ton crédit.');
     }
 }
 
@@ -216,7 +233,11 @@ function updateScore(points) {
 
 async function listenToAllPronouns() {
     const examples = ENGLISH_DATA.pronouns.map(p => p.example);
-    for (const text of examples) {
+    await listenSequentially(examples);
+}
+
+async function listenSequentially(texts) {
+    for (const text of texts) {
         await playAudio(text);
         await new Promise(r => setTimeout(r, 1500)); // Pause de 1.5s
     }
@@ -341,6 +362,9 @@ function runQuiz(containerId, questions) {
 function renderAdjectives() {
     currentSectionName.innerText = "Les Adjectifs";
     let html = `
+        <div class="section-actions">
+            <button class="btn-primary" onclick="listenSequentially(ENGLISH_DATA.adjectives.slice(0,10).map(a => a.en))">🔊 Écouter les 10 premiers</button>
+        </div>
         <div class="card">
             <h3>Règle d'or : L'adjectif se place AVANT le nom !</h3>
             <p>Exemple: A <strong>red</strong> car (Une voiture rouge), A <strong>big</strong> house (Une grande maison).</p>
@@ -389,6 +413,9 @@ window.showAdjTab = (tab) => {
 function renderPrepositions() {
     currentSectionName.innerText = "Les Prépositions";
     sectionContainer.innerHTML = `
+        <div class="section-actions">
+            <button class="btn-primary" onclick="listenSequentially(ENGLISH_DATA.prepositions.map(p => p.example))">🔊 Écouter toute la leçon</button>
+        </div>
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showPrepTab('list')">Illustrations</button>
             <button class="tab-btn" onclick="showPrepTab('quiz')">Quiz</button>
@@ -546,6 +573,7 @@ function renderConjugation() {
                 <button class="tab-btn" onclick="showTense('present-continuous')">Present Continuous</button>
                 <button class="tab-btn" onclick="showTense('preterit')">Prétérit</button>
                 <button class="tab-btn" onclick="showTense('present-perfect')">Present Perfect</button>
+                <button class="tab-btn" onclick="showTense('past-perfect')">Past Perfect</button>
                 <button class="tab-btn" onclick="showTense('future')">Futur (Will)</button>
                 <button class="tab-btn" onclick="showTense('modals')">Modaux</button>
             </div>
@@ -562,71 +590,246 @@ window.showTense = (tense) => {
     const btns = document.querySelectorAll('.tab-btn');
     btns.forEach(b => b.classList.toggle('active', b.onclick.toString().includes(tense)));
 
-    let content = "";
-    if (tense === 'present-simple') {
-        content = `
-            <h3>Present Simple</h3>
-            <p>Utilisé pour les vérités générales et les habitudes.</p>
-            <ul>
-                <li>I play ${createAudioBtn("I play")}</li>
-                <li>You play ${createAudioBtn("You play")}</li>
-                <li>He/She/It play<strong>s</strong> ${createAudioBtn("He plays")}</li>
-            </ul>
-            <div class="card"><h4>Quiz Rapide</h4><div id="tense-quiz"></div></div>
-        `;
-    } else if (tense === 'present-continuous') {
-        content = `
-            <h3>Present Continuous (BE + ING)</h3>
-            <p>Action en cours au moment où l'on parle.</p>
-            <p>Exemple: I am eating. ${createAudioBtn("I am eating")}</p>
-            <div class="card"><h4>Quiz Rapide</h4><div id="tense-quiz"></div></div>
-        `;
-    } else if (tense === 'preterit') {
-        content = `
-            <h3>Le Prétérit</h3>
-            <p>Action passée et terminée.</p>
-            <p>Régulier: Verbe + <strong>ED</strong></p>
-            <p>Exemple: I walked. ${createAudioBtn("I walked")}</p>
-            <div class="card"><h4>Quiz Rapide</h4><div id="tense-quiz"></div></div>
-        `;
-    } else if (tense === 'present-perfect') {
-        content = `
-            <h3>Le Present Perfect (HAVE + Participe Passé)</h3>
-            <p>Lien entre le passé et le présent.</p>
-            <p>Exemple: I have lost my keys. ${createAudioBtn("I have lost my keys")}</p>
-            <div class="card"><h4>Quiz Rapide</h4><div id="tense-quiz"></div></div>
-        `;
-    } else if (tense === 'future') {
-        content = `
-            <h3>Futur Simple (WILL)</h3>
-            <p>Décision soudaine ou prédiction.</p>
-            <p>Exemple: I will help you. ${createAudioBtn("I will help you")}</p>
-            <div class="card"><h4>Quiz Rapide</h4><div id="tense-quiz"></div></div>
-        `;
-    } else if (tense === 'modals') {
-        content = `
-            <h3>Les Modaux</h3>
-            <p>CAN (capacité), MUST (obligation), SHOULD (conseil)...</p>
-            <ul>
-                <li>I can swim. ${createAudioBtn("I can swim")}</li>
-                <li>You must study. ${createAudioBtn("You must study")}</li>
-            </ul>
-            <div class="card"><h4>Quiz Rapide</h4><div id="tense-quiz"></div></div>
-        `;
-    }
-    container.innerHTML = content;
+    let html = "";
 
     if (tense === 'present-simple') {
-        runQuiz("tense-quiz", [{q: "She ___ (like) pizza.", o: ["like", "likes", "liking", "liked"], a: "likes"}]);
+        html = `
+            <div class="lesson-section">
+                <h3>Simple Present (Présent Simple)</h3>
+                <p>Le Présent Simple s'utilise pour exprimer des **habitudes**, des **vérités générales** ou des **goûts**.</p>
+
+                <div class="card">
+                    <h4>1. Les Auxiliaires (Indispensables !)</h4>
+                    <div class="flex-grid">
+                        <div>
+                            <strong>TO BE (Être)</strong>
+                            <ul class="conj-list">
+                                <li>I **am** ${createAudioBtn("I am")}</li>
+                                <li>You **are** ${createAudioBtn("You are")}</li>
+                                <li>He/She/It **is** ${createAudioBtn("He is")}</li>
+                                <li>We **are** ${createAudioBtn("We are")}</li>
+                                <li>They **are** ${createAudioBtn("They are")}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong>TO HAVE (Avoir)</strong>
+                            <ul class="conj-list">
+                                <li>I **have** ${createAudioBtn("I have")}</li>
+                                <li>You **have** ${createAudioBtn("You have")}</li>
+                                <li>He/She/It **has** (Attention !) ${createAudioBtn("He has")}</li>
+                                <li>We **have** ${createAudioBtn("We have")}</li>
+                                <li>They **have** ${createAudioBtn("They have")}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>2. Verbes Ordinaires (Ex: TO PLAY)</h4>
+                    <p>**Règle Affirmative :** On utilise la base du verbe, mais on ajoute un **-S** à la 3ème personne du singulier (**He, She, It**).</p>
+                    <ul class="conj-list">
+                        <li>I play / He play**s** ${createAudioBtn("I play, He plays")}</li>
+                    </ul>
+
+                    <p>**Règle Négative :** On utilise l'auxiliaire **DO / DOES** + **NOT** + Verbe (base).</p>
+                    <ul class="conj-list">
+                        <li>I **do not** (don't) play ${createAudioBtn("I don't play")}</li>
+                        <li>He **does not** (doesn't) play ${createAudioBtn("He doesn't play")}</li>
+                    </ul>
+
+                    <p>**Règle Interrogative :** On commence par **DO / DOES** + Sujet + Verbe (base) ?</p>
+                    <ul class="conj-list">
+                        <li>**Do** you play? ${createAudioBtn("Do you play?")}</li>
+                        <li>**Does** she play? ${createAudioBtn("Does she play?")}</li>
+                    </ul>
+
+                    <p>**Règle Interro-Négative :** On utilise la contraction **DON'T / DOESN'T** en début de phrase.</p>
+                    <ul class="conj-list">
+                        <li>**Don't** you play? ${createAudioBtn("Don't you play?")}</li>
+                        <li>**Doesn't** he play? ${createAudioBtn("Doesn't he play?")}</li>
+                    </ul>
+                </div>
+            </div>
+        `;
     } else if (tense === 'present-continuous') {
-        runQuiz("tense-quiz", [{q: "They ___ (watch) TV now.", o: ["is watching", "are watching", "watch", "watches"], a: "are watching"}]);
+        html = `
+            <div class="lesson-section">
+                <h3>Present Progressive (ou Present Continuous)</h3>
+                <p>On l'utilise pour une **action qui se passe maintenant**, au moment où l'on parle.</p>
+                <div class="card">
+                    <h4>Structure : Sujet + BE (au présent) + Verbe-ING</h4>
+                    <p>**Affirmatif :**</p>
+                    <ul class="conj-list">
+                        <li>I **am eating** ${createAudioBtn("I am eating")}</li>
+                        <li>He **is working** ${createAudioBtn("He is working")}</li>
+                        <li>They **are playing** ${createAudioBtn("They are playing")}</li>
+                    </ul>
+                    <p>**Négatif :** On ajoute **NOT** après l'auxiliaire BE.</p>
+                    <ul class="conj-list">
+                        <li>I **am not** eating ${createAudioBtn("I am not eating")}</li>
+                        <li>She **is not** (isn't) working ${createAudioBtn("She isn't working")}</li>
+                    </ul>
+                    <p>**Interrogatif :** On inverse le sujet et l'auxiliaire BE.</p>
+                    <ul class="conj-list">
+                        <li>**Are** you eating? ${createAudioBtn("Are you eating?")}</li>
+                        <li>**Is** he working? ${createAudioBtn("Is he working?")}</li>
+                    </ul>
+                    <p>**Interro-Négatif :**</p>
+                    <ul class="conj-list">
+                        <li>**Aren't** you eating? ${createAudioBtn("Aren't you eating?")}</li>
+                        <li>**Isn't** he working? ${createAudioBtn("Isn't he working?")}</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Auxiliaires au Présent Continu</h4>
+                    <p>**BE** n'est généralement pas utilisé au continu, mais **HAVE** peut l'être pour une action (ex: having lunch).</p>
+                    <ul class="conj-list">
+                        <li>I **am having** lunch ${createAudioBtn("I am having lunch")}</li>
+                    </ul>
+                </div>
+            </div>
+        `;
     } else if (tense === 'preterit') {
-        runQuiz("tense-quiz", [{q: "He ___ (finish) yesterday.", o: ["finish", "finishing", "finished", "was finish"], a: "finished"}]);
+        html = `
+            <div class="lesson-section">
+                <h3>Simple Past (Prétérit Simple)</h3>
+                <p>On l'utilise pour une **action passée, datée et terminée**.</p>
+                <div class="card">
+                    <h4>1. Les Auxiliaires au passé</h4>
+                    <div class="flex-grid">
+                        <div>
+                            <strong>TO BE (Was/Were)</strong>
+                            <ul class="conj-list">
+                                <li>I **was** / You **were** ${createAudioBtn("I was, You were")}</li>
+                                <li>He/She/It **was** ${createAudioBtn("He was")}</li>
+                                <li>We/They **were** ${createAudioBtn("They were")}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong>TO HAVE (Had)</strong>
+                            <ul class="conj-list">
+                                <li>I/You/He/They **had** ${createAudioBtn("I had")}</li>
+                            </ul>
+                            <p>(**Had** est le même pour tous !)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4>2. Verbes Ordinaires (Ex: TO WORK)</h4>
+                    <p>**Affirmatif :** On ajoute **-ED** (verbes réguliers) ou on utilise la 2ème colonne (irréguliers).</p>
+                    <ul class="conj-list"><li>I work**ed** / I **went** ${createAudioBtn("I worked, I went")}</li></ul>
+                    <p>**Négatif / Interrogatif :** On utilise l'auxiliaire **DID** pour TOUS les sujets.</p>
+                    <p>**Règle d'or :** Quand **DID** arrive, le verbe perd son **-ED** et revient à sa **forme de base** !</p>
+                    <ul class="conj-list">
+                        <li>**Négatif :** I **did not (didn't)** work ${createAudioBtn("I didn't work")}</li>
+                        <li>**Interrogatif :** **Did** you work? ${createAudioBtn("Did you work?")}</li>
+                        <li>**Interro-Négatif :** **Didn't** you work? ${createAudioBtn("Didn't you work?")}</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+    } else if (tense === 'present-perfect') {
+        html = `
+            <div class="lesson-section">
+                <h3>Present Perfect</h3>
+                <p>Le lien entre le passé et le présent (constat d'une action terminée ou bilan).</p>
+                <div class="card">
+                    <h4>Structure : Sujet + HAVE / HAS + Participe Passé</h4>
+                    <ul class="conj-list">
+                        <li>**Affirmatif :** I **have been** / She **has had** ${createAudioBtn("I have been, She has had")}</li>
+                        <li>**Négatif :** I **haven't (have not)** been ${createAudioBtn("I haven't been")}</li>
+                        <li>**Interrogatif :** **Have** you been? ${createAudioBtn("Have you been?")}</li>
+                        <li>**Interro-Négatif :** **Hasn't** she had lunch? ${createAudioBtn("Hasn't she had lunch?")}</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+    } else if (tense === 'past-perfect') {
+        html = `
+            <div class="lesson-section">
+                <h3>Past Perfect (Plus-que-parfait)</h3>
+                <p>On l'utilise pour parler d'une action passée qui s'est déroulée **AVANT** une autre action passée.</p>
+                <div class="card">
+                    <h4>Structure : Sujet + HAD + Participe Passé</h4>
+                    <p>**Affirmatif :** I **had seen** / She **had been** ${createAudioBtn("I had seen, She had been")}</p>
+                    <p>**Négatif :** I **had not (hadn't)** seen ${createAudioBtn("I hadn't seen")}</p>
+                    <p>**Interrogatif :** **Had** you seen? ${createAudioBtn("Had you seen?")}</p>
+                    <p>**Interro-Négatif :** **Hadn't** they seen it? ${createAudioBtn("Hadn't they seen it?")}</p>
+                </div>
+            </div>
+        `;
     } else if (tense === 'future') {
-        runQuiz("tense-quiz", [{q: "I ___ (be) there.", o: ["will be", "am be", "shall be", "be"], a: "will be"}]);
+        html = `
+            <div class="lesson-section">
+                <h3>Simple Future (Futur Simple)</h3>
+                <p>On l'utilise pour une **prédiction** ou une **décision soudaine**.</p>
+                <div class="card">
+                    <h4>Structure : Sujet + WILL + Verbe (base)</h4>
+                    <ul class="conj-list">
+                        <li>**Affirmatif :** I **will be** / He **will have** ${createAudioBtn("I will be, He will have")}</li>
+                        <li>**Négatif :** I **will not (won't)** be ${createAudioBtn("I won't be")}</li>
+                        <li>**Interrogatif :** **Will** you be there? ${createAudioBtn("Will you be there?")}</li>
+                        <li>**Interro-Négatif :** **Won't** they help us? ${createAudioBtn("Won't they help us?")}</li>
+                    </ul>
+                </div>
+            </div>
+        `;
     } else if (tense === 'modals') {
-        runQuiz("tense-quiz", [{q: "You ___ study for the test (conseil).", o: ["must", "should", "can", "may"], a: "should"}]);
+        html = `
+            <div class="lesson-section">
+                <h3>Les Modaux (Can, Must, Should...)</h3>
+                <p>Les modaux sont des petits mots qui changent le sens du verbe (capacité, obligation, conseil).</p>
+                <div class="card">
+                    <ul class="conj-list">
+                        <li>**CAN** (Capacité) : I **can** swim. ${createAudioBtn("I can swim")}</li>
+                        <li>**MUST** (Obligation) : You **must** listen. ${createAudioBtn("You must listen")}</li>
+                        <li>**SHOULD** (Conseil) : You **should** sleep. ${createAudioBtn("You should sleep")}</li>
+                        <li>**MAY** (Permission) : **May** I enter? ${createAudioBtn("May I enter?")}</li>
+                    </ul>
+                    <p>**Règle d'or :** Ils ne prennent **JAMAIS de -S** à la 3ème personne et sont suivis de la **base verbale**.</p>
+                </div>
+            </div>
+        `;
     }
+
+    html += `<div class="card quiz-card"><h4>Prêt pour un petit test ?</h4><div id="tense-quiz"></div></div>`;
+    container.innerHTML = html;
+
+    // Quiz automatiques selon le temps
+    let questions = [];
+    if (tense === 'present-simple') {
+        questions = [
+            { q: "He ___ (like) chocolate.", o: ["like", "likes", "liking", "liked"], a: "likes" },
+            { q: "___ you speak English?", o: ["Do", "Does", "Are", "Is"], a: "Do" },
+            { q: "She ___ (not work) on Sundays.", o: ["don't work", "doesn't work", "not work", "isn't work"], a: "doesn't work" },
+            { q: "___ he like pizza?", o: ["Do", "Does", "Is", "Has"], a: "Does" },
+            { q: "___ you want to come?", o: ["Don't", "Doesn't", "Aren't", "Isn't"], a: "Don't" }
+        ];
+    } else if (tense === 'present-continuous') {
+        questions = [
+            { q: "They ___ (play) football now.", o: ["is playing", "are playing", "play", "playing"], a: "are playing" },
+            { q: "What ___ you doing?", o: ["do", "is", "are", "have"], a: "are" },
+            { q: "___ he coming tonight?", o: ["Is", "Are", "Does", "Has"], a: "Is" },
+            { q: "I ___ (not sleep) at the moment.", o: ["am not sleeping", "is not sleeping", "not sleep", "don't sleeping"], a: "am not sleeping" }
+        ];
+    } else if (tense === 'preterit') {
+        questions = [
+            { q: "I ___ (watch) a movie last night.", o: ["watch", "watching", "watched", "was watch"], a: "watched" },
+            { q: "___ he call you yesterday?", o: ["Do", "Does", "Did", "Was"], a: "Did" },
+            { q: "We ___ (not go) to school yesterday.", o: ["didn't go", "didn't went", "not went", "doesn't go"], a: "didn't go" },
+            { q: "___ you see the movie?", o: ["Did", "Do", "Were", "Had"], a: "Did" }
+        ];
+    } else if (tense === 'future') {
+        questions = [{ q: "I ___ (be) 15 next year.", o: ["will be", "am", "was", "will"], a: "will be" }];
+    } else if (tense === 'present-perfect') {
+        questions = [{ q: "She ___ (already see) this film.", o: ["have seen", "has see", "has seen", "seen"], a: "has seen" }];
+    } else if (tense === 'modals') {
+        questions = [{ q: "You ___ not smoke in the hospital.", o: ["must", "can", "should", "may"], a: "must" }];
+    } else if (tense === 'past-perfect') {
+        questions = [{ q: "The train ___ (leave) when I arrived.", o: ["has left", "had left", "was left", "leaves"], a: "had left" }];
+    }
+
+    if (questions.length > 0) runQuiz("tense-quiz", questions);
 }
 
 // --- MODULE 6: TRADUCTION ---
@@ -679,6 +882,9 @@ function renderTranslation() {
 function renderActivePassive() {
     currentSectionName.innerText = "Voix Active vs Voix Passive";
     sectionContainer.innerHTML = `
+        <div class="section-actions">
+            <button class="btn-primary" onclick="listenSequentially(['The cat eats the mouse', 'The mouse is eaten by the cat'])">🔊 Écouter l'essentiel</button>
+        </div>
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showPassiveTab('lesson')">Leçon</button>
             <button class="tab-btn" onclick="showPassiveTab('animation')">Animation</button>
@@ -695,14 +901,14 @@ window.showPassiveTab = (tab) => {
         container.innerHTML = `
             <div class="card">
                 <h3>Voix Active vs Passive</h3>
-                <p><strong>Active :</strong> Le sujet fait l'action. <em>(The cat eats the mouse)</em></p>
-                <p><strong>Passive :</strong> Le sujet subit l'action. <em>(The mouse is eaten by the cat)</em></p>
+                <p><strong>Active :</strong> Le sujet fait l'action. <em>(The cat eats the mouse)</em> ${createAudioBtn("The cat eats the mouse")}</p>
+                <p><strong>Passive :</strong> Le sujet subit l'action. <em>(The mouse is eaten by the cat)</em> ${createAudioBtn("The mouse is eaten by the cat")}</p>
                 <hr>
                 <h4>Formation : BE (conjugué) + Participe Passé</h4>
                 <table class="data-table">
-                    <tr><td>Present Simple</td><td>The room is cleaned.</td></tr>
-                    <tr><td>Prétérit</td><td>The room was cleaned.</td></tr>
-                    <tr><td>Futur</td><td>The room will be cleaned.</td></tr>
+                    <tr><td>Present Simple</td><td>The room is cleaned. ${createAudioBtn("The room is cleaned")}</td></tr>
+                    <tr><td>Prétérit</td><td>The room was cleaned. ${createAudioBtn("The room was cleaned")}</td></tr>
+                    <tr><td>Futur</td><td>The room will be cleaned. ${createAudioBtn("The room will be cleaned")}</td></tr>
                 </table>
             </div>
         `;

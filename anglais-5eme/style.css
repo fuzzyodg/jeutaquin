@@ -428,6 +428,43 @@ h1, h2, h3, .logo h1 {
     font-size: 0.9rem;
 }
 
+.flex-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.flex-grid > div {
+    flex: 1;
+    min-width: 200px;
+}
+
+.conj-list {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.conj-list li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lesson-section h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    border-left: 5px solid var(--accent);
+    padding-left: 15px;
+}
+
+.lesson-section p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
 #trans-input {
     width: 100%;
     padding: 12px;

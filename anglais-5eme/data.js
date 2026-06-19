@@ -225,6 +225,8 @@ const ENGLISH_DATA = {
         { fr: "J'ai trop de travail.", en: "I have too much work.", level: 3 },
         { fr: "Est-ce que je peux ouvrir la fenêtre ?", en: "May I open the window?", level: 2 },
         { fr: "Tu ne dois pas fumer ici.", en: "You must not smoke here.", level: 3 },
-        { fr: "Il faut que nous partions.", en: "We must leave.", level: 3 }
+        { fr: "Il faut que nous partions.", en: "We must leave.", level: 3 },
+        { fr: "J'avais déjà fini quand elle est arrivée.", en: "I had already finished when she arrived.", level: 4 },
+        { fr: "Ils n'avaient jamais vu la mer.", en: "They had never seen the sea.", level: 4 }
     ]
 };
