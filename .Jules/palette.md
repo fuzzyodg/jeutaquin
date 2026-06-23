@@ -1,0 +1,3 @@
+## 2025-05-14 - Semantic Buttons and Event Delegation in Dynamic UI
+**Learning:** Replacing non-semantic `<span>` elements with `<button>` for interactive cart controls significantly improves keyboard accessibility and screen reader support. Using event delegation on a stable parent (`#cart-body`) makes the UI more robust against frequent DOM updates during quantity changes, as listeners don't need to be re-attached to new elements.
+**Action:** Prioritize semantic interactive elements (`<button>`, `<a>`) over generic containers with click listeners. Use event delegation for dynamic lists to ensure consistent behavior and cleaner code.

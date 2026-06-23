@@ -174,6 +174,7 @@ const Cart = (function () {
     const n = count();
     if (badge) {
       badge.textContent = n;
+      badge.setAttribute('aria-live', 'polite');
       badge.classList.toggle('visible', n > 0);
     }
     if (totalEl) totalEl.textContent = total().toLocaleString('fr-FR') + ' CFA';
@@ -184,6 +185,7 @@ const Cart = (function () {
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
           <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="btn btn--secondary" style="margin-top:15px; font-size:0.8rem; padding: 0.5rem 1rem;">Voir le menu</a>
         </div>`;
       return;
     }
@@ -191,22 +193,30 @@ const Cart = (function () {
     body.innerHTML = items.map(item => `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${escAttr(item.name)}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
           <div class="cart-item__name">${item.name}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="decrease" data-name="${escAttr(item.name)}" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" data-action="increase" data-name="${escAttr(item.name)}" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-action="remove" data-name="${escAttr(item.name)}" aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return '';
+    return s.toString()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +292,25 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Event delegation for cart actions
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button, a');
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+      const name = btn.dataset.name;
+
+      if (action === 'increase') {
+        Cart.changeQty(name, 1);
+      } else if (action === 'decrease') {
+        Cart.changeQty(name, -1);
+      } else if (action === 'remove') {
+        Cart.remove(name);
+      } else if (btn.getAttribute('href') === 'menu.html') {
+        close();
+      }
+    });
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
