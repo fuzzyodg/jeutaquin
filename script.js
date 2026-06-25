@@ -145,6 +145,14 @@ const Cart = (function () {
     if (existing) { existing.qty++; }
     else { items.push({ name, price, imgSrc, qty: 1 }); }
     save(); render(); showToast(`${name} ajouté au panier`);
+
+    // Animation de rebond sur le bouton du panier
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+      cartBtn.classList.remove('cart-bump');
+      void cartBtn.offsetWidth; // Force reflow
+      cartBtn.classList.add('cart-bump');
+    }
   }
 
   function remove(name) {
@@ -165,6 +173,11 @@ const Cart = (function () {
   function total() { return items.reduce((sum, i) => sum + i.price * i.qty, 0); }
   function count() { return items.reduce((sum, i) => sum + i.qty, 0); }
 
+  function escAttr(s) {
+    if (!s) return '';
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   function render() {
     const body   = document.getElementById('cart-body');
     const badge  = document.getElementById('cart-count');
@@ -183,30 +196,28 @@ const Cart = (function () {
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p class="cart-empty__sub">
+            <a href="menu.html" class="text-primary" style="text-decoration:underline;" data-action="close">Voir le menu</a> pour ajouter des plats
+          </p>
         </div>`;
       return;
     }
 
     body.innerHTML = items.map(item => `
       <div class="cart-item">
-        ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
-          : `<div class="cart-item__img-placeholder">🍽️</div>`}
+        ${item.imgSrc ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${escAttr(item.name)}" onerror="this.style.display='none'">` : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
           <div class="cart-item__name">${item.name}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" aria-label="Diminuer la quantité" data-action="decrease" data-name="${escAttr(item.name)}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" aria-label="Augmenter la quantité" data-action="increase" data-name="${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" aria-label="Supprimer" data-action="remove" data-name="${escAttr(item.name)}">🗑</button>
       </div>`).join('');
   }
-
-  function esc(s) { return s.replace(/'/g, "\\'"); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -222,6 +233,16 @@ const Cart = (function () {
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     render();
+
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const target = e.target.closest('button, a');
+      if (!target) return;
+      const { action, name } = target.dataset;
+      if (action === 'increase') changeQty(name, 1);
+      else if (action === 'decrease') changeQty(name, -1);
+      else if (action === 'remove') remove(name);
+      else if (action === 'close') close();
+    });
 
     /* ---- Specialties Slider ---- */
     (function() {
