@@ -1,0 +1,3 @@
+## 2024-05-24 - Semantic Cart Interactions and Site-wide Navigation Audit
+**Learning:** In vanilla JS projects, the use of `<span>` for interactive elements and inline `onclick` handlers often leads to accessibility gaps and fragile code. Transitioning to semantic `<button>` elements with `aria-label` and `aria-live="polite"` significantly improves the screen reader experience. Additionally, using event delegation on a stable parent (like `#cart-body`) simplifies the management of dynamic lists and ensures interaction stability.
+**Action:** Always audit icon-only controls for ARIA labels and replace non-semantic triggers with `<button>`. Use event delegation for list-based UI components to maintain clean, scalable interaction logic.
