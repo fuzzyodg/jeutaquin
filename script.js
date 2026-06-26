@@ -145,6 +145,15 @@ const Cart = (function () {
     if (existing) { existing.qty++; }
     else { items.push({ name, price, imgSrc, qty: 1 }); }
     save(); render(); showToast(`${name} ajouté au panier`);
+    bumpCart();
+  }
+
+  function bumpCart() {
+    const btn = document.getElementById('cart-btn');
+    if (!btn) return;
+    btn.classList.remove('cart-bump');
+    void btn.offsetWidth; // Trigger reflow
+    btn.classList.add('cart-bump');
   }
 
   function remove(name) {
@@ -165,6 +174,19 @@ const Cart = (function () {
   function total() { return items.reduce((sum, i) => sum + i.price * i.qty, 0); }
   function count() { return items.reduce((sum, i) => sum + i.qty, 0); }
 
+  /**
+   * Échappe les caractères spéciaux pour les attributs HTML
+   */
+  function escAttr(s) {
+    if (!s) return "";
+    return s.toString()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+  }
+
   function render() {
     const body   = document.getElementById('cart-body');
     const badge  = document.getElementById('cart-count');
@@ -183,7 +205,8 @@ const Cart = (function () {
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p class="cart-empty__sub">Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="cart-empty__link" id="cart-go-menu">Voir le menu</a>
         </div>`;
       return;
     }
@@ -191,22 +214,20 @@ const Cart = (function () {
     body.innerHTML = items.map(item => `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${escAttr(item.name)}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
           <div class="cart-item__name">${item.name}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
-        <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+        <div class="cart-item__qty" aria-live="polite">
+          <button class="cart-item__qty-btn" data-action="decrease" data-id="${escAttr(item.name)}" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="increase" data-id="${escAttr(item.name)}" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-action="remove" data-id="${escAttr(item.name)}" aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
-
-  function esc(s) { return s.replace(/'/g, "\\'"); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +303,20 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Délégation d'événements pour le panier
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const target = e.target.closest('button, a');
+      if (!target) return;
+
+      const { id, action } = target.dataset;
+
+      if (action === 'increase') changeQty(id, 1);
+      else if (action === 'decrease') changeQty(id, -1);
+      else if (action === 'remove') remove(id);
+      else if (target.id === 'cart-go-menu') close();
+    });
+
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
