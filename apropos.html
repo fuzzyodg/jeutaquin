@@ -59,7 +59,7 @@
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <span class="cart-count" id="cart-count">0</span>
+          <span class="cart-count" id="cart-count" aria-live="polite">0</span>
         </button>
         <button class="burger" aria-label="Menu">
           <span class="burger__line"></span>
@@ -363,7 +363,7 @@
   <aside class="cart-panel" id="cart-panel" aria-label="Panier">
     <div class="cart-panel__header">
       <span class="cart-panel__title">🛒 Mon Panier</span>
-      <button class="cart-panel__close" id="cart-close">✕</button>
+      <button class="cart-panel__close" id="cart-close" aria-label="Fermer le panier">✕</button>
     </div>
     <div class="cart-panel__body" id="cart-body">
       <div class="cart-empty">
@@ -375,7 +375,7 @@
     <div class="cart-panel__footer">
       <div class="cart-total">
         <span class="cart-total__label">Total</span>
-        <span class="cart-total__amount" id="cart-total">0 CFA</span>
+        <span class="cart-total__amount" id="cart-total" aria-live="polite">0 CFA</span>
       </div>
       <button class="cart-checkout" id="cart-checkout">Commander par téléphone</button>
       <button class="cart-clear" id="cart-clear">Vider le panier</button>
