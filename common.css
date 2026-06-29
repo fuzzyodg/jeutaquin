@@ -218,6 +218,11 @@ p { margin-bottom: 1rem; }
   color: #dc3545; cursor: pointer; font-size: 1.1rem;
   padding: 4px; transition: var(--transition-fast);
   flex-shrink: 0;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cart-item__remove:hover { transform: scale(1.2); }
 
