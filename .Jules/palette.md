@@ -1,0 +1,3 @@
+## 2025-05-15 - [Shopping Cart Accessibility & Standard Compliance]
+**Learning:** Standardizing interactive elements (using `<button>` instead of `<span>`) and implementing event delegation with `data-*` attributes significantly improves accessibility and code maintainability in vanilla JS projects. Adding `aria-live="polite"` to numerical values like cart quantities ensures that changes are announced to screen reader users immediately.
+**Action:** Always prefer semantic `<button>` elements for interactive triggers and use event delegation for dynamic lists. Ensure all user-facing labels for accessibility are in the primary language of the site (French in this case).
