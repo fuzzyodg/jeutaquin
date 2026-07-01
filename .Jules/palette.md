@@ -1,0 +1,3 @@
+## 2025-05-15 - [Shopping Cart Accessibility & Refactoring]
+**Learning:** In a vanilla HTML multi-page architecture, interactive components like the shopping cart often rely on non-semantic elements and inline event handlers, which hinder accessibility and maintainability. Specifically, using `span` for buttons prevents keyboard navigation, and lacking `aria-live` on dynamic regions (cart count, quantity) makes the UI silent for screen reader users.
+**Action:** Always replace inline event handlers with event delegation for dynamic content. Ensure all interactive elements use semantic tags (`<button>`, `<a>`) with descriptive `aria-label` attributes. Implement `aria-live="polite"` on any UI elements that update dynamically to ensure accessibility.
