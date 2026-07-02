@@ -1,0 +1,3 @@
+## 2025-05-15 - Improving Shopping Cart Accessibility and UX
+**Learning:** In vanilla HTML/JS multi-page applications with shared UI components (like a shopping cart), accessibility indicators (e.g., `aria-live` regions) must be manually synchronized across all pages to ensure a consistent experience for screen reader users. Additionally, using event delegation for dynamic UI components improves security by avoiding forbidden `onclick` attributes and simplifies DOM management.
+**Action:** Always verify that dynamic UI updates are reflected in all relevant HTML files and prefer event delegation over inline handlers for interactive elements.
