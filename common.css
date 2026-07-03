@@ -182,6 +182,14 @@ p { margin-bottom: 1rem; }
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
 .cart-empty p { font-size: 1rem; }
+.cart-empty__sub { margin-top: var(--spacing-sm); }
+.cart-empty__sub a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: var(--transition-fast);
+}
+.cart-empty__sub a:hover { color: var(--color-secondary); }
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
