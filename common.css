@@ -7,6 +7,7 @@
   /* Palette Sahara Luxueux */
   --color-primary: #fed65b;   /* Or Sahara */
   --color-secondary: #c24d2c; /* Ocre/Rouge terre */
+  --color-primary-hover: #5a1d08;
   --color-gold: #fed65b;
   --color-bg: #12100e;        /* Noir profond / Terre brûlée */
   --color-text: #f5f2eb;      /* Sable clair */
@@ -136,7 +137,7 @@ p { margin-bottom: 1rem; }
   transition: var(--transition-fast);
   flex-shrink: 0;
 }
-.cart-btn:hover { background: #5a1d08; transform: translateY(-1px); }
+.cart-btn:hover { background: var(--color-primary-hover); transform: translateY(-1px); }
 .cart-btn svg { width: 22px; height: 22px; }
 .cart-count {
   position: absolute; top: -6px; right: -6px;
@@ -242,7 +243,7 @@ p { margin-bottom: 1rem; }
   transition: var(--transition-fast);
   margin-bottom: var(--spacing-xs);
 }
-.cart-checkout:hover { background: #5a1d08; transform: translateY(-1px); }
+.cart-checkout:hover { background: var(--color-primary-hover); transform: translateY(-1px); }
 .cart-clear {
   width: 100%;
   padding: var(--spacing-xs) var(--spacing-md);
@@ -287,7 +288,7 @@ p { margin-bottom: 1rem; }
   transition: var(--transition-normal); cursor: pointer;
 }
 .btn--primary { background: var(--color-primary); color: var(--color-white); }
-.btn--primary:hover { background: #5a1d08; transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.btn--primary:hover { background: var(--color-primary-hover); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 .btn--secondary { background: transparent; color: var(--color-primary); border: 2px solid var(--color-primary); }
 .btn--secondary:hover { background: var(--color-primary); color: var(--color-white); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 .btn--gold { background: var(--color-gold); color: var(--color-secondary); }
