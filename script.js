@@ -198,15 +198,26 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
-          <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-id="${escAttr(item.name)}" data-action="decrease" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
+          <span class="cart-item__qty-num" aria-live="polite">${item.qty}</span>
+          <button class="cart-item__qty-btn" data-id="${escAttr(item.name)}" data-action="increase" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-id="${escAttr(item.name)}" data-action="remove" aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return "";
+    return s.replace(/[&<>"']/g, function(m) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&apos;"
+      }[m];
+    });
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -283,6 +294,23 @@ const Cart = (function () {
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
+
+    // Event delegation pour le panier
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const { id, action } = btn.dataset;
+      if (!id || !action) return;
+
+      if (action === 'increase') changeQty(id, 1);
+      else if (action === 'decrease') changeQty(id, -1);
+      else if (action === 'remove') remove(id);
+    });
+
+    // Accessibilité clavier
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
   const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
