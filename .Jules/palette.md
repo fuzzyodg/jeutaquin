@@ -1,0 +1,3 @@
+## 2025-05-15 - Improving Cart Accessibility and Security in Vanilla JS
+**Learning:** In vanilla JS projects with dynamic HTML generation (like a cart), using inline `onclick` attributes is both a security risk and an accessibility bottleneck. Transitioning to event delegation on a stable parent element allows for cleaner code, better security via robust attribute escaping, and easier implementation of accessibility features like `aria-live`.
+**Action:** Always prefer event delegation for dynamically rendered lists. Implement a centralized `escAttr` helper for all data-attributes to prevent injection and ensure semantic buttons are used for all interactive elements.
