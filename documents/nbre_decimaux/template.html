@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Résumé – Nombres décimaux et puissances de 10</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.5;
+            color: black;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            text-decoration: underline;
+            font-size: 22pt;
+            margin-bottom: 30pt;
+        }
+        h2 {
+            font-size: 16pt;
+            border-bottom: 1px solid black;
+            margin-top: 20pt;
+            padding-bottom: 5pt;
+        }
+        .rule-box {
+            border: 1px solid black;
+            padding: 10pt;
+            margin: 10pt 0;
+            background-color: #f9f9f9;
+        }
+        .example {
+            margin-left: 20pt;
+            font-style: italic;
+        }
+        .exercise {
+            margin-top: 20pt;
+        }
+        .exercise h3 {
+            font-size: 14pt;
+            margin-bottom: 10pt;
+            margin-top: 20pt;
+        }
+        .exercise-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .exercise-list li {
+            margin-bottom: 12pt;
+        }
+        .memo {
+            background-color: #eee;
+            padding: 10pt;
+            font-weight: bold;
+            border-left: 5px solid black;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Résumé – Nombres décimaux et puissances de 10</h1>
+
+        <h2>Cas 1 : Réécrire un nombre sans changer sa valeur</h2>
+        <div class="rule-box">
+            <p><strong>Règle simple :</strong></p>
+            <ul>
+                <li>Si on décale la virgule vers la <strong>droite</strong>, l'exposant diminue (on multiplie par <strong>10<sup>-nombre de rangs</sup></strong>).</li>
+                <li>Si on décale la virgule vers la <strong>gauche</strong>, l'exposant augmente (on multiplie par <strong>10<sup>+nombre de rangs</sup></strong>).</li>
+            </ul>
+        </div>
+        <div class="example">
+            <p><strong>Exemples :</strong></p>
+            <p>3,14 = 314 × 10<sup>-2</sup> (on a décalé de 2 rangs vers la droite)</p>
+            <p>3,14 = 0,314 × 10<sup>1</sup> (on a décalé de 1 rang vers la gauche)</p>
+            <p>0,0035 = 3,5 × 10<sup>-3</sup> (on a décalé de 3 rangs vers la droite)</p>
+        </div>
+
+        <h2>Cas 2 : Multiplier par une puissance de 10 (le nombre change)</h2>
+        <div class="rule-box">
+            <p><strong>Règle simple :</strong></p>
+            <ul>
+                <li><strong>Exposant positif (+) :</strong> on déplace la virgule vers la <strong>droite</strong>. Le nombre devient <strong>plus grand</strong>.</li>
+                <li><strong>Exposant négatif (-) :</strong> on déplace la virgule vers la <strong>gauche</strong>. Le nombre devient <strong>plus petit</strong>.</li>
+            </ul>
+        </div>
+        <div class="example">
+            <p><strong>Exemples :</strong></p>
+            <p>3,14 × 10<sup>4</sup> = 31 400 (plus grand : 4 rangs vers la droite)</p>
+            <p>3,14 × 10<sup>-4</sup> = 0,000314 (plus petit : 4 rangs vers la gauche)</p>
+        </div>
+
+        <div class="memo">
+            <p>Mémo rapide :</p>
+            <p>• Garder la même valeur : Droite → (-) | Gauche → (+)</p>
+            <p>• Calculer (× 10<sup>n</sup>) : n positif → Droite (Grand) | n négatif → Gauche (Petit)</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>Exercices d'entraînement</h2>
+
+        <div class="exercise">
+            <h3>Exercice 1 – Compléter pour garder la même valeur</h3>
+            <ul class="exercise-list">
+                <li>1. 3,14 = 314 × 10<sup>....</sup></li>
+                <li>2. 3,14 = 0,314 × 10<sup>....</sup></li>
+                <li>3. 0,0062 = 62 × 10<sup>....</sup></li>
+                <li>4. 0,0062 = 0,62 × 10<sup>....</sup></li>
+                <li>5. 7,5 = 0,75 × 10<sup>....</sup></li>
+                <li>6. 7,5 = 750 × 10<sup>....</sup></li>
+                <li>7. 0,00081 = 8,1 × 10<sup>....</sup></li>
+                <li>8. 73,5 = 7,35 × 10<sup>....</sup></li>
+            </ul>
+        </div>
+
+        <div class="exercise">
+            <h3>Exercice 2 – Calculer (donner l'écriture décimale)</h3>
+            <ul class="exercise-list">
+                <li>1. 3,14 × 10<sup>-4</sup> = ....................</li>
+                <li>2. 3,14 × 10<sup>3</sup> = ....................</li>
+                <li>3. 0,0062 × 10<sup>5</sup> = ....................</li>
+                <li>4. 0,0062 × 10<sup>-3</sup> = ....................</li>
+                <li>5. 7,5 × 10<sup>-2</sup> = ....................</li>
+                <li>6. 7,5 × 10<sup>2</sup> = ....................</li>
+                <li>7. 0,00081 × 10<sup>6</sup> = ....................</li>
+                <li>8. 73,5 × 10<sup>-3</sup> = ....................</li>
+            </ul>
+        </div>
+
+        <div class="exercise">
+            <h3>Exercice 3 – Notation scientifique</h3>
+            <p>1. Écrire en notation scientifique (un seul chiffre avant la virgule, non nul) :</p>
+            <ul class="exercise-list">
+                <li>a) 0,00081 = ....................</li>
+                <li>b) 73,5 = ....................</li>
+                <li>c) 0,0062 = ....................</li>
+                <li>d) 520 000 = ....................</li>
+            </ul>
+            <p>2. Ranger dans l'ordre croissant :</p>
+            <p style="margin-left: 20pt;">7,5 × 10<sup>-3</sup> ; 0,00081 ; 3,14 × 10<sup>-4</sup> ; 6,2 × 10<sup>-3</sup></p>
+        </div>
+
+        <div class="exercise">
+            <h3>Exercice 4 – Problèmes</h3>
+            <p>1. La vitesse de la lumière est d'environ 300 000 000 m/s. Écrire cette vitesse en notation scientifique.</p>
+            <p>2. Un signal met 0,000002 s pour parcourir une distance. Écrire ce temps en notation scientifique.</p>
+            <p>3. Calculer la distance parcourue par la lumière pendant ce temps (Distance = Vitesse × Temps). Donner le résultat en notation scientifique.</p>
+            <p>4. Une bactérie se multiplie par 10 toutes les minutes. On part d'une seule bactérie. Donner le nombre de bactéries après 6 minutes sous forme d'une puissance de 10, puis en écriture décimale.</p>
+        </div>
+
+        <div class="exercise">
+            <h3>Exercice 5 – Vrai ou Faux (Justifier)</h3>
+            <ul class="exercise-list">
+                <li>1. "Multiplier un nombre par 10<sup>-3</sup> revient à déplacer la virgule de 3 rangs vers la droite."</li>
+                <li>2. "0,0035 = 3,5 × 10<sup>-3</sup>"</li>
+                <li>3. "73,5 = 7,35 × 10<sup>2</sup>"</li>
+                <li>4. "3,14 × 10<sup>-4</sup> = 0,00314"</li>
+                <li>5. "Si on déplace la virgule de 2 rangs vers la droite dans 0,0062, on doit utiliser l'exposant -2 pour garder la même valeur."</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
