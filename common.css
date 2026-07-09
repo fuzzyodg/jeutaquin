@@ -448,3 +448,9 @@ padding: var(--spacing-xl) 0;
   opacity: 0.8;
   transform: translateY(-2px);
 }
+
+/* --- Cart Enhancements --- */
+.cart-empty__sub .btn {
+  font-size: 0.9rem;
+  padding: 10px 20px;
+}
