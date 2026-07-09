@@ -1,0 +1,3 @@
+## 2025-05-22 - Accessible Shopping Cart with Event Delegation and ARIA Labels
+**Learning:** In vanilla JS projects, using semantic `<button>` elements instead of `div` or `span` for actions is critical for keyboard accessibility. Combining this with event delegation and `aria-live="polite"` for dynamic updates (like cart quantities) provides a robust UX for screen reader users. Proper sanitization of `data-*` attributes used in these templates is essential to prevent XSS when rendering dynamic content.
+**Action:** Use semantic interactive elements, centralize event listeners via delegation, and always use ARIA labels for icon-only buttons.
