@@ -182,6 +182,9 @@ p { margin-bottom: 1rem; }
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
 .cart-empty p { font-size: 1rem; }
+.cart-empty__text { font-size: 0.85rem; color: #999; margin-top: 8px; }
+.cart-empty__sub { margin-top: 1.5rem; }
+.cart-empty__sub .btn { font-size: 0.9rem; padding: 10px 20px; }
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
