@@ -183,7 +183,10 @@ const Cart = (function () {
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
           <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p class="cart-empty__text">Ajoutez des plats depuis le menu</p>
+          <div class="cart-empty__sub">
+            <a href="menu.html" class="btn btn--primary">Voir le menu</a>
+          </div>
         </div>`;
       return;
     }
@@ -198,15 +201,24 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-id="${escAttr(item.name)}" data-action="decrease" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-id="${escAttr(item.name)}" data-action="increase" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-id="${escAttr(item.name)}" data-action="remove" aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return "";
+    return s.replace(/[&<>"']/g, m => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&apos;'
+    })[m]);
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +294,24 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      const action = btn.dataset.action;
+      if (!id || !action) return;
+
+      if (action === 'increase') changeQty(id, 1);
+      else if (action === 'decrease') changeQty(id, -1);
+      else if (action === 'remove') remove(id);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('cart-panel')?.classList.contains('open')) {
+        close();
+      }
+    });
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
