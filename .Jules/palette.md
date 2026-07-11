@@ -1,0 +1,3 @@
+## 2026-07-11 - Accessible Cart & Navigation Refactor
+**Learning:** Moving from inline `onclick` handlers and non-semantic tags to event delegation and semantic `<button>` elements significantly improves accessibility and code maintainability in vanilla JS projects. Adding `aria-live="polite"` to quantity displays ensures screen reader users are notified of updates without losing context.
+**Action:** Always use event delegation on parent containers for dynamic list items (like cart items) and sanitize attributes using a robust `escAttr` helper. Avoid `target="_blank"` for internal site navigation to maintain a seamless user experience.
