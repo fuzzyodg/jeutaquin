@@ -181,7 +181,8 @@ p { margin-bottom: 1rem; }
   color: #999;
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
-.cart-empty p { font-size: 1rem; }
+.cart-empty__text { font-size: 1.1rem; font-weight: 600; color: var(--color-primary); margin-bottom: 0.5rem; }
+.cart-empty__sub { font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; line-height: 1.4; }
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
