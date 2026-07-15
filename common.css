@@ -178,10 +178,11 @@ p { margin-bottom: 1rem; }
 .cart-panel__body { flex: 1; overflow-y: auto; padding: var(--spacing-md); }
 .cart-empty {
   text-align: center; padding: var(--spacing-2xl) var(--spacing-lg);
-  color: #999;
+  color: var(--color-text);
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
-.cart-empty p { font-size: 1rem; }
+.cart-empty__text { font-size: 1rem; font-weight: 700; }
+.cart-empty__sub { font-size: 0.85rem; margin-top: var(--spacing-xs); color: #999; }
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
