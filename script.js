@@ -165,6 +165,16 @@ const Cart = (function () {
   function total() { return items.reduce((sum, i) => sum + i.price * i.qty, 0); }
   function count() { return items.reduce((sum, i) => sum + i.qty, 0); }
 
+  function escAttr(s) {
+    if (!s) return "";
+    return s.toString()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function render() {
     const body   = document.getElementById('cart-body');
     const badge  = document.getElementById('cart-count');
@@ -182,31 +192,33 @@ const Cart = (function () {
       body.innerHTML = `
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
-          <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p class="cart-empty__text">Votre panier est vide</p>
+          <p class="cart-empty__sub">Ajoutez des plats depuis le menu</p>
         </div>`;
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const safeName = escAttr(item.name);
+      return `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${safeName}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${safeName}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-id="${safeName}" data-action="decrease" aria-label="Diminuer la quantité de ${safeName}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-id="${safeName}" data-action="increase" aria-label="Augmenter la quantité de ${safeName}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button class="cart-item__remove" data-id="${safeName}" data-action="remove" aria-label="Retirer ${safeName} du panier">🗑</button>
+      </div>`;
+    }).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -222,6 +234,47 @@ const Cart = (function () {
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     render();
+
+    // Event delegation for cart actions
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const id = btn.dataset.id;
+      const action = btn.dataset.action;
+
+      if (action === 'increase') {
+        changeQty(id, 1);
+      } else if (action === 'decrease') {
+        changeQty(id, -1);
+      } else if (action === 'remove') {
+        remove(id);
+      }
+    });
+
+    // Escape key to close cart and modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        close(); // Close cart
+
+        // Close event modal if active
+        const eventModal = document.getElementById('event-modal');
+        if (eventModal && eventModal.classList.contains('active')) {
+          eventModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+
+        // Close mobile nav if active
+        const burger = document.querySelector('.burger');
+        const navMob = document.querySelector('.nav-mobile');
+        const overlay = document.querySelector('.nav-overlay');
+        if (burger && burger.classList.contains('active')) {
+          burger.classList.remove('active');
+          navMob?.classList.remove('active');
+          overlay?.classList.remove('active');
+        }
+      }
+    });
 
     /* ---- Specialties Slider ---- */
     (function() {
@@ -314,6 +367,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
