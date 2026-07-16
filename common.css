@@ -181,7 +181,8 @@ p { margin-bottom: 1rem; }
   color: #999;
 }
 .cart-empty__icon { font-size: 4rem; margin-bottom: var(--spacing-md); }
-.cart-empty p { font-size: 1rem; }
+.cart-empty__text { font-size: 1rem; font-weight: bold; color: var(--color-text); }
+.cart-empty__sub { font-size: 0.85rem; margin-top: 8px; color: #999; }
 
 .cart-item {
   display: flex; align-items: center; gap: var(--spacing-sm);
@@ -218,8 +219,10 @@ p { margin-bottom: 1rem; }
   color: #dc3545; cursor: pointer; font-size: 1.1rem;
   padding: 4px; transition: var(--transition-fast);
   flex-shrink: 0;
+  background: none;
+  border: none;
 }
-.cart-item__remove:hover { transform: scale(1.2); }
+.cart-item__remove:hover { transform: scale(1.2); color: #a71d2a; }
 
 .cart-panel__footer {
   border-top: 2px solid var(--color-light);

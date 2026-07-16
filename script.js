@@ -182,8 +182,11 @@ const Cart = (function () {
       body.innerHTML = `
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
-          <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p class="cart-empty__text">Votre panier est vide</p>
+          <div class="cart-empty__sub">
+            <p>Ajoutez des plats depuis le menu</p>
+            <a href="menu.html" class="btn btn--secondary mt-1" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Voir le menu</a>
+          </div>
         </div>`;
       return;
     }
@@ -198,15 +201,21 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-name="${escAttr(item.name)}" data-action="decrease" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-name="${escAttr(item.name)}" data-action="increase" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-name="${escAttr(item.name)}" data-action="remove" aria-label="Retirer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    return s.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -282,6 +291,38 @@ const Cart = (function () {
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        close();
+        // Also close event modal if it exists and is active
+        const eventModal = document.getElementById('event-modal');
+        if (eventModal && eventModal.classList.contains('active')) {
+          // We can't easily call the local closeModal from here if it's not exported,
+          // but we can simulate a click on the close button or just remove the class.
+          eventModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+
+    // Event delegation for cart actions
+    document.getElementById('cart-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const name = btn.dataset.name;
+      const action = btn.dataset.action;
+
+      if (action === 'increase') {
+        Cart.changeQty(name, 1);
+      } else if (action === 'decrease') {
+        Cart.changeQty(name, -1);
+      } else if (action === 'remove') {
+        Cart.remove(name);
+      }
+    });
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
