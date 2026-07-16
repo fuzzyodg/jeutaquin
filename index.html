@@ -60,7 +60,7 @@
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <span class="cart-count" id="cart-count">0</span>
+          <span class="cart-count" id="cart-count" aria-live="polite">0</span>
         </button>
         <button class="burger" aria-label="Menu">
           <span class="burger__line"></span>
@@ -77,7 +77,7 @@
       <li><a href="index.html" class="nav-mobile__link active">Accueil</a></li>
       <li><a href="menu.html" class="nav-mobile__link">Menu</a></li>
       <li><a href="apropos.html" class="nav-mobile__link">À propos</a></li>
-      <li><a href="evenements.html" class="nav-mobile__link">Événements</a></li>
+      <li><a href="evenement.html" class="nav-mobile__link">Événements</a></li>
       <li><a href="contact.html" class="nav-mobile__link">Contact</a></li>
     </ul>
   </nav>
@@ -497,8 +497,11 @@
     <div class="cart-panel__body" id="cart-body">
       <div class="cart-empty">
         <div class="cart-empty__icon">🛒</div>
-        <p>Votre panier est vide</p>
-        <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+        <p class="cart-empty__text">Votre panier est vide</p>
+        <div class="cart-empty__sub">
+          <p>Ajoutez des plats depuis le menu</p>
+          <a href="menu.html" class="btn btn--secondary mt-1" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Voir le menu</a>
+        </div>
       </div>
     </div>
     <div class="cart-panel__footer">
