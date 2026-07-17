@@ -124,6 +124,23 @@
   }
 })();
 
+/* ---- Fermeture par touche Échap (Escape) ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    // Fermer le modal d'événements s'il est actif
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal && eventModal.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    // Fermer le panier s'il est ouvert
+    const cartPanel = document.getElementById('cart-panel');
+    if (cartPanel && cartPanel.classList.contains('open')) {
+      Cart.close();
+    }
+  }
+});
+
 /* ---- Formulaire réservation (contact) ---- */
 (function () {
   const form = document.getElementById('reservation-form');
@@ -182,31 +199,46 @@ const Cart = (function () {
       body.innerHTML = `
         <div class="cart-empty">
           <div class="cart-empty__icon">🛒</div>
-          <p>Votre panier est vide</p>
-          <p style="font-size:0.85rem;margin-top:8px;color:#bbb;">Ajoutez des plats depuis le menu</p>
+          <p class="cart-empty__text">Votre panier est vide</p>
+          <p class="cart-empty__sub">
+            Ajoutez des plats depuis le menu.<br>
+            <a href="menu.html" class="cart-empty__link">Voir le menu</a>
+          </p>
         </div>`;
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const escapedName = escAttr(item.name);
+      const escapedImg = escAttr(item.imgSrc);
+      return `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${escapedImg}" alt="${escapedName}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${escapedName}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
-        <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+        <div class="cart-item__qty" aria-live="polite">
+          <button class="cart-item__qty-btn" data-id="${escapedName}" data-action="decrease" aria-label="Diminuer la quantité de ${escapedName}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-id="${escapedName}" data-action="increase" aria-label="Augmenter la quantité de ${escapedName}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button class="cart-item__remove" data-id="${escapedName}" data-action="remove" aria-label="Supprimer ${escapedName} du panier">🗑</button>
+      </div>`;
+    }).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return '';
+    return s.toString()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -283,6 +315,27 @@ const Cart = (function () {
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
+
+    // Delegation for cart actions in body
+    const bodyEl = document.getElementById('cart-body');
+    if (bodyEl) {
+      bodyEl.addEventListener('click', e => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const id = btn.dataset.id;
+        const action = btn.dataset.action;
+        if (!id || !action) return;
+
+        if (action === 'increase') {
+          Cart.changeQty(id, 1);
+        } else if (action === 'decrease') {
+          Cart.changeQty(id, -1);
+        } else if (action === 'remove') {
+          Cart.remove(id);
+        }
+      });
+    }
+
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
   if (count() === 0) return;
   const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
