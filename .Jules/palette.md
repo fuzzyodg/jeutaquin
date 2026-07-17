@@ -1,0 +1,3 @@
+## 2025-01-24 - Semantic Buttons & Escape Dismissal in Slide-out Overlays
+**Learning:** Transitioning cart items from non-interactive tags (like `<span>`) to semantic focusable `<button>` elements with descriptive dynamic `aria-labels` drastically improves assistive technology operability. Additionally, implementing global `Escape` key listeners to dismiss full-screen or sliding panels (such as carts and modals) provides a critical keyboard navigation shortcut that aligns with natural user expectations.
+**Action:** Always map overlay close events to both standard close buttons and the `Escape` key, and prioritize semantic focusable `<button>` elements over non-interactive click targets for cart controls and modal actions.
