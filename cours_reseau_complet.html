@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Cours Réseau et Administration Système - Du Concept à la Pratique Cisco</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+            @bottom-right {
+                content: counter(page);
+            }
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #319795;
+            --bg-light: #f7fafc;
+            --bg-code: #1e293b;
+            --text-dark: #2d3748;
+            --text-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --success-color: #2f855a;
+            --warning-color: #c05621;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 11pt;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            page-break-after: always;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+            padding: 20px;
+        }
+
+        .cover-page h1 {
+            font-size: 28pt;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cover-page h2 {
+            font-size: 16pt;
+            color: var(--secondary-color);
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .cover-meta {
+            margin-top: 50px;
+            font-size: 11pt;
+            color: #718096;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            width: 80%;
+        }
+
+        .badge {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 10pt;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* Table of Contents */
+        .toc {
+            page-break-after: always;
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .toc ul ul {
+            padding-left: 20px;
+            font-weight: normal;
+        }
+
+        .toc ul ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Chapters & Typography */
+        h1.chapter-title {
+            color: var(--primary-color);
+            font-size: 20pt;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-top: 30px;
+            page-break-before: always;
+        }
+
+        h1.chapter-title:first-of-type {
+            page-break-before: avoid;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 15pt;
+            margin-top: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            font-size: 12pt;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        /* Definitions & Callout Boxes */
+        .def-box {
+            background-color: #ebf8ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .def-box strong {
+            color: var(--primary-color);
+        }
+
+        .concept-box {
+            background-color: #f0fff4;
+            border-left: 5px solid var(--success-color);
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .warning-box {
+            background-color: #fffaf0;
+            border-left: 5px solid var(--warning-color);
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 10pt;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        /* Code Blocks & CLI Output */
+        pre {
+            background-color: var(--bg-code);
+            color: var(--text-light);
+            padding: 14px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9.5pt;
+            line-height: 1.4;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #edf2f7;
+            color: #c53030;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Diagram & Topology Schemas */
+        .diagram {
+            background-color: #f8fafc;
+            border: 1px dashed var(--secondary-color);
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            color: #1a202c;
+            margin: 15px 0;
+            line-height: 1.3;
+        }
+
+        /* Exercise Section Styling */
+        .exercise-card {
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 6px;
+            padding: 18px;
+            margin: 20px 0;
+            background-color: #ffffff;
+        }
+
+        .exercise-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .solution-card {
+            border: 1px solid #cbd5e0;
+            border-top: 4px solid var(--success-color);
+            border-radius: 6px;
+            padding: 18px;
+            margin: 20px 0;
+            background-color: #f7fafc;
+        }
+
+        .solution-card h3 {
+            margin-top: 0;
+            color: var(--success-color);
+        }
+
+        /* Glossaire */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .glossary-item {
+            background-color: var(--bg-light);
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .glossary-item strong {
+            color: var(--primary-color);
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+        <span class="badge">NIVEAU INTERMÉDIAIRE / AVANCÉ</span>
+        <h1>Cours Complet de Réseaux & Administration Système</h1>
+        <h2>Architectures, Circulation des Paquets, Adressage IP, Administration d'Infrastructures & TP Cisco</h2>
+
+        <div class="cover-meta">
+            <p><strong>Domaines abordés :</strong> Modèles OSI & TCP/IP, Commutation L2, Routage L3, Subnetting/VLSM, Services Réseau (DHCP, DNS, NAT), Administration (SSH, SNMP, Syslog, Wireshark, ACL), Architectures Complexes (Hôpital, Amazon/Spine-Leaf), Exercices & Corrections CLI Cisco IOS.</p>
+            <p><strong>Support d'apprentissage et Référence Technique</strong></p>
+        </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <h2>Table des Matières</h2>
+        <ul>
+            <li><strong>Chapitre 1 : Modèles de Référence & Concepts Fondamentaux</strong>
+                <ul>
+                    <li>1.1 Modèle OSI (7 couches) vs Modèle TCP/IP (4 couches)</li>
+                    <li>1.2 Modèle Hybride à 5 Couches</li>
+                    <li>1.3 Processus d'Encapsulation et de Décapsulation</li>
+                    <li>1.4 Unités de Données de Protocole (PDU) & En-têtes</li>
+                </ul>
+            </li>
+            <li><strong>Chapitre 2 : Circulation des Paquets & Traitement des Flux</strong>
+                <ul>
+                    <li>2.1 Commutation de Couche 2 (Commutateur / Switch & Table MAC)</li>
+                    <li>2.2 Routage de Couche 3 (Routeur & Table de Routage)</li>
+                    <li>2.3 Résolution d'Adresses avec ARP (Address Resolution Protocol)</li>
+                    <li>2.4 Diagnostic et Contrôle avec ICMP</li>
+                    <li>2.5 Établissement de Connexion TCP (Handshake en 3 Temps) & UDP</li>
+                    <li>2.6 Services Réseau Clés : DNS, DHCP, NAT/PAT</li>
+                </ul>
+            </li>
+            <li><strong>Chapitre 3 : Adressage IP & Calculs de Sous-Réseaux (Subnetting)</strong>
+                <ul>
+                    <li>3.1 Structure d'une Adresse IPv4 & Masques de Sous-Réseau</li>
+                    <li>3.2 Classes d'Adresses et Notation CIDR</li>
+                    <li>3.3 Méthodologie Complète de Découpage VLSM (Variable Length Subnet Mask)</li>
+                    <li>3.4 Exemple Pratique Détaillé de Calcul VLSM</li>
+                    <li>3.5 Aperçu et Fondamentaux d'IPv6</li>
+                </ul>
+            </li>
+            <li><strong>Chapitre 4 : Administration, Supervison & Sécurité Réseau</strong>
+                <ul>
+                    <li>4.1 Gestion à Distance Sécurisée (SSH vs Telnet)</li>
+                    <li>4.2 Supervision d'Équipements avec SNMP (Simple Network Management Protocol)</li>
+                    <li>4.3 Journalisation Centralisée avec Syslog</li>
+                    <li>4.4 Analyse de Trafic et Capture de Paquets avec Wireshark</li>
+                    <li>4.5 Contrôle d'Accès Réseau via les ACLs (Standard & Étendues)</li>
+                    <li>4.6 Modèle de Sécurité AAA (Authentication, Authorization, Accounting)</li>
+                </ul>
+            </li>
+            <li><strong>Chapitre 5 : Gestion des Grandes Infrastructures Réseau</strong>
+                <ul>
+                    <li>5.1 Étude de Cas 1 : Infrastructure Hospitalière (Isolation Biomédicale, VLANs, Redondance HSRP/VRRP)</li>
+                    <li>5.2 Étude de Cas 2 : Infrastructure Datacenter & Amazon Cloud (Spine-Leaf, BGP, SDN, Load Balancing)</li>
+                </ul>
+            </li>
+            <li><strong>Chapitre 6 : Glossaire des Termes Techniques</strong></li>
+            <li><strong>Chapitre 7 : Exercices Pratiques Cisco IOS / Packet Tracer</strong></li>
+            <li><strong>Chapitre 8 : Corrections Détaillées et Commandes CLI</strong></li>
+        </ul>
+    </div>
+
+    <!-- CHAPITRE 1 -->
+    <h1 class="chapter-title">Chapitre 1 : Modèles de Référence & Concepts Fondamentaux</h1>
+
+    <h2>1.1 Modèle OSI (7 couches) vs Modèle TCP/IP (4 couches)</h2>
+    <p>
+        Les réseaux informatiques s'appuient sur des modèles d'architecture en couches pour standardiser la communication entre systèmes hétérogènes. Chaque couche fournit un service précis à la couche supérieure et s'appuie sur les services de la couche inférieure.
+    </p>
+
+    <div class="def-box">
+        <strong>Définition - Modèle OSI (Open Systems Interconnection) :</strong> Norme ISO créée en 1984 décrivant les communications réseau en 7 couches théoriques. Il sert de cadre de référence conceptuel pour comprendre le parcours d'une information.
+    </div>
+
+    <div class="def-box">
+        <strong>Définition - Modèle TCP/IP :</strong> Suite de protocoles concrète et opérationnelle sur laquelle repose Internet. Il regroupe les fonctions en 4 couches pratiques.
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>N° Couche OSI</th>
+                <th>Nom Couche OSI</th>
+                <th>Couche TCP/IP Equivalent</th>
+                <th>Unité de Donnée (PDU)</th>
+                <th>Rôle / Équipements & Protocoles Exemples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>7</td>
+                <td>Application</td>
+                <td rowspan="3">Application</td>
+                <td rowspan="3">Données (Data)</td>
+                <td>Interface utilisateur, services réseau (HTTP, HTTPS, FTP, DNS, SSH, SMTP)</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Présentation</td>
+                <td>Chiffrement, compression, formatage des données (SSL/TLS, JPEG, ASCII)</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Session</td>
+                <td>Établissement, gestion et fermeture des sessions de communication (NetBIOS, RPC)</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Transport</td>
+                <td>Transport</td>
+                <td>Segment (TCP) / Datagramme (UDP)</td>
+                <td>Communication de bout en bout, gestion des ports, contrôle de flux (TCP, UDP)</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Réseau</td>
+                <td>Internet</td>
+                <td>Paquet (Packet)</td>
+                <td>Adressage logique (IP) et routage entre réseaux distincts (IPv4, IPv6, ICMP, OSPF, BGP). Equipment : <strong>Routeur</strong>.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Liaison de données</td>
+                <td rowspan="2">Accès Réseau</td>
+                <td>Trame (Frame)</td>
+                <td>Adressage physique (MAC), détection d'erreurs, commutation physique (Ethernet 802.3, Wi-Fi 802.11, ARP). Équipement : <strong>Switch (Commutateur)</strong>.</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Physique</td>
+                <td>Bits (0 / 1)</td>
+                <td>Transmission des signaux électriques, optiques ou radio (Câbles RJ45, Fibre optique, Hub). Équipement : <strong>Hub, Répéteur</strong>.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>1.2 Modèle Hybride à 5 Couches</h2>
+    <p>
+        Dans la pratique de l'ingénierie réseau, on utilise très souvent un <strong>modèle hybride à 5 couches</strong> qui combine la clarté conceptuelle des couches basses OSI avec la réalité du modèle TCP/IP :
+    </p>
+    <ol>
+        <li><strong>Couche 5 - Application :</strong> Applications et services applicatifs (HTTP, DNS, SSH).</li>
+        <li><strong>Couche 4 - Transport :</strong> Communication process-à-process via les numéros de ports (TCP, UDP).</li>
+        <li><strong>Couche 3 - Réseau :</strong> Adressage logique IP et détermination de chemin (IPv4, IPv6, Routage).</li>
+        <li><strong>Couche 2 - Liaison de données :</strong> Adressage MAC et transfert sur un lien physique local (Ethernet, VLAN).</li>
+        <li><strong>Couche 1 - Physique :</strong> Codage et transmission binaire sur le médium matériel.</li>
+    </ol>
+
+    <h2>1.3 Processus d'Encapsulation et de Décapsulation</h2>
+    <p>
+        Lorsqu'une application émet une information sur le réseau (par exemple une requête HTTP) :
+    </p>
+    <ul>
+        <li><strong>Encapsulation (Émission) :</strong> Les données descendantes traversent les couches de haut en bas. À chaque couche, un en-tête spécifique (et parfois une queue de trame/trailer) est ajouté autour de la donnée reçue de la couche supérieure.</li>
+        <li><strong>Décapsulation (Réception) :</strong> La machine destinataire reçoit les bits au niveau de la couche 1, puis remonte la pile en retirant un à un les en-têtes à chaque niveau après vérification de la validité.</li>
+    </ul>
+
+    <div class="diagram">
+[ÉMETTEUR]                                                               [DESTINATAIRE]
+Données applicatives                                                     Données applicatives
+    │                                                                          ▲
+    ▼                                                                          │
+[Port Dst | Port Src | Données]                         (Segment/UDP)  ──►     │
+    │                                                                          │
+    ▼                                                                          │
+[IP Dst | IP Src | Port Dst | Port Src | Données]       (Paquet IP)    ──►     │
+    │                                                                          │
+    ▼                                                                          │
+[MAC Dst | MAC Src | IP Dst | IP Src | ... | FCS]       (Trame MAC)    ──►     │
+    │                                                                          │
+    ▼                                                                          │
+10110010101011010100101010101010101011010101...         (Bits physiques)──►  [Physique]
+    </div>
+
+    <h2>1.4 Unités de Données de Protocole (PDU) & En-têtes</h2>
+    <div class="concept-box">
+        <strong>Les termes exacts par couche :</strong>
+        <ul>
+            <li>Couche Application (5-7) : <strong>Données / Message</strong></li>
+            <li>Couche Transport (4) : <strong>Segment</strong> (en TCP) ou <strong>Datagramme</strong> (en UDP)</li>
+            <li>Couche Réseau (3) : <strong>Paquet</strong></li>
+            <li>Couche Liaison (2) : <strong>Trame</strong></li>
+            <li>Couche Physique (1) : <strong>Bits</strong></li>
+        </ul>
+    </div>
+
+    <!-- CHAPITRE 2 -->
+    <h1 class="chapter-title">Chapitre 2 : Circulation des Paquets & Traitement des Flux</h1>
+
+    <h2>2.1 Commutation de Couche 2 (Commutateur / Switch & Table MAC)</h2>
+    <p>
+        Un commutateur (Switch) fonctionne au niveau de la <strong>Couche 2 (Liaison de données)</strong>. Son rôle est d'acheminer les trames Ethernet entre équipements situés au sein du même réseau local (LAN).
+    </p>
+    <p>
+        Le Switch maintient en mémoire une table d'adresses physiques appelée <strong>Table MAC</strong> (ou table CAM - <em>Content Addressable Memory</em>) qui associe chaque adresse MAC apprise au port physique du switch auquel elle est reliée.
+    </p>
+
+    <div class="def-box">
+        <strong>Algorithme de traitement d'une trame par un Switch :</strong>
+        <ol>
+            <li><strong>Apprentissage (Learning) :</strong> Le switch examine l'adresse MAC <em>source</em> de la trame entrante et enregistre l'association <code>[Adresse MAC Source ➔ Port d'entrée]</code> dans sa table MAC.</li>
+            <li><strong>Commutation (Forwarding / Flooding) :</strong> Le switch examine l'adresse MAC <em>destination</em> :
+                <ul>
+                    <li>Si la MAC destination est connue dans la table MAC ➔ transmission unique sur le port correspondant (Unicast).</li>
+                    <li>Si la MAC destination est inconnue ou s'il s'agit d'une adresse de diffusion (Broadcast <code>FF:FF:FF:FF:FF:FF</code>) ➔ envoi sur <strong>tous les ports</strong> sauf le port d'entrée (Inondation / Flooding).</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <h2>2.2 Routage de Couche 3 (Routeur & Table de Routage)</h2>
+    <p>
+        Un routeur fonctionne au niveau de la <strong>Couche 3 (Réseau)</strong>. Il interconnecte deux ou plusieurs réseaux logiques IP distincts et prend des décisions de transfert basées sur l'adresse IP destination.
+    </p>
+    <p>
+        Lorsqu'un paquet IP arrive sur une interface de routeur :
+    </p>
+    <ol>
+        <li>Le routeur retire l'en-tête de trame de Couche 2 (décapsulation).</li>
+        <li>Il vérifie la somme de contrôle (Checksum) et décrémente le champ <strong>TTL (Time To Live)</strong> de 1. Si TTL = 0, le paquet est détruit et un message ICMP <em>Time Exceeded</em> est renvoyé à la source.</li>
+        <li>Il consulte sa <strong>Table de Routage</strong> en appliquant la règle du <em>plus long masque correspondant</em> (Longest Prefix Match).</li>
+        <li>Si une route existe, il réencapsule le paquet dans une nouvelle trame L2 adaptée au média de sortie (avec la MAC destination du prochain saut) et l'expédie.</li>
+        <li>Si aucune route n'est trouvée et qu'aucune route par défaut (<code>0.0.0.0/0</code>) n'est configurée, le paquet est rejeté (ICMP <em>Destination Unreachable</em>).</li>
+    </ol>
+
+    <h2>2.3 Résolution d'Adresses avec ARP (Address Resolution Protocol)</h2>
+    <p>
+        Pour communiquer en IP sur un réseau Ethernet local, une machine connaît l'adresse IP de destination mais a impérativement besoin de connaître l'adresse MAC physique du destinataire (ou du passerelle/gateway). Le protocole <strong>ARP</strong> réalise cette traduction.
+    </p>
+
+    <div class="concept-box">
+        <strong>Déroulement d'une requête ARP :</strong>
+        <ol>
+            <li><strong>ARP Request (Broadcast) :</strong> L'hôte A envoie une trame Ethernet à destination de <code>FF:FF:FF:FF:FF:FF</code> demandant : <em>"Qui a l'adresse IP 192.168.1.50 ? Répondez à 192.168.1.10"</em>.</li>
+            <li>Tous les équipements du segment reçoivent la trame, mais seule la machine possédant l'IP <code>192.168.1.50</code> répond.</li>
+            <li><strong>ARP Reply (Unicast) :</strong> L'hôte B répond directement à l'hôte A : <em>"J'ai l'IP 192.168.1.50, ma MAC est AA:BB:CC:11:22:33"</em>.</li>
+            <li>L'hôte A enregistre cette correspondance dans son <strong>cache ARP</strong> pour éviter de répéter la requête à chaque paquet.</li>
+        </ol>
+    </div>
+
+    <h2>2.4 Diagnostic et Contrôle avec ICMP</h2>
+    <p>
+        Le protocole <strong>ICMP (Internet Control Message Protocol)</strong> est adossé à IP pour transmettre des messages d'erreur et des informations de contrôle :
+    </p>
+    <ul>
+        <li><code>Ping</code> (ICMP Echo Request / Echo Reply) : Permet de tester la joignabilité logique d'un hôte et de mesurer le temps de réponse (RTT).</li>
+        <li><code>Traceroute</code> (ou <code>tracert</code>) : Identifie le chemin de routeurs (sauts / hops) traversé par un paquet en envoyant une série de paquets avec un champ TTL incrémenté de 1 en 1 (TTL=1, TTL=2, TTL=3...).</li>
+    </ul>
+
+    <h2>2.5 Établissement de Connexion TCP (Handshake en 3 Temps) & UDP</h2>
+    <p>
+        Au niveau de la Couche 4 (Transport), deux protocoles majeurs s'affrontent :
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Critère</th>
+                <th>TCP (Transmission Control Protocol)</th>
+                <th>UDP (User Datagram Protocol)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mode de fonctionnement</td>
+                <td>Orienté connexion (FIABLE)</td>
+                <td>Non orienté connexion (RAPIDE)</td>
+            </tr>
+            <tr>
+                <td>Garantie de livraison</td>
+                <td>Oui (Accusés de réception ACK, retransmission)</td>
+                <td>Non (Best-effort)</td>
+            </tr>
+            <tr>
+                <td>Contrôle de flux & ordonnancement</td>
+                <td>Oui (Fenêtrage, numéros de séquence)</td>
+                <td>Non (Aucun suivi)</td>
+            </tr>
+            <tr>
+                <td>Surcoût (Header)</td>
+                <td>Élevé (20 octets)</td>
+                <td>Faible (8 octets)</td>
+            </tr>
+            <tr>
+                <td>Cas d'usage typiques</td>
+                <td>Web (HTTP/HTTPS), SSH, Transfert de fichiers (FTP), Email</td>
+                <td>Streaming vidéo, VoIP (SIP/RTP), DNS, Jeux en ligne</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Le Handshake TCP en 3 temps (Three-Way Handshake)</h3>
+    <div class="diagram">
+CLIENT                                                               SERVEUR
+  │                                                                     │
+  │ ─── 1. SYN (seq = X) ─────────────────────────────────────────────► │ (État: LISTEN)
+  │                                                                     │
+  │ ◄── 2. SYN-ACK (seq = Y, ack = X + 1) ────────────────────────────  │ (État: SYN-RCVD)
+  │                                                                     │
+  │ ─── 3. ACK (seq = X + 1, ack = Y + 1) ────────────────────────────► │ (État: ESTABLISHED)
+  │                                                                     │
+[Connexion Établie - Échange de données]
+    </div>
+
+    <h2>2.6 Services Réseau Clés : DNS, DHCP, NAT/PAT</h2>
+
+    <h3>DNS (Domain Name System - Port UDP/TCP 53)</h3>
+    <p>
+        Le DNS est l'annuaire d'Internet. Il traduit des noms de domaine intelligibles par l'humain (ex: <code>www.google.com</code>) en adresses IP compréhensibles par les machines (ex: <code>142.250.180.206</code>).
+    </p>
+
+    <h3>DHCP (Dynamic Host Configuration Protocol - Ports UDP 67/68)</h3>
+    <p>
+        Le protocole DHCP permet la distribution automatique des paramètres réseau aux équipements clients lors de leur connexion.
+    </p>
+
+    <div class="concept-box">
+        <strong>Processus DHCP DORA :</strong>
+        <ol>
+            <li><strong>Discover (Client ➔ Broadcast) :</strong> Le client cherche un serveur DHCP disponible.</li>
+            <li><strong>Offer (Serveur ➔ Unicast/Broadcast) :</strong> Le serveur propose une adresse IP libre avec masque, passerelle et DNS.</li>
+            <li><strong>Request (Client ➔ Broadcast) :</strong> Le client confirme qu'il accepte l'offre du serveur.</li>
+            <li><strong>Acknowledge (Serveur ➔ Unicast) :</strong> Le serveur valide le bail (Lease) d'adressage.</li>
+        </ol>
+    </div>
+
+    <h3>NAT / PAT (Network Address Translation / Port Address Translation)</h3>
+    <p>
+        Le NAT masque des adresses IP privées (non routables sur Internet : <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>) derrière une ou plusieurs adresses IP publiques routables.
+    </p>
+    <ul>
+        <li><strong>NAT Statique :</strong> Association fixe 1-à-1 entre une IP privée et une IP publique (souvent utilisé pour publier un serveur Web interne).</li>
+        <li><strong>PAT (Overload) :</strong> Traduction de milliers d'adresses IP privées vers une seule IP publique en utilisant les <strong>numéros de ports source L4</strong> pour différencier les connexions simultanées.</li>
+    </ul>
+
+    <!-- CHAPITRE 3 -->
+    <h1 class="chapter-title">Chapitre 3 : Adressage IP & Calculs de Sous-Réseaux (Subnetting)</h1>
+
+    <h2>3.1 Structure d'une Adresse IPv4 & Masques de Sous-Réseau</h2>
+    <p>
+        Une adresse IPv4 est codée sur <strong>32 bits</strong> (4 octets de 8 bits séparés par des points). Elle comporte obligatoirement deux parties :
+    </p>
+    <ul>
+        <li><strong>Partie Réseau (NetID) :</strong> Identifie le réseau ou le sous-réseau.</li>
+        <li><strong>Partie Hôte (HostID) :</strong> Identifie l'équipement spécifique sur ce réseau.</li>
+    </ul>
+
+    <p>
+        Le <strong>masque de sous-réseau</strong> permet de déterminer où s'arrête la partie réseau et où commence la partie hôte (les bits à 1 représentent le réseau, les bits à 0 représentent les hôtes).
+    </p>
+
+    <h2>3.2 Classes d'Adresses et Notation CIDR</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Classe</th>
+                <th>Plage d'Adresses IP</th>
+                <th>Masque par Défaut</th>
+                <th>Prefix CIDR</th>
+                <th>Nombre d'Hôtes max / Réseau</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Classe A</strong></td>
+                <td>1.0.0.0 à 126.255.255.255</td>
+                <td>255.0.0.0</td>
+                <td>/8</td>
+                <td>16 777 214</td>
+            </tr>
+            <tr>
+                <td><strong>Classe B</strong></td>
+                <td>128.0.0.0 à 191.255.255.255</td>
+                <td>255.255.0.0</td>
+                <td>/16</td>
+                <td>65 534</td>
+            </tr>
+            <tr>
+                <td><strong>Classe C</strong></td>
+                <td>192.0.0.0 à 223.255.255.255</td>
+                <td>255.255.255.0</td>
+                <td>/24</td>
+                <td>254</td>
+            </tr>
+            <tr>
+                <td><strong>Classe D</strong></td>
+                <td>224.0.0.0 à 239.255.255.255</td>
+                <td colspan="3">Réservé au Multicast</td>
+            </tr>
+            <tr>
+                <td><strong>Classe E</strong></td>
+                <td>240.0.0.0 à 254.255.255.255</td>
+                <td colspan="3">Réservé pour usages expérimentaux</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="warning-box">
+        <strong>Plages d'Adresses Privées (RFC 1918) :</strong>
+        <ul>
+            <li><code>10.0.0.0</code> à <code>10.255.255.255</code> (/8)</li>
+            <li><code>172.16.0.0</code> à <code>172.31.255.255</code> (/12)</li>
+            <li><code>192.168.0.0</code> à <code>192.168.255.255</code> (/16)</li>
+        </ul>
+    </div>
+
+    <h2>3.3 Méthodologie Complète de Découpage VLSM (Variable Length Subnet Mask)</h2>
+    <p>
+        Le découpage VLSM permet d'optimiser l'espace d'adressage en attribuant des masques de sous-réseaux sur mesure selon le besoin réel d'hôtes de chaque sous-réseau.
+    </p>
+
+    <div class="def-box">
+        <strong>Formules Fondamentales :</strong>
+        <ul>
+            <li>Nombre d'adresses IPv4 totales dans un bloc : <code>2<sup>h</sup></code> (où <em>h</em> est le nombre de bits hôtes réservés).</li>
+            <li>Nombre d'adresses IP utilisables pour les hôtes : <code>2<sup>h</sup> - 2</code> (on soustrait l'adresse Réseau et l'adresse Broadcast).</li>
+            <li>Le nouveau CIDR est égal à : <code>32 - h</code>.</li>
+        </ul>
+    </div>
+
+    <h3>Règles d'or du calcul VLSM :</h3>
+    <ol>
+        <li>Trier obligatoirement les besoins en sous-réseaux par <strong>ordre décroissant du nombre d'hôtes nécessaires</strong>.</li>
+        <li>Déterminer pour chaque sous-réseau le nombre de bits hôtes <em>h</em> nécessaire tel que <code>2<sup>h</sup> - 2 ≥ Besoins</code>.</li>
+        <li>Allouer les blocs mémoire les uns à la suite des autres sans chevauchement.</li>
+    </ol>
+
+    <h2>3.4 Exemple Pratique Détaillé de Calcul VLSM</h2>
+    <p>
+        <strong>Énoncé :</strong> Soit le réseau principal <code>192.168.10.0/24</code> à découper pour les besoins suivants :
+    </p>
+    <ul>
+        <li>Sous-réseau A (VLAN Ventes) : 50 hôtes</li>
+        <li>Sous-réseau B (VLAN Serveurs) : 26 hôtes</li>
+        <li>Sous-réseau C (VLAN Direction) : 10 hôtes</li>
+        <li>Sous-réseau D (Lien Point-à-Point Routeur R1-R2) : 2 hôtes</li>
+    </ul>
+
+    <h3>Pas de calcul :</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Sous-Réseau</th>
+                <th>Besoins Hôtes</th>
+                <th>Bits Hôtes (h)</th>
+                <th>Adresses Totales (2<sup>h</sup>)</th>
+                <th>Masque / CIDR</th>
+                <th>Adresse Réseau</th>
+                <th>Plage d'IPs Utilisables</th>
+                <th>Adresse Broadcast</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Sous-Réseau A</strong></td>
+                <td>50</td>
+                <td>h = 6 (2<sup>6</sup>-2=62)</td>
+                <td>64</td>
+                <td>255.255.255.192 (/26)</td>
+                <td><code>192.168.10.0</code></td>
+                <td><code>192.168.10.1</code> - <code>192.168.10.62</code></td>
+                <td><code>192.168.10.63</code></td>
+            </tr>
+            <tr>
+                <td><strong>Sous-Réseau B</strong></td>
+                <td>26</td>
+                <td>h = 5 (2<sup>5</sup>-2=30)</td>
+                <td>32</td>
+                <td>255.255.255.224 (/27)</td>
+                <td><code>192.168.10.64</code></td>
+                <td><code>192.168.10.65</code> - <code>192.168.10.94</code></td>
+                <td><code>192.168.10.95</code></td>
+            </tr>
+            <tr>
+                <td><strong>Sous-Réseau C</strong></td>
+                <td>10</td>
+                <td>h = 4 (2<sup>4</sup>-2=14)</td>
+                <td>16</td>
+                <td>255.255.255.240 (/28)</td>
+                <td><code>192.168.10.96</code></td>
+                <td><code>192.168.10.97</code> - <code>192.168.10.110</code></td>
+                <td><code>192.168.10.111</code></td>
+            </tr>
+            <tr>
+                <td><strong>Sous-Réseau D</strong></td>
+                <td>2</td>
+                <td>h = 2 (2<sup>2</sup>-2=2)</td>
+                <td>4</td>
+                <td>255.255.255.252 (/30)</td>
+                <td><code>192.168.10.112</code></td>
+                <td><code>192.168.10.113</code> - <code>192.168.10.114</code></td>
+                <td><code>192.168.10.115</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3.5 Aperçu et Fondamentaux d'IPv6</h2>
+    <p>
+        Pour pallier la pénurie d'adresses IPv4, IPv6 offre un espace d'adressage codé sur <strong>128 bits</strong> (soit 3,4 × 10<sup>38</sup> adresses).
+    </p>
+    <ul>
+        <li>Format : 8 groupes de 4 chiffres hexadécimaux séparés par deux-points (ex: <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>).</li>
+        <li>Simplification : Suppression des zéros en tête et remplacement de séries de blocs nuls par <code>::</code> (une seule fois par adresse). Exemple : <code>2001:db8:85a3::8a2e:370:7334</code>.</li>
+        <li>Absence de Broadcast : Remplacé par le Multicast et l'Anycast.</li>
+        <li>SLAAC (Stateless Address Autoconfiguration) : Attribution automatique d'IP via ICMPv6 sans serveur DHCP requis.</li>
+    </ul>
+
+    <!-- CHAPITRE 4 -->
+    <h1 class="chapter-title">Chapitre 4 : Administration, Supervision & Sécurité Réseau</h1>
+
+    <h2>4.1 Gestion à Distance Sécurisée (SSH vs Telnet)</h2>
+    <p>
+        L'administration des commutateurs et routeurs requiert un accès à l'interface de ligne de commande (CLI).
+    </p>
+    <ul>
+        <li><strong>Telnet (Port TCP 23) :</strong> DÉCONSEILLÉ et OBSOLÈTE. Toutes les commandes, identifiants et mots de passe transitent en clair sur le réseau.</li>
+        <li><strong>SSH (Secure Shell - Port TCP 22) :</strong> OBLIGATOIRE. Établit un canal de communication entièrement chiffré (RSA/ED25519) garantissant la confidentialité et l'intégrité des échanges.</li>
+    </ul>
+
+    <h2>4.2 Supervision d'Équipements avec SNMP (Simple Network Management Protocol)</h2>
+    <p>
+        SNMP permet à un serveur de gestion réseau (NMS - <em>Network Management Station</em> comme Zabbix, Nagios ou PRTG) de surveiller la santé des équipements réseau (utilisation CPU, RAM, état des interfaces, bande passante).
+    </p>
+    <ul>
+        <li><strong>Structure MIB (Management Information Base) :</strong> Arborescence normalisée décrivant les variables d'un équipement (ex: nombre de paquets perdus sur l'interface Gigabit0/1).</li>
+        <li><strong>Versions SNMP :</strong>
+            <ul>
+                <li>SNMPv1 / v2c : Authentification basique par "Communauté" (Community String) transmise en clair.</li>
+                <li><strong>SNMPv3 :</strong> Norme sécurisée offrant Authentification (HMAC-SHA) et Chiffrement des échanges (AES).</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>4.3 Journalisation Centralisée avec Syslog</h2>
+    <p>
+        Le protocole Syslog (Port UDP 514) centralise l'enregistrement de tous les événements système générés par les équipements réseau vers un serveur de journaux unique.
+    </p>
+    <p>Les événements sont classés selon leur niveau de sévérité (de 0 à 7) :</p>
+    <ul>
+        <li><code>0 - Emergency</code> : Système inutilisable.</li>
+        <li><code>1 - Alert</code> : Action immédiate requise.</li>
+        <li><code>2 - Critical</code> : Conditions critiques (panne matérielle).</li>
+        <li><code>3 - Error</code> : Erreurs de fonctionnement.</li>
+        <li><code>4 - Warning</code> : Avertissements.</li>
+        <li><code>5 - Notification</code> : Événement normal mais significatif (interface UP/DOWN).</li>
+        <li><code>6 - Informational</code> : Messages d'information basiques.</li>
+        <li><code>7 - Debugging</code> : Logs détaillés pour le dépannage.</li>
+    </ul>
+
+    <h2>4.4 Analyse de Trafic et Capture de Paquets avec Wireshark</h2>
+    <p>
+        Wireshark est le logiciel d'analyse de protocoles (Sniffer) de référence. Il capture les trames circulant sur une carte réseau et permet une dissection couche par couche.
+    </p>
+
+    <div class="def-box">
+        <strong>Filtres de Capture et Filtres d'Affichage Wireshark Essentiels :</strong>
+        <ul>
+            <li><code>ip.addr == 192.168.1.50</code> : Affiche tout le trafic impliquant cette adresse IP.</li>
+            <li><code>tcp.port == 80 || tcp.port == 443</code> : Filtre le trafic Web HTTP/HTTPS.</li>
+            <li><code>http.request.method == "POST"</code> : Identifie les soumissions de formulaires Web.</li>
+            <li><code>dns</code> ou <code>arp</code> : Segmente uniquement les paquets DNS ou ARP.</li>
+        </ul>
+    </div>
+
+    <h2>4.5 Contrôle d'Accès Réseau via les ACLs (Standard & Étendues)</h2>
+    <p>
+        Une liste de contrôle d'accès (ACL - <em>Access Control List</em>) est un ensemble séquentiel de règles de filtrage appliquées sur une interface de routeur en entrée (In) ou en sortie (Out).
+    </p>
+    <div class="warning-box">
+        <strong>Règle D'or des ACLs :</strong> Une ACL contient toujours une règle implicite invisible à la fin : <code>deny ip any any</code> (rejet implicite de tout trafic non explicitement autorisé).
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type d'ACL Cisco</th>
+                <th>Plage de Numéros</th>
+                <th>Critères de Filtrage</th>
+                <th>Règle d'Emplacement Recommandée</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>ACL Standard</strong></td>
+                <td>1 - 99 et 1300 - 1999</td>
+                <td>Adresse IP <strong>Source</strong> uniquement</td>
+                <td>Au plus près de la <strong>Destination</strong></td>
+            </tr>
+            <tr>
+                <td><strong>ACL Étendue</strong></td>
+                <td>100 - 199 et 2000 - 2699</td>
+                <td>IP Source, IP Destination, Protocole (TCP/UDP/ICMP), Ports Source & Destination</td>
+                <td>Au plus près de la <strong>Source</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>4.6 Modèle de Sécurité AAA (Authentication, Authorization, Accounting)</h2>
+    <p>
+        Pour sécuriser les accès d'administration sur de grands parcs d'équipements, le modèle AAA centralise la gestion des accès via des serveurs dédiés (protocoles <strong>RADIUS</strong> ou <strong>TACACS+</strong>) :
+    </p>
+    <ul>
+        <li><strong>Authentication (Qui êtes-vous ?) :</strong> Vérification de l'identité de l'administrateur (Nom d'utilisateur + Mot de passe + MFA).</li>
+        <li><strong>Authorization (Qu'avez-vous le droit de faire ?) :</strong> Détermination des commandes autorisées pour cet utilisateur (ex: niveau privilège 15 vs niveau 1).</li>
+        <li><strong>Accounting (Qu'avez-vous fait ?) :</strong> Enregistrement de l'historique complet des commandes exécutées par chaque administrateur avec horodatage.</li>
+    </ul>
+
+    <!-- CHAPITRE 5 -->
+    <h1 class="chapter-title">Chapitre 5 : Gestion des Grandes Infrastructures Réseau</h1>
+
+    <h2>5.1 Étude de Cas 1 : Infrastructure Hospitalière (Isolation Biomédicale, VLANs, Redondance HSRP/VRRP)</h2>
+
+    <h3>Problématiques et Enjeux Critiques :</h3>
+    <ul>
+        <li><strong>Continuité de service 24/7/365 :</strong> Aucune interruption réseau ne peut être tolérée dans les blocs opératoires et services de réanimation.</li>
+        <li><strong>Sécurité & Confidentialité des Données de Santé :</strong> Isolation stricte entre les objets connectés biomédicaux (scanners, pousses-seringues), le réseau médical (Dossier Patient Informatisé - DPI) et le réseau public Wi-Fi Visiteurs.</li>
+    </ul>
+
+    <div class="diagram">
+                        [ CŒUR DE RÉSEAU REDONDANT ]
+                   Routeur / Switch L3-A ◄─── (VRRP) ───► Routeur / Switch L3-B
+                            │                                     │
+                            └──────────────────┬──────────────────┘
+                                               │ Trunks 802.1Q
+                                               ▼
+                                    [ SWITCH D'ACCÈS BLOC ]
+                                  ┌────────────┼────────────┐
+                                  ▼            ▼            ▼
+                            [VLAN 10]      [VLAN 20]    [VLAN 99]
+                            Biomédical      DPI / SI    Wi-Fi Invités
+                            (Critique)      Soignants   (Isolé)
+    </div>
+
+    <h3>Architectures et Solutions Techniques Appliquées :</h3>
+    <ol>
+        <li><strong>Segmentation Logique par VLANs (IEEE 802.1Q) :</strong>
+            <ul>
+                <li>VLAN 10 (Biomédical) : <code>10.100.10.0/24</code> - Équipements de soin critiques (Accès internet bloqué par ACL).</li>
+                <li>VLAN 20 (SI Médical) : <code>10.100.20.0/24</code> - Postes médecins et accèss serveurs DPI.</li>
+                <li>VLAN 99 (Wi-Fi Invités) : <code>172.16.99.0/24</code> - Accès Internet pur, aucun accès aux réseaux internes.</li>
+            </ul>
+        </li>
+        <li><strong>Redondance de Passerelle avec VRRP (Virtual Router Redundancy Protocol) :</strong>
+            <ul>
+                <li>Deux commutateurs de cœur N3 fonctionnent en cluster VRRP en partageant une IP virtuelle (ex: <code>10.100.10.254</code>).</li>
+                <li>En cas de défaillance physique du commutateur maître (Master), le commutateur de secours (Backup) prend le relais en moins de 1 seconde de manière transparente pour les équipements médicaux.</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>5.2 Étude de Cas 2 : Infrastructure Datacenter & Amazon Cloud (Spine-Leaf, BGP, SDN, Load Balancing)</h2>
+
+    <h3>Problématiques des Datacenters Hyper-échelle (Hyperscale) :</h3>
+    <p>
+        Les architectures traditionnelles à 3 niveaux (Accès / Agrégation / Cœur) souffrent de limitations de bande passante Est-Ouest (trafic entre serveurs du même Datacenter) et du blocage de liens lié au protocole Spanning-Tree (STP).
+    </p>
+
+    <h3>1. Architecture Spine-Leaf (Clos Network) :</h3>
+    <div class="diagram">
+                        [ SPINE 1 ]                  [ SPINE 2 ]
+                             │   \                  /     │
+                             │    └─────────┐  ┌───┘      │
+                             │              │  │          │
+                        [ LEAF 1 ]          [ LEAF 2 ]   [ LEAF 3 ]
+                            │                   │            │
+                        [Serveur A]         [Serveur B]  [Serveur C]
+    </div>
+    <ul>
+        <li>Chaque commutateur <strong>Leaf</strong> (Feuille) est raccordé à <strong>tous</strong> les commutateurs <strong>Spine</strong> (Épine).</li>
+        <li>Aucun lien direct entre Spine-Spine ni entre Leaf-Leaf.</li>
+        <li><strong>Avantage :</strong> Temps de latence déterministe et identique (exactement 2 sauts / hops entre n'importe quels serveurs du datacenter).</li>
+        <li>Utilisation du routage N3 (BGP / OSPF) avec <strong>ECMP (Equal-Cost Multi-Path)</strong> : Tous les liens transmettent du trafic simultanément sans blocage Spanning-Tree.</li>
+    </ul>
+
+    <h3>2. Overlay & SDN (Software-Defined Networking - VXLAN) :</h3>
+    <p>
+        Pour permettre la migration à chaud de machines virtuelles (VMware vMotion / pods Kubernetes) n'importe où dans le datacenter tout en conservant leur IP, on utilise l'encapsulation <strong>VXLAN (Virtual Extensible LAN)</strong> qui transporte des trames L2 dans des paquets UDP/IP L3.
+    </p>
+
+    <h3>3. Répartition de Charge (Load Balancing) :</h3>
+    <p>
+        Des équilibreurs de charge (Load Balancers physiques ou logiciels comme NGINX / HAProxy / AWS ALB) reçoivent le trafic entrant et le répartissent sur des fermes de milliers de serveurs selon des algorithmes dynamiques (Round-Robin, Moins de connexions, Health Checks en temps réel).
+    </p>
+
+    <!-- CHAPITRE 6 -->
+    <h1 class="chapter-title">Chapitre 6 : Glossaire des Termes Techniques</h1>
+
+    <div class="glossary-grid">
+        <div class="glossary-item"><strong>ACL :</strong> Access Control List. Séquence de règles permettant d'autoriser ou de bloquer des paquets selon des critères réseau.</div>
+        <div class="glossary-item"><strong>ARP :</strong> Address Resolution Protocol. Protocole associant une adresse IP logique à une adresse MAC physique.</div>
+        <div class="glossary-item"><strong>BGP :</strong> Border Gateway Protocol. Protocole de routage à vecteur de chemins utilisé pour échanger des routes sur Internet et entre Datacenters.</div>
+        <div class="glossary-item"><strong>CIDR :</strong> Classless Inter-Domain Routing. Notation synthétique des masques de sous-réseau (ex: /24).</div>
+        <div class="glossary-item"><strong>DHCP :</strong> Dynamic Host Configuration Protocol. Service attribuant automatiquement les adresses IP aux équipements.</div>
+        <div class="glossary-item"><strong>DNS :</strong> Domain Name System. Service de résolution des noms de domaine en adresses IP.</div>
+        <div class="glossary-item"><strong>HSRP / VRRP :</strong> Hot Standby Router Protocol / Virtual Router Redundancy Protocol. Protocoles de haute disponibilité de passerelle.</div>
+        <div class="glossary-item"><strong>MAC :</strong> Media Access Control. Adresse physique unique gravée sur la carte réseau d'un équipement (48 bits).</div>
+        <div class="glossary-item"><strong>NAT / PAT :</strong> Network Address Translation / Port Address Translation. Mécanisme de sous-titrage/masquage d'adresses IP privées vers une IP publique.</div>
+        <div class="glossary-item"><strong>OSPF :</strong> Open Shortest Path First. Protocole de routage dynamique interne à état de liens.</div>
+        <div class="glossary-item"><strong>SDN :</strong> Software-Defined Networking. Architecture dissociant le plan de contrôle du plan de données pour automatiser le réseau.</div>
+        <div class="glossary-item"><strong>SSH :</strong> Secure Shell. Protocole de communication chiffré pour l'administration à distance en ligne de commande.</div>
+        <div class="glossary-item"><strong>VLAN :</strong> Virtual Local Area Network. Network logique indépendant créé au sein d'un même commutateur physique.</div>
+        <div class="glossary-item"><strong>VLSM :</strong> Variable Length Subnet Mask. Technique de découpage de sous-réseaux à masques de longueur variable.</div>
+        <div class="glossary-item"><strong>VXLAN :</strong> Virtual Extensible LAN. Protocole d'encapsulation de trames L2 dans des paquets UDP L3 pour Datacenters.</div>
+    </div>
+
+    <!-- CHAPITRE 7 -->
+    <h1 class="chapter-title">Chapitre 7 : Exercices Pratiques Cisco IOS / Packet Tracer</h1>
+
+    <div class="exercise-card">
+        <h3>Exercice 1 : Configuration de Base d'un Switch Cisco & Sécurisation SSH</h3>
+        <p><strong>Objectif :</strong> Configurer un commutateur Cisco Catalyst neuf, attribuer une IP de gestion sur le VLAN 1, et activer l'accès SSH sécurisé.</p>
+        <p><strong>Consignes :</strong></p>
+        <ol>
+            <li>Nommer le switch <code>SW-CORE-01</code>.</li>
+            <li>Définir le mot de passe d'accès au mode privilège (enable) à <code>CiscoEnPass123</code> (chiffré).</li>
+            <li>Configurer l'interface SVI VLAN 1 avec l'adresse IP <code>192.168.1.2/24</code> et la passerelle <code>192.168.1.1</code>.</li>
+            <li>Configurer le nom de domaine <code>entreprise.local</code> et générer des clés RSA de 2048 bits.</li>
+            <li>Activer SSH version 2 sur les lignes VTY (0 à 4) et bloquer Telnet.</li>
+        </ol>
+    </div>
+
+    <div class="exercise-card">
+        <h3>Exercice 2 : Segmentation par VLANs et Trunking 802.1Q</h3>
+        <p><strong>Topologie :</strong> Un switch <code>SW-ACCESS-01</code> relié à un routeur <code>R1</code> via le port <code>GigabitEthernet0/1</code>.</p>
+        <p><strong>Consignes :</strong></p>
+        <ol>
+            <li>Créer le VLAN 10 nommé <code>COMPTABILITE</code> et le VLAN 20 nommé <code>RH</code> sur le switch.</li>
+            <li>Affecter les ports <code>FastEthernet0/1-10</code> au VLAN 10 et <code>FastEthernet0/11-20</code> au VLAN 20.</li>
+            <li>Configurer le port <code>GigabitEthernet0/1</code> du switch en mode <strong>Trunk</strong> 802.1Q.</li>
+            <li>Sur le routeur <code>R1</code>, implémenter le routage inter-VLAN (Router-on-a-Stick) sur l'interface <code>GigabitEthernet0/0</code> avec les subinterfaces <code>g0/0.10</code> (IP: <code>10.0.10.1/24</code>) et <code>g0/0.20</code> (IP: <code>10.0.20.1/24</code>).</li>
+        </ol>
+    </div>
+
+    <div class="exercise-card">
+        <h3>Exercice 3 : Sécurité par Liste de Contrôle d'Accès (ACL Étendue)</h3>
+        <p><strong>Contexte :</strong> Vous devez sécuriser le serveur Web/SGBD de l'entreprise situant sur l'IP <code>10.0.20.100</code>.</p>
+        <p><strong>Consignes :</strong></p>
+        <ol>
+            <li>Créer une ACL étendue numérotée <code>101</code> sur le routeur R1.</li>
+            <li>Autoriser tout le réseau Ventes (<code>10.0.10.0/24</code>) à accéder uniquement au service Web HTTPS (Port 443) du serveur.</li>
+            <li>Interdire explicitement tout autre accès du réseau Ventes vers le serveur <code>10.0.20.100</code>.</li>
+            <li>Autoriser tout le reste du trafic.</li>
+            <li>Appliquer cette ACL dans le sens adéquat sur l'interface Ventes.</li>
+        </ol>
+    </div>
+
+    <!-- CHAPITRE 8 -->
+    <h1 class="chapter-title">Chapitre 8 : Corrections Détaillées et Commandes CLI Cisco</h1>
+
+    <div class="solution-card">
+        <h3>Correction Exercice 1 : Configuration Switch Cisco & SSH</h3>
+        <pre><code>! 1. Nom de machine et mot de passe privilège chiffré
+Switch> enable
+Switch# configure terminal
+Switch(config)# hostname SW-CORE-01
+SW-CORE-01(config)# enable secret CiscoEnPass123
+SW-CORE-01(config)# service password-encryption
+
+! 2. Configuration IP de Gestion
+SW-CORE-01(config)# interface vlan 1
+SW-CORE-01(config-if)# ip address 192.168.1.2 255.255.255.0
+SW-CORE-01(config-if)# no shutdown
+SW-CORE-01(config-if)# exit
+SW-CORE-01(config)# ip default-gateway 192.168.1.1
+
+! 3. Configuration Paramètres SSH
+SW-CORE-01(config)# ip domain-name entreprise.local
+SW-CORE-01(config)# crypto key generate rsa general-keys modulus 2048
+SW-CORE-01(config)# ip ssh version 2
+SW-CORE-01(config)# username admin privilege 15 secret AdminSSH2024!
+
+! 4. Sécurisation des accès Lignes VTY
+SW-CORE-01(config)# line vty 0 4
+SW-CORE-01(config-line)# login local
+SW-CORE-01(config-line)# transport input ssh
+SW-CORE-01(config-line)# exit
+SW-CORE-01(config)# end
+SW-CORE-01# write memory
+
+! Commandes de Vérification
+SW-CORE-01# show ip interface brief
+SW-CORE-01# show ip ssh</code></pre>
+    </div>
+
+    <div class="solution-card">
+        <h3>Correction Exercice 2 : VLANs & Routage Inter-VLAN (Router-on-a-Stick)</h3>
+        <p><strong>Configuration sur le Commutateur SW-ACCESS-01 :</strong></p>
+        <pre><code>SW-ACCESS-01# configure terminal
+
+! Création des VLANs
+SW-ACCESS-01(config)# vlan 10
+SW-ACCESS-01(config-vlan)# name COMPTABILITE
+SW-ACCESS-01(config-vlan)# vlan 20
+SW-ACCESS-01(config-vlan)# name RH
+SW-ACCESS-01(config-vlan)# exit
+
+! Affectation des ports d'accès
+SW-ACCESS-01(config)# interface range fastEthernet 0/1 - 10
+SW-ACCESS-01(config-if-range)# switchport mode access
+SW-ACCESS-01(config-if-range)# switchport access vlan 10
+SW-ACCESS-01(config-if-range)# exit
+
+SW-ACCESS-01(config)# interface range fastEthernet 0/11 - 20
+SW-ACCESS-01(config-if-range)# switchport mode access
+SW-ACCESS-01(config-if-range)# switchport access vlan 20
+SW-ACCESS-01(config-if-range)# exit
+
+! Configuration de la liaison Trunk vers le routeur
+SW-ACCESS-01(config)# interface gigabitEthernet 0/1
+SW-ACCESS-01(config-if)# switchport mode trunk
+SW-ACCESS-01(config-if)# switchport trunk allowed vlan 10,20
+SW-ACCESS-01(config-if)# no shutdown
+SW-ACCESS-01(config-if)# end</code></pre>
+
+        <p><strong>Configuration sur le Routeur R1 :</strong></p>
+        <pre><code>R1# configure terminal
+R1(config)# interface gigabitEthernet 0/0
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+! Subinterface pour VLAN 10
+R1(config)# interface gigabitEthernet 0/0.10
+R1(config-subif)# encapsulation dot1Q 10
+R1(config-subif)# ip address 10.0.10.1 255.255.255.0
+R1(config-subif)# exit
+
+! Subinterface pour VLAN 20
+R1(config)# interface gigabitEthernet 0/0.20
+R1(config-subif)# encapsulation dot1Q 20
+R1(config-subif)# ip address 10.0.20.1 255.255.255.0
+R1(config-subif)# end
+
+! Commandes de Vérification
+SW-ACCESS-01# show vlan brief
+SW-ACCESS-01# show interfaces trunk
+R1# show ip route</code></pre>
+    </div>
+
+    <div class="solution-card">
+        <h3>Correction Exercice 3 : ACL Étendue de Sécurité</h3>
+        <pre><code>R1# configure terminal
+
+! Création de l'ACL Étendue 101
+R1(config)# access-list 101 permit tcp 10.0.10.0 0.0.0.255 host 10.0.20.100 eq 443
+R1(config)# access-list 101 deny ip 10.0.10.0 0.0.0.255 host 10.0.20.100
+R1(config)# access-list 101 permit ip any any
+
+! Application sur l'interface du VLAN Ventes (Entrée)
+R1(config)# interface gigabitEthernet 0/0.10
+R1(config-subif)# ip access-group 101 in
+R1(config-subif)# end
+
+! Commandes de Vérification et de Suivi de Hits
+R1# show access-lists 101
+R1# show ip interface gigabitEthernet 0/0.10</code></pre>
+    </div>
+
+</body>
+</html>
