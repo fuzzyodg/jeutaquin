@@ -314,6 +314,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
@@ -508,3 +510,25 @@ function showToast(msg) {
     });
   }
 })();
+
+/* ---- Fermeture par la touche Échap (Keyboard Accessibility) ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (typeof Cart !== 'undefined' && Cart.close) {
+      Cart.close();
+    }
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal?.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const navMob = document.querySelector('.nav-mobile');
+    const burger = document.querySelector('.burger');
+    const overlay = document.querySelector('.nav-overlay');
+    if (navMob?.classList.contains('active')) {
+      burger?.classList.remove('active');
+      navMob.classList.remove('active');
+      overlay?.classList.remove('active');
+    }
+  }
+});

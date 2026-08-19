@@ -1,0 +1,3 @@
+## 2026-05-20 - Global Escape Key Listener for Overlays & ARIA Toast Attributes
+**Learning:** Dismissing modal overlays (cart panel, event modals, mobile navigation) via the Escape key is a vital micro-UX pattern for keyboard accessibility, ensuring keyboard-only users can exit overlays without losing context. Toast notifications require explicit `role="status"` and `aria-live="polite"` attributes so dynamic feedback is voiced by screen readers.
+**Action:** When adding modal drawers or toast notifications, ensure global keydown Escape listeners and ARIA live regions are configured at element creation.
