@@ -314,6 +314,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
@@ -321,6 +323,21 @@ function showToast(msg) {
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
+
+/* ---- Support de la touche Échap pour fermer les modales et le panier ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal && eventModal.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const cartPanel = document.getElementById('cart-panel');
+    if (cartPanel && cartPanel.classList.contains('open')) {
+      Cart.close();
+    }
+  }
+});
 
 /* ============================================
    FORMULAIRE RÉSERVATION/COMMANDE (contact.html)
