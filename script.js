@@ -191,22 +191,29 @@ const Cart = (function () {
     body.innerHTML = items.map(item => `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${escAttr(item.imgSrc)}" alt="${escAttr(item.name)}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${escAttr(item.name)}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button type="button" class="cart-item__qty-btn" data-action="decrease" data-name="${escAttr(item.name)}" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button type="button" class="cart-item__qty-btn" data-action="increase" data-name="${escAttr(item.name)}" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button type="button" class="cart-item__remove" data-action="remove" data-name="${escAttr(item.name)}" aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -284,12 +291,38 @@ const Cart = (function () {
     document.getElementById('cart-overlay')?.addEventListener('click', close);
     document.getElementById('cart-clear')?.addEventListener('click', () => { clear(); });
     document.getElementById('cart-checkout')?.addEventListener('click', () => {
-  if (count() === 0) return;
-  const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
-  localStorage.setItem('akadi_order', JSON.stringify({ items, summary }));
-  close();
-  window.location.href = 'contact.html';
-});
+      if (count() === 0) return;
+      const summary = items.map(i => `${i.name} x${i.qty}`).join(', ');
+      localStorage.setItem('akadi_order', JSON.stringify({ items, summary }));
+      close();
+      window.location.href = 'contact.html';
+    });
+
+    // Événements pour le contenu dynamique du panier
+    const cartBody = document.getElementById('cart-body');
+    if (cartBody) {
+      cartBody.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const action = btn.dataset.action;
+        const name = btn.dataset.name;
+        if (action === 'increase') changeQty(name, 1);
+        else if (action === 'decrease') changeQty(name, -1);
+        else if (action === 'remove') remove(name);
+      });
+    }
+
+    // Gestion de la touche Échap pour fermer les modales
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        close();
+        const eventModal = document.getElementById('event-modal');
+        if (eventModal && eventModal.classList.contains('active')) {
+          eventModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
 
     // Boutons "Ajouter au panier" dans menu-item
     document.querySelectorAll('.menu-item__add-btn').forEach(btn => {
@@ -314,6 +347,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
