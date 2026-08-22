@@ -191,22 +191,30 @@ const Cart = (function () {
     body.innerHTML = items.map(item => `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${escAttr(item.imgSrc)}" alt="${escAttr(item.name)}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${escAttr(item.name)}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" data-action="decrease" data-id="${escAttr(item.name)}" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" data-action="increase" data-id="${escAttr(item.name)}" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" data-action="remove" data-id="${escAttr(item.name)}" aria-label="Supprimer ${escAttr(item.name)} du panier" style="background:none;border:none;">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    if (!s) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -291,6 +299,18 @@ const Cart = (function () {
   window.location.href = 'contact.html';
 });
 
+    // Event delegation pour les actions du panier
+    document.getElementById('cart-body')?.addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      const action = btn.dataset.action;
+      if (!id || !action) return;
+      if (action === 'increase') Cart.changeQty(id, 1);
+      else if (action === 'decrease') Cart.changeQty(id, -1);
+      else if (action === 'remove') Cart.remove(id);
+    });
+
     // Boutons "Ajouter au panier" dans menu-item
     document.querySelectorAll('.menu-item__add-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -314,6 +334,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
@@ -321,6 +343,18 @@ function showToast(msg) {
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
+
+/* ---- Fermeture des modals avec Échap ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    Cart.close();
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal && eventModal.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+});
 
 /* ============================================
    FORMULAIRE RÉSERVATION/COMMANDE (contact.html)
