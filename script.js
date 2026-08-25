@@ -314,6 +314,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
