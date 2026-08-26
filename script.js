@@ -42,6 +42,31 @@
   document.querySelectorAll('.nav-mobile__link').forEach(l => l.addEventListener('click', close));
 })();
 
+/* ---- Global Keyboard Accessibility (Escape key) ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    // Dismiss Cart
+    if (typeof Cart !== 'undefined' && Cart.close) {
+      Cart.close();
+    }
+    // Dismiss Event Modal
+    const modal = document.getElementById('event-modal');
+    if (modal && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    // Dismiss Mobile Nav
+    const burger = document.querySelector('.burger');
+    const navMob = document.querySelector('.nav-mobile');
+    const overlay = document.querySelector('.nav-overlay');
+    if (burger && burger.classList.contains('active')) {
+      burger.classList.remove('active');
+      navMob?.classList.remove('active');
+      overlay?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Scroll infini mobile (Pause au toucher) ---- */
 (function () {
   const track = document.querySelector('.infinite-scroll__track');
