@@ -1,0 +1,3 @@
+## 2026-08-27 - Shopping Cart Action Controls & Event Delegation
+**Learning:** In vanilla JS cart items, using non-interactive `<span>` elements or inline `onclick` attributes breaks keyboard accessibility and HTML sanitization standards. Converting item controls to `<button type="button">` with `data-action` attributes, explicit `aria-label` text, and handling clicks via event delegation on `#cart-body` improves both accessibility and code safety.
+**Action:** Always generate cart controls as semantic `<button type="button">` elements with `aria-label` attributes and handle item actions using event delegation.
