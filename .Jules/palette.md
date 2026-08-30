@@ -1,0 +1,3 @@
+## 2025-08-30 - Shopping Cart Event Delegation and Accessibility
+**Learning:** Dynamic DOM rendering in vanilla JS cart components often defaults to non-semantic elements (like `<span>` with inline `onclick`) and missing ARIA attributes. Replacing them with semantic `<button>` elements, dataset action mapping via event delegation on `#cart-body`, and `aria-live="polite"` feedback drastically improves keyboard accessibility and screen reader experience without added JS weight.
+**Action:** Always delegate events on dynamic container elements using `dataset.action` and render interactive elements as semantic `<button>` tags with descriptive `aria-label` and `escAttr()` sanitization.
