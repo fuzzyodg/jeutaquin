@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Termes de Référence (TDR) - Projet Wakat</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            color: #111111;
+            line-height: 1.45;
+            font-size: 10.5pt;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 18pt;
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid #111111;
+            padding-bottom: 6px;
+            margin-bottom: 15px;
+        }
+        h2 {
+            font-size: 13pt;
+            border-bottom: 1px solid #444444;
+            padding-bottom: 3px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        h3 {
+            font-size: 11pt;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-top: 4px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        .header-box {
+            border: 2px solid #111111;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+        .header-box p {
+            margin: 2px 0;
+        }
+        .highlight-box {
+            border-left: 4px solid #111111;
+            background-color: #f5f5f5;
+            padding: 8px 12px;
+            margin: 12px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 9.5pt;
+        }
+        th, td {
+            border: 1px solid #333333;
+            padding: 6px 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #eaeaea;
+            font-weight: bold;
+        }
+        .stat-grid {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .stat-card {
+            border: 1px solid #333;
+            padding: 8px;
+            width: 30%;
+            text-align: center;
+            background-color: #fcfcfc;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <h1 style="border:none; margin:0 0 8px 0; padding:0;">TERMES DE RÉFÉRENCE (TDR)</h1>
+        <p style="text-align:center; font-weight:bold; font-size:12pt; margin-bottom:8px;">PROJET WAKAT — PLATEFORME DE COMMANDE DIRECTE ET DE LIVRAISON À LA DEMANDE</p>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 8px 0;">
+        <table style="border:none; margin:0; font-size:10pt;">
+            <tr style="border:none;"><td style="border:none; padding:2px;"><strong>Nom du Projet :</strong> WAKAT</td><td style="border:none; padding:2px;"><strong>Document :</strong> TDR Appel à Investisseurs / Partenaires</td></tr>
+            <tr style="border:none;"><td style="border:none; padding:2px;"><strong>Ville Pilote :</strong> Ouagadougou, Burkina Faso</td><td style="border:none; padding:2px;"><strong>Version :</strong> 2.0 (Spécification Finale)</td></tr>
+            <tr style="border:none;"><td style="border:none; padding:2px;"><strong>Budget MVP Cible :</strong> 3 000 000 FCFA</td><td style="border:none; padding:2px;"><strong>Statut :</strong> CONFIDENTIEL</td></tr>
+        </table>
+    </div>
+
+    <h2>1. CONTEXTE ET OPPORTUNITÉ DE MARCHÉ</h2>
+    <p>
+        À Ouagadougou, la restauration rapide et le commerce urbain connaissent une croissance soutenue, tirée par une population jeune et hyperconnectée. Cependant, la logistique du "dernier kilomètre" et la gestion des flux de commande restent un goulot d'étranglement majeur.
+    </p>
+    <p>
+        <strong>Problématique constatée chez les restaurateurs partenaires :</strong> De grandes enseignes à fort volume (telles que <em>Shitir Chicken</em>, spécialisée dans la restauration rapide et les poulets panés) font face à un engorgement critique de leur canal de commande prioritaire actuel : WhatsApp. Les appels répétitifs et les messages textuels non structurés provoquent des retards de prise en charge, des erreurs dans la préparation des commandes et une insatisfaction de la clientèle.
+    </p>
+    <p>
+        <strong>Problématique côté acheteurs et livreurs :</strong> Les clients manquent d'un outil centralisé pour passer leurs commandes et obtenir un suivi GPS clair de leur livraison. De leur côté, les livreurs indépendants manquent d'un système d'affectation automatique garantissant une rémunération transparente et prévisible.
+    </p>
+
+    <h2>2. VISION ET PROPOSITION DE VALEUR DE WAKAT</h2>
+    <p>
+        <strong>WAKAT</strong> est une solution numérique intégrée de commande directe et de livraison à la demande, spécialement conçue pour s'adapter au contexte urbain et économique de Ouagadougou.
+    </p>
+    <div class="highlight-box">
+        <strong>Modèle Stratégique de WAKAT :</strong>
+        <br>
+        WAKAT met à disposition des restaurants partenaires (ex: <em>Shitir Chicken</em>) une solution complète incluant une interface dédiée sur <strong>tablette mise à disposition gratuitement en phase d'essai</strong>. Cette interface automatise la réception et la préparation des commandes, éliminant la saturation WhatsApp.
+        <br><br>
+        Pour le client, WAKAT offre la flexibilité absolue :
+        <ul>
+            <li><strong>Option 1 — Commande avec Livraison Wakat :</strong> Commande du repas sur l'application Wakat et prise en charge de la livraison au domicile/bureau par la flotte de livreurs Wakat.</li>
+            <li><strong>Option 2 — Commande à Emporter (Click & Collect) :</strong> Commande et paiement sur l'application, puis retrait directement sur place chez le restaurateur sans frais de livraison.</li>
+            <li><strong>Option 3 — Service de Livraison Externe à la Demande :</strong> Possibilité pour un utilisateur ou un commerçant d'expédier un colis/pli ou de faire livrer une commande passée directement par téléphone auprès d'un établissement hors application.</li>
+        </ul>
+    </div>
+
+    <h2>3. PERIMÈTRE DU PROJET : INCLUSIONS ET EXCLUSIONS STRICTES</h2>
+    <p>
+        Pour garantir l'efficience du lancement et le respect rigoureux de l'enveloppe budgétaire de <strong>3 000 000 FCFA</strong>, le périmètre du projet est strictement délimité.
+    </p>
+    <p><strong>PÉRIMÈTRE INCLUS (MVP WAKAT) :</strong></p>
+    <ul>
+        <li>Application mobile Client / Expéditeur (Android) pour la commande, le choix retrait/livraison et la livraison à la demande.</li>
+        <li>Interface Commerçant / Restaurateur optimisée pour tablettes Android (gestion en direct des commandes, acceptation, temps de préparation, statut "Commande prête").</li>
+        <li>Application mobile Livreur (Android) pour la réception des missions, la navigation GPS, la validation par OTP et la gestion des revenus.</li>
+        <li>Tableau de bord Administrateur Web pour le pilotage complet, la gestion des litiges, la tarification et le suivi analytique.</li>
+        <li>Intégrations techniques : Cartographie GPS, Paiements Mobile Money (Orange Money, Moov Money, Wave/Coris Money), vérification OTP par SMS, Chat & Notifications en temps réel.</li>
+    </ul>
+
+    <p><strong>EXCLUSION STRICTE (MARKETPLACE GÉNÉRALISTE) :</strong></p>
+    <div class="highlight-box">
+        <strong>Précision stratégique majeure :</strong>
+        <br>
+        WAKAT <strong>exclut catégoriquement le modèle de marketplace généraliste multi-vendeurs</strong> (type plateforme où n'importe quel vendeur tiers vient ouvrir une boutique autonome de produits divers). WAKAT se focalise exclusivement sur le partenariat direct de restauration/commerce ciblé et le service pur de livraison à la demande.
+    </div>
+
+    <h2>4. CAS D'USAGE CLINIC : STRATÉGIE DE PARTENARIAT SHITIR CHICKEN</h2>
+    <p>
+        Pour valider le modèle économique sur le terrain à Ouagadougou, WAKAT déploie une stratégie d'acquisition B2B basée sur le partenariat phare avec l'enseigne <strong>Shitir Chicken</strong>.
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">Étape du Partenariat</th>
+                <th style="width: 50%;">Action Opérationnelle WAKAT</th>
+                <th style="width: 25%;">Impact Attendu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Équipement & Test Gratuit</strong></td>
+                <td>Déploiement d'une tablette Android Wakat configurée gratuitement dans la cuisine/caisse de Shitir Chicken pour une période d'essai.</td>
+                <td>Adhésion immédiate du restaurateur sans barrière financière initiale.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Campagne & Visibilité</strong></td>
+                <td>Communication ciblée annonçant la disponibilité exclusive du menu Shitir Chicken sur l'application Wakat.</td>
+                <td>Migration rapide des clients WhatsApp vers l'application Wakat.</td>
+            </tr>
+            <tr>
+                <td><strong>3. Processus de Commande</strong></td>
+                <td>Le client sélectionne ses produits Shitir sur Wakat et choisit : <em>"Livraison à domicile"</em> ou <em>"À emporter"</em>. La commande bip instantanément sur la tablette Shitir.</td>
+                <td>Suppression des erreurs de saisie et gain de temps de préparation (division par 3 du temps de traitement).</td>
+            </tr>
+            <tr>
+                <td><strong>4. Exécution Logistique</strong></td>
+                <td>Si la livraison est choisie, un livreur Wakat à proximité est automatiquement affecté dès que le restaurant appuie sur "Commande Prête".</td>
+                <td>Livraison rapide, sécurisée par code OTP à la remise du repas.</td>
+            </tr>
+        </tbody>
+    </ul>
+
+    <h2>5. SPÉCIFICATIONS TECHNIQUES DE LA PLATEFORME MVP</h2>
+    <p>L'architecture technique retenue garantit un fonctionnement fluide même en cas de réseau mobile instable :</p>
+    <ul>
+        <li><strong>Applications Mobiles (Android) :</strong> Conçues avec Flutter ou React Native pour une légèreté maximale, mise en cache locale des données et consommation de données mobiles réduite.</li>
+        <li><strong>Backend & Base de Données :</strong> API REST/GraphQL développée sur Node.js/NestJS ou Laravel, adossée à une base de données PostgreSQL éprouvée pour la gestion des transactions et des coordonnées géographiques.</li>
+        <li><strong>Modules Temps Réel & Sécurité :</strong> Géolocalisation GPS en direct via Google Maps API / OpenStreetMap, système de notifications Push Firebase (FCM), vérification des comptes par SMS OTP.</li>
+    </ul>
+
+    <h2>6. BUDGET PRÉVISIONNEL ET AFFECTATION DE L'INVESTISSEMENT (3 000 000 FCFA)</h2>
+    <p>
+        L'investissement total requis pour l'aboutissement et le lancement opérationnel du MVP WAKAT à Ouagadougou s'élève exactement à <strong>3 000 000 FCFA</strong>. Le tableau ci-dessous détaille l'affectation rigoureuse de ce capital :
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 8%;">N°</th>
+                <th style="width: 32%;">Poste de Dépense</th>
+                <th style="width: 42%;">Détails des Livrables Inclus</th>
+                <th style="width: 18%;">Montant (FCFA)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>01</td>
+                <td><strong>Développement Application Mobile</strong></td>
+                <td>App expéditeur/livreur/client, création de compte, profil livreur, interface commande Shitir, option Click & Collect, historique, notations.</td>
+                <td>700 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td><strong>Développement Backend & BDD</strong></td>
+                <td>API REST, gestion des utilisateurs, suivi des courses, calcul automatique des tarifs par distance, règles métier, sécurité PostgreSQL.</td>
+                <td>500 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>03</td>
+                <td><strong>Suivi GPS, Chat & Notifications</strong></td>
+                <td>Géolocalisation du livreur en temps réel, lien de suivi, messagerie interne expéditeur/livreur, notifications push Firebase.</td>
+                <td>300 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>04</td>
+                <td><strong>Paiements Mobile Money & OTP</strong></td>
+                <td>Intégration des passerelles Orange Money, Moov Money, Wave / Coris Money, vérification OTP par SMS.</td>
+                <td>250 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>05</td>
+                <td><strong>Tableau de Bord Administrateur</strong></td>
+                <td>Dashboard Web, gestion des partenaires, livreurs, statistiques de vente, litiges et décisions admin.</td>
+                <td>300 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>06</td>
+                <td><strong>Tests, Corrections & Bêta</strong></td>
+                <td>Tests intensifs sur smartphones Android, optimisation réseau faible, validation des flux de paiement et GPS.</td>
+                <td>200 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>07</td>
+                <td><strong>Déploiement & Frais Techniques</strong></td>
+                <td>Hébergement Cloud sécurisé, nom de domaine, certificat SSL, stockage et bases de données initiales.</td>
+                <td>150 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>08</td>
+                <td><strong>Communication & Lancement Terrain</strong></td>
+                <td>Conception de visuels, flyers, affiches, promotion de lancement ciblée sur Shitir Chicken, recrutement des livreurs.</td>
+                <td>450 000 FCFA</td>
+            </tr>
+            <tr>
+                <td>09</td>
+                <td><strong>Réserve pour Imprévus</strong></td>
+                <td>Ajustements techniques terrain et marge de sécurité opérationnelle.</td>
+                <td>150 000 FCFA</td>
+            </tr>
+            <tr style="background-color: #f0f0f0; font-weight: bold;">
+                <td colspan="3">TOTAL GÉNÉRAL DU BUDGET MVP</td>
+                <td>3 000 000 FCFA</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <strong>Synthèse de Répartition du Capital :</strong>
+        <br>
+        • <strong>Développement Cœur (Apps + Backend) :</strong> 1 200 000 FCFA (40,0 %)
+        <br>
+        • <strong>Fonctionnalités Temps Réel & Paiement :</strong> 550 000 FCFA (18,3 %)
+        <br>
+        • <strong>Administration, Tests & Déploiement :</strong> 650 000 FCFA (21,7 %)
+        <br>
+        • <strong>Communication & Partenariats Terrain :</strong> 450 000 FCFA (15,0 %)
+        <br>
+        • <strong>Réserve d'Imprévus :</strong> 150 000 FCFA (5,0 %)
+    </div>
+
+    <h2>7. PLANNING DE DÉPLOIEMENT MVP (17 SEMAINES)</h2>
+    <p>
+        Le calendrier d'exécution est structuré en 5 phases majeures garantissant une mise sur le marché rapide et maîtrisée :
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 20%;">Période</th>
+                <th style="width: 30%;">Phase du Projet</th>
+                <th style="width: 50%;">Livrables Majeurs Attendus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Semaines 1 - 2</td>
+                <td><strong>Préparation Technique</strong></td>
+                <td>Configuration des environnements de développement, architecture de la base de données, validation des maquettes.</td>
+            </tr>
+            <tr>
+                <td>Semaines 3 - 6</td>
+                <td><strong>Socle Mobile & Backend</strong></td>
+                <td>Développement des modules utilisateurs, interface tablette restaurant, gestion des commandes et calcul tarifaire.</td>
+            </tr>
+            <tr>
+                <td>Semaines 7 - 10</td>
+                <td><strong>Temps Réel & Paiements</strong></td>
+                <td>Intégration du suivi GPS, module de chat, notifications push, OTP SMS et API Mobile Money.</td>
+            </tr>
+            <tr>
+                <td>Semaines 11 - 14</td>
+                <td><strong>Admin & Litiges</strong></td>
+                <td>Finalisation du dashboard administrateur, paramétrage des commissions, gestion des signalements.</td>
+            </tr>
+            <tr>
+                <td>Semaines 15 - 17</td>
+                <td><strong>Bêta & Lancement Terrain</strong></td>
+                <td>Installation de la tablette chez Shitir Chicken, tests grandeur nature avec les premiers livreurs, campagne de communication à Ouagadougou.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>8. MODÈLE ÉCONOMIQUE ET RETOUR SUR INVESTISSEMENT (ROI)</h2>
+    <p>
+        WAKAT génère des revenus via trois leviers complémentaires :
+    </p>
+    <ol>
+        <li><strong>Frais de livraison à la charge du client :</strong> Calculés dynamiquement selon la distance parcourue (tarif de base + coût au kilomètre).</li>
+        <li><strong>Commission sur les commandes partenaires :</strong> Pourcentage négocié prélevé sur les ventes générées via l'application pour les enseignes partenaires équipées (ex: Shitir Chicken).</li>
+        <li><strong>Frais de mise en relation sur livraison externe :</strong> Montant fixe prélevé lors des demandes de coursier à la demande hors application.</li>
+    </ol>
+    <p>
+        <strong>Perspective pour l'investisseur :</strong> Grâce à un coût d'acquisition réduit via le partenariat exclusif d'enseignes reconnues et un budget marketing concentré sur le terrain, le projet Wakat vise le point d'équilibre financier (Break-Even) dès la fin du 6ème mois d'exploitation post-lancement.
+    </p>
+
+    <h2>9. CONCLUSION ET ENGAGEMENT</h2>
+    <p>
+        Le présent TDR constitue le document de référence engageant les spécifications du projet WAKAT. Il démontre la viabilité technique, la pertinence commerciale et la rigueur financière d'une solution sur-mesure pour Ouagadougou, optimisée autour d'un budget maîtrisé de 3 000 000 FCFA.
+    </p>
+
+</body>
+</html>
