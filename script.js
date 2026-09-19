@@ -124,6 +124,21 @@
   }
 })();
 
+/* ---- Fermeture au clavier (Touche Échap) ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal && eventModal.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const cartPanel = document.getElementById('cart-panel');
+    if (cartPanel && cartPanel.classList.contains('open')) {
+      Cart.close();
+    }
+  }
+});
+
 /* ---- Formulaire réservation (contact) ---- */
 (function () {
   const form = document.getElementById('reservation-form');
