@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Termes de Référence - Wakat Livraison</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 15mm 15mm 15mm;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Times New Roman", "Liberation Serif", "DejaVu Serif", serif;
+    font-size: 10pt;
+    line-height: 1.35;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Cover Page Styling */
+  .cover-page {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 250mm;
+    padding: 10px;
+  }
+
+  .cover-header {
+    border-bottom: 3px solid #b83214;
+    padding-bottom: 12px;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background-color: #b83214;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 9pt;
+    padding: 3px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .cover-title {
+    font-size: 26pt;
+    font-weight: bold;
+    color: #0f172a;
+    margin: 6px 0 4px 0;
+    line-height: 1.1;
+  }
+
+  .cover-subtitle {
+    font-size: 14pt;
+    color: #b83214;
+    font-style: italic;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .cover-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #b83214;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 18px;
+  }
+
+  .cover-meta-item {
+    font-size: 9pt;
+  }
+
+  .cover-meta-item strong {
+    color: #0f172a;
+    display: block;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .cover-summary-box {
+    margin-top: 18px;
+    background-color: #fffbf0;
+    border: 1px solid #fef3c7;
+    border-left: 4px solid #d97706;
+    padding: 12px;
+    border-radius: 4px;
+  }
+
+  .cover-summary-box h3 {
+    margin-top: 0;
+    color: #92400e;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+  }
+
+  .cover-footer {
+    margin-top: 25px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 10px;
+    font-size: 8.5pt;
+    color: #64748b;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* TOC Page */
+  .toc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 16px;
+    border-radius: 6px;
+    page-break-after: always;
+  }
+
+  .toc-title {
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: #0f172a;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #b83214;
+    padding-bottom: 4px;
+  }
+
+  .toc-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .toc-list li {
+    margin-bottom: 5px;
+    font-size: 9.5pt;
+  }
+
+  /* Document Content Styling */
+  .section-block {
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 13pt;
+    color: #0f172a;
+    border-bottom: 2px solid #b83214;
+    padding-bottom: 3px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  h2 {
+    font-size: 11pt;
+    color: #b83214;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-left: 3px solid #b83214;
+    padding-left: 6px;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  h3 {
+    font-size: 10pt;
+    color: #1e293b;
+    margin-top: 8px;
+    margin-bottom: 3px;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 6px;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 6px;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    font-size: 9pt;
+    page-break-inside: avoid;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 5px 7px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  .table-total {
+    font-weight: bold;
+    background-color: #fee2e2 !important;
+    color: #991b1b;
+  }
+
+  /* Highlight boxes */
+  .callout-box {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 4px solid #16a34a;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin: 8px 0;
+    page-break-inside: avoid;
+  }
+
+  .callout-box-title {
+    font-weight: bold;
+    color: #15803d;
+    margin-bottom: 3px;
+    font-size: 9.5pt;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+  <div>
+    <div class="cover-header">
+      <span class="cover-badge">Document Officiel &bull; Confidentiel</span>
+      <div class="cover-title">WAKAT LIVRAISON</div>
+      <div class="cover-subtitle">Plateforme Burkinabè de Commande Directe & de Livraison à la Demande</div>
+      <p style="font-size: 10.5pt; color: #475569; margin-top: 4px; text-align: left;">
+        <strong>Termes de Référence (TDR) — Synthèse Consolidée & Appel à Investisseurs / Partenaires Stratégiques</strong>
+      </p>
+    </div>
+
+    <div class="cover-summary-box">
+      <h3>&bull; Synthèse de la Proposition de Valeur</h3>
+      <p style="margin-bottom: 0;">
+        <strong>Wakat Livraison</strong> est une solution numérique intégrée conçue sur mesure pour l'écosystème urbain du Burkina Faso (ville pilote : <strong>Ouagadougou</strong>). Le projet fédère en un écosystème unique les <strong>Clients</strong>, <strong>Restaurants / Commerces</strong> et <strong>Livreurs indépendants</strong>. Il élimine le goulot d'étranglement de la livraison du dernier kilomètre, résout la saturation des canaux non structurés (ex. WhatsApp) chez les acteurs de la restauration rapide comme <em>Chitir Chicken</em>, et offre un service fiable de livraison à la demande pour tous types de colis et de courses téléphoniques externes.
+      </p>
+    </div>
+
+    <div class="cover-meta-grid">
+      <div class="cover-meta-item">
+        <strong>Entité Porteuse</strong>
+        Wakat Group
+      </div>
+      <div class="cover-meta-item">
+        <strong>Ville Pilote</strong>
+        Ouagadougou, Burkina Faso
+      </div>
+      <div class="cover-meta-item">
+        <strong>Budget MVP Cible</strong>
+        3 000 000 FCFA
+      </div>
+      <div class="cover-meta-item">
+        <strong>Statut &amp; Version</strong>
+        Version 3.0 (Spécification Finale Consolidée)
+      </div>
+      <div class="cover-meta-item">
+        <strong>Orientation Stratégique</strong>
+        Marketplace + Livraison Externe à la Demande
+      </div>
+      <div class="cover-meta-item">
+        <strong>Portée Future</strong>
+        Bobo-Dioulasso, Villes Secondaires &amp; International
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <span>&copy; 2026 Wakat Group — Tous droits réservés</span>
+    <span>Document d'Investissement &amp; Partenariat</span>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-container">
+  <div class="toc-title">TABLE DES MATIÈRES</div>
+  <ul class="toc-list">
+    <li><strong>1. CONTEXTE, ORIGINE ET OPPORTUNITÉ DE MARCHÉ</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;1.1 Origine et Signification de « Wakat Livraison »</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;1.2 Analyse du Contexte Urbain à Ouagadougou</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;1.3 Problématique Cible : L'Exemple de la Restauration Rapide (Chitir Chicken)</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;1.4 Dysfonctionnements Côtés Acheteurs et Livreurs</li>
+    <li><strong>2. VISION STRATÉGIQUE ET PROPOSITION DE VALEUR</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;2.1 Vision Globale de Wakat Group</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;2.2 Modèle Bi-Front : Marketplace Directe &amp; Livraison Externe à la Demande</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;2.3 Piliers d'Adaptation aux Réalités Burkinabè</li>
+    <li><strong>3. PÉRIMÈTRE FONCTIONNEL ET ARCHITECTURE TECHNIQUE (MVP V3.0)</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;3.1 Les Quatre Interfaces de la Plateforme</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;3.2 Fonctionnalités Détaillées par Acteur</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;3.3 Parcours Utilisateurs &amp; Innovation « Livraison Externe »</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;3.4 Règles Métier, Rémunération et Sécurité des Transactions</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;3.5 Éthique, Protection des Données et Gestion des Litiges</li>
+    <li><strong>4. MODÈLE ÉCONOMIQUE ET STRUCTURE DE REVENUS</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;4.1 Sources de Revenus de la Plateforme</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;4.2 Grille Tarifaire et Clé de Répartition (70% Livreur / 30% Wakat)</li>
+    <li><strong>5. BUDGET PRÉVISIONNEL ET ALLOCATION DES FONDS (3 000 000 FCFA)</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;5.1 Tableau Budgétaire Détaillé des 9 Postes</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;5.2 Vue de Synthèse et Répartition Synthétique</li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;5.3 Justification Économique et Périmètre de Financement</li>
+    <li><strong>6. PLANNING DE DÉVELOPPEMENT ET FEUILLE DE ROUTE (17 SEMAINES)</strong></li>
+    <li><strong>7. ÉQUIPE PROJET, GOUVERNANCE ET RECRUTEMENT</strong></li>
+    <li><strong>8. MATRICE DES RISQUES ET FACTEURS DE VIGILANCE</strong></li>
+    <li><strong>9. CONCLUSION ET APPEL À INVESTISSEMENT</strong></li>
+  </ul>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section-block">
+  <h1>1. CONTEXTE, ORIGINE ET OPPORTUNITÉ DE MARCHÉ</h1>
+
+  <h2>1.1 Origine et Signification du Nom « Wakat Livraison »</h2>
+  <p>
+    Le nom de l'application, <strong>Wakat Livraison</strong> (développée et exploitée par l'entité <strong>Wakat Group</strong>), puise ses racines profondes dans le patrimoine culturel du Burkina Faso. En langue nationale <strong>mooré</strong> — l'une des langues les plus largement parlées et comprises à travers tout le pays —, le terme <em>« Wakat »</em> signifie littéralement <strong>« le moment »</strong>, <strong>« l'instant »</strong> ou <strong>« le temps venu »</strong>.
+  </p>
+  <p>
+    Dans le contexte de notre solution, <strong>Wakat</strong> incarne l'esprit même de la <strong>« livraison instantanée, rapide et exacte au moment précis où le besoin se manifeste »</strong>. Ce choix d'appellation crée un ancrage identitaire fort, immédiatement mémorisable et engageant pour les populations locales, tout en véhiculant une promesse claire de ponctualité, d'agilité et de proximité.
+  </p>
+
+  <h2>1.2 Analyse du Contexte Urbain à Ouagadougou</h2>
+  <p>
+    À Ouagadougou, la capitale économique et administrative du Burkina Faso, le secteur de la restauration rapide, des commerces de proximité et du petit commerce urbain connaît une expansion soutenue. Cette dynamique est tirée par une population jeune, active, en forte croissance et de plus en plus connectée via les réseaux mobiles.
+  </p>
+  <p>
+    Cependant, le développement commercial de ces entreprises se heurte à un obstacle majeur : <strong>la logistique du « dernier kilomètre »</strong>. La mobilité urbaine repose quasi exclusivement sur les deux-roues motorisés, mais l'absence d'un réseau de livraison structuré, fiable et géolocalisé crée de profonds dysfonctionnements opérationnels au quotidien.
+  </p>
+
+  <h2>1.3 Problématique Cible : L'Exemple de la Restauration Rapide (Chitir Chicken)</h2>
+  <p>
+    Le constat sur le terrain est frappant chez les grandes enseignes à fort volume de vente à emporter, telles que <strong>Chitir Chicken</strong> (spécialiste renommé de la restauration rapide et du poulet pané à Ouagadougou) et d'autres commerces de la place. Ces établissements reçoivent quotidiennement un flux massif de commandes qu'ils peinent à honorer efficacement.
+  </p>
+  <div class="callout-box">
+    <div class="callout-box-title">&bull; Cas d'usage type : Le goulet d'étranglement de WhatsApp chez Chitir Chicken</div>
+    <p style="margin-bottom:0;">
+      Actuellement, le canal de commande prioritaire pour des enseignes comme <em>Chitir Chicken</em> reste l'application WhatsApp et les appels téléphoniques directs. Cette gestion non structurée entraîne :
+      <br>&bull; <strong>Surcharge opérationnelle :</strong> saturation des lignes et accumulation de messages vocaux/textuels indisciplinés ;
+      <br>&bull; <strong>Erreurs de commande :</strong> mauvaise transmission des détails du plat, retards d'enregistrement et oublis ;
+      <br>&bull; <strong>Pertes de clients :</strong> abandon de la commande par les acheteurs agacés par les délais de réponse ;
+      <br>&bull; <strong>Incapacité d'acheminement :</strong> indisponibilité récurrente de livreurs propres pour assurer la livraison.
+    </p>
+  </div>
+  <p>
+    <strong>Wakat Livraison</strong> n'a pas été conçue comme une simple application supplémentaire, mais comme un véritable partenaire stratégique que nous avons vocation à associer aux enseignes comme <em>Chitir Chicken</em> afin de digitaliser l'ensemble de leur prise de commande et d'externaliser en toute sérénité leur logistique de livraison.
+  </p>
+
+  <h2>1.4 Dysfonctionnements Côtés Acheteurs et Livreurs</h2>
+  <ul>
+    <li><strong>Côté Clients / Acheteurs :</strong> Absence d'une plateforme unique pour explorer le menu des restaurants, comparer en temps réel les prix des plats, connaître avec précision le coût de livraison avant la commande et suivre la progression du livreur en temps réel sur une carte GPS.</li>
+    <li><strong>Côté Livreurs Indépendants :</strong> Absence de système automatisé leur assignant des courses équitables, opacité des rémunérations, insécurité liée au transport d'espèces et manque de traçabilité des trajets effectués.</li>
+  </ul>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section-block page-break">
+  <h1>2. VISION STRATÉGIQUE ET PROPOSITION DE VALEUR</h1>
+
+  <h2>2.1 Vision Globale de Wakat Group</h2>
+  <p>
+    Porté par <strong>Wakat Group</strong>, le projet ambitionne de construire l'écosystème numérique de référence pour la commande et la livraison de produits en Afrique de l'Ouest. En débutant par la ville pilote de <strong>Ouagadougou</strong>, la plateforme a pour vocation d'étendre progressivement sa présence à <strong>Bobo-Dioulasso</strong> puis aux autres grandes villes du Burkina Faso, avant d'envisager un déploiement sous-régional à l'international.
+  </p>
+
+  <h2>2.2 Modèle Bi-Front : Marketplace Directe &amp; Livraison Externe à la Demande</h2>
+  <p>
+    La grande force stratégique de <strong>Wakat Livraison</strong> réside dans son architecture hybride répondant à 100% des habitudes d'achat locales :
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 28%;">Volet / Service</th>
+        <th style="width: 36%;">Principe de Fonctionnement</th>
+        <th style="width: 36%;">Bénéfice Stratégique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Volet A : Marketplace Digitalisée</strong></td>
+        <td>Le client consulte le catalogue interactif des restaurants et commerces partenaires (ex. <em>Chitir Chicken</em>), compare les prix, passe sa commande et paie directement en ligne via Mobile Money. La commande est transmise instantanément sur la tablette/téléphone du restaurant.</td>
+        <td>Numérisation complète du parcours, éradication des erreurs de commande, pré-paiement sécurisé, suivi automatisé du livreur.</td>
+      </tr>
+      <tr>
+        <td><strong>Volet B : Livraison Externe à la Demande</strong></td>
+        <td>Si un client passe sa commande directement par téléphone auprès d'un restaurant non encore intégré à la marketplace ou s'il souhaite expédier un colis/document d'un point A à un point B, il utilise le bouton <strong>« Faire livrer une commande externe »</strong>.</td>
+        <td>Interconnexion immédiate avec 100% du commerce informel et traditionnel. Le client bénéficie du calcul automatique des frais selon la distance GPS et d'un livreur dédié.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2.3 Piliers d'Adaptation aux Réalités Burkinabè</h2>
+  <p>
+    Pour garantir un taux d'adoption maximal, <strong>Wakat Livraison</strong> intègre nativement les spécificités socio-économiques locales :
+  </p>
+  <ul>
+    <li><strong>Système d'Adresse Hybride Burkinabè :</strong> Prise en compte de la géolocalisation GPS combinée à la désignation par Quartier, Secteur, Point de repère connu (ex. <em>« À côté du Château d'eau »</em>) et adresse numérique.</li>
+    <li><strong>Intégration Mobile Money Universelle :</strong> Paiements fluides via Orange Money, Moov Money, Wave et Coris Money, limitant la manipulation de monnaie physique et les risques d'impayés.</li>
+    <li><strong>Résilience Réseau &amp; Mode Hors-Ligne :</strong> Optimisation de l'application pour les connexions mobiles instables ou à faible débit (compression d'images, mise en cache des commandes en attente, reprise automatique après coupure).</li>
+    <li><strong>Sécurisation par Code OTP :</strong> Validation systématique de la remise du colis/repas par un code à usage unique (OTP) transmis par le client au livreur.</li>
+  </ul>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section-block page-break">
+  <h1>3. PÉRIMÈTRE FONCTIONNEL ET ARCHITECTURE TECHNIQUE (MVP V3.0)</h1>
+
+  <h2>3.1 Les Quatre Interfaces de la Plateforme</h2>
+  <p>
+    La plateforme Wakat Livraison s'articules autour de quatre briques applicatives parfaitement interconnectées :
+  </p>
+  <ol>
+    <li><strong>Application Mobile Client (Android / iOS / Web) :</strong> Recherche de commerces/plats, outil de comparaison des prix, panier multi-articles, calcul instantané des frais de livraison, sélection d'adresses enregistrées, option « Livraison Externe », paiement Mobile Money, suivi GPS en temps réel et notation.</li>
+    <li><strong>Interface Restaurant / Commerçant (Tablette / Smartphone / Web) :</strong> Réception instantanée des commandes avec alerte sonore, acceptation/refus, gestion du temps de préparation, notification « Commande Prête », gestion des stocks (produit disponible/indisponible) et historique des ventes.</li>
+    <li><strong>Application Mobile Livreur (Android) :</strong> Gestion de disponibilité (Bouton « Disponible / Indisponible »), alerte de course avec détails (montant gain, distance, type Standard ou Express), navigation GPS, chat intégré avec le client, validation de livraison par OTP et suivi des revenus journaliers/hebdomadaires.</li>
+    <li><strong>Tableau de Bord Administrateur (Console Web) :</strong> Supervision globale des utilisateurs, commerces et livreurs, paramétrage dynamique des grilles tarifaires et commissions, carte d'activité en direct, gestion centralisée des litiges et statistiques de performance.</li>
+  </ol>
+
+  <h2>3.2 Parcours Utilisateurs &amp; Innovation « Livraison Externe »</h2>
+  <div class="callout-box">
+    <div class="callout-box-title">&bull; Focus : Déroulement d'une commande Marketplace vs Livraison Externe</div>
+    <p><strong>Parcours Marketplace (ex. Commande chez Chitir Chicken) :</strong></p>
+    <p style="font-size: 8.5pt; margin-bottom: 5px;">
+      Client sélectionne le restaurant &rarr; Choisit son menu/plat &rarr; Ajoute au panier &rarr; Choisit son adresse de livraison &rarr; Calcul automatique de la distance et des frais &rarr; Paiement Mobile Money &rarr; Transmis instantanément en cuisine chez Chitir Chicken &rarr; Validation &amp; Préparation &rarr; Affectation automatique d'un livreur Wakat &rarr; Récupération du repas &rarr; Suivi GPS &rarr; Remise contre Code OTP &rarr; Confirmation &amp; Notation.
+    </p>
+    <p><strong>Parcours Livraison Externe (Commande par Téléphone) :</strong></p>
+    <p style="font-size: 8.5pt; margin-bottom: 0;">
+      Client appelle directement le restaurant &rarr; Passe sa commande par téléphone &rarr; Ouvre l'application Wakat &rarr; Clique sur « Faire livrer une commande externe » &rarr; Sélectionne l'établissement et son adresse &rarr; Calcul instantané des frais de course &rarr; Recherche &amp; Affectation d'un livreur Wakat &rarr; Le livreur récupère le plat et effectue la livraison &rarr; Validation OTP.
+    </p>
+  </div>
+
+  <h2>3.3 Règles Métier, Rémunération et Sécurité des Transactions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Règle Métier</th>
+        <th style="width: 75%;">Description &amp; Implémentation Technologique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Types de Livraison</strong></td>
+        <td><strong>Standard :</strong> Livraison regroupée optimisée (jusqu'à 3 courses simultanées). <br><strong>Express :</strong> Course prioritaire directe, aucun détour (majoration tarifaire x 1,40).</td>
+      </tr>
+      <tr>
+        <td><strong>Décompteur &amp; Fenêtre</strong></td>
+        <td>Fenêtre d'acceptation de 15 secondes pour le livreur. Dès acceptation, un décompteur démarre côté serveur pour garantir le respect des délais de récupération.</td>
+      </tr>
+      <tr>
+        <td><strong>Chat &amp; Suivi GPS</strong></td>
+        <td>Canal de chat éphémère activé uniquement pendant la course entre client et livreur. Position GPS mise à jour en temps réel et partageable via un lien de suivi sécurisé.</td>
+      </tr>
+      <tr>
+        <td><strong>Gestion des Refus/Annulations</strong></td>
+        <td>Livreur : jusqu'à 3 refus/jour sans pénalité. Annulation client : gratuite avant acceptation, pénalisée après acceptation, non remboursable après récupération du produit.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3.4 Éthique, Protection des Données et Gestion des Litiges</h2>
+  <p>
+    <strong>Wakat Group</strong> place l'éthique et la sécurité au cœur de ses opérations. La plateforme interdit formellement le transport de colis illicites, dangereux ou suspects. Le livreur bénéficie d'un droit de refus éthique en cas de doute sérieux.
+  </p>
+  <p>
+    En cas de litige (colis endommagé, retard critique, absence de livraison), le système intègre un module de déclaration sous 24h avec instruction administrative basée sur les logs GPS, le journal de chat et les preuves photos. Un barème d'indemnisation clair est appliqué (ex. remboursement partiel ou intégral selon la responsabilité établie).
+  </p>
+</div>
+
+<!-- SECTION 4 & 5 -->
+<div class="section-block page-break">
+  <h1>4. MODÈLE ÉCONOMIQUE ET STRUCTURE DE REVENUS</h1>
+
+  <h2>4.1 Sources de Revenus de la Plateforme</h2>
+  <p>
+    La viabilité financière de <strong>Wakat Livraison</strong> repose sur un modèle de revenus diversifié et hautement rentable :
+  </p>
+  <ul>
+    <li><strong>Commissions sur les Ventes Marketplace :</strong> Prélèvement d'un pourcentage négocié (ex. 10% à 20%) sur chaque commande réalisée via le catalogue de la plateforme.</li>
+    <li><strong>Frais de Livraison :</strong> Prélèvement d'un tarif calculé sur la distance (Prix de base de 500 FCFA + 150 FCFA par kilomètre supplémentaire).</li>
+    <li><strong>Mise en Avant &amp; Publicité :</strong> Frais de référencement prioritaire proposés aux restaurants et commerces partenaires souhaitant figurer en tête de liste.</li>
+    <li><strong>Commissions sur Livraisons Externes :</strong> Frais de mise en relation appliqués aux courses à la demande et livraisons de commandes téléphoniques.</li>
+  </ul>
+
+  <h2>4.2 Grille Tarifaire et Clé de Répartition</h2>
+  <div class="callout-box">
+    <div class="callout-box-title">&bull; Clé de Répartition des Frais de Course : 70% Livreur / 30% Wakat</div>
+    <p style="margin-bottom:0;">
+      Pour chaque course effectuée, <strong>70% des frais de livraison sont directement reversés au livreur indépendant</strong>, garantissant une rémunération très attractive et motivante sur le marché de Ouagadougou. Les <strong>30% restants sont conservés par Wakat Group</strong> pour couvrir les frais de fonctionnement de la plateforme, les infrastructures cloud, le support client et la marge bénéficiaire.
+    </p>
+  </div>
+</div>
+
+<!-- SECTION 5 BUDGET -->
+<div class="section-block page-break">
+  <h1>5. BUDGET PRÉVISIONNEL ET ALLOCATION DES FONDS (3 000 000 FCFA)</h1>
+
+  <p>
+    Le développement et le lancement du MVP (Minimum Viable Product) de <strong>Wakat Livraison</strong> nécessitent un budget cible de <strong>3 000 000 FCFA</strong>. Ce budget a été rigoureusement optimisé pour concentrer 100% des ressources sur les briques fonctionnelles essentielles et les actions de lancement terrain indispensables.
+  </p>
+
+  <h2>5.1 Tableau Budgétaire Détaillé des 9 Postes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 5%;">N°</th>
+        <th style="width: 30%;">Poste Budgétaire</th>
+        <th style="width: 50%;">Détails &amp; Composantes Incluses</th>
+        <th style="width: 15%;">Montant (FCFA)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>01</strong></td>
+        <td><strong>Développement Application Mobile</strong></td>
+        <td>Apps Client &amp; Livreur (Android/iOS), création de compte, profil livreur, demande de livraison Standard/Express, historique, notation, gestion de disponibilité.</td>
+        <td><strong>700 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>02</strong></td>
+        <td><strong>Développement Backend &amp; Base de Données</strong></td>
+        <td>Architecture API REST/WebSocket, gestion des rôles, calcul automatique des prix, règles métier, BDD PostgreSQL, sécurité serveur.</td>
+        <td><strong>500 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>03</strong></td>
+        <td><strong>Suivi GPS, Chat &amp; Notifications</strong></td>
+        <td>Suivi du livreur en temps réel sur carte, lien de suivi destinataire, chat éphémère client/livreur, notifications push Firebase.</td>
+        <td><strong>300 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>04</strong></td>
+        <td><strong>Paiements Mobile Money &amp; OTP</strong></td>
+        <td>Intégration des API Orange Money, Moov Money, Wave / Coris Money, vérification OTP SMS à l'inscription et à la livraison.</td>
+        <td><strong>250 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>05</strong></td>
+        <td><strong>Tableau de Bord Administrateur</strong></td>
+        <td>Console web de gestion des utilisateurs, commerces, livreurs, tarifs, commissions, litiges et statistiques d'activité.</td>
+        <td><strong>300 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>06</strong></td>
+        <td><strong>Tests, Corrections &amp; Bêta</strong></td>
+        <td>Tests d'intrusion et de montée en charge sur téléphones Android, correction de bugs, optimisation GPS et tests de paiement en conditions réelles.</td>
+        <td><strong>200 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>07</strong></td>
+        <td><strong>Déploiement &amp; Frais Techniques Initiaux</strong></td>
+        <td>Hébergement serveur cloud sécurisé, noms de domaine, certificats SSL, configuration production, sauvegardes initiales.</td>
+        <td><strong>150 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>08</strong></td>
+        <td><strong>Communication &amp; Lancement Terrain</strong></td>
+        <td>Création de l'identité visuelle, flyers, affiches, campagne digitale ciblée, sensibilisation et recrutement des premiers livreurs à Ouagadougou.</td>
+        <td><strong>450 000 FCFA</strong></td>
+      </tr>
+      <tr>
+        <td><strong>09</strong></td>
+        <td><strong>Réserve pour Imprévus</strong></td>
+        <td>Ajustements techniques de dernière minute, petits frais opérationnels et optimisations post-lancement pilote.</td>
+        <td><strong>150 000 FCFA</strong></td>
+      </tr>
+      <tr class="table-total">
+        <td colspan="3" style="text-align: right;"><strong>TOTAL GÉNÉRAL DU BUDGET MVP WAKAT</strong></td>
+        <td><strong>3 000 000 FCFA</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5.2 Répartition Synthétique du Budget</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Catégorie de Dépense</th>
+        <th>Montant (FCFA)</th>
+        <th>Proportion (%)</th>
+        <th>Poids / Orientation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Développement Application &amp; Backend</strong></td>
+        <td>1 200 000 FCFA</td>
+        <td>40,0 %</td>
+        <td>Cœur de la plateforme technologique</td>
+      </tr>
+      <tr>
+        <td><strong>Fonctionnalités Temps Réel (GPS, Chat, Paiement, OTP)</strong></td>
+        <td>550 000 FCFA</td>
+        <td>18,3 %</td>
+        <td>Fiabilité, confiance &amp; géolocalisation</td>
+      </tr>
+      <tr>
+        <td><strong>Administration, Tests &amp; Déploiement Cloud</strong></td>
+        <td>650 000 FCFA</td>
+        <td>21,7 %</td>
+        <td>Sécurité, contrôle &amp; infrastructure</td>
+      </tr>
+      <tr>
+        <td><strong>Communication &amp; Lancement Terrain</strong></td>
+        <td>450 000 FCFA</td>
+        <td>15,0 %</td>
+        <td>Acquisition clients, restaurants &amp; livreurs</td>
+      </tr>
+      <tr>
+        <td><strong>Réserve Imprévus</strong></td>
+        <td>150 000 FCFA</td>
+        <td>5,0 %</td>
+        <td>Flexibilité &amp; aléas de lancement</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 6, 7, 8, 9 -->
+<div class="section-block page-break">
+  <h1>6. PLANNING DE DÉVELOPPEMENT ET FEUILLE DE ROUTE (17 SEMAINE)</h1>
+
+  <p>
+    L'exécution technique et le déploiement opérationnel du MVP de <strong>Wakat Livraison</strong> s'étalent sur un calendrier rigoureux de <strong>17 semaines</strong>, articulé en 7 phases clés :
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 18%;">Période</th>
+        <th style="width: 25%;">Phase / Bloc</th>
+        <th style="width: 57%;">Livrables Attendus &amp; Jalons</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Semaines 1 - 2</strong></td>
+        <td><strong>Phase 0 : Setup &amp; Architecture</strong></td>
+        <td>Configuration des environnements dev/staging, modélisation de la BDD PostgreSQL, mise en place des API et validation du design system.</td>
+      </tr>
+      <tr>
+        <td><strong>Semaines 3 - 4</strong></td>
+        <td><strong>Phase 1 : Authentification &amp; Profils</strong></td>
+        <td>Module d'inscription, vérification par OTP SMS, collecte des pièces livreurs et processus de validation des comptes.</td>
+      </tr>
+      <tr>
+        <td><strong>Semaines 5 - 8</strong></td>
+        <td><strong>Phase 2 : Coeur de Livraison</strong></td>
+        <td>Moteur de demande de livraison, algorithme de calcul des frais, système d'acceptation/refus, décompteur et chat intégré.</td>
+      </tr>
+      <tr>
+        <td><strong>Semaines 9 - 10</strong></td>
+        <td><strong>Phase 3 : Intégration Paiement</strong></td>
+        <td>Connexion sécurisée aux passerelles Mobile Money (Orange Money, Moov Money, Wave, Coris Money) et gestion des transactions.</td>
+      </tr>
+      <tr>
+        <td><strong>Semaines 11 - 12</strong></td>
+        <td><strong>Phase 4 : GPS &amp; Temps Réel</strong></td>
+        <td>Suivi GPS en direct des livreurs, envoi des notifications push via Firebase et génération du lien de suivi destinataire.</td>
+      </tr>
+      <tr>
+        <td><strong>Semaines 13 - 14</strong></td>
+        <td><strong>Phase 5 : Admin &amp; Litiges</strong></td>
+        <td>Finalisation du dashboard administrateur, console de gestion des incidents, archivage des chats et rapports statistiques.</td>
+      </tr>
+      <tr>
+        <td><strong>Semaines 15 - 17</strong></td>
+        <td><strong>Phase 6 : Tests &amp; Bêta Lancement</strong></td>
+        <td>Tests terrain en conditions réelles à Ouagadougou, corrections de bugs, déploiement sur les stores, campagne de communication et lancement officiel.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1>7. ÉQUIPE PROJET, GOUVERNANCE ET RECRUTEMENT</h1>
+
+  <p>
+    Le projet est piloté par une équipe pluridisciplinaire, agile et parfaitement ancrée dans les réalités du marché burkinabè :
+  </p>
+  <ul>
+    <li><strong>Direction de Projet &amp; Product Lead (Fondateur) :</strong> Pilotage stratégique, vision produit, relations investisseurs et partenariats grands comptes (enseignes comme <em>Chitir Chicken</em>).</li>
+    <li><strong>Développeur Lead Mobile &amp; Backend :</strong> Ingénierie logicielle, développement des applications React Native / Flutter, architecture backend Node.js / PostgreSQL, intégrations API Mobile Money et cartographie.</li>
+    <li><strong>Responsable Communication &amp; Lancement Terrain :</strong> Stratégie marketing, création de contenus visuels, déploiement des campagnes d'acquisition, animation des réseaux sociaux et démarchage de proximité auprès des livreurs et commerçants.</li>
+    <li><strong>Feuille de Route des Recrutements (Post-Lancement) :</strong> Intégration progressive d'un Chargé du Support Client &amp; Litiges, d'un Responsable de la Flotte des Livreurs et d'Agents Commerciaux de terrain.</li>
+  </ul>
+
+  <h1>8. MATRICE DES RISQUES ET FACTEURS DE VIGILANCE</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Risque Identifié</th>
+        <th style="width: 20%;">Niveau de Risque</th>
+        <th style="width: 55%;">Stratégie d'Atténuation &amp; Mesures Préventives</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Adoption des Restaurants</strong></td>
+        <td>Moyen</td>
+        <td>Démonstration rapide du gain de temps face à la saturation WhatsApp. Offre d'intégration gratuite pour les premiers partenaires cibles (ex. <em>Chitir Chicken</em>).</td>
+      </tr>
+      <tr>
+        <td><strong>Recrutement des Livreurs</strong></td>
+        <td>Moyen</td>
+        <td>Rémunération très attractive (70% des frais retenus par le livreur), flexibilité totale des horaires et paiement rapide des gains.</td>
+      </tr>
+      <tr>
+        <td><strong>Fiabilité Mobile Money</strong></td>
+        <td>Faible à Moyen</td>
+        <td>Intégration multi-opérateurs (Orange, Moov, Wave, Coris) avec basculement automatique en cas d'indisponibilité d'un réseau.</td>
+      </tr>
+      <tr>
+        <td><strong>Instabilité Réseau Mobile</strong></td>
+        <td>Moyen</td>
+        <td>Optimisation poussée de l'application (images compressées, cache local, synchronisation différée dès le retour du réseau).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1>9. CONCLUSION ET APPEL À INVESTISSEMENT / PARTENARIAT</h1>
+
+  <p>
+    <strong>Wakat Livraison</strong> s'impose comme une réponse technologique et logistique particulièrement aboutie aux défis quotidiens du commerce urbain à Ouagadougou. En combinant la puissance d'une marketplace de commande directe avec la souplesse d'un service de livraison externe à la demande, la plateforme résout définitivement l'engorgement des canaux traditionnels comme WhatsApp chez les enseignes majeures de restauration rapide (à l'image de <em>Chitir Chicken</em>).
+  </p>
+  <p>
+    S'appuyant sur un modèle économique éprouvé et adapté aux usages locaux (paiement Mobile Money, tarification en FCFA, géolocalisation hybride), le projet bénéficie d'un cahier des charges finalisé, d'une équipe technique et opérationnelle motivée, et d'un plan de déploiement maîtrisé sur 17 semaines.
+  </p>
+
+  <div class="callout-box" style="background-color: #fffbf0; border-color: #fef3c7; border-left-color: #b83214; margin-top: 12px;">
+    <div class="callout-box-title" style="color: #b83214; font-size: 10pt;">
+      &bull; Synthèse de la Demande de Financement : 3 000 000 FCFA
+    </div>
+    <p style="margin-bottom: 0;">
+      L'investissement recherché de <strong>3 000 000 FCFA</strong> permettra de concrétiser le développement complet du MVP opérationnel, d'assurer le déploiement technique sur les stores et de lancer la campagne de communication terrain indispensable à l'acquisition des premiers milliers d'utilisateurs, des enseignes partenaires stratégiques et de la flotte de livreurs indépendants à Ouagadougou.
+    </p>
+  </div>
+
+  <p style="text-align: center; margin-top: 20px; font-weight: bold; color: #0f172a; font-size: 10.5pt;">
+    Nous invitons chaleureusement nos partenaires et investisseurs stratégiques à se joindre à l'aventure Wakat Group pour bâtir ensemble l'avenir du commerce et de la livraison au Burkina Faso.
+  </p>
+
+  <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 2px solid #cbd5e1; padding-top: 12px;">
+    <div>
+      <strong>Pour Wakat Group :</strong><br>
+      La Direction du Projet Wakat Livraison<br>
+      Ouagadougou, Burkina Faso
+    </div>
+    <div style="text-align: right;">
+      <strong>Investisseurs &amp; Partenaires :</strong><br>
+      Signature / Visa pour Accord<br>
+      Date : ________________________
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
