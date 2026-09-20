@@ -314,6 +314,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
@@ -508,3 +510,15 @@ function showToast(msg) {
     });
   }
 })();
+
+/* ---- Dismiss overlays with Escape key ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (typeof Cart !== 'undefined' && Cart.close) Cart.close();
+    const modal = document.getElementById('event-modal');
+    if (modal && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+});
