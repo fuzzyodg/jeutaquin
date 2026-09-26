@@ -198,11 +198,11 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)" aria-label="Diminuer la quantité de ${item.name}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)" aria-label="Augmenter la quantité de ${item.name}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')" aria-label="Supprimer ${item.name}" title="Supprimer ${item.name}">🗑</button>
       </div>`).join('');
   }
 
