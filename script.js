@@ -307,6 +307,26 @@ const Cart = (function () {
   return { add, remove, changeQty, clear, open, close };
 })();
 
+/* ---- Support de la touche Échap (Escape) pour fermeture des overlays / modaux ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (typeof Cart !== 'undefined' && Cart.close) Cart.close();
+    const modal = document.getElementById('event-modal');
+    if (modal?.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const burger = document.querySelector('.burger');
+    const navMob = document.querySelector('.nav-mobile');
+    const overlay = document.querySelector('.nav-overlay');
+    if (navMob?.classList.contains('active')) {
+      burger?.classList.remove('active');
+      navMob.classList.remove('active');
+      overlay?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Toast notification ---- */
 function showToast(msg) {
   let toast = document.getElementById('cart-toast');
@@ -314,6 +334,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
