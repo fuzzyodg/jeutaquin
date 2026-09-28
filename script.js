@@ -124,6 +124,26 @@
   }
 })();
 
+/* ---- Fermeture des overlays avec la touche Échap ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('cart-panel')?.classList.contains('open')) {
+      Cart.close();
+    }
+    const modal = document.getElementById('event-modal');
+    if (modal?.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const navMob = document.querySelector('.nav-mobile');
+    if (navMob?.classList.contains('active')) {
+      document.querySelector('.burger')?.classList.remove('active');
+      navMob.classList.remove('active');
+      document.querySelector('.nav-overlay')?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Formulaire réservation (contact) ---- */
 (function () {
   const form = document.getElementById('reservation-form');
