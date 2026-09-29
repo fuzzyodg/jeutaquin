@@ -191,22 +191,22 @@ const Cart = (function () {
     body.innerHTML = items.map(item => `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${esc(item.name)}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
           <div class="cart-item__name">${item.name}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" aria-label="Diminuer la quantité de ${esc(item.name)}" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" aria-label="Augmenter la quantité de ${esc(item.name)}" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" aria-label="Supprimer ${esc(item.name)} du panier" onclick="Cart.remove('${esc(item.name)}')">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function esc(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -279,6 +279,16 @@ const Cart = (function () {
     };
     reveal();
 
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('cart-panel')?.classList.contains('open')) close();
+        const eventModal = document.getElementById('event-modal');
+        if (eventModal?.classList.contains('active')) eventModal.querySelector('.modal__close')?.click();
+        const burger = document.querySelector('.burger');
+        if (burger?.classList.contains('active')) burger.click();
+      }
+    });
+
     document.getElementById('cart-btn')?.addEventListener('click', open);
     document.getElementById('cart-close')?.addEventListener('click', close);
     document.getElementById('cart-overlay')?.addEventListener('click', close);
@@ -314,6 +324,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
