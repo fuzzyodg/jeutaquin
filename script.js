@@ -198,15 +198,16 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" aria-label="Diminuer la quantité de ${escAttr(item.name)}" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" aria-label="Augmenter la quantité de ${escAttr(item.name)}" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" aria-label="Supprimer ${escAttr(item.name)} du panier" onclick="Cart.remove('${esc(item.name)}')">🗑</button>
       </div>`).join('');
   }
 
   function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
@@ -314,6 +315,8 @@ function showToast(msg) {
     toast = document.createElement('div');
     toast.id = 'cart-toast';
     toast.className = 'cart-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
