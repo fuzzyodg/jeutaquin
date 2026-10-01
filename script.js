@@ -188,25 +188,37 @@ const Cart = (function () {
       return;
     }
 
-    body.innerHTML = items.map(item => `
+    body.innerHTML = items.map(item => {
+      const safeName = escAttr(item.name);
+      const safeJsName = escAttr(esc(item.name));
+      return `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${escAttr(item.imgSrc)}" alt="${safeName}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
-          <div class="cart-item__name">${item.name}</div>
+          <div class="cart-item__name">${safeName}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button type="button" class="cart-item__qty-btn" aria-label="Diminuer la quantité de ${safeName}" onclick="Cart.changeQty('${safeJsName}', -1)">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button type="button" class="cart-item__qty-btn" aria-label="Augmenter la quantité de ${safeName}" onclick="Cart.changeQty('${safeJsName}', 1)">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
-      </div>`).join('');
+        <button type="button" class="cart-item__remove" aria-label="Supprimer ${safeName} du panier" onclick="Cart.remove('${safeJsName}')">🗑</button>
+      </div>`;
+    }).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function esc(s) { return String(s || '').replace(/\\/g, "\\\\").replace(/'/g, "\\'"); }
+  function escAttr(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
