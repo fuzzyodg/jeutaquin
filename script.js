@@ -191,22 +191,38 @@ const Cart = (function () {
     body.innerHTML = items.map(item => `
       <div class="cart-item">
         ${item.imgSrc
-          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${item.name}" onerror="this.style.display='none'">`
+          ? `<img class="cart-item__img" src="${item.imgSrc}" alt="${escAttr(item.name)}" onerror="this.style.display='none'">`
           : `<div class="cart-item__img-placeholder">🍽️</div>`}
         <div class="cart-item__info">
           <div class="cart-item__name">${item.name}</div>
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${escJs(item.name)}', -1)" aria-label="Diminuer la quantité de ${escAttr(item.name)}">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${escJs(item.name)}', 1)" aria-label="Augmenter la quantité de ${escAttr(item.name)}">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button class="cart-item__remove" onclick="Cart.remove('${escJs(item.name)}')" aria-label="Supprimer ${escAttr(item.name)} du panier">🗑</button>
       </div>`).join('');
   }
 
-  function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escJs(s) {
+    return String(s)
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '\\"');
+  }
+
+  function escAttr(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function esc(s) { return escAttr(s); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
