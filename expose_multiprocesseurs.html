@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exposé complet : Les Multiprocesseurs - De la Théorie à la Pratique</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.6;
+            color: #111111;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 26pt;
+            color: #0f172a;
+            border-bottom: 3px solid #0f172a;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 14pt;
+            font-style: italic;
+            color: #475569;
+            margin-bottom: 35px;
+        }
+        .toc {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 20px 30px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+        }
+        .toc h2 {
+            margin-top: 0;
+            font-size: 16pt;
+            border-bottom: 2px solid #94a3b8;
+            padding-bottom: 5px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 8px;
+            font-size: 11pt;
+        }
+        .toc a {
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 18pt;
+            color: #1e293b;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 6px;
+            margin-top: 40px;
+            page-break-after: avoid;
+        }
+        h3 {
+            font-size: 14pt;
+            color: #334155;
+            margin-top: 25px;
+            page-break-after: avoid;
+        }
+        p {
+            font-size: 11pt;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        ul, ol {
+            font-size: 11pt;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Pedagogy cards */
+        .card-analogy {
+            background-color: #f0fdf4;
+            border-left: 5px solid #16a34a;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .card-analogy h4 {
+            margin: 0 0 8px 0;
+            color: #15803d;
+            font-size: 12pt;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-expert {
+            background-color: #f1f5f9;
+            border-left: 5px solid #2563eb;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .card-expert h4 {
+            margin: 0 0 8px 0;
+            color: #1d4ed8;
+            font-size: 12pt;
+        }
+
+        /* Script Video Table */
+        table.script-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 10pt;
+        }
+        table.script-table th, table.script-table td {
+            border: 1px solid #94a3b8;
+            padding: 10px 12px;
+            vertical-align: top;
+        }
+        table.script-table th {
+            background-color: #1e293b;
+            color: #ffffff;
+            text-align: left;
+        }
+        table.script-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .time-badge {
+            font-weight: bold;
+            color: #0284c7;
+            white-space: nowrap;
+        }
+        .visual-cue {
+            font-style: italic;
+            color: #475569;
+        }
+        .audio-narr {
+            font-weight: normal;
+        }
+
+        .software-box {
+            background-color: #fff7ed;
+            border: 1px solid #fdba74;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #e2e8f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 10pt;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Les Multiprocesseurs : Architecture, Évolution et Enjeux</h1>
+    <div class="subtitle">Dossier de fond théorique, vulgarisation pédagogique et guide de production vidéo</div>
+
+    <div class="toc">
+        <h2>Table des Matières</h2>
+        <ul>
+            <li>1. Genèse et Histoire : Pourquoi les Multiprocesseurs ?</li>
+            <li>2. Architectures & Concepts Fondamentaux</li>
+            <li>3. Classification et Modèles de Multiprocesseurs</li>
+            <li>4. Limites Physiques et Théoriques Actuelles</li>
+            <li>5. Domaines d'Application et Cas d'Usage Modernes</li>
+            <li>6. Script Scénarisé Complet pour Vidéo / Projection (15-20 min)</li>
+            <li>7. Guide des Logiciels Gratuits de Montage et Capture Vidéo</li>
+            <li>8. Bibliographie et Ressources de Référence</li>
+        </ul>
+    </div>
+
+    <!-- SECTION 1 -->
+    <h2>1. Genèse et Histoire : Pourquoi les Multiprocesseurs ?</h2>
+    <p>
+        Pendant des décennies, le développement des microprocesseurs a suivi une règle empirique formulée par Gordon Moore en 1965 : la densité des transistors sur une puce doublait environ tous les 18 à 24 mois. Associée à la <strong>loi d'échelle de Dennard (Dennard Scaling)</strong>, chaque réduction de taille des transistors s'accompagnait d'une hausse proportionnelle de la fréquence d'horloge sans augmentation de la densité de puissance.
+    </p>
+    <p>
+        Toutefois, au début des années 2000, l'industrie s'est heurtée à trois murs physiques majeurs :
+    </p>
+    <ul>
+        <li><strong>Le mur de la fréquence (Frequency Wall) :</strong> Au-delà de 3,5 à 4 GHz, augmenter la fréquence provoque une dissipation thermique incontrôlable.</li>
+        <li><strong>Le mur de la puissance (Power Wall) :</strong> La fuite de courant au niveau microscopique entraîne une consommation d'énergie excessive et un échauffement localisé (points chauds).</li>
+        <li><strong>Le mur de la mémoire (Memory Wall) :</strong> L'écart de vitesse entre les processeurs (très rapides) et la mémoire RAM (plus lente) s'est accru considérablement.</li>
+    </ul>
+    <p>
+        Pour continuer d'accroître la puissance de calcul sans dépasser l'enveloppe thermique (TDP - Thermal Design Power), les architectes matériels ont opéré une transition fondamentale : <strong>passer de l'exécution séquentielle ultra-rapide sur un seul cœur à l'exécution parallèle sur plusieurs cœurs</strong>.
+    </p>
+
+    <div class="card-analogy">
+        <h4>💡 Analogie accessible (Pour non-experts) : Le restaurant et les cuisiniers</h4>
+        <p>
+            Imaginez une cuisine de restaurant avec un seul chef (le processeur monocœur). Pour servir plus de clients, vous lui demandez de travailler de plus en plus vite. À un moment, ses bras bougent tellement vite que la cuisine surchauffe et qu'il commence à faire des erreurs ou à brûler les plats : c'est le <strong>mur de la fréquence et de la puissance</strong>.
+        </p>
+        <p>
+            Plutôt que d'embaucher un super-héros qui cuisine à la vitesse de la lumière (impossible physiquement), le patron décide d'embaucher 4 cuisiniers travaillant à une vitesse normale en parallèle dans la même cuisine. C'est l'apparition du <strong>multiprocesseur</strong>.
+        </p>
+    </div>
+
+    <div class="card-expert">
+        <h4>🔬 Encadré Technique Approfondi (Pour experts) : La Taxonomie de Flynn & La Fin de Dennard</h4>
+        <p>
+            Michael J. Flynn a proposé en 1966 une classification des architectures d'ordinateurs basée sur le nombre de flux d'instructions et de flux de données :
+        </p>
+        <ul>
+            <li><strong>SISD (Single Instruction, Single Data) :</strong> L'ordinateur séquentiel traditionnel von Neumann.</li>
+            <li><strong>SIMD (Single Instruction, Multiple Data) :</strong> Une seule instruction appliquée à un vecteur de données (utilisé dans les GPU et instructions vectorielles AVX/NEON).</li>
+            <li><strong>MISD (Multiple Instruction, Single Data) :</strong> Rare, utilisé pour la tolérance aux pannes (systèmes redondants comme l'aéronautique).</li>
+            <li><strong>MIMD (Multiple Instruction, Multiple Data) :</strong> La vraie catégorie des multiprocesseurs. Chaque cœur exécute son propre programme sur ses propres données indépendamment.</li>
+        </ul>
+    </div>
+
+    <!-- SECTION 2 -->
+    <h2>2. Architectures & Concepts Fondamentaux</h2>
+    <p>
+        Un système multiprocesseur est composé de plusieurs unités centrales de traitement (CPU) ou de plusieurs cœurs qui partagent la charge de travail. Le défi majeur n'est pas seulement de mettre plusieurs processeurs ensemble, mais d'assurer qu'ils communiquent efficacement sans entrer en conflit.
+    </p>
+
+    <h3>A. La Hiérarchie Mémoire et le Bus d'Interconnexion</h3>
+    <p>
+        Chaque cœur possède ses propres registres et ses caches de niveaux 1 et 2 (L1, L2). Le cache de niveau 3 (L3) est généralement partagé entre tous les cœurs d'une même puce. La mémoire vive principale (RAM) est partagée par l'ensemble des puces via un bus d'interconnexion ou un réseau sur puce (NoC - Network on Chip).
+    </p>
+
+    <h3>B. Le Problème de la Cohérence de Cache</h3>
+    <p>
+        Lorsque plusieurs processeurs possèdent une copie d'une même donnée mémoire dans leur cache respectif, toute modification apportée par un processeur doit être répercutée ou invalidée chez les autres. Sans protocole rigoureux, des données incohérentes seraient lues.
+    </p>
+
+    <div class="card-analogy">
+        <h4>💡 Analogie accessible (Pour non-experts) : Le tableau blanc partagé</h4>
+        <p>
+            Quatre architectes travaillent sur le plan d'une maison. Chacun a un cahier de notes individuel (le cache L1). Si l'un d'eux modifie l'emplacement de la porte principale sur son cahier sans en avertir les trois autres, ils vont construire une maison absurde. La <strong>cohérence de cache</strong> est la règle qui oblige chaque architecte à crier aux autres : « J'ai effacé la porte à la page 12, effacez-la aussi de vos cahiers ! ».
+        </p>
+    </div>
+
+    <div class="card-expert">
+        <h4>🔬 Encadré Technique Approfondi (Pour experts) : Le protocole MESI / MOESI</h4>
+        <p>
+            Pour garantir l'invariance de mémoire, les systèmes multiprocesseurs à mémoire partagée utilisent un protocole d'écoute sur le bus (Snooping) ou par répertoire (Directory-based). Le protocole classique <strong>MESI</strong> associe 4 états à chaque ligne de cache :
+        </p>
+        <ul>
+            <li><strong>M (Modified) :</strong> La ligne est présente uniquement dans ce cache et a été modifiée (incohérente avec la RAM).</li>
+            <li><strong>E (Exclusive) :</strong> La ligne est présente uniquement dans ce cache, identique à la RAM.</li>
+            <li><strong>S (Shared) :</strong> La ligne est présente dans ce cache et potentiellement dans d'autres caches (lecture seule).</li>
+            <li><strong>I (Invalid) :</strong> La ligne n'est plus à jour et ne doit pas être lue.</li>
+        </ul>
+        <p>
+            Les transitions d'état sont déclenchées par les requêtes du processeur local (BusRd, BusRdX, BusUpgr) ou par l'observation des activités des autres sur le bus.
+        </p>
+    </div>
+
+    <!-- SECTION 3 -->
+    <h2>3. Classification et Modèles de Multiprocesseurs</h2>
+    <p>
+        Les multiprocesseurs se distinguent principalement selon le mode d'accès à la mémoire et l'organisation physique des composants.
+    </p>
+
+    <h3>A. UMA vs NUMA (Uniform vs Non-Uniform Memory Access)</h3>
+    <ul>
+        <li><strong>UMA (Symmetrical Multiprocessing - SMP) :</strong> Tous les processeurs accèdent à la mémoire RAM avec le même temps de latence, indépendamment de l'emplacement du mot mémoire.</li>
+        <li><strong>NUMA :</strong> Chaque processeur possède sa mémoire locale propre, mais peut accéder à la mémoire des autres processeurs via une interconnexion (comme AMD Infinity Fabric ou Intel UPI). Le temps d'accès varie si la donnée est locale ou distante.</li>
+    </ul>
+
+    <h3>B. Multicoeur vs Multiprocesseur physique (Multi-socket)</h3>
+    <p>
+        Un système <strong>multi-cœur</strong> intègre plusieurs unités de calcul sur la même matrice de silicium (Die). Un système <strong>multi-socket</strong> possède plusieurs puces physiques distinctes enfichées sur des connecteurs séparés sur la carte mère.
+    </p>
+
+    <div class="card-analogy">
+        <h4>💡 Analogie accessible (Pour non-experts) : Le bureau personnel vs le dépôt distant</h4>
+        <p>
+            Dans une architecture <strong>UMA</strong>, tous les employés travaillent dans la même pièce et vont chercher leurs dossiers dans une armoire unique située au centre.
+        </p>
+        <p>
+            Dans une architecture <strong>NUMA</strong>, chaque employé a sa propre armoire sous son bureau (accès ultra-rapide). S'il a besoin d'un dossier présent dans l'armoire de son collègue au bout du couloir, il peut y aller, mais cela lui prendra plus de temps.
+        </p>
+    </div>
+
+    <div class="card-expert">
+        <h4>🔬 Encadré Technique Approfondi (Pour experts) : L'impact applicatif de l'effet NUMA</h4>
+        <p>
+            Sur les serveurs NUMA modernes (ex. AMD EPYC à 128 cœurs ou Intel Xeon Scalable), le scheduler du système d'exploitation (comme le kernel Linux) doit pratiquer le <em>NUMA-aware scheduling</em> et le <em>first-touch memory allocation policy</em>. Si un thread s'exécute sur le Nœud 0 mais que ses données sont stockées sur le Nœud 3, les accès mémoire traversent le bus d'interconnexion (QPI/UPI/Infinity Fabric), augmentant la latence de 50 à 100% et saturant la bande passante d'interconnexion.
+        </p>
+    </div>
+
+    <!-- SECTION 4 -->
+    <h2>4. Limites Physiques et Théoriques Actuelles</h2>
+
+    <h3>A. La Loi d'Amdahl vs La Loi de Gustafson</h3>
+    <p>
+        La <strong>loi d'Amdahl</strong> indique que le gain en performance (speedup) d'un programme accéléré par $N$ processeurs est limité par la fraction séquentielle non parallélisable du programme ($F_s$).
+    </p>
+    <p style="text-align: center; font-style: italic;">
+        $\text{Speedup}(N) = \frac{1}{F_s + \frac{1 - F_s}{N}}$
+    </p>
+    <p>
+        Même avec un nombre infini de processeurs ($N \to \infty$), le gain maximal ne pourra jamais dépasser $1 / F_s$. Si 5% du code est strictement séquentiel, le gain maximal théorique est de 20x.
+    </p>
+
+    <h3>B. Le Choc du "Dark Silicon" et le goulot d'étranglement de Bus</h3>
+    <p>
+        En raison des contraintes thermiques, il est devenu impossible d'alimenter simultanément tous les transistors d'une puce à leur fréquence maximale sans brûler le composant. Une partie importante du silicium doit rester inoffensive ou éteinte à un instant $t$ : c'est le <strong>Dark Silicon</strong>.
+    </p>
+
+    <div class="card-analogy">
+        <h4>💡 Analogie accessible (Pour non-experts) : La préparation d'un gâteau de mariage</h4>
+        <p>
+            Pour faire un gâteau géant, vous pouvez embaucher 100 pâtissiers pour mélanger les ingrédients en même temps (étape parallèle). Mais à la fin, il n'y a qu'un seul four et le gâteau doit cuire pendant 45 minutes (étape séquentielle). Vous aurez beau avoir 10 000 pâtissiers, la cuisson prendra toujours 45 minutes ! C'est exactement l'illustration de la <strong>loi d'Amdahl</strong>.
+        </p>
+    </div>
+
+    <div class="card-expert">
+        <h4>🔬 Encadré Technique Approfondi (Pour experts) : Cache Bouncing et Faux Partage (False Sharing)</h4>
+        <p>
+            Le <em>False Sharing</em> survient lorsque deux threads s'exécutant sur deux cœurs différents modifient deux variables indépendantes, mais qui se trouvent par malchance sur la même ligne de cache (typiquement 64 octets). Bien que les données ne soient pas partagées logiquement, le système de cohérence de cache fait voyager en permanence la ligne de cache entre les deux cœurs (<em>Cache Bouncing</em>), entraînant une chute dramatique des performances.
+        </p>
+    </div>
+
+    <!-- SECTION 5 -->
+    <h2>5. Domaines d'Application et Cas d'Usage Modernes</h2>
+    <ul>
+        <li><strong>Supercalculateurs & HPC (High Performance Computing) :</strong> Le supercalculateur Frontier (USA) utilise plus de 8.7 millions de cœurs combinant CPU et GPU pour des simulations climatiques, nucléaires et astrophysiques.</li>
+        <li><strong>Cloud Computing & Datacenters :</strong> Virtualisation et conteneurisation (AWS, GCP, Azure) où chaque processeur physique héberge des dizaines de machines virtuelles en parallèle.</li>
+        <li><strong>Smartphones & puces ARM ARM big.LITTLE / DynamIQ :</strong> Utilisation d'architectures hétérogènes combinant des cœurs haute performance (pour les jeux/applications lourdes) et des cœurs haute efficacité énergétique (pour les tâches de fond).</li>
+        <li><strong>Systèmes Embarqués & Avionique :</strong> Calculateurs de vol à tolérance de pannes (lockstep multiprocessors) où deux cœurs exécutent exactement les mêmes instructions pour comparer leurs résultats en temps réel.</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 6 -->
+    <h2>6. Script Scénarisé Complet pour Vidéo / Projection (15 à 20 minutes)</h2>
+    <p>
+        <em>Ce script est conçu pour une vidéo immersive style "vulgarisation YouTube scientifique" (ex. Trash, Science Étonnante, Defakator). Il combine une narration vivante, des visualisations explicites et des encadrés techniques pour l'expert dans la salle.</em>
+    </p>
+
+    <table class="script-table">
+        <thead>
+            <tr>
+                <th style="width: 12%;">Timing</th>
+                <th style="width: 38%;">Visuel / Plan Caméra / B-Roll</th>
+                <th style="width: 50%;">Voix-Off / Narration Exacte</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="time-badge">00:00 - 01:30</td>
+                <td class="visual-cue">
+                    <strong>[Accroche Immersive]</strong><br>
+                    Plan serré sur le présentateur. Fond sombre futuriste. B-roll rapide : lignes de code qui défilent, serveur de datacenter clignotant, puis zoom macro sur une puce en silicium.
+                </td>
+                <td class="audio-narr">
+                    « Regardez ce petit carré de silicium de la taille d'un timbre-poste. À l'intérieur, il y a plus de 50 milliards de transistors. Il y a 20 ans, les ingénieurs pensaient qu'il suffirait d'augmenter sa fréquence pour le rendre infiniment plus rapide. Mais vers 2004, le monde de l'informatique s'est fracturé contre un mur d'acier physique : la chaleur. Aujourd'hui, on va comprendre comment on est passé d'un processeur solitaire ultra-rapide à de véritables armées de cœurs travaillant à l'unisson : bienvenue dans le monde des multiprocesseurs. »
+                </td>
+            </tr>
+            <tr>
+                <td class="time-badge">01:30 - 04:30</td>
+                <td class="visual-cue">
+                    <strong>[Partie 1 : L'Histoire & Le Mur de la Fréquence]</strong><br>
+                    Animation graphique : Une courbe de fréquence des CPU qui monte en flèche de 1980 à 2004 (de 4.77 MHz à 3.8 GHz) puis s'aplatit subitement.
+                    <br><em>Incrustation : Schéma de la Loi de Dennard.</em>
+                </td>
+                <td class="audio-narr">
+                    « Pendant 30 ans, la règle était simple : plus de fréquence = plus de vitesse. C'est l'âge d'or décrit par la loi de Moore et le Dennard Scaling. Mais à 4 GHz, la physique s'est vengée. Un processeur consommait autant qu'une plaque de cuisson électrique ! Pour éviter que nos puces ne fondent, les architectes ont dit : 'Stop. On arrête de faire chauffer le processeur unique, on va plutôt en mettre deux, quatre, puis cent sur la même puce !' C'est la naissance du multiprocesseur. »
+                </td>
+            </tr>
+            <tr>
+                <td class="time-badge">04:30 - 08:30</td>
+                <td class="visual-cue">
+                    <strong>[Partie 2 : L'Architecture & Le Mystère du Cache]</strong><br>
+                    Schéma animé dynamique : 4 cœurs (CPU 0 à 3) reliés à leurs caches L1/L2, partageant le cache L3 et la RAM.
+                    <br><em>Metaphore visuelle : L'analogie des 4 architectes et du tableau blanc.</em>
+                </td>
+                <td class="audio-narr">
+                    « Mais attention ! Mettre 8 cuisiniers dans la même cuisine, c'est bien... à condition qu'ils ne se rentrent pas dedans. Comment 8 cœurs partagent-ils la même mémoire vive sans corrompre les données ? C'est le défi de la <strong>cohérence de cache</strong>. Quand le cœur 1 modifie une valeur dans sa mémoire ultra-rapide L1, il doit instantanément prévenir les autres cœurs via des protocoles comme <strong>MESI</strong>. Sinon, c'est le chaos absolu ! »
+                </td>
+            </tr>
+            <tr>
+                <td class="time-badge">08:30 - 12:00</td>
+                <td class="visual-cue">
+                    <strong>[Partie 3 : UMA, NUMA et les Modèles]</strong><br>
+                    Animation 3D montrant l'accès uniforme (UMA) vs l'accès non-uniforme (NUMA) avec des bonhommes de couleurs différentes et des lignes de latence.
+                </td>
+                <td class="audio-narr">
+                    « Tous les multiprocesseurs ne sont pas nés égaux. Dans les petits systèmes, tous les cœurs voient la mémoire avec le même temps d'accès : c'est le modèle <strong>UMA</strong>. Mais dans les monstrueux serveurs à 128 cœurs, voyager jusqu'à la mémoire de l'autre bout de la carte mère prend du temps ! On utilise alors le modèle <strong>NUMA</strong> : chaque processeur a son jardin privé de mémoire, et ne va chez le voisin que si c'est strictement nécessaire. »
+                </td>
+            </tr>
+            <tr>
+                <td class="time-badge">12:00 - 16:00</td>
+                <td class="visual-cue">
+                    <strong>[Partie 4 : Les Limites Physiques & Théoriques]</strong><br>
+                    Graphique de la Loi d'Amdahl. Animation humoristique montrant 100 ouvriers attendant devant un seul four à gâteau.
+                </td>
+                <td class="audio-narr">
+                    « Peut-on mettre 1 million de cœurs pour aller 1 million de fois plus vite ? Hélàs non ! Et la raison s'appelle la <strong>Loi d'Amdahl</strong>. Si seulement 5% de votre programme ne peut pas être découpé en parallèle, votre accélération maximale sera bloquée à 20 fois, même avec une infinité de processeurs ! Sans compter le 'Dark Silicon' : des zones entières de la puce qu'on doit éteindre pour ne pas dépasser le budget thermique. »
+                </td>
+            </tr>
+            <tr>
+                <td class="time-badge">16:00 - 19:00</td>
+                <td class="visual-cue">
+                    <strong>[Partie 5 : Applications & Futur]</strong><br>
+                    Images de supercalculateurs (Frontier, Top500), cockpit d'avion de chasse, smartphone démonté avec puce ARM big.LITTLE.
+                </td>
+                <td class="audio-narr">
+                    « Aujourd'hui, les multiprocesseurs sont partout. Dans votre poche, votre smartphone alterne entre gros cœurs puissants et petits cœurs économes grâce aux architectures <strong>ARM big.LITTLE</strong>. Dans les avions de ligne, des multiprocesseurs redondants exécutent le même calcul en parallèle pour garantir qu'aucune panne ne survienne. Et dans les supercalculateurs HPC, ils prédisent le climat de demain. »
+                </td>
+            </tr>
+            <tr>
+                <td class="time-badge">19:00 - 20:00</td>
+                <td class="visual-cue">
+                    <strong>[Conclusion & Débat]</strong><br>
+                    Plan moyen du présentateur. Récapitulatif à l'écran avec la bibliographie affichée.
+                </td>
+                <td class="audio-narr">
+                    « Le multiprocesseur n'était pas un choix de confort, mais une nécessité physique. L'avenir appartient aux puces hétérogènes combinant CPU, GPU et accélérateurs IA. Merci à tous, et je suis à vous pour vos questions ! »
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- SECTION 7 -->
+    <h2>7. Guide des Logiciels Gratuits de Montage et Capture Vidéo</h2>
+    <p>
+        Pour réaliser une présentation vidéo ou projeter un montage dynamique sans débourser un centime, voici les meilleures solutions gratuites recommandées :
+    </p>
+
+    <div class="software-box">
+        <h3>1. OBS Studio (Open Broadcaster Software) - Capture & Projection</h3>
+        <p><strong>Type :</strong> Capture d'écran, enregistrement webcam et diffusion en direct (Open Source, Windows/Mac/Linux).</p>
+        <p><strong>Utilité pour votre exposé :</strong> Permet d'enregistrer simultanément votre visage (webcam) et votre diaporama HTML à l'écran, avec incrustation d'image dans l'image (PIP) et enregistrement audio haute qualité.</p>
+    </div>
+
+    <div class="software-box">
+        <h3>2. DaVinci Resolve (Version Gratuite) - Montage Professionnel</h3>
+        <p><strong>Type :</strong> Logiciel de montage vidéo, d'effets visuels (Fusion) et de mixage audio (Fairlight).</p>
+        <p><strong>Utilité pour votre exposé :</strong> Le standard de l'industrie hollywoodienne disponible gratuitement. Idéal pour couper les temps morts, ajouter des titres animés, des transitions fluides et synchroniser parfaitement votre voix-off avec les illustrations b-roll.</p>
+    </div>
+
+    <div class="software-box">
+        <h3>3. CapCut Desktop / Shotcut / Kdenlive - Alternatives Simples</h3>
+        <p><strong>CapCut :</strong> Ultra intuitif, parfait pour ajouter des sous-titres automatiques en français et des effets dynamiques très rapidement.</p>
+        <p><strong>Shotcut / Kdenlive :</strong> Logiciels libres légers et performants si vous travaillez sur une machine moins puissante.</p>
+    </div>
+
+    <!-- SECTION 8 -->
+    <h2>8. Bibliographie et Ressources de Référence</h2>
+    <ul>
+        <li><strong>John L. Hennessy & David A. Patterson</strong> (2017). <em>Computer Architecture: A Quantitative Approach (6th Edition)</em>. Morgan Kaufmann. (La bible absolue de l'architecture informatique et du calcul parallèle).</li>
+        <li><strong>Andrew S. Tanenbaum & Todd Austin</strong> (2013). <em>Structured Computer Organization (6th Edition)</em>. Pearson. (Excellente référence pour la mémoire partagée et les bus).</li>
+        <li><strong>Flynn, M. J.</strong> (1972). <em>Some Computer Organizations and Their Effectiveness</em>. IEEE Transactions on Computers. (L'article original fondant la taxonomie SISD/SIMD/MIMD).</li>
+        <li><strong>Amdahl, G. M.</strong> (1967). <em>Validity of the single processor approach to achieving large scale computing capabilities</em>. AFIPS Conference Proceedings. (L'article fondateur sur les limites du parallélisme).</li>
+        <li><strong>Cours en ligne & Chaînes de vulgarisation :</strong>
+            <ul>
+                <li><em>MIT OpenCourseWare 6.823 :</em> Computer System Architecture.</li>
+                <li><em>Carnegie Mellon University (CMU 15-418/618) :</em> Parallel Computer Architecture and Programming.</li>
+                <li><em>Chaînes YouTube recommandées :</em> Ben Eater (Architecture bas niveau), Computerphile (Explications claires sur le cache et l'architecture).</li>
+            </ul>
+        </li>
+    </ul>
+
+</body>
+</html>
