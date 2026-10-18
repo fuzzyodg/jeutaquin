@@ -181,69 +181,69 @@
     <div class="doc-header">
         <h1>Les Systèmes d'Exploitation Multiprocesseurs</h1>
         <div class="subtitle">Synthèse simplifiée : Fondements, Noyau, Ordonnancement, Concurrence et Accélérateurs (GPU/IA)</div>
-        <div class="meta">Document de cours condensé avec références bibliographiques et exemples simplifiés</div>
+        <div class="meta">Document de cours condensé avec références bibliographiques et exemples simples</div>
     </div>
 
     <h2>Introduction : L'impasse physique et le virage du multicœur</h2>
 
-    <p class="no-indent">Pendant trois décennies, la vitesse des logiciels augmentait automatiquement avec l'arrivée des nouveaux processeurs, sans modifier le code. Cette période dorée du <em>"Free Lunch"</em> <span class="citation">[Sutter, 2005]</span> reposait sur la complémentarité entre la loi de Moore et l'échelle de Dennard.</p>
+    <p class="no-indent">Pendant près de trente ans, la vitesse des logiciels augmentait toute seule à chaque nouveau processeur. On achetait une nouvelle machine, et le même logiciel tournait deux fois plus vite sans qu'un développeur ne touche au code. Herb Sutter a résumé ça sous une formule célèbre : la fin du <em>"Free Lunch"</em> <span class="citation">[Sutter, 2005]</span>. Ce miracle reposait sur deux piliers : la loi de Moore et l'échelle de Dennard.</p>
 
     <h3>1. L'âge d'or du monocœur</h3>
-    <p>La <strong>loi de Moore</strong> (1965) observait que le nombre de transistors doublait environ tous les deux ans <span class="citation">[Moore, 1965]</span>. En parallèle, l'<strong>échelle de Dennard</strong> (1974) prouvait que la consommation électrique par unité de surface restait constante lorsque les transistors rapetissaient. Cela permettait d'augmenter la fréquence d'horloge sans faire chauffer exagérément la puce <span class="citation">[Dennard et al., 1974]</span>.</p>
+    <p>En 1965, Gordon Moore constate que le nombre de transistors par puce double environ tous les deux ans <span class="citation">[Moore, 1965]</span>. De son côté, Robert Dennard démontre en 1974 qu'en rétrécissant un transistor, sa consommation baisse proportionnellement. Résultat : la densité d'énergie reste constante. On pouvait donc augmenter la fréquence d'horloge de la puce sans la transformer en grille-pain <span class="citation">[Dennard et al., 1974]</span>.</p>
 
     <div class="analogy-box">
-        <div class="title">Analogie : L'amélioration du moteur unique</div>
-        C'était comme améliorer une voiture sur une route à une voie : chaque année, le moteur tournait deux fois plus vite, réduisant la durée du trajet sans rien changer à la conduite.
+        <div class="title">Analogie : La voiture sur voie unique</div>
+        C'est comme si on améliorait une voiture sur une route à une voie : chaque année, le moteur tourne deux fois plus vite. Le trajet prend deux fois moins de temps sans changer la façon de conduire.
     </div>
 
     <h3>2. La rupture physique : les trois murs (vers 2005)</h3>
-    <p>Vers 2005, la miniaturisation s'est heurtée à des limites atomiques, provoquant l'effondrement de l'échelle de Dennard <span class="citation">[Silberschatz et al., 2018]</span> :</p>
+    <p>Au milieu des années 2000, les transistors sont devenus tellement petits que les fuites d'électricité ont fait grimper la température. L'échelle de Dennard s'est effondrée contre trois murs physiques <span class="citation">[Silberschatz et al., 2018]</span> :</p>
     <ul>
-        <li><strong>Mur de la puissance (Power Wall) :</strong> Les fuites électriques font surchauffer le silicium.</li>
-        <li><strong>Mur de la fréquence (Frequency Wall) :</strong> Bloqué à 3-4 GHz sous peine de détruire le composant.</li>
-        <li><strong>Mur de la mémoire (Memory Wall) :</strong> La RAM est trop lente par rapport au processeur qui passe son temps à l'attendre.</li>
+        <li><strong>Le mur de la puissance :</strong> La puce chauffe trop et devient impossible à refroidir avec un ventilateur classique.</li>
+        <li><strong>Le mur de la fréquence :</strong> Bloqué net autour de 3 à 4 GHz. Monter plus haut risquerait de griller le silicium.</li>
+        <li><strong>Le mur de la mémoire :</strong> Le processeur va trop vite par rapport à la mémoire RAM et passe son temps à l'attendre.</li>
     </ul>
 
-    <h3>3. Le paradoxe et la transition multicœur</h3>
-    <p>Les besoins en calcul continuant d'exploser, les fondeurs ont placé <strong>plusieurs cœurs de calcul</strong> sur une même puce. Ne pouvant plus accélérer un cœur unique, on parallélise le travail. La charge bascule alors sur le système d'exploitation, qui doit coordonner ces cœurs sans conflit <span class="citation">[Tanenbaum & Bos, 2015]</span>.</p>
+    <h3>3. Le virage du multicœur</h3>
+    <p>Les besoins en calcul n'ont pas diminué pour autant. Les fabricants ont donc changé de stratégie : au lieu de fabriquer un seul cœur ultra-rapide, ils ont placé <strong>plusieurs cœurs</strong> sur la même puce. Mais attention, un système d'exploitation conçu pour un seul cœur ne sait pas utiliser cette puissance. C'est à l'OS de répartir les tâches et de gérer les accès simultanés sans pagaille <span class="citation">[Tanenbaum & Bos, 2015]</span>.</p>
 
     <div class="analogy-box">
         <div class="title">Analogie : Le convoi de camions</div>
-        Ne pouvant créer une voiture roulant à 1000 km/h, on envoie dix camions roulant à 100 km/h. La livraison globale augmente, mais il faut un régulateur de trafic efficace.
+        Quand on ne peut plus fabriquer une voiture de course roulant à 1000 km/h, on envoie dix camions à 100 km/h. On transporte plus de marchandises, mais il faut un bon régulateur pour éviter les collisions.
     </div>
 
     <h3>4. Définition</h3>
-    <p>Un <strong>système d'exploitation multiprocesseur</strong> distribue les programmes sur plusieurs cœurs physiques ou logiques, gère la mémoire partagée et sécurise les accès simultanés <span class="citation">[Stallings, 2018]</span>.</p>
+    <p>Un <strong>système d'exploitation multiprocesseur</strong> répartit les programmes entre plusieurs cœurs, gère la mémoire partagée et coordonne les accès aux ressources pour éviter que deux traitements ne se marchent sur les pieds <span class="citation">[Stallings, 2018]</span>.</p>
 
     <div class="transition">
-        S'exécutant lui-même sur ces processeurs, comment le noyau s'organise-t-il pour éviter d'être corrompu ?
+        Maintenant que l'OS doit tourner lui-même sur plusieurs cœurs, voyons comment son propre noyau protège ses données.
     </div>
 
     <h2>Partie 1 : Les modèles d'OS et l'organisation du noyau</h2>
 
     <h3>1.1 Définition du noyau</h3>
-    <p>Le <strong>noyau (kernel)</strong> est le cœur privilégié de l'OS qui gère la mémoire, les processus et les périphériques <span class="citation">[Love, 2010]</span>.</p>
+    <p>Le <strong>noyau (kernel)</strong> est la partie centrale et privilégiée de l'OS. C'est lui qui contrôle directement la mémoire, le matériel et le lancement des programmes <span class="citation">[Love, 2010]</span>.</p>
 
     <h3>1.2 Le modèle asymétrique (AMP)</h3>
-    <p>Un processeur <strong>maître</strong> exécute le noyau, tandis que les processeurs <strong>esclaves</strong> exécutent les applications utilisateur <span class="citation">[Silberschatz et al., 2018]</span>.</p>
+    <p>Dans le modèle AMP, un processeur <strong>maître</strong> exécute tout le noyau. Les autres processeurs, dits <strong>esclaves</strong>, font tourner les applications et envoient leurs demandes au maître <span class="citation">[Silberschatz et al., 2018]</span>.</p>
     <ul>
-        <li><em>Avantage :</em> Simple à programmer, pas de conflit dans le noyau.</li>
-        <li><em>Inconvénient :</em> Le maître est un goulot d'étranglement et un point de défaillance unique (SPOF).</li>
+        <li><em>Avantage :</em> Très simple à écrire, aucun risque de conflit dans le noyau.</li>
+        <li><em>Inconvénient :</em> Le maître sature vite et si le maître tombe en panne, toute la machine s'arrête.</li>
     </ul>
 
     <div class="analogy-box">
-        <div class="title">Analogie : La cuisine à chef unique</div>
-        Plusieurs commis préparent des plats, mais un seul chef détient les clés de la réserve. Les commis font la queue dès qu'ils ont besoin d'un ingrédient.
+        <div class="title">Analogie : La cuisine avec un seul chef</div>
+        Plusieurs commis préparent les plats, mais un seul chef garde les clés du garde-manger. Dès qu'un commis a besoin d'un ingrédient, il doit faire la queue devant le chef.
     </div>
 
     <h3>1.3 Le modèle symétrique (SMP)</h3>
-    <p>Tous les processeurs sont égaux et peuvent exécuter le code du noyau <span class="citation">[Tanenbaum & Bos, 2015]</span>. C'est le choix des OS actuels (Linux, Windows, macOS).</p>
+    <p>Dans le modèle SMP, tous les processeurs sont égaux et chacun peut exécuter le noyau <span class="citation">[Tanenbaum & Bos, 2015]</span>. C'est le modèle utilisé par Linux, Windows et macOS.</p>
     <ul>
-        <li><em>Avantages :</em> Charge bien répartie, meilleure tolérance aux pannes.</li>
-        <li><em>Nouveau problème :</em> Deux cœurs risquent de modifier simultanément les données du noyau.</li>
+        <li><em>Avantages :</em> La charge est bien répartie et le système continue de tourner si un cœur flanche.</li>
+        <li><em>Défi :</em> Si deux cœurs modifient en même temps la liste des programmes en mémoire, ils risquent de la corrompre.</li>
     </ul>
 
-    <h3>1.4 Tableau comparatif AMP / SMP</h3>
+    <h3>1.4 Comparaison rapide AMP / SMP</h3>
     <table>
         <thead>
             <tr>
@@ -254,93 +254,93 @@
         </thead>
         <tbody>
             <tr>
-                <td><strong>Exécution noyau</strong></td>
-                <td>Réservée au maître uniquement.</td>
-                <td>Partagée par tous les cœurs.</td>
+                <td><strong>Exécution du noyau</strong></td>
+                <td>Processeur maître uniquement.</td>
+                <td>Tous les processeurs.</td>
             </tr>
             <tr>
-                <td><strong>Goulot d'étranglement</strong></td>
-                <td>Élevé (saturation du maître).</td>
-                <td>Faible (dépend des verrous).</td>
+                <td><strong>Risque de bouchon</strong></td>
+                <td>Élevé (le maître sature vite).</td>
+                <td>Faible (réparti selon les verrous).</td>
             </tr>
             <tr>
                 <td><strong>Passage à l'échelle</strong></td>
-                <td>Très limité.</td>
-                <td>Excellent (dizaines de cœurs).</td>
+                <td>Limité à quelques cœurs.</td>
+                <td>Très bon (dizaines de cœurs).</td>
             </tr>
         </tbody>
     </table>
 
-    <h3>1.5 L'organisation des verrous dans le noyau SMP</h3>
+    <h3>1.5 Protéger le noyau en SMP</h3>
     <ul>
-        <li><strong>Verrou global (Big Kernel Lock - BKL) :</strong> Un seul verrou pour tout le noyau. Simple mais retombe sur le goulot de l'AMP <span class="citation">[Bovet & Cesati, 2005]</span>. (Retiré dans Linux 2.6.39 en 2011).</li>
-        <li><strong>Verrous fins :</strong> Un verrou par structure de données. Excellent parallélisme, mais code complexe <span class="citation">[Love, 2010]</span>.</li>
+        <li><strong>Le verrou global (Big Kernel Lock - BKL) :</strong> Un gros cadenas unique pour tout le noyau. Un seul cœur peut entrer dans le noyau à la fois <span class="citation">[Bovet & Cesati, 2005]</span>. (Définitivement retiré du noyau Linux en 2011 avec la version 2.6.39).</li>
+        <li><strong>Les verrous fins :</strong> Un cadenas séparé pour chaque petite liste de données. Ça demande plus de prudence, mais le gain de vitesse est énorme <span class="citation">[Love, 2010]</span>.</li>
     </ul>
 
     <div class="transition">
-        Une fois le noyau protégé, comment répartit-on les processus utilisateur entre les cœurs ?
+        Le noyau étant sécurisé, comment l'OS choisit-il quel cœur va exécuter quel programme ?
     </div>
 
     <div class="page-break"></div>
 
     <h2>Partie 2 : L'ordonnancement des processus</h2>
 
-    <h3>2.1 Structure des files d'attente</h3>
+    <h3>2.1 Organisation des files d'attente</h3>
     <ul>
-        <li><strong>File globale unique :</strong> Équilibrage parfait, mais tous les cœurs se disputent le verrou de la file <span class="citation">[Silberschatz et al., 2018]</span>.</li>
-        <li><strong>Files locales par CPU :</strong> Pas de conflit sur le verrou et meilleur usage du cache, mais risque de déséquilibre.</li>
+        <li><strong>File globale unique :</strong> Tous les cœurs piochaient dans la même liste. C'est très équitable, mais les cœurs perdent du temps à se disputer le cadenas de la file <span class="citation">[Silberschatz et al., 2018]</span>.</li>
+        <li><strong>Files locales par cœur :</strong> Chaque cœur a sa propre liste. Pas de dispute sur le cadenas, mais un cœur peut se retrouver au chômage pendant que son voisin déborde de travail.</li>
     </ul>
 
     <div class="analogy-box">
-        <div class="title">Analogie : Caisses de supermarché</div>
-        File unique (banque) = équilibrage parfait mais bouchon à l'entrée. Files séparées (supermarché) = fluide, mais vous risquez d'être bloqué derrière un caddie plein.
+        <div class="title">Analogie : Les caisses du magasin</div>
+        Une file unique (comme à la banque) garantit le passage dans l'ordre, mais crée un bouchon. Une file par caisse (au supermarché) va vite, sauf si quelqu'un devant vous a un caddie plein à craquer.
     </div>
 
-    <h3>2.2 Équilibrage de charge et Affinité</h3>
-    <p>L'OS associe des files locales avec le <strong>Work Stealing</strong> (un cœur inactif "vole" du travail à un voisin surchargé) <span class="citation">[Tanenbaum & Bos, 2015]</span>. L'<strong>affinité processeur</strong> cherche à garder une tâche sur le même cœur pour réutiliser la mémoire cache rapide L1/L2.</p>
+    <h3>2.2 Équilibrage de charge et affinité</h3>
+    <p>Pour régler le problème des files locales, l'OS utilise le <strong>Work Stealing</strong> : un cœur qui a fini son travail va piquer des tâches dans la file de son voisin <span class="citation">[Tanenbaum & Bos, 2015]</span>. En même temps, l'OS essaie de garder un programme sur le même cœur (<strong>affinité processeur</strong>) pour ne pas vider la mémoire cache L1/L2 qui contient déjà ses données.</p>
 
-    <h3>2.3 Topologie NUMA</h3>
-    <p>Sur les gros serveurs <strong>NUMA (Non-Uniform Memory Access)</strong>, la RAM est rattachée à des groupes de processeurs. Lire sa mémoire locale est très rapide, lire la mémoire distante d'un autre socket est lent. L'ordonnanceur regroupe le calcul et la mémoire sur le même nœud local <span class="citation">[Bovet & Cesati, 2005]</span>.</p>
+    <h3>2.3 Les machines NUMA</h3>
+    <p>Sur les grands serveurs à plusieurs puces, la mémoire RAM est découpée par groupe de processeurs : c'est l'architecture <strong>NUMA (Non-Uniform Memory Access)</strong>. Accéder à sa mémoire locale prend quelques nanosecondes, alors qu'aller chercher la mémoire d'un autre processeur est beaucoup plus long. L'ordonnanceur veille donc à placer le programme et ses données sur le même nœud physique <span class="citation">[Bovet & Cesati, 2005]</span>.</p>
 
     <div class="transition">
-        Pour éviter que ces calculs parallèles ne corrompent la mémoire, la synchronisation est indispensable.
+        Faire travailler plusieurs cœurs en parallèle crée un vrai risque : les erreurs de concurrence.
     </div>
 
     <h2>Partie 3 : Synchronisation, concurrence et pièges logiciels</h2>
 
-    <h3>3.1 Conditions de concurrence et instructions atomiques</h3>
-    <p>Une <strong>condition de concurrence (race condition)</strong> survient lorsque le résultat dépend de l'ordre d'exécution de deux cœurs sur une même variable <span class="citation">[Stallings, 2018]</span>. Couper les interruptions sur un seul cœur ne suffit plus en SMP. On utilise des instructions matérielles <strong>atomiques</strong> (ex: <code>Compare-and-Swap</code>).</p>
+    <h3>3.1 Erreurs de concurrence et opérations atomiques</h3>
+    <p>Une <strong>condition de concurrence (race condition)</strong> arrive quand deux cœurs lisent et écrivent sur la même donnée au même instant, écrasant le travail de l'autre <span class="citation">[Stallings, 2018]</span>. Couper les interruptions sur un seul cœur ne sert à rien en SMP. On s'appuie sur des instructions matérielles <strong>atomiques</strong> (comme <code>Compare-and-Swap</code>) qui bloquent la ligne mémoire le temps d'une modification.</p>
 
-    <h3>3.2 Les outils : Spinlock vs Mutex</h3>
+    <h3>3.2 Spinlock ou Mutex ?</h3>
     <ul>
-        <li><strong>Spinlock :</strong> Le cœur boucle en attente active (<em>busy waiting</em>). Ultra-rapide mais brûle du CPU. Idéal pour de très courtes attentes <span class="citation">[Love, 2010]</span>.</li>
-        <li><strong>Mutex :</strong> Le processus s'endort, libérant le cœur. Économe, mais coûteux en changement de contexte.</li>
+        <li><strong>Spinlock :</strong> Le cœur tourne en boucle en attendant que la place se libère. Très rapide si l'attente duren deux microsecondes, mais ça brûle de l'électricité inutilement si ça s'allonge <span class="citation">[Love, 2010]</span>.</li>
+        <li><strong>Mutex :</strong> Le programme s'endort et laisse sa place à un autre. C'est plus sobre, mais réveiller le programme demande un changement de contexte coûteux.</li>
     </ul>
 
-    <h3>3.3 Les pièges : Interblocage et Faux partage</h3>
+    <h3>3.3 Les bugs classiques</h3>
     <ul>
-        <li><strong>Deadlock (Interblocage) :</strong> Deux processus s'attendent mutuellement. (Conditions de Coffman <span class="citation">[Coffman et al., 1971]</span>).</li>
-        <li><strong>Faux partage (False Sharing) :</strong> Deux variables indépendantes situées sur la même ligne de cache de 64 octets provoquent des allers-retours inutiles entre cœurs, effondrant les performances <span class="citation">[Tanenbaum & Bos, 2015]</span>.</li>
+        <li><strong>Deadlock (Interblocage) :</strong> Deux programmes se bloquent mutuellement en attendant une ressource tenue par l'autre. C'est l'analogie du carrefour où quatre voitures arrivent en même temps et se cèdent la priorité à droite. (Voir conditions de Coffman <span class="citation">[Coffman et al., 1971]</span>).</li>
+        <li><strong>False Sharing (Faux partage) :</strong> Deux variables différentes partagent la même ligne de cache de 64 octets. Les cœurs se renvoient le bloc mémoire en permanence, effondrant la vitesse du système sans qu'il n'y ait la moindre erreur de code <span class="citation">[Tanenbaum & Bos, 2015]</span>.</li>
     </ul>
 
     <div class="transition">
-        Pourquoi ne suffit-il pas d'ajouter des dizaines de cœurs pour accélérer un programme ?
+        Pourquoi ne peut-on pas accélérer un programme à l'infini en ajoutant des cœurs ?
     </div>
 
     <h2>Partie 4 : Limites théoriques et évolution</h2>
 
     <h3>4.1 La loi d'Amdahl</h3>
-    <p>La <strong>loi d'Amdahl</strong> (1967) démontre que l'accélération maximale est bridée par la partie séquentielle <span class="formula">(1 - p)</span> qui ne peut pas être parallélisée (les verrous) <span class="citation">[Amdahl, 1967]</span> :</p>
+    <p>La <strong>loi d'Amdahl</strong> (1967) montre que l'accélération d'un logiciel est limitée par sa partie séquentielle <span class="formula">(1 - p)</span>, c'est-à-dire les lignes de code qu'on ne peut pas découper <span class="citation">[Amdahl, 1967]</span> :</p>
     <div class="formula-block">
         Accélération = 1 / [ (1 - p) + (p / n) ]
     </div>
-    <p class="no-indent">Avec 5 % de code séquentiel (<span class="formula">1 - p = 0,05</span>), l'accélération maximale absolue avec une infinité de cœurs est limitée à <strong>20</strong>.</p>
+    <p class="no-indent">S'il reste seulement 5 % de code non parallélisable (<span class="formula">1 - p = 0,05</span>), l'accélération maximale théorique ne dépassera jamais <strong>20</strong>, même avec un million de cœurs.</p>
 
-    <h3>4.2 L'ordonnancement asymétrique moderne (big.LITTLE)</h3>
-    <p>Face au mur de la puissance, les puces modernes (ARM big.LITTLE, Apple Silicon, Intel) combinent des cœurs de Performance (P-cores) et d'Efficacité (E-cores) <span class="citation">[Silberschatz et al., 2018]</span>. L'OS oriente les tâches lourdes vers les P-cores et le travail de fond vers les E-cores.</p>
+    <h3>4.2 L'asymétrie moderne (big.LITTLE)</h3>
+    <p>Pour économiser la batterie des smartphones et éviter la surchauffe des PC, les puces actuelles mélangent de gros cœurs puissants (P-cores) et de petits cœurs économes (E-cores) <span class="citation">[Silberschatz et al., 2018]</span>. L'OS doit envoyer les jeux lourds sur les gros cœurs et la musique de fond sur les petits cœurs.</p>
 
     <div class="transition">
-        Aujourd'hui, l'évolution dépasse le CPU : le système doit gérer des puces spécialisées comme les GPU et les puces d'IA.
+        Aujourd'hui, l'histoire va encore plus loin : les processeurs collaborent avec des puces spécialisées.
     </div>
 
     <div class="page-break"></div>
@@ -348,33 +348,30 @@
     <h2>Partie 5 : L'ère des accélérateurs spécialisés (GPU et Puces IA)</h2>
 
     <h3>5.1 Le GPU (Graphics Processing Unit)</h3>
-    <p>Le GPU contient des centaines ou milliers de cœurs simples exécutant la même opération sur des volumes massifs de données (parallélisme SIMD/SIMT) <span class="citation">[Hennessy & Patterson, 2017]</span>. Initialement conçu pour les graphismes 3D, il est central pour le calcul scientifique et l'IA.</p>
-    <ul>
-        <li><strong>Rôle de l'OS :</strong> Dialogue via un pilote (driver), gestion de la mémoire dédiée ou partagée, allocation sécurisée du GPU entre applications (navigateur, jeu, vidéo), et régulation d'énergie.</li>
-        <li><em>Nuance :</em> Sur PC de bureau, le GPU possède sa propre VRAM dédiée. Sur smartphone/SoC, le GPU et le CPU partagent la même mémoire RAM physique, modifiant la gestion des données par l'OS.</li>
-    </ul>
+    <p>Un GPU contient des centaines ou des milliers de cœurs très simples qui font exactement la même opération sur des blocs de données massifs (mode SIMD/SIMT) <span class="citation">[Hennessy & Patterson, 2017]</span>. Conçu pour la 3D, il est devenu incontournable pour les calculs scientifiques et l'intelligence artificielle.</p>
+
+    <p><strong>Rôle de l'OS :</strong> L'OS utilise un pilote spécialisé pour envoyer les données au GPU, gérer sa mémoire et partager son accès entre plusieurs applications (votre jeu et votre navigateur). Sur un ordinateur fixe, le GPU a sa propre mémoire VRAM séparée, alors que sur un téléphone portable, il partage la mémoire RAM du système avec le CPU.</p>
 
     <h3>5.2 Les puces d'IA (NPU, TPU)</h3>
-    <p>Les <strong>NPU (Neural Processing Unit)</strong> et <strong>TPU (Tensor Processing Unit)</strong> sont des circuits accélérateurs optimisés pour les calculs de réseaux de neurones (multiplications de matrices) <span class="citation">[Hennessy & Patterson, 2017]</span>. Ils sont très économes en énergie.</p>
-    <ul>
-        <li><strong>Exemples concrets :</strong> Apple Neural Engine, Google Tensor sur Pixel, Qualcomm Hexagon NPU.</li>
-        <li><strong>Usage typique :</strong> Traitement d'images, reconnaissance vocale, traduction locale sans appel aux serveurs cloud.</li>
-        <li><strong>Rôle de l'OS :</strong> Répartir intelligemment la tâche entre CPU, GPU et NPU, et offrir des frameworks unifiés (ex: Core ML, Android NNAPI).</li>
-    </ul>
+    <p>Les <strong>NPU (Neural Processing Unit)</strong> et <strong>TPU (Tensor Processing Unit)</strong> sont des circuits intégrés dessinés spécifiquement pour accélérer les réseaux de neurones (les multiplications de matrices) <span class="citation">[Hennessy & Patterson, 2017]</span>. Ils consomment très peu d'énergie.</p>
+
+    <p><strong>Exemples concrets :</strong> Le Neural Engine des iPhone d'Apple, les processeurs Tensor des smartphones Pixel, ou les NPU Qualcomm des nouveaux PC. Ces puces gèrent la reconnaissance vocale, la retouche photo automatique et la traduction en direct sur votre appareil, sans envoyer vos données sur un serveur externe.</p>
+
+    <p><strong>Rôle de l'OS :</strong> Choisir si un calcul doit aller sur le CPU, le GPU ou le NPU, tout en fournissant des outils simples aux développeurs (comme Core ML chez Apple).</p>
 
     <h3>5.3 Le smartphone : Un SoC où tout cohabite</h3>
-    <p>Le smartphone est l'exemple parfait du <strong>SoC (System on Chip)</strong> : une unique puce regroupe le CPU (big.LITTLE), le GPU, le NPU, le modem et le processeur d'image (ISP) <span class="citation">[Tanenbaum & Bos, 2015]</span>. L'OS mobile (Android, iOS) doit arbitrer la consommation d'énergie et la chauffe plutôt que la seule vitesse pure.</p>
+    <p>Sur un téléphone, l'intégralité du matériel est regroupée sur une seule puce appelée <strong>SoC (System on Chip)</strong> : cœurs CPU big.LITTLE, GPU, NPU, modem et traitement d'image <span class="citation">[Tanenbaum & Bos, 2015]</span>. L'OS mobile (Android ou iOS) doit faire tourner tout ce monde en pensant à la batterie et à la chaleur avant la vitesse pure.</p>
 
     <h3>5.4 Ce qui change pour l'OS</h3>
     <ul>
-        <li><strong>Ordonnancement :</strong> L'OS ordonnance des blocs de travail sur des unités hétérogènes. L'ordonnancement d'un GPU ou d'un NPU est géré par des grilles de calculs, pas par des tranches de temps classiques.</li>
-        <li><strong>Mémoire & Énergie :</strong> Réduire les copies de mémoire inutiles entre puces et éteindre les blocs inactifs (clock-gating / power-gating).</li>
-        <li><strong>Firmware & Sécurité :</strong> Un firmware autonome tourne souvent sur l'accélérateur. L'OS communique avec la puce via des interfaces d'appels et des pilotes.</li>
+        <li><strong>Ordonnancement :</strong> L'OS ne distribue plus seulement du temps CPU, mais envoie des blocs de travail vers des composants très différents.</li>
+        <li><strong>Mémoire & Énergie :</strong> Éviter de recopier les données d'une puce à l'autre et éteindre les zones inactives du composant pour sauver la batterie.</li>
+        <li><strong>Firmware :</strong> Un petit programme interne (firmware) tourne directement sur le GPU ou le NPU. L'OS ne contrôle pas tout dans le détail, il dialogue avec le composant via des commandes.</li>
     </ul>
 
     <h2>Conclusion</h2>
 
-    <p class="no-indent">L'évolution des systèmes d'exploitation est une suite de réponses aux contraintes physiques du silicium. De l'asymétrie initiale au SMP, du découpage des verrous à l'ordonnancement NUMA et hybride, l'OS s'est constamment adapté. Aujourd'hui, avec l'intégration du multicœur, de l'asymétrie matérielle et des puces spécialisées (GPU/NPU) au sein d'un même SoC, l'OS devient le chef d'orchestre d'une mosaïque de calculateurs hétérogènes.</p>
+    <p class="no-indent">L'évolution des systèmes d'exploitation découle directement des limites physiques du matériel. Pour surmonter les blocages de fréquence et de température, l'OS a dû s'adapter à chaque étape : du modèle asymétrique au SMP, du verrou unique aux verrous fins, et de l'ordonnancement NUMA jusqu'à la gestion des smartphones hybrides actuels. L'OS moderne est désormais le chef d'orchestre d'une mosaïque de puces spécialisées.</p>
 
     <h2>Bibliographie et Références Académiques</h2>
 
