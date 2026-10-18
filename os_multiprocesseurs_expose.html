@@ -185,7 +185,7 @@
         Ne pouvant plus construire une seule voiture roulant à 1000 km/h, les ingénieurs ont décidé d'envoyer un convoi de dix camions roulant à 100 km/h. C'est la naissance du multicœur. Mais un camionneur a besoin d'un régulateur de trafic : c'est le rôle fondamental du système d'exploitation multiprocesseur, que nous allons explorer ensemble."
     </div>
 
-    <h2>Partie 1 : Modèles d'OS et Organisation du Noyau <span class="timing-badge">Durée : ~4 min</span></h2>
+    <h2>Partie 1 : Modèles d'OS et Organisation du Noyau <span class="timing-badge">Durée : ~3 min</span></h2>
 
     <div class="card-box">
         <div class="title">Fiche Mémo Visuelle</div>
@@ -223,7 +223,7 @@
 
     <div class="page-break"></div>
 
-    <h2>Partie 2 : L'Ordonnancement des Processus <span class="timing-badge">Durée : ~4 min</span></h2>
+    <h2>Partie 2 : L'Ordonnancement des Processus <span class="timing-badge">Durée : ~3 min</span></h2>
 
     <div class="card-box">
         <div class="title">Fiche Mémo Visuelle</div>
@@ -260,7 +260,7 @@
         Cependant, déplacer une tâche coûte cher car la mémoire cache devient 'froide'. L'OS cherche donc à maintenir l'affinité processeur. Sur des serveurs à plusieurs sockets, appelés architectures NUMA, ce principe devient vital : aller chercher des données dans la RAM rattachée à un processeur distant est aussi lent que d'envoyer un coursier dans une autre ville. L'ordonnanceur doit donc impérativement garder le processus et sa mémoire sur le même nœud physique."
     </div>
 
-    <h2>Partie 3 : Synchronisation et Pièges Logiciels <span class="timing-badge">Durée : ~4 min</span></h2>
+    <h2>Partie 3 : Synchronisation et Pièges Logiciels <span class="timing-badge">Durée : ~3 min</span></h2>
 
     <div class="card-box">
         <div class="title">Fiche Mémo Visuelle</div>
@@ -329,13 +329,49 @@
         C'est pour cela que les systèmes récents changent d'approche. Regardez vos smartphones ou les puces récentes d'Apple et d'Intel : elles adoptent l'architecture big.LITTLE. On mélange sur la même puce de très gros cœurs ultra-rapides et de petits cœurs très économes en énergie. L'ordonnanceur moderne ne traite plus les cœurs à égalité : il envoie la musique de fond sur un petit cœur économe, et réserve le gros cœur puissant au jeu vidéo que vous venez de lancer."
     </div>
 
+    <h2>Partie 5 : L'Ère des Accélérateurs Spécialisés (GPU & Puces IA) <span class="timing-badge">Durée : ~4 min</span></h2>
+
+    <div class="card-box">
+        <div class="title">Fiche Mémo Visuelle (Puces Hétérogènes et SoC Mobile)</div>
+        <ul>
+            <li><strong>Le GPU :</strong> Des milliers de cœurs simples (SIMD/SIMT) pour traiter de gros volumes de données (3D, calcul scientifique, IA).
+                <ul>
+                    <li><em>Différence PC/Smartphone :</em> VRAM dédiée sur PC de bureau vs Mémoire RAM partagée sur SoC mobile.</li>
+                </ul>
+            </li>
+            <li><strong>Puces d'IA (NPU / TPU) :</strong> Circuits dédiés aux opérations matricielles des réseaux de neurones, ultra-économes.
+                <ul>
+                    <li><em>Exemples familiers :</em> Apple Neural Engine, Tensor sur Google Pixel, Samsung/Qualcomm NPU.</li>
+                    <li><em>Usages :</em> Reconnaissance vocale, traitement photo, traduction locale (évite les serveurs distants).</li>
+                </ul>
+            </li>
+            <li><strong>Le Smartphone (SoC complet) :</strong> Tout cohabite sur la même puce (CPU big.LITTLE, GPU, NPU, modem, ISP).
+                <ul>
+                    <li><em>Objectif OS :</em> Priorité absolue à l'énergie et la chaleur plutôt qu'à la vitesse brute.</li>
+                </ul>
+            </li>
+            <li><strong>Nouveaux défis OS :</strong> Ordonnancer du travail sur des unités non-CPU, supprimer les copies mémoire entre puces, gérer les firmwares propriétaires embarqués.</li>
+        </ul>
+    </div>
+
+    <div class="speech-box">
+        <div class="title">Script Oral Mot-à-Mot</div>
+        "Pour terminer notre voyage dans l'architecture moderne, regardons ce qui se passe aujourd'hui au-delà du CPU classique : l'avènement des accélérateurs spécialisés.
+        <br><br>
+        Le premier d'entre eux est le GPU. Contrairement au CPU qui possède quelques cœurs très intelligents, le GPU intègre des milliers de cœurs très simples travaillant tous en même temps sur la même opération. Conçu à l'origine pour afficher des pixels 3D, le GPU est devenu le moteur principal du calcul scientifique et de l'intelligence artificielle. Pour l'OS, il faut gérer son pilote, lui allouer sa mémoire et partager son accès entre votre navigateur web et vos applications. Remarquez au passage une nuance clé : sur un ordinateur de bureau, le GPU possède sa propre mémoire dédiée, alors que sur votre téléphone, il partage la même RAM que le CPU, ce qui simplifie le transfert de données !
+        <br><br>
+        Aujourd'hui, une nouvelle catégorie de puces a fait son apparition : les puces d'IA, appelées NPU ou TPU. Ces puces sont taillées sur mesure pour faire des multiplications de matrices, la tâche de base des réseaux de neurones. On les retrouve partout dans nos smartphones : le Tensor des Google Pixel, le Neural Engine d'Apple ou les NPU de Qualcomm. C'est grâce à eux que votre téléphone effectue la reconnaissance vocale, la traduction instantanée ou le traitement de vos photos en direct, le tout sans vider votre batterie ni envoyer vos données personnelles sur un serveur distant !
+        <br><br>
+        Votre smartphone est en réalité un SoC &mdash; System on Chip &mdash; où cohabitent sur un seul morceau de silicium des cœurs CPU big.LITTLE, un GPU, un NPU, un modem et un processeur d'image. Pour l'OS mobile comme Android ou iOS, le problème n'est plus seulement d'ordonnancer des tranches de temps, mais de décider quel bloc de la puce est le plus économe pour accomplir une tâche donnée. C'est le meilleur exemple moderne pour conclure : multicœur, asymétrie et spécialisation réunis dans notre poche."
+    </div>
+
     <h2>Conclusion & Questions/Réponses <span class="timing-badge">Durée : ~2 min</span></h2>
 
     <div class="speech-box">
         <div class="title">Script Oral de Conclusion</div>
-        "Pour boucler notre tour d'horizon, l'arrivée des systèmes multiprocesseurs n'a pas été un choix de confort, mais une obligation physique dictée par l'arrêt de l'échelle de Dennard. Les systèmes d'exploitation ont dû se réinventer complètement : de l'asymétrie initiale vers le SMP, de la file unique vers les structures NUMA, et de la symétrie parfaite vers l'ordonnancement hybride hétérogène.
+        "Pour boucler notre tour d'horizon, l'arrivée des systèmes multiprocesseurs n'a pas été un choix de confort, mais une obligation physique dictée par l'arrêt de l'échelle de Dennard. Les systèmes d'exploitation ont dû se réinventer complètement : de l'asymétrie initiale vers le SMP, de la file unique vers les structures NUMA, de la symétrie parfaite vers l'ordonnancement hybride, et enfin vers le pilotage des accélérateurs GPU et NPU.
         <br><br>
-        Aujourd'hui, une nouvelle frontière s'ouvre avec l'intégration massive des accélérateurs spécialisés comme les GPU et les puces d'IA. L'OS de demain sera avant tout le chef d'orchestre d'une mosaïque de puces spécialisées. Je vous remercie de votre attention et je suis prêt à répondre à vos questions."
+        L'OS moderne est désormais le chef d'orchestre d'une mosaïque de puces hétérogènes. Je vous remercie de votre attention et je suis prêt à répondre à vos questions."
     </div>
 
     <h2>Préparation aux questions pièges du jury / de l'auditoire</h2>
@@ -353,6 +389,11 @@
     <div class="qa-box">
         <div class="question">Q3 : Qu'est-ce que le principe RCU (Read-Copy-Update) dans Linux ?</div>
         <strong>Réponse concise :</strong> RCU est un mécanisme de synchronisation sans verrou pour les structures lues très souvent et modifiées rarement. Les lecteurs accèdent aux données directement sans aucun verrou. Lors d'une écriture, l'OS crée une copie de la structure, la modifie, puis bascule le pointeur de manière atomique, avant de supprimer l'ancienne version une fois que tous les lecteurs ont terminé.
+    </div>
+
+    <div class="qa-box">
+        <div class="question">Q4 : Comment l'OS communique-t-il avec une puce d'IA (NPU) ou un GPU ?</div>
+        <strong>Réponse concise :</strong> L'OS n'ordonnance pas directement chaque instruction du GPU ou du NPU. Il dialogue via un pilote (driver) propriétaire et des bibliothèques logicielles (ex: CUDA, Core ML, Vulkan). L'OS prépare des grilles de calcul en mémoire, puis envoie une commande au firmware de l'accélérateur qui gère ensuite l'exécution en interne.
     </div>
 
 </body>
