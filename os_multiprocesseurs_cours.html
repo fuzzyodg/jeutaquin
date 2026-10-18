@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Systèmes d'Exploitation Multiprocesseurs : Principes, Concurrence et Évolutions</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 18mm 20mm 18mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: "Times New Roman", Times, serif;
+                font-size: 10pt;
+            }
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 11.5pt;
+            line-height: 1.5;
+            color: #111111;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: justify;
+        }
+
+        /* Document Header / Title */
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px solid #222222;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .doc-header h1 {
+            font-size: 22pt;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .doc-header .subtitle {
+            font-size: 13pt;
+            font-style: italic;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        .doc-header .meta {
+            font-size: 10.5pt;
+            color: #555555;
+            margin-top: 10px;
+        }
+
+        /* Section Headings */
+        h2 {
+            font-size: 15pt;
+            font-weight: bold;
+            color: #000000;
+            border-bottom: 1px solid #666666;
+            padding-bottom: 4px;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12.5pt;
+            font-weight: bold;
+            color: #222222;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-indent: 1.5em;
+        }
+
+        p.no-indent {
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 12px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Analogy Box - Text Only */
+        .analogy-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4a5568;
+            padding: 12px 16px;
+            margin: 16px 0;
+            font-size: 10.5pt;
+            line-height: 1.45;
+            page-break-inside: avoid;
+        }
+
+        .analogy-box .title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 9.5pt;
+            letter-spacing: 0.5px;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #a0aec0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #edf2f7;
+            font-weight: bold;
+            color: #1a202c;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        /* Code / Formula inline */
+        .formula {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10.5pt;
+        }
+
+        .formula-block {
+            display: block;
+            text-align: center;
+            font-family: "Courier New", Courier, monospace;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            margin: 14px 0;
+            font-weight: bold;
+            page-break-inside: avoid;
+        }
+
+        /* Transition Text */
+        .transition {
+            font-style: italic;
+            color: #2d3748;
+            margin-top: 18px;
+            margin-bottom: 18px;
+            padding: 6px 12px;
+            border-left: 2px solid #cbd5e0;
+            page-break-inside: avoid;
+        }
+
+        /* Page breaks controls */
+        .page-break {
+            page-break-before: always;
+        }
+
+        .keep-together {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="doc-header">
+        <h1>Les Systèmes d'Exploitation Multiprocesseurs</h1>
+        <div class="subtitle">Fondements physiques, architecture du noyau, ordonnancement et mécanismes de concurrence</div>
+        <div class="meta">Document de cours complet &mdash; Support académique et technique</div>
+    </div>
+
+    <h2>Introduction : De l'impasse physique à la révolution parallèle</h2>
+
+    <p class="no-indent">Pendant près de quarante ans, l'informatique a bénéficié d'une dynamique exceptionnelle. Sans modifier la moindre ligne de code, un programme informatique voyait ses exécutions s'accélérer presque automatiquement au fil des ans. Il suffisait d'attendre la génération suivante de processeurs pour doubler la vitesse de calcul. Cette époque dorée reposait sur deux piliers indissociables : la loi de Moore et l'effet de Dennard.</p>
+
+    <h3>1. L'âge d'or du monocœur</h3>
+    <p>En 1965, Gordon Moore, cofondateur d'Intel, émet une observation empirique : le nombre de transistors intégrés sur une puce en silicium double approximativement tous les deux ans (intervalle réajusté à 18-24 mois en 1975). En soi, rajouter des transistors permet de complexifier le processeur, mais cela ne garantit pas directement une hausse de fréquence. C'est ici qu'intervient la découverte faite par Robert Dennard en 1974.</p>
+    <p>Dennard démontre qu'en réduisant la taille physique d'un transistor, sa consommation électrique baisse dans les mêmes proportions. En clair : la densité de puissance consommée par unité de surface de silicium reste constante. Les ingénieurs pouvaient donc faire grimper la fréquence d'horloge de la puce (passant de quelques mégahertz à plusieurs gigahertz) sans que la température globale n'atteigne des seuils critiques. Herb Sutter a qualifié cette période d'âge d'or du <em>"free lunch"</em> (le repas gratuit) : l'optimisation logicielle découlait directement des progrès du matériel.</p>
+    <p>Une précaution conceptuelle s'impose : la loi de Moore n'est pas une loi physique, mais un modèle d'observation industrielle. Et contrairement à une idée reçue, elle ne s'est pas arrêtée net au début des années 2000. On continue aujourd'hui de graver davantage de transistors sur une puce. Ce qui s'est effondré vers 2004-2005, c'est l'échelle de Dennard.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : Le véhicule et l'autoroute</div>
+        L'âge d'or du monocœur s'apparente à l'amélioration progressive d'une seule voiture sur une autoroute à une voie. Chaque année, les constructeurs doublaient le régime du moteur. Le conducteur n'avait pas à revoir sa façon de conduire : le simple fait d'installer un moteur plus rapide réduisait instantanément la durée du trajet.
+    </div>
+
+    <h3>2. La rupture physique : les trois murs</h3>
+    <p>Vers 2005, la miniaturisation des transistors a atteint des dimensions atomiques. À cette échelle, les effets quantiques et les courants de fuite ont brisé le modèle de Dennard, heurtant simultanément trois obstacles majeurs :</p>
+    <ul>
+        <li><strong>Le mur de la puissance (Power Wall) :</strong> Les transistors miniaturisés laissent fuiter de l'électricité même au repos. La consommation ne baisse plus avec la taille, et la densité thermique sur la puce devient comparables à celle d'une plaque de cuisson ou d'un réacteur nucléaire. Dissiper cette chaleur avec des moyens traditionnels devient impossible.</li>
+        <li><strong>Le mur de la fréquence (Frequency Wall) :</strong> Directement lié à la surchauffe, le rythme d'horloge s'est bloqué autour de 3 à 4 GHz. Pousser la fréquence au-delà demande une tension électrique excessive qui détruirait le composant.</li>
+        <li><strong>Le mur de la mémoire (Memory Wall) :</strong> La vitesse d'exécution du processeur a augmenté bien plus vite que la rapidité de la mémoire RAM. Le processeur passe une part considérable de ses cycles d'horloge inactif, à attendre le transfert des données depuis la mémoire principale.</li>
+    </ul>
+
+    <h3>3. Le paradoxe moderne</h3>
+    <p>Au moment même où la fréquence individuelle des processeurs atteignait son plafond physique, la demande mondiale en capacité de calcul connaissait une explosion sans précédent : simulations scientifiques complexes, traitement massif de données, intelligence artificielle et traitement vidéo en temps réel. Le silicium ne pouvait plus offrir de puissance supplémentaire par le biais d'un cœur unique.</p>
+
+    <h3>4. La transition fondamentale</h3>
+    <p>L'industrie des semi-conducteurs a donc opéré un virage stratégique majeur : au lieu de concevoir un processeur monolithique plus rapide, les fabricants ont assemblé <strong>plusieurs cœurs de calcul</strong> sur le même morceau de silicium. Le problème ne résidait plus dans la vitesse pure de traitement, mais dans le parallélisme d'exécution.</p>
+    <p>C'est ici que la charge bascule sur le logiciel, et plus particulièrement sur le système d'exploitation. Un système d'exploitation conçu pour un processeur unique est fondamentalement aveugle face à cette nouvelle architecture. Sans une refonte complète de sa structure, il ne peut utiliser qu'un seul cœur, laissant les autres inutilisés. L'OS doit désormais agir comme un chef d'orchestre capable de répartir les tâches, de réguler l'accès simultané aux ressources partagées et d'empêcher les collisions de données.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : De la voiture rapide au convoi de camions</div>
+        Ne pouvant plus construire une voiture roulant à 1000 km/h à cause de la friction et de la surchauffe du moteur, les ingénieurs ont décidé d'envoyer dix camions roulant chacun à 100 km/h. La quantité totale de marchandise transportée par heure est plus grande, mais la gestion de la circulation devient infiniment plus complexe.
+    </div>
+
+    <h3>5. Définition du système d'exploitation multiprocesseur</h3>
+    <p>Un <strong>système d'exploitation multiprocesseur</strong> est un logiciel système conçu pour gérer, coordonner et exploiter simultanément plusieurs unités de traitement (processeurs physiques ou cœurs intégrés) partageant tout ou partie de la mémoire vive. Son rôle principal consiste à répartir équitablement les processus sur les cœurs disponibles, à synchroniser l'accès aux structures de données communes du système et à fournir aux applications une vision cohérente et protégée du matériel.</p>
+    <p>Pour le système d'exploitation moderne, la frontière entre plusieurs puces physiques distinctes et plusieurs cœurs gravés sur une même puce est étroite : chaque cœur est perçu comme un processeur logique capable d'exécuter un fil d'instructions de manière autonome.</p>
+
+    <div class="transition">
+        Ce changement d'échelle pose d'emblée une question fondamentale : comment s'organise le système d'exploitation lui-même lorsqu'il doit s'exécuter sur une machine à plusieurs processeurs ? C'est ce que nous allons analyser dans la première partie.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 1 : Les modèles d'OS et l'organisation du noyau</h2>
+
+    <p class="no-indent">L'intégration du multiprocessage ne se limite pas à faire exécuter des programmes utilisateur sur plusieurs cœurs. Le système d'exploitation lui-même &mdash; et plus spécifiquement son cœur, le noyau &mdash; doit tourner sur ces processeurs. La question clé devient alors : <em>qui a le droit d'exécuter le code du noyau, et comment empêche-t-on deux processeurs de corrompre l'état interne de l'OS ?</em></p>
+
+    <h3>1.1 Rappels et définitions</h3>
+    <p>Le <strong>noyau (kernel)</strong> est la partie centrale et privilégiée du système d'exploitation. Il s'exécute dans un mode matériel protégé (mode kernel) et détient le contrôle direct sur la mémoire, les périphériques d'entrée-sortie et la gestion des processus. Lorsque votre application souhaite lire un fichier ou envoyer une paquet réseau, elle effectue un appel système (system call) qui passe le relais au noyau.</p>
+    <p>Il est crucial de distinguer la structure matérielle du modèle logiciel :</p>
+    <ul>
+        <li><strong>Architecture matérielle :</strong> définit la disposition physique des puces, des bus et de la mémoire.</li>
+        <li><strong>Modèle d'OS :</strong> définit la manière dont le logiciel tire parti de cette architecture. On classe historiquement ces modèles en deux grandes familles : asymétrique (AMP) et symétrique (SMP).</li>
+    </ul>
+
+    <h3>1.2 Le modèle asymétrique (AMP : Asymmetric Multiprocessing)</h3>
+    <p>Dans un système d'exploitation asymétrique, les processeurs n'occupent pas les mêmes fonctions. Un processeur désigné comme le <strong>maître (Master)</strong> est le seul habilité à exécuter le noyau du système d'exploitation. Les autres processeurs, dits <strong>esclaves (Slaves)</strong>, exécutent uniquement le code des applications utilisateur.</p>
+    <p>Lorsqu'un processus tournant sur un processeur esclave demande une opération d'entrée-sortie ou un appel système, l'esclave ne peut pas traiter la demande lui-même. Il doit interrompre le processeur maître et attendre que celui-ci traite la requête pour son compte.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : Le restaurant avec un seul chef de cuisine</div>
+        L'AMP ressemble à une cuisine de restaurant où plusieurs commis (les processeurs esclaves) découpent les légumes et préparent les assiettes, mais où un unique chef (le processeur maître) détient les clés de la réserve et prépare toutes les sauces. Si trois commis ont besoin d'épices en même temps, ils doivent faire la queue devant le chef.
+    </div>
+
+    <p><strong>Avantages de l'AMP :</strong> La conception du noyau est extrêmement simple. Comme un seul processeur s'exécute dans le noyau, il n'existe aucun risque de concurrence sur les structures de données internes du système. Il n'y a pas besoin de verrous complexes.</p>
+    <p><strong>Limites de l'AMP :</strong> Le maître constitue un véritable goulot d'étranglement. Si les applications effectuent beaucoup d'appels système, le maître sature pendant que les esclaves restent inactifs. De plus, c'est un point individuel de défaillance (SPOF : Single Point of Failure) : si le processeur maître tombe en panne, l'intégralité de la machine s'arrête.</p>
+    <p><em>Nuance terminologique :</em> Le terme "asymétrique" est également employé aujourd'hui pour désigner du matériel hétérogène (comme les puces ARM big.LITTLE). Il convient de ne pas confondre l'asymétrie matérielle (cœurs de tailles différentes) et l'asymétrie logicielle de l'OS (répartition maître/esclave des fonctions du noyau).</p>
+
+    <h3>1.3 Le modèle symétrique (SMP : Symmetric Multiprocessing)</h3>
+    <p>Dans le modèle symétrique, tous les processeurs sont égaux. Chacun d'eux possède les mêmes droits d'accès au matériel et à la mémoire partagée, et surtout, <strong>chaque processeur peut exécuter le code du noyau</strong>. Si un processus effectue un appel système sur le cœur n°3, c'est le cœur n°3 qui bascule en mode noyau et traite la demande sur place, sans transférer le travail à un tiers.</p>
+    <p>C'est le modèle retenu par la quasi-totalité des systèmes d'exploitation modernes grand public et serveur (Linux, Windows, macOS, FreeBSD).</p>
+    <p><strong>Avantages du SMP :</strong> La charge de travail est répartie de façon homogène sur tous les cœurs disponibles. Si un processeur tombe en panne, le système peut théoriquement continuer de fonctionner en isolant le composant défaillant. Le passage à l'échelle (scalabilité) est nettement supérieur à celui de l'AMP.</p>
+    <p><strong>Nouveaux défis :</strong> Puisque tous les processeurs exécutent le noyau simultanément, deux cœurs peuvent tenter d'accéder ou de modifier en même temps la même liste de processus ou la même table de mémoire. Sans précaution, la mémoire du noyau est rapidement corrompue.</p>
+
+    <h3>1.4 Tableau comparatif AMP et SMP</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Critère de comparaison</th>
+                <th>Modèle Asymétrique (AMP)</th>
+                <th>Modèle Symétrique (SMP)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Exécution du noyau</strong></td>
+                <td>Réservée au seul processeur maître.</td>
+                <td>Tous les processeurs peuvent exécuter le noyau.</td>
+            </tr>
+            <tr>
+                <td><strong>Complexité du code OS</strong></td>
+                <td>Faible. Proche d'un OS monoprocesseur.</td>
+                <td>Élevée. Nécessite une synchronisation stricte.</td>
+            </tr>
+            <tr>
+                <td><strong>Goulot d'étranglement</strong></td>
+                <td>Élevé (le processeur maître sature rapidement).</td>
+                <td>Réparti (dépend de la finesse des verrous).</td>
+            </tr>
+            <tr>
+                <td><strong>Passage à l'échelle</strong></td>
+                <td>Très limité (stagne après quelques cœurs).</td>
+                <td>Excellent (extensible à des dizaines/centaines de cœurs).</td>
+            </tr>
+            <tr>
+                <td><strong>Résilience aux pannes</strong></td>
+                <td>Critique (la panne du maître plante l'OS).</td>
+                <td>Bonne (isolation possible d'un cœur défaillant).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>1.5 L'organisation interne du noyau en SMP</h3>
+    <p>Pour éviter la corruption de données en mode SMP, les concepteurs de systèmes d'exploitation ont dû repenser l'organisation interne du noyau. Plusieurs approches ont évolué au fil des décennies :</p>
+
+    <p><strong>1. Le verrou global (Big Kernel Lock - BKL) :</strong> C'est la méthode historiquement employée pour transformer rapidement un OS mono-cœur en OS compatible SMP (notamment dans les premières versions SMP de Linux ou FreeBSD). Un unique verrou géant protège l'intégralité du noyau. Lorsqu'un processeur souhaite exécuter un appel système, il doit acquérir ce verrou. Si un autre cœur détient déjà le verrou, le second doit attendre.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : La mairie avec un unique tampon officiel</div>
+        Imaginez une grande mairie avec dix guichets ouverts. Mais pour valider n'importe quel document administratif, il n'existe qu'un seul tampon dans tout le bâtiment. Un seul employé peut tamponner une feuille à la fois. Même si vous avez dix employés, le rythme de validation reste celui d'une seule personne.
+    </div>
+
+    <p><strong>2. Les verrous à gros grain (Coarse-grained locking) :</strong> Le noyau est divisé en grands sous-systèmes fonctionnels (gestionnaire de mémoire, pile réseau, système de fichiers, ordonnanceur). Chaque sous-système possède son propre verrou. Le cœur n°1 peut traiter du réseau pendant que le cœur n°2 alloue de la mémoire, mais deux cœurs ne peuvent pas manipuler la pile réseau simultanément.</p>
+
+    <p><strong>3. Les verrous fins (Fine-grained locking) :</strong> L'approche la plus performante mais la plus complexe. Les verrous ne protègent plus des sous-systèmes entiers, mais des structures de données individuelles (une liste chaînée spécifique, le bloc d'informations d'un seul processus, un nœud d'arbre de mémoire). Le parallélisme est maximal, mais le risque d'erreurs de programmation (comme les blocages mutuels) augmente considérablement.</p>
+
+    <p><em>Exemple historique de Linux :</em> Linux a introduit le <em>Big Kernel Lock</em> (connu sous le nom de <code>lock_kernel()</code>) dans la version 2.0 en 1996. Il a fallu plus de 15 ans d'efforts communautaires pour découper ce verrou en des milliers de verrous ultra-fins, jusqu'à la suppression définitive du BKL dans la version 2.6.39 publiée en 2011.</p>
+
+    <p><em>Note sur les micro-noyaux :</em> Une autre approche d'organisation réside dans les architectures à micro-noyau (comme Mach ou seL4), où les services traditionnels du noyau (fichiers, réseau) s'exécutent sous forme de serveurs en espace utilisateur, réduisant mécaniquement la surface de code du noyau devant être synchronisée en SMP.</p>
+
+    <div class="transition">
+        Maintenant que nous savons comment le noyau s'organise et se protège en SMP, une question pratique se pose : comment décide-t-on quel processeur doit exécuter quel programme utilisateur à un instant donné ? C'est le rôle de l'ordonnanceur.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 2 : L'ordonnancement des processus</h2>
+
+    <p class="no-indent">L'ordonnanceur (scheduler) est l'un des composants les plus critiques d'un système d'exploitation. En monoprocesseur, il se contente de décider dans quel ordre exécuter la file des programmes en attente. En multiprocesseur, le problème devient tridimensionnel : il faut décider <em>quel</em> processus exécuter, <em>quand</em> l'exécuter, et sur <em>quel cœur</em> le placer.</p>
+
+    <h3>2.1 Structure des files d'attente</h3>
+    <p>La première décision d'architecture concerne l'organisation des tâches prêtes à s'exécuter (état <em>Ready</em>) :</p>
+
+    <p><strong>La file globale unique (Shared Runqueue) :</strong> Une seule liste centrale contient tous les processus en attente. Dès qu'un cœur de processeur se libère, il accède à cette file commune et extrait la tâche prioritaire suivante.</p>
+    <ul>
+        <li><em>Avantage :</em> Équilibrage parfait et automatique du travail. Aucun processeur ne peut rester inactif s'il existe du travail dans la file.</li>
+        <li><em>Inconvénients :</em> La file globale doit être protégée par un verrou. À mesure que le nombre de cœurs augmente, tous les processeurs se battent pour accéder à cette même liste, créant une forte contention. De plus, un processus a de fortes chances d'être exécuté sur un cœur différent à chaque fois qu'il reprend la main, détruisant l'efficacité de la mémoire cache.</li>
+    </ul>
+
+    <p><strong>Files locales par processeur (Per-CPU Runqueues) :</strong> Chaque cœur de processeur gère sa propre file d'attente indépendante.</p>
+    <ul>
+        <li><em>Avantage :</em> Pas de conflit d'accès entre les cœurs lors de la sélection d'une tâche. Excellente conservation des données en mémoire cache locale.</li>
+        <li><em>Inconvénient :</em> Risque important de déséquilibre. Un cœur peut terminer rapidement ses tâches et se retrouver inactif, tandis qu'un cœur voisin reste submergé sous une file de calculs intenses.</li>
+    </ul>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : Les caisses du supermarché</div>
+        La file globale correspond au système de file unique de certaines banques : tout le monde attend dans un seul serpentin et le premier guichet libre prend le client suivant. Les files locales correspondent aux caisses traditionnelles de supermarché : chaque client choisit sa file. Si un client devant vous sort un grand nombre d'articles, vous restez coincé tandis que la caisse voisine avance à toute vitesse.
+    </div>
+
+    <p><em>Le compromis moderne :</em> Tous les OS modernes d'entreprise (notamment l'ordonnanceur EEVDF / CFS de Linux) adoptent des files d'attente locales par processeur, associées à un mécanisme dynamique d'équilibrage de charge pour corriger les asymétries.</p>
+
+    <h3>2.2 Équilibrage de charge (Load Balancing)</h3>
+    <p>Pour corriger la stase de certains cœurs en présence de files locales, l'OS applique des stratégies de réallocation de tâches :</p>
+    <ul>
+        <li><strong>La migration poussée (Push Migration) :</strong> Un sous-système périodique du noyau évalue la charge globale de la machine. S'il repère un déséquilibre marqué entre les files d'attente, il déplace de force ("pousse") des processus depuis les cœurs surchargés vers les cœurs sous-utilisés.</li>
+        <li><strong>La migration tirée (Pull Migration / Work Stealing) :</strong> Lorsqu'un cœur se retrouve totalement inactif car sa file locale est vide, il prend lui-même l'initiative d'examiner les files de ses voisins. S'il trouve un cœur surchargé, il lui "vole" une ou plusieurs tâches en attente (principe du <em>work stealing</em>) pour les exécuter immédiatement.</li>
+    </ul>
+
+    <p><strong>Le coût caché de la migration :</strong> Migrer un processus d'un cœur A vers un cœur B n'est jamais gratuit. Les données utiles au programme étaient stockées dans les mémoires caches rapides L1 et L2 du cœur A. Sur le cœur B, ces caches sont "froids". Le processeur doit recharger toutes ses données depuis la mémoire RAM lente, ce qui dégrade temporairement les performances.</p>
+
+    <h3>2.3 Affinité de processeur (CPU Affinity)</h3>
+    <p>Pour éviter les déplacements inutiles et préserver la réutilisation des mémoires caches, l'ordonnanceur met en œuvre la notion d'<strong>affinité processeur</strong> :</p>
+    <ul>
+        <li><strong>Affinité souple (Soft Affinity) :</strong> L'OS essaie de maintenir un processus sur le même cœur autant que possible. Ce n'est qu'en cas de déséquilibre de charge important qu'il acceptera de le migrer vers un autre cœur.</li>
+        <li><strong>Affinité dure (Hard Affinity) :</strong> L'utilisateur ou le développeur spécifie explicitement au système (via des appels système comme <code>sched_setaffinity()</code> sous Linux) que son programme n'a le droit de s'exécuter que sur un sous-ensemble strict de cœurs (par exemple uniquement sur les cœurs 0 et 1).</li>
+    </ul>
+    <p>L'affinité et l'équilibrage de charge sont deux forces antagonistes : l'ordonnanceur doit sans cesse naviguer entre le maintien de la localité mémoire et la répartition équitable de la puissance de calcul.</p>
+
+    <h3>2.4 Ordonnancement sensible à la topologie (NUMA)</h3>
+    <p>Sur les architectures de serveurs modernes possédant plusieurs processeurs physiques, l'accès à la mémoire RAM devient non-uniforme. On parle d'architecture <strong>NUMA (Non-Uniform Memory Access)</strong>.</p>
+    <p>Dans un système NUMA, la mémoire RAM est découpée et rattachée physiquement à des nœuds (groupes de cœurs). Un cœur accède très rapidement à sa mémoire locale (rattachée à son propre nœud), mais met beaucoup plus de temps à lire la mémoire distante (rattachée à un autre nœud), car l'information doit traverser un bus d'interconnexion (comme AMD Infinity Fabric ou Intel UPI).</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : L'entrepôt logistique régional</div>
+        Travailler en mémoire locale NUMA, c'est comme prendre des fournitures dans le placard de votre propre bureau. Aller chercher de la mémoire distante sur un autre nœud NUMA, c'est devoir envoyer un coursier chercher un carton dans un entrepôt situé dans la ville voisine. Le coût en temps est démultiplié.
+    </div>
+
+    <p>L'ordonnanceur d'un OS moderne doit donc être "NUMA-aware" :</p>
+    <ul>
+        <li>Il tente de placer un processus et la mémoire qu'il alloue sur le même nœud NUMA.</li>
+        <li>Il évite absolument de migrer un processus vers un autre nœud NUMA, sauf si le déséquilibre de charge devient dramatique.</li>
+        <li>Il prend en compte la hiérarchie complète du matériel : cœurs partageant un cache L2, cœurs d'un même socket, puis sockets distants.</li>
+    </ul>
+
+    <div class="transition">
+        Maintenant que nous savons comment placer et ordonnancer les processus sur plusieurs cœurs, abordons la difficulté centrale du multiprocessage : comment s'assurer que ces travaux parallèles ne détruisent pas la cohérence des données ?
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 3 : Synchronisation, concurrence et pièges logiciels</h2>
+
+    <p class="no-indent">Le parallélisme offre un gain de performance impressionnant, mais introduit une complexité redoutable. Dès lors que plusieurs unités de calcul manipulent simultanément le même espace mémoire, des comportements imprévisibles et destructeurs apparaissent si aucun mécanisme de contrôle n'est imposé.</p>
+
+    <h3>3.1 Le besoin de synchronisation</h3>
+    <p>Une <strong>condition de concurrence (race condition)</strong> survient lorsque le résultat d'une opération dépend de l'ordre d'exécution exact et non déterministe dans lequel les processeurs exécutent leurs instructions.</p>
+    <p>Considérons l'exemple classique d'une variable globale répertoriant le nombre de clients connectés, initialement égale à 10. Deux cœurs exécutent simultanément l'instruction <code>compteur++</code> :</p>
+
+    <ol>
+        <li>Au niveau de l'assembleur, une incrémentation nécessite 3 étapes : lire la valeur en mémoire, lui ajouter 1 dans un registre, puis réécrire le résultat en mémoire.</li>
+        <li>Si le Cœur 1 et le Cœur 2 lisent la mémoire en même temps, ils voient tous les deux la valeur 10.</li>
+        <li>Le Cœur 1 calcule 10 + 1 = 11 et écrit 11.</li>
+        <li>Le Cœur 2 calcule 10 + 1 = 11 et écrit 11.</li>
+    </ol>
+    <p>Résultat final : le compteur vaut 11 alors que deux clients se sont connectés. Une mise à jour a été perdue.</p>
+    <p>La portion de code qui accède à cette ressource partagée est appelée <strong>section critique</strong>. Elle doit respecter le principe d'<strong>exclusion mutuelle</strong> : un seul processeur à la fois peut s'y trouver.</p>
+
+    <p><strong>L'insuffisance de la désactivation des interruptions :</strong> Sur un système monoprocesseur antique, il suffisait de désactiver les interruptions logiques avant de rentrer en section critique pour empêcher le système de donner la main à une autre tâche. En multiprocesseur, cette technique est inefficace : désactiver les interruptions sur le cœur n°1 n'empêche absolument pas le cœur n°2 de continuer sa course et de modifier la mémoire en même temps !</p>
+
+    <p><strong>La solution matérielle : les instructions atomiques :</strong> Pour résoudre ce problème à la racine, les processeurs modernes intègrent des instructions matérielles indivisibles (atomiques), comme <code>Test-and-Set</code> ou <code>Compare-and-Swap (CAS)</code>. Ces instructions verrouillent le bus mémoire le temps d'exécuter une lecture et une écriture en un seul cycle indivisible, fournissant le socle matériel de tous les verrous logiciels.</p>
+
+    <h3>3.2 Les outils de synchronisation logicielle</h3>
+    <p>Sur la base des instructions atomiques, le système d'exploitation propose différents mécanismes de verrouillage aux développeurs et à son propre noyau :</p>
+
+    <p><strong>1. Le Spinlock (Verrou à attente active) :</strong> Lorsqu'un processeur tente d'acquérir un spinlock déjà occupé par un autre cœur, il entre dans une boucle d'attente infinie (<em>busy waiting</em>) en testant continuellement l'état du verrou jusqu'à ce qu'il se libère.</p>
+    <ul>
+        <li><em>Avantage :</em> Temps de réaction ultra-rapide. Il n'y a aucun changement de contexte ni mise en sommeil du processus.</li>
+        <li><em>Inconvénient :</em> Consomme 100 % d'un cœur de processeur à tourner dans le vide pendant l'attente. À ne réserver qu'à des sections critiques extrêmement courtes (quelques nanosecondes) au sein du noyau.</li>
+    </ul>
+
+    <p><strong>2. Le Mutex (Mutual Exclusion Lock) :</strong> Si le verrou n'est pas disponible, le processus demandeur est suspendu par le système d'exploitation et placé dans une file d'attente. Le cœur de processeur est immédiatement libéré pour exécuter une autre tâche.</p>
+    <ul>
+        <li><em>Avantage :</em> Ne gaspille pas de cycles processeur lors d'une longue attente.</li>
+        <li><em>Inconvénient :</em> Suspendre un processus et en charger un autre implique un changement de contexte (context switch), une opération lourde en temps de calcul.</li>
+    </ul>
+
+    <p><strong>3. Le Sémaphore :</strong> Imaginé par Edsger Dijkstra, le sémaphore est une variable entière associée à une file d'attente. Il permet de gérer l'accès à un quota fixé de ressources identiques (par exemple limiter à 5 le nombre d'accès simultanés à une base de données).</p>
+
+    <p><em>Verrous hybrides modernes :</em> Pour concilier la vitesse du spinlock et la sobriété du mutex, les noyaux modernes utilisent des verrous adaptatifs : le processeur "tourne" en attente active pendant quelques microsecondes dans l'espoir que le verrou se libère rapidement, puis s'endort en mutex classique si l'attente se prolonge.</p>
+
+    <h3>3.3 Les pièges et bugs de concurrence</h3>
+    <p>Même avec ces outils, la programmation multiprocesseur est truffée de pièges redoutables :</p>
+
+    <p><strong>1. Le Deadlock (Interblocage) :</strong> Situation gelée où deux processus restent bloqués à tout jamais, chacun attendant une ressource détenue par l'autre.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : Le carrefour à quatre sens de priorité</div>
+        Quatre voitures arrivent exactement en même temps sur un carrefour sans feu de signalisation, chacune devant céder le passage à sa droite. Chaque conducteur attend que son voisin de droite passe. Tout le monde est bloqué indéfiniment.
+    </div>
+
+    <p>Un interblocage ne peut survenir que si les 4 conditions formelles de Coffman sont réunies simultanément : l'exclusion mutuelle, la détention et attente, l'absence de réquisition (non-preemption) et l'attente circulaire. La stratégie classique de prévention consiste à imposer un <strong>ordre strict et global d'acquisition des verrous</strong> dans tout le code.</p>
+
+    <p><strong>2. La cohérence de cache (Cache Coherency) :</strong> Chaque cœur possède son propre cache L1/L2. Si le Cœur 1 modifie une variable dans son cache local, le Cœur 2 (qui possède une copie ancienne de cette variable dans son propre cache) risque de lire une valeur obsolète. Les puces matérielles intègrent des protocoles de cohérence de cache (comme le protocole <strong>MESI</strong> : Modified, Exclusive, Shared, Invalid) qui invalident automatiquement les copies obsolètes à travers le bus d'interconnexion.</p>
+
+    <p><strong>3. Le Faux Partage (False Sharing) :</strong> Il s'agit d'un bug de performance particulièrement pernicieux. La mémoire cache ne transfère pas les données octet par octet, mais par blocs de 64 octets appelés <em>lignes de cache (cache lines)</em>. Si le Cœur 1 modifie la variable X et que le Cœur 2 modifie la variable Y, et que X et Y ont le malheur de se trouver côte à côte dans la même ligne de cache de 64 octets, le matériel va croire à un conflit. La ligne de cache va faire des allers-retours incessants entre les deux cœurs (effet d'éviction), effondrant les performances alors même que les deux programmes n'ont aucune donnée en commun !</p>
+
+    <div class="transition">
+        À mesure que nous multiplions les verrous pour protéger la mémoire et éviter les erreurs, nous faisons émerger un nouveau problème : les processeurs passent leur temps à s'attendre les uns les autres, limitant le rendement global.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 4 : Limites théoriques et évolution des systèmes</h2>
+
+    <p class="no-indent">Ajouter toujours plus de cœurs de processeur sur une puce ne garantit absolument pas une accélération linéaire des calculs. Le logiciel se heurte à des barrières mathématiques et physiques fondamentales.</p>
+
+    <h3>4.1 La saturation par les verrous (Lock Contention)</h3>
+    <p>La contention de verrou désigne la situation où plusieurs processeurs se disputent simultanément l'accès au même verrou. Lorsque la contention augmente, l'efficacité du système s'effondre : la majorité des cœurs passent leur puissance de calcul non pas à exécuter du code utile, mais à tourner en attente active ou à gérer des changements de contexte.</p>
+    <p>C'est précisément ce qui s'est produit avec le <em>Big Kernel Lock</em>. Pour contourner cet écueil, la recherche sur les OS s'est orientée vers :</p>
+    <ul>
+        <li>L'utilisation de structures de données propres à chaque processeur (variables <em>Per-CPU</em>).</li>
+        <li>La conception d'algorithmes dits <strong>Lock-Free</strong> ou <strong>Wait-Free</strong> basés uniquement sur des instructions atomiques sans aucun verrou bloquant.</li>
+        <li>L'utilisation de mécanismes de lecture prioritaire comme RCU (Read-Copy-Update) dans Linux, permettant des lectures simultanées sans aucun verrouillage.</li>
+    </ul>
+
+    <h3>4.2 La loi d'Amdahl appliquée au logiciel</h3>
+    <p>Formulée dès 1967 par Gene Amdahl, cette loi mathématique calcule le gain maximal théorique attendu lors du parallélisme d'un programme :</p>
+
+    <div class="formula-block">
+        Accélération globale (Speedup) = 1 / [ (1 - p) + (p / n) ]
+    </div>
+
+    <p class="no-indent">Où :</p>
+    <ul>
+        <li><span class="formula">p</span> désigne la proportion du programme qui est strictement parallélisable.</li>
+        <li><span class="formula">(1 - p)</span> représente la fraction séquentielle (incapable d'être exécutée en parallèle, comme les sections critiques sous verrou).</li>
+        <li><span class="formula">n</span> est le nombre de cœurs de processeur.</li>
+    </ul>
+
+    <p><strong>Exemple chiffré révélateur :</strong> Prenons un logiciel dont 95 % du code est parfaitement parallélisable (<span class="formula">p = 0,95</span>) et 5 % du code reste strictement séquentiel (<span class="formula">1 - p = 0,05</span>).</p>
+    <ul>
+        <li>Avec 16 processeurs : <span class="formula">Speedup = 1 / [ 0,05 + (0,95 / 16) ] = 1 / [ 0,05 + 0,0593 ] &approx; 9,14</span>. Le gain réels n'est que de 9 fois la vitesse initiale, bien loin des 16 théoriques.</li>
+        <li>Même avec un nombre <em>infini</em> de processeurs (<span class="formula">n &rarr; &infty;</span>), la limite maximale absolue d'accélération ne dépassera jamais <span class="formula">1 / 0,05 = 20</span> !</li>
+    </ul>
+
+    <p>Pour le système d'exploitation, cela signifie que le moindre verrou centralisé ou la moindre phase d'attente dans le noyau augmente la fraction séquentielle <span class="formula">(1 - p)</span> et réduit à néant le bénéfice des serveurs à 64 ou 128 cœurs.</p>
+
+    <p><em>Nuance avec la loi de Gustafson :</em> La loi d'Amdahl suppose que la taille du problème reste fixe. En 1988, John Gustafson a souligné qu'en pratique, lorsqu'on dispose de plus de puissance, on augmente la taille des données à traiter. La fraction séquentielle devient alors proportionnellement de plus en plus négligeable, permettant un passage à l'échelle bien plus favorable.</p>
+
+    <h3>4.3 L'évolution vers l'ordonnancement asymétrique (big.LITTLE)</h3>
+    <p>Alors que le modèle SMP repose sur l'hypothèse de cœurs rigoureusement identiques, le retour fracassant du mur de la puissance dans l'informatique mobile et moderne a imposé une nouvelle architecture : l'hétérogénéité matérielle.</p>
+    <p>Pionnière dans ce domaine, la technologie <strong>ARM big.LITTLE</strong> (déclinée aujourd'hui sous les architectures hybrides Intel Alder Lake et Apple Silicon) associe sur la même puce :</p>
+    <ul>
+        <li><strong>Des cœurs à forte performance (P-cores / big) :</strong> Très rapides et gourmands en énergie, parfaits pour les jeux ou le calcul lourd.</li>
+        <li><strong>Des cœurs à haute efficacité énergétique (E-cores / LITTLE) :</strong> Plus lents mais ultra-économes, parfaits pour les tâches de fond.</li>
+    </ul>
+
+    <p><strong>La tâche de l'ordonnanceur moderne :</strong> L'OS ne peut plus traiter les cœurs sur un pied d'égalité symétrique. L'ordonnanceur (comme l'EAS : Energy Aware Scheduling sous Linux/Android) doit continuellement surveiller le comportement des applications. Une tâche d'arrière-plan (synchronisation de mails) est immédiatement reléguée sur un cœur économe, tandis qu'une application de premier plan nécessitant une réactivité immédiate est propulsée sur un cœur de performance.</p>
+
+    <div class="transition">
+        L'histoire boucle ainsi son cycle : le système d'exploitation est parti de l'asymétrie logicielle, a régné avec la symétrie homogène, pour revenir à une gestion asymétrique imposée par la diversité du matériel.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Conclusion</h2>
+
+    <h3>1. Synthèse globale</h3>
+    <p class="no-indent">L'avènement des systèmes multiprocesseurs n'a pas été le fruit d'un choix logiciel délibéré, mais une réponse impérative aux limites physiques de la matière. La fin du modèle de Dennard et l'apparition simultanée des murs de la puissance, de la fréquence et de la mémoire ont contraint l'industrie à chercher la puissance dans la multiplication des cœurs de calcul.</p>
+    <p>Face à cette rupture, les systèmes d'exploitation ont dû se métamorphoser à chaque étage de leur architecture :</p>
+    <ul>
+        <li><strong>Au niveau du modèle :</strong> Abandon de l'asymétrie maître/esclave au profit du modèle symétrique (SMP) où chaque cœur exécute le noyau.</li>
+        <li><strong>Au niveau de l'organisation :</strong> Évolution douloureuse du verrou global (BKL) vers des milliers de verrous d'une extrême finesse.</li>
+        <li><strong>Au niveau de l'ordonnancement :</strong> Remplacement des files d'attente uniques par des files locales par CPU, régulées par de l'équilibrage de charge, de l'affinité mémoire et la conscience de la topologie NUMA.</li>
+        <li><strong>Au niveau de la concurrence :</strong> Maîtrise des primitives atomiques, des spinlocks et des mutex, tout en contournant les pièges mortels de l'interblocage (deadlock) et du faux partage (false sharing).</li>
+    </ul>
+
+    <p>L'évolution des systèmes d'exploitation multiprocesseurs illustre une leçon constante en ingénierie informatique : <em>chaque solution technique crée une nouvelle classe de problèmes, et le rôle de l'OS est d'arbitrer en permanence entre performance, complexité et sécurité.</em></p>
+
+    <h3>2. Ouverture : Les accélérateurs spécialisés (GPU et Puces IA)</h3>
+    <p>Aujourd'hui, l'évolution continue au-delà du processeur généraliste (CPU). L'hétérogénéité s'accentue avec l'intégration massive d'accélérateurs matériels spécialisés : processeurs graphiques (GPU), puces de traitement de signal (DSP) et cartes d'accélération pour l'intelligence artificielle (NPU ou TPU).</p>
+    <p>Ces puces spécialisées comptent parfois des milliers de cœurs très simples travaillant en parallèle massif (modèle SIMD / SIMT). L'ordonnancement sur ces composants ne s'effectue pas comme sur un CPU traditionnel : l'OS ne gère pas directement chaque fil d'exécution de la puce, mais agit comme un chef d'orchestre de haut niveau à travers des pilotes et des bibliothèques spécialisées (CUDA, ROCm, Vulkan), déléguant le calcul brut à l'accélérateur tout en assurant le transfert sécurisé des données en mémoire.</p>
+    <p>Le système d'exploitation de demain ne sera plus seulement un gestionnaire de processeurs, mais le régulateur d'un écosystème complexe de puces hétérogènes. Un défi passionnant pour les décennies à venir.</p>
+
+</body>
+</html>

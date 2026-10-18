@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Support d'Exposé & Script Oral : Les Systèmes d'Exploitation Multiprocesseurs</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 18mm 20mm 18mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: "Times New Roman", Times, serif;
+                font-size: 10pt;
+            }
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 11pt;
+            line-height: 1.45;
+            color: #111111;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: justify;
+        }
+
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px solid #222222;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .doc-header h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .doc-header .subtitle {
+            font-size: 12pt;
+            font-style: italic;
+            color: #333333;
+            margin-bottom: 8px;
+        }
+
+        .doc-header .meta {
+            font-size: 10pt;
+            color: #555555;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #000000;
+            border-bottom: 1px solid #444444;
+            padding-bottom: 4px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #222222;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+        }
+
+        .timing-badge {
+            display: inline-block;
+            background-color: #2d3748;
+            color: #ffffff;
+            font-size: 9pt;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+
+        .card-box {
+            background-color: #f7fafc;
+            border: 1px solid #cbd5e0;
+            border-left: 4px solid #3182ce;
+            padding: 12px 14px;
+            margin: 12px 0;
+            page-break-inside: avoid;
+        }
+
+        .card-box .title {
+            font-weight: bold;
+            font-size: 10pt;
+            text-transform: uppercase;
+            color: #2b6cb0;
+            margin-bottom: 6px;
+        }
+
+        .speech-box {
+            background-color: #fffaf0;
+            border: 1px solid #feebc8;
+            border-left: 4px solid #dd6b20;
+            padding: 12px 14px;
+            margin: 12px 0;
+            font-style: normal;
+            page-break-inside: avoid;
+        }
+
+        .speech-box .title {
+            font-weight: bold;
+            font-size: 10pt;
+            text-transform: uppercase;
+            color: #c05621;
+            margin-bottom: 6px;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .qa-box {
+            background-color: #f0fff4;
+            border: 1px solid #c6f6d5;
+            border-left: 4px solid #38a169;
+            padding: 12px 14px;
+            margin: 12px 0;
+            page-break-inside: avoid;
+        }
+
+        .qa-box .question {
+            font-weight: bold;
+            color: #276749;
+            margin-bottom: 4px;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="doc-header">
+        <h1>Guide d'Exposé Oral & Script du Présentateur</h1>
+        <div class="subtitle">Les Systèmes d'Exploitation Multiprocesseurs : Fiches Mémos, Minutage et Script Mot-à-Mot</div>
+        <div class="meta">Support pour présentation orale face à un jury ou un auditoire</div>
+    </div>
+
+    <h2>Introduction : L'impasse physique et l'avènement du multicœur <span class="timing-badge">Durée : ~3 min</span></h2>
+
+    <div class="card-box">
+        <div class="title">Fiche Mémo Visuelle (Points clés à projeter ou garder en tête)</div>
+        <ul>
+            <li><strong>Loi de Moore (1965) :</strong> Le nombre de transistors double tous les 2 ans. Toujours valide aujourd'hui !</li>
+            <li><strong>Échelle de Dennard (1974) :</strong> Densité de puissance constante lors de la miniaturisation &rarr; hausse de fréquence gratuite.</li>
+            <li><strong>La rupture de 2005 (Les 3 murs) :</strong>
+                <ul>
+                    <li><em>Power Wall :</em> Fuites électriques, surchauffe ingérable.</li>
+                    <li><em>Frequency Wall :</em> Plafond à 3-4 GHz.</li>
+                    <li><em>Memory Wall :</em> Le processeur attend la RAM.</li>
+                </ul>
+            </li>
+            <li><strong>Conséquence majeure :</strong> Fin du "Free Lunch". On bascule vers le multicœur. L'OS devient l'élément clé du parallélisme.</li>
+        </ul>
+    </div>
+
+    <div class="speech-box">
+        <div class="title">Script Oral Mot-à-Mot (Ce que vous dites à voix haute)</div>
+        "Bonjour à tous. Aujourd'hui, nous allons aborder une transformation majeure qui a façonné toute l'informatique moderne : le passage aux systèmes d'exploitation multiprocesseurs.
+        <br><br>
+        Pendant près de trente ans, les développeurs ont bénéficié de ce que Herb Sutter a appelé le 'repas gratuit' ou <em>free lunch</em>. Un programme écrit en 1990 s'exécutait deux fois plus vite en 1992 sans retoucher à la moindre ligne de code. Pourquoi ? Parce que la loi de Moore doublait le nombre de transistors, et l'échelle de Dennard permettait d'augmenter la fréquence d'horloge sans que la puce ne brûle.
+        <br><br>
+        Mais vers 2005, ce modèle s'est effondré sur trois murs physiques : le mur de la puissance, le mur de la fréquence et le mur de la mémoire. À force de rapetisser les transistors, l'électricité s'est mise à fuiter, créant une chaleur impossible à dissiper. La fréquence s'est bloquée net autour de 3 à 4 Gigahertz.
+        <br><br>
+        Ne pouvant plus construire une seule voiture roulant à 1000 km/h, les ingénieurs ont décidé d'envoyer un convoi de dix camions roulant à 100 km/h. C'est la naissance du multicœur. Mais un camionneur a besoin d'un régulateur de trafic : c'est le rôle fondamental du système d'exploitation multiprocesseur, que nous allons explorer ensemble."
+    </div>
+
+    <h2>Partie 1 : Modèles d'OS et Organisation du Noyau <span class="timing-badge">Durée : ~4 min</span></h2>
+
+    <div class="card-box">
+        <div class="title">Fiche Mémo Visuelle</div>
+        <ul>
+            <li><strong>AMP (Asymétrique) :</strong> Un processeur maître (exécute le noyau), des processeurs esclaves (programmes utilisateur).
+                <ul>
+                    <li><em>Analogie :</em> Un restaurant avec un seul chef de cuisine pour toutes les commandes.</li>
+                    <li><em>Limite :</em> Goulot d'étranglement, point individuel de défaillance.</li>
+                </ul>
+            </li>
+            <li><strong>SMP (Symétrique) :</strong> Tous les processeurs sont égaux et peuvent exécuter le noyau.
+                <ul>
+                    <li><em>Problème :</em> Risque de corruption de la mémoire du noyau.</li>
+                </ul>
+            </li>
+            <li><strong>Évolution de la protection :</strong>
+                <ul>
+                    <li><em>Verrou Global (BKL) :</em> Simple mais bloque le système (un seul processeur en mode noyau).</li>
+                    <li><em>Verrous fins :</em> Un verrou par structure de données. Très efficace mais complexe (exemple du nettoyage du BKL dans Linux 2.6.39).</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="speech-box">
+        <div class="title">Script Oral Mot-à-Mot</div>
+        "Rentrons dans le vif du sujet : comment organise-t-on le noyau d'un OS sur une telle machine ?
+        <br><br>
+        Historiquement, la solution la plus simple a été le modèle asymétrique, ou AMP. Un processeur est désigné comme le maître et exécute tout le noyau. Les autres processeurs sont des esclaves qui font tourner les applications et supplient le maître à chaque besoin. C'est l'analogie d'une cuisine de restaurant où plusieurs commis découpent des légumes, mais où un seul chef détient les clés de la réserve. Le problème est évident : le maître sature rapidement, et s'il tombe en panne, toute la machine s'arrête.
+        <br><br>
+        C'est pour cela que tous les systèmes modernes utilise le modèle symétrique, ou SMP. Ici, tous les processeurs sont égaux et chacun peut exécuter le noyau sur place. C'est formidable pour les performances, mais cela crée un danger mortel : deux cœurs qui modifient en même temps la liste des processus en mémoire vont la corrompre.
+        <br><br>
+        Pour éviter cela, les pionniers ont d'abord inventé le 'Big Kernel Lock', un gros verrou unique. C'était comme mettre un seul tampon officiel dans une mairie de dix guichets : un seul employé travaille pendant que neuf attendent. Il a fallu des décennies d'ingénierie, notamment dans le noyau Linux entre 1996 et 2011, pour découper ce gros verrou en des milliers de verrous ultra-fins, protégeant chaque donnée individuellement."
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 2 : L'Ordonnancement des Processus <span class="timing-badge">Durée : ~4 min</span></h2>
+
+    <div class="card-box">
+        <div class="title">Fiche Mémo Visuelle</div>
+        <ul>
+            <li><strong>File globale vs Files locales :</strong>
+                <ul>
+                    <li><em>File globale :</em> Équilibrage naturel, mais grosse contention sur le verrou et perte de cache.</li>
+                    <li><em>Files locales par CPU :</em> Pas de conflit, excellente utilisation du cache, mais risque de déséquilibre.</li>
+                </ul>
+            </li>
+            <li><strong>Équilibrage de charge :</strong>
+                <ul>
+                    <li><em>Migration poussée (Push) :</em> Un sous-système rééquilibre les tâches.</li>
+                    <li><em>Migration tirée (Pull / Work Stealing) :</em> Un cœur inactif vole du travail à son voisin.</li>
+                </ul>
+            </li>
+            <li><strong>Affinité & NUMA :</strong>
+                <ul>
+                    <li><em>Affinité processeur :</em> Garder un processus sur son cœur pour garder le cache L1/L2 "chaud".</li>
+                    <li><em>Architecture NUMA :</em> Accéder à la RAM locale est rapide, la RAM distante est lente. L'ordonnanceur doit grouper calcul et mémoire sur le même nœud.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="speech-box">
+        <div class="title">Script Oral Mot-à-Mot</div>
+        "Une fois le noyau sécurisé, comment répartit-on les programmes sur les différents cœurs ? C'est le rôle de l'ordonnanceur.
+        <br><br>
+        Au début, on utilisait une file d'attente globale unique. Imaginez la file unique d'un guichet de banque : dès qu'un guichet se libère, la personne en tête avance. C'est parfait pour l'équilibrage, mais lorsque vous avez 64 cœurs, tous les processeurs se battent violemment pour accéder au verrou de cette file unique.
+        <br><br>
+        Les OS modernes préfèrent donc des files d'attente locales sur chaque cœur, comme les caisses de supermarché. C'est très fluide, mais si un client devant vous a un caddie débordant, votre file bloque pendant que la caisse voisine est vide. Pour corriger cela, l'OS utilise le 'work stealing' ou vol de travail : un cœur inactif va scruter la file de son voisin et lui dérober quelques tâches.
+        <br><br>
+        Cependant, déplacer une tâche coûte cher car la mémoire cache devient 'froide'. L'OS cherche donc à maintenir l'affinité processeur. Sur des serveurs à plusieurs sockets, appelés architectures NUMA, ce principe devient vital : aller chercher des données dans la RAM rattachée à un processeur distant est aussi lent que d'envoyer un coursier dans une autre ville. L'ordonnanceur doit donc impérativement garder le processus et sa mémoire sur le même nœud physique."
+    </div>
+
+    <h2>Partie 3 : Synchronisation et Pièges Logiciels <span class="timing-badge">Durée : ~4 min</span></h2>
+
+    <div class="card-box">
+        <div class="title">Fiche Mémo Visuelle</div>
+        <ul>
+            <li><strong>Condition de concurrence (Race Condition) :</strong> Deux cœurs modifient la même variable en même temps.
+                <ul>
+                    <li>Incapacité de la désactivation des interruptions en SMP.</li>
+                    <li>Base matérielle : Instructions atomiques (Test-and-Set, Compare-and-Swap).</li>
+                </ul>
+            </li>
+            <li><strong>Outils de verrouillage :</strong>
+                <ul>
+                    <li><em>Spinlock :</em> Attente active (boucle). Rapide mais brûle du CPU.</li>
+                    <li><em>Mutex :</em> Maintien en sommeil. Économe en CPU mais coûteux en changement de contexte.</li>
+                </ul>
+            </li>
+            <li><strong>Pièges classiques :</strong>
+                <ul>
+                    <li><em>Deadlock (Interblocage) :</em> Blocage mutuel (analogie du carrefour à 4 sens de priorité).</li>
+                    <li><em>False Sharing (Faux partage) :</em> Deux variables indépendantes sur la même ligne de cache de 64 octets provoquant un effondrement des performances.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="speech-box">
+        <div class="title">Script Oral Mot-à-Mot</div>
+        "Mais le plus grand danger du multiprocessage, c'est la concurrence. Si deux cœurs exécutent simultanément l'instruction 'compteur + 1', ils lient la même valeur initiale et une incrémentation est perdue.
+        <br><br>
+        Sur un monoprocesseur, il suffisait de couper les interruptions pour être tranquille. En SMP, c'est inutile : couper les interruptions sur un cœur n'empêche pas le cœur d'à côté de continuer de tourner ! Il a fallu créer des instructions matérielles atomiques, comme le Compare-and-Swap.
+        <br><br>
+        À partir de là, l'OS propose deux grands outils : le Spinlock et le Mutex. Le Spinlock, c'est comme faire le piquet devant une cabine d'essayage en frappant à la porte toutes les secondes. Si la personne sort dans deux secondes, c'est très rapide. Mais si elle y reste dix minutes, vous avez gaspillé votre énergie. Le Mutex, lui, consiste à aller s'asseoir dans la salle d'attente. C'est plus sage, mais le temps de se lever et d'aller s'asseoir coûte un changement de contexte.
+        <br><br>
+        Et attention aux pièges ! Le Deadlock est le plus connu : quatre voitures arrivent en même temps sur un carrefour à quatre sens de priorité, chacune cédant le passage à sa droite. Tout le monde reste figé à jamais. Un autre piège vicieux est le 'faux partage' : si deux variables totalement indépendantes se retrouvent par malchance côte à côte dans la même ligne de cache de 64 octets, les cœurs vont se disputer cette ligne en permanence, détruisant les performances sans aucune erreur de logique."
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 4 : Limites Théoriques et Évolution <span class="timing-badge">Durée : ~3 min</span></h2>
+
+    <div class="card-box">
+        <div class="title">Fiche Mémo Visuelle</div>
+        <ul>
+            <li><strong>Contention de verrous :</strong> Plus on a de cœurs, plus le temps passé à attendre les verrous augmente.</li>
+            <li><strong>Loi d'Amdahl :</strong> <span class="formula">Speedup = 1 / [(1-p) + p/n]</span>.
+                <ul>
+                    <li>La fraction séquentielle (1-p) fixe le plafond de verre infranchissable.</li>
+                    <li>Même avec 95% de code parallèle, le gain maximal absolu avec une infinité de cœurs est de 20.</li>
+                </ul>
+            </li>
+            <li><strong>Ordonnancement asymétrique moderne (big.LITTLE) :</strong>
+                <ul>
+                    <li>Alliance de cœurs de Performance (P-cores) et d'Efficacité (E-cores).</li>
+                    <li>L'OS (Energy Aware Scheduler) doit placer intelligemment les tâches selon leur charge et l'énergie disponible.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="speech-box">
+        <div class="title">Script Oral Mot-à-Mot</div>
+        "Arrivé à ce stade, une question naïve se pose : pourquoi ne pas mettre 1000 cœurs sur nos puces ? C'est ici que la loi mathématique d'Amdahl nous rattrape.
+        <br><br>
+        Amdahl nous démontre que le gain de performance est limité par la partie séquentielle du programme, c'est-à-dire les sections critiques où l'on est obligé d'attendre un verrou. Faites le calcul : si votre programme est parallélisable à 95 %, il reste 5 % de code séquentiel. Même en achetant un ordinateur avec un nombre infini de processeurs, votre accélération maximale absolue ne pourra JAMAIS dépasser 20 fois la vitesse initiale !
+        <br><br>
+        C'est pour cela que les systèmes récents changent d'approche. Regardez vos smartphones ou les puces récentes d'Apple et d'Intel : elles adoptent l'architecture big.LITTLE. On mélange sur la même puce de très gros cœurs ultra-rapides et de petits cœurs très économes en énergie. L'ordonnanceur moderne ne traite plus les cœurs à égalité : il envoie la musique de fond sur un petit cœur économe, et réserve le gros cœur puissant au jeu vidéo que vous venez de lancer."
+    </div>
+
+    <h2>Conclusion & Questions/Réponses <span class="timing-badge">Durée : ~2 min</span></h2>
+
+    <div class="speech-box">
+        <div class="title">Script Oral de Conclusion</div>
+        "Pour boucler notre tour d'horizon, l'arrivée des systèmes multiprocesseurs n'a pas été un choix de confort, mais une obligation physique dictée par l'arrêt de l'échelle de Dennard. Les systèmes d'exploitation ont dû se réinventer complètement : de l'asymétrie initiale vers le SMP, de la file unique vers les structures NUMA, et de la symétrie parfaite vers l'ordonnancement hybride hétérogène.
+        <br><br>
+        Aujourd'hui, une nouvelle frontière s'ouvre avec l'intégration massive des accélérateurs spécialisés comme les GPU et les puces d'IA. L'OS de demain sera avant tout le chef d'orchestre d'une mosaïque de puces spécialisées. Je vous remercie de votre attention et je suis prêt à répondre à vos questions."
+    </div>
+
+    <h2>Préparation aux questions pièges du jury / de l'auditoire</h2>
+
+    <div class="qa-box">
+        <div class="question">Q1 : Quelle est la différence exacte entre la loi de Moore et l'échelle de Dennard ?</div>
+        <strong>Réponse concise :</strong> La loi de Moore est une observation sur la densité d'intégration (le nombre de transistors double tous les 2 ans). L'échelle de Dennard concernait la physique de l'électricité : la densité de puissance restait constante en miniaturisant, permettant de monter en fréquence. La loi de Moore continue de s'appliquer, tandis que l'échelle de Dennard s'est arrêtée vers 2005.
+    </div>
+
+    <div class="qa-box">
+        <div class="question">Q2 : Pourquoi ne pas remplacer tous les verrous par du Spinlock pour éviter les changements de contexte ?</div>
+        <strong>Réponse concise :</strong> Le Spinlock effectue une attente active (100% de CPU consommé dans une boucle). Si la section critique retenue par un autre cœur prend du temps (ex: lecture sur disque), le cœur qui attend brûle de l'énergie et chauffe pour rien. Le Spinlock n'est rentable que pour des attentes de quelques nanosecondes dans le noyau.
+    </div>
+
+    <div class="qa-box">
+        <div class="question">Q3 : Qu'est-ce que le principe RCU (Read-Copy-Update) dans Linux ?</div>
+        <strong>Réponse concise :</strong> RCU est un mécanisme de synchronisation sans verrou pour les structures lues très souvent et modifiées rarement. Les lecteurs accèdent aux données directement sans aucun verrou. Lors d'une écriture, l'OS crée une copie de la structure, la modifie, puis bascule le pointeur de manière atomique, avant de supprimer l'ancienne version une fois que tous les lecteurs ont terminé.
+    </div>
+
+</body>
+</html>
