@@ -124,6 +124,28 @@
   }
 })();
 
+/* ---- Fermeture globale avec la touche Echap ---- */
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    if (typeof Cart !== 'undefined' && Cart.close) {
+      Cart.close();
+    }
+    const modal = document.getElementById('event-modal');
+    if (modal && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const burger = document.querySelector('.burger');
+    const navMob = document.querySelector('.nav-mobile');
+    const overlay = document.querySelector('.nav-overlay');
+    if (burger && burger.classList.contains('active')) {
+      burger.classList.remove('active');
+      navMob?.classList.remove('active');
+      overlay?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Formulaire réservation (contact) ---- */
 (function () {
   const form = document.getElementById('reservation-form');
