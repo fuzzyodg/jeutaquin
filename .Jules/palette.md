@@ -1,0 +1,3 @@
+## 2026-05-18 - Global Keyboard Navigation & Close Button ARIA Labels
+**Learning:** Icon-only close buttons in side-drawers (cart) and modals require explicit `aria-label` attributes to ensure accessibility for screen readers. In multi-component vanilla JS applications, adding a centralized global `keydown` listener for the `Escape` key cleanly closes all active overlays (cart panel, event modal, mobile navigation) without tight coupling.
+**Action:** When adding or updating overlays or close buttons across HTML templates, always verify `aria-label` attributes on icon-only buttons and ensure `Escape` key listeners handle resetting relevant UI and body states (e.g. `document.body.style.overflow = ''`).
