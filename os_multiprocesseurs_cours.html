@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Systèmes d'Exploitation Multiprocesseurs : Principes, Concurrence, Évolutions et Accélérateurs</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 18mm 20mm 18mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: "Times New Roman", Times, serif;
+                font-size: 10pt;
+            }
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 11pt;
+            line-height: 1.45;
+            color: #111111;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: justify;
+        }
+
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px solid #222222;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .doc-header h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .doc-header .subtitle {
+            font-size: 12pt;
+            font-style: italic;
+            color: #333333;
+            margin-bottom: 8px;
+        }
+
+        .doc-header .meta {
+            font-size: 10pt;
+            color: #555555;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #000000;
+            border-bottom: 1px solid #555555;
+            padding-bottom: 3px;
+            margin-top: 24px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #222222;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-indent: 1.2em;
+        }
+
+        p.no-indent {
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .analogy-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4a5568;
+            padding: 10px 14px;
+            margin: 12px 0;
+            font-size: 10pt;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .analogy-box .title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 9pt;
+            letter-spacing: 0.5px;
+            color: #2d3748;
+            margin-bottom: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 9.5pt;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #a0aec0;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #edf2f7;
+            font-weight: bold;
+            color: #1a202c;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .citation {
+            font-weight: bold;
+            color: #2b6cb0;
+            font-size: 9.5pt;
+        }
+
+        .formula-block {
+            text-align: center;
+            font-family: "Courier New", Courier, monospace;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 8px;
+            margin: 12px 0;
+            font-weight: bold;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        .transition {
+            font-style: italic;
+            color: #2d3748;
+            margin-top: 14px;
+            margin-bottom: 14px;
+            padding: 4px 10px;
+            border-left: 2px solid #cbd5e0;
+            page-break-inside: avoid;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .biblio-list li {
+            margin-bottom: 8px;
+            text-indent: -1.5em;
+            padding-left: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="doc-header">
+        <h1>Les Systèmes d'Exploitation Multiprocesseurs</h1>
+        <div class="subtitle">Synthèse simplifiée : Fondements, Noyau, Ordonnancement, Concurrence et Accélérateurs (GPU/IA)</div>
+        <div class="meta">Document de cours condensé avec références bibliographiques et exemples simples</div>
+    </div>
+
+    <h2>Introduction : L'impasse physique et le virage du multicœur</h2>
+
+    <p class="no-indent">Pendant près de trente ans, la vitesse des logiciels augmentait toute seule à chaque nouveau processeur. On achetait une nouvelle machine, et le même logiciel tournait deux fois plus vite sans qu'un développeur ne touche au code. Herb Sutter a résumé ça sous une formule célèbre : la fin du <em>"Free Lunch"</em> <span class="citation">[Sutter, 2005]</span>. Ce miracle reposait sur deux piliers : la loi de Moore et l'échelle de Dennard.</p>
+
+    <h3>1. L'âge d'or du monocœur</h3>
+    <p>En 1965, Gordon Moore constate que le nombre de transistors par puce double environ tous les deux ans <span class="citation">[Moore, 1965]</span>. De son côté, Robert Dennard démontre en 1974 qu'en rétrécissant un transistor, sa consommation baisse proportionnellement. Résultat : la densité d'énergie reste constante. On pouvait donc augmenter la fréquence d'horloge de la puce sans la transformer en grille-pain <span class="citation">[Dennard et al., 1974]</span>.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : La voiture sur voie unique</div>
+        C'est comme si on améliorait une voiture sur une route à une voie : chaque année, le moteur tourne deux fois plus vite. Le trajet prend deux fois moins de temps sans changer la façon de conduire.
+    </div>
+
+    <h3>2. La rupture physique : les trois murs (vers 2005)</h3>
+    <p>Au milieu des années 2000, les transistors sont devenus tellement petits que les fuites d'électricité ont fait grimper la température. L'échelle de Dennard s'est effondrée contre trois murs physiques <span class="citation">[Silberschatz et al., 2018]</span> :</p>
+    <ul>
+        <li><strong>Le mur de la puissance :</strong> La puce chauffe trop et devient impossible à refroidir avec un ventilateur classique.</li>
+        <li><strong>Le mur de la fréquence :</strong> Bloqué net autour de 3 à 4 GHz. Monter plus haut risquerait de griller le silicium.</li>
+        <li><strong>Le mur de la mémoire :</strong> Le processeur va trop vite par rapport à la mémoire RAM et passe son temps à l'attendre.</li>
+    </ul>
+
+    <h3>3. Le virage du multicœur</h3>
+    <p>Les besoins en calcul n'ont pas diminué pour autant. Les fabricants ont donc changé de stratégie : au lieu de fabriquer un seul cœur ultra-rapide, ils ont placé <strong>plusieurs cœurs</strong> sur la même puce. Mais attention, un système d'exploitation conçu pour un seul cœur ne sait pas utiliser cette puissance. C'est à l'OS de répartir les tâches et de gérer les accès simultanés sans pagaille <span class="citation">[Tanenbaum & Bos, 2015]</span>.</p>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : Le convoi de camions</div>
+        Quand on ne peut plus fabriquer une voiture de course roulant à 1000 km/h, on envoie dix camions à 100 km/h. On transporte plus de marchandises, mais il faut un bon régulateur pour éviter les collisions.
+    </div>
+
+    <h3>4. Définition</h3>
+    <p>Un <strong>système d'exploitation multiprocesseur</strong> répartit les programmes entre plusieurs cœurs, gère la mémoire partagée et coordonne les accès aux ressources pour éviter que deux traitements ne se marchent sur les pieds <span class="citation">[Stallings, 2018]</span>.</p>
+
+    <div class="transition">
+        Maintenant que l'OS doit tourner lui-même sur plusieurs cœurs, voyons comment son propre noyau protège ses données.
+    </div>
+
+    <h2>Partie 1 : Les modèles d'OS et l'organisation du noyau</h2>
+
+    <h3>1.1 Définition du noyau</h3>
+    <p>Le <strong>noyau (kernel)</strong> est la partie centrale et privilégiée de l'OS. C'est lui qui contrôle directement la mémoire, le matériel et le lancement des programmes <span class="citation">[Love, 2010]</span>.</p>
+
+    <h3>1.2 Le modèle asymétrique (AMP)</h3>
+    <p>Dans le modèle AMP, un processeur <strong>maître</strong> exécute tout le noyau. Les autres processeurs, dits <strong>esclaves</strong>, font tourner les applications et envoient leurs demandes au maître <span class="citation">[Silberschatz et al., 2018]</span>.</p>
+    <ul>
+        <li><em>Avantage :</em> Très simple à écrire, aucun risque de conflit dans le noyau.</li>
+        <li><em>Inconvénient :</em> Le maître sature vite et si le maître tombe en panne, toute la machine s'arrête.</li>
+    </ul>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : La cuisine avec un seul chef</div>
+        Plusieurs commis préparent les plats, mais un seul chef garde les clés du garde-manger. Dès qu'un commis a besoin d'un ingrédient, il doit faire la queue devant le chef.
+    </div>
+
+    <h3>1.3 Le modèle symétrique (SMP)</h3>
+    <p>Dans le modèle SMP, tous les processeurs sont égaux et chacun peut exécuter le noyau <span class="citation">[Tanenbaum & Bos, 2015]</span>. C'est le modèle utilisé par Linux, Windows et macOS.</p>
+    <ul>
+        <li><em>Avantages :</em> La charge est bien répartie et le système continue de tourner si un cœur flanche.</li>
+        <li><em>Défi :</em> Si deux cœurs modifient en même temps la liste des programmes en mémoire, ils risquent de la corrompre.</li>
+    </ul>
+
+    <h3>1.4 Comparaison rapide AMP / SMP</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Critère</th>
+                <th>Modèle Asymétrique (AMP)</th>
+                <th>Modèle Symétrique (SMP)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Exécution du noyau</strong></td>
+                <td>Processeur maître uniquement.</td>
+                <td>Tous les processeurs.</td>
+            </tr>
+            <tr>
+                <td><strong>Risque de bouchon</strong></td>
+                <td>Élevé (le maître sature vite).</td>
+                <td>Faible (réparti selon les verrous).</td>
+            </tr>
+            <tr>
+                <td><strong>Passage à l'échelle</strong></td>
+                <td>Limité à quelques cœurs.</td>
+                <td>Très bon (dizaines de cœurs).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>1.5 Protéger le noyau en SMP</h3>
+    <ul>
+        <li><strong>Le verrou global (Big Kernel Lock - BKL) :</strong> Un gros cadenas unique pour tout le noyau. Un seul cœur peut entrer dans le noyau à la fois <span class="citation">[Bovet & Cesati, 2005]</span>. (Définitivement retiré du noyau Linux en 2011 avec la version 2.6.39).</li>
+        <li><strong>Les verrous fins :</strong> Un cadenas séparé pour chaque petite liste de données. Ça demande plus de prudence, mais le gain de vitesse est énorme <span class="citation">[Love, 2010]</span>.</li>
+    </ul>
+
+    <div class="transition">
+        Le noyau étant sécurisé, comment l'OS choisit-il quel cœur va exécuter quel programme ?
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 2 : L'ordonnancement des processus</h2>
+
+    <h3>2.1 Organisation des files d'attente</h3>
+    <ul>
+        <li><strong>File globale unique :</strong> Tous les cœurs piochaient dans la même liste. C'est très équitable, mais les cœurs perdent du temps à se disputer le cadenas de la file <span class="citation">[Silberschatz et al., 2018]</span>.</li>
+        <li><strong>Files locales par cœur :</strong> Chaque cœur a sa propre liste. Pas de dispute sur le cadenas, mais un cœur peut se retrouver au chômage pendant que son voisin déborde de travail.</li>
+    </ul>
+
+    <div class="analogy-box">
+        <div class="title">Analogie : Les caisses du magasin</div>
+        Une file unique (comme à la banque) garantit le passage dans l'ordre, mais crée un bouchon. Une file par caisse (au supermarché) va vite, sauf si quelqu'un devant vous a un caddie plein à craquer.
+    </div>
+
+    <h3>2.2 Équilibrage de charge et affinité</h3>
+    <p>Pour régler le problème des files locales, l'OS utilise le <strong>Work Stealing</strong> : un cœur qui a fini son travail va piquer des tâches dans la file de son voisin <span class="citation">[Tanenbaum & Bos, 2015]</span>. En même temps, l'OS essaie de garder un programme sur le même cœur (<strong>affinité processeur</strong>) pour ne pas vider la mémoire cache L1/L2 qui contient déjà ses données.</p>
+
+    <h3>2.3 Les machines NUMA</h3>
+    <p>Sur les grands serveurs à plusieurs puces, la mémoire RAM est découpée par groupe de processeurs : c'est l'architecture <strong>NUMA (Non-Uniform Memory Access)</strong>. Accéder à sa mémoire locale prend quelques nanosecondes, alors qu'aller chercher la mémoire d'un autre processeur est beaucoup plus long. L'ordonnanceur veille donc à placer le programme et ses données sur le même nœud physique <span class="citation">[Bovet & Cesati, 2005]</span>.</p>
+
+    <div class="transition">
+        Faire travailler plusieurs cœurs en parallèle crée un vrai risque : les erreurs de concurrence.
+    </div>
+
+    <h2>Partie 3 : Synchronisation, concurrence et pièges logiciels</h2>
+
+    <h3>3.1 Erreurs de concurrence et opérations atomiques</h3>
+    <p>Une <strong>condition de concurrence (race condition)</strong> arrive quand deux cœurs lisent et écrivent sur la même donnée au même instant, écrasant le travail de l'autre <span class="citation">[Stallings, 2018]</span>. Couper les interruptions sur un seul cœur ne sert à rien en SMP. On s'appuie sur des instructions matérielles <strong>atomiques</strong> (comme <code>Compare-and-Swap</code>) qui bloquent la ligne mémoire le temps d'une modification.</p>
+
+    <h3>3.2 Spinlock ou Mutex ?</h3>
+    <ul>
+        <li><strong>Spinlock :</strong> Le cœur tourne en boucle en attendant que la place se libère. Très rapide si l'attente duren deux microsecondes, mais ça brûle de l'électricité inutilement si ça s'allonge <span class="citation">[Love, 2010]</span>.</li>
+        <li><strong>Mutex :</strong> Le programme s'endort et laisse sa place à un autre. C'est plus sobre, mais réveiller le programme demande un changement de contexte coûteux.</li>
+    </ul>
+
+    <h3>3.3 Les bugs classiques</h3>
+    <ul>
+        <li><strong>Deadlock (Interblocage) :</strong> Deux programmes se bloquent mutuellement en attendant une ressource tenue par l'autre. C'est l'analogie du carrefour où quatre voitures arrivent en même temps et se cèdent la priorité à droite. (Voir conditions de Coffman <span class="citation">[Coffman et al., 1971]</span>).</li>
+        <li><strong>False Sharing (Faux partage) :</strong> Deux variables différentes partagent la même ligne de cache de 64 octets. Les cœurs se renvoient le bloc mémoire en permanence, effondrant la vitesse du système sans qu'il n'y ait la moindre erreur de code <span class="citation">[Tanenbaum & Bos, 2015]</span>.</li>
+    </ul>
+
+    <div class="transition">
+        Pourquoi ne peut-on pas accélérer un programme à l'infini en ajoutant des cœurs ?
+    </div>
+
+    <h2>Partie 4 : Limites théoriques et évolution</h2>
+
+    <h3>4.1 La loi d'Amdahl</h3>
+    <p>La <strong>loi d'Amdahl</strong> (1967) montre que l'accélération d'un logiciel est limitée par sa partie séquentielle <span class="formula">(1 - p)</span>, c'est-à-dire les lignes de code qu'on ne peut pas découper <span class="citation">[Amdahl, 1967]</span> :</p>
+    <div class="formula-block">
+        Accélération = 1 / [ (1 - p) + (p / n) ]
+    </div>
+    <p class="no-indent">S'il reste seulement 5 % de code non parallélisable (<span class="formula">1 - p = 0,05</span>), l'accélération maximale théorique ne dépassera jamais <strong>20</strong>, même avec un million de cœurs.</p>
+
+    <h3>4.2 L'asymétrie moderne (big.LITTLE)</h3>
+    <p>Pour économiser la batterie des smartphones et éviter la surchauffe des PC, les puces actuelles mélangent de gros cœurs puissants (P-cores) et de petits cœurs économes (E-cores) <span class="citation">[Silberschatz et al., 2018]</span>. L'OS doit envoyer les jeux lourds sur les gros cœurs et la musique de fond sur les petits cœurs.</p>
+
+    <div class="transition">
+        Aujourd'hui, l'histoire va encore plus loin : les processeurs collaborent avec des puces spécialisées.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Partie 5 : L'ère des accélérateurs spécialisés (GPU et Puces IA)</h2>
+
+    <h3>5.1 Le GPU (Graphics Processing Unit)</h3>
+    <p>Un GPU contient des centaines ou des milliers de cœurs très simples qui font exactement la même opération sur des blocs de données massifs (mode SIMD/SIMT) <span class="citation">[Hennessy & Patterson, 2017]</span>. Conçu pour la 3D, il est devenu incontournable pour les calculs scientifiques et l'intelligence artificielle.</p>
+
+    <p><strong>Rôle de l'OS :</strong> L'OS utilise un pilote spécialisé pour envoyer les données au GPU, gérer sa mémoire et partager son accès entre plusieurs applications (votre jeu et votre navigateur). Sur un ordinateur fixe, le GPU a sa propre mémoire VRAM séparée, alors que sur un téléphone portable, il partage la mémoire RAM du système avec le CPU.</p>
+
+    <h3>5.2 Les puces d'IA (NPU, TPU)</h3>
+    <p>Les <strong>NPU (Neural Processing Unit)</strong> et <strong>TPU (Tensor Processing Unit)</strong> sont des circuits intégrés dessinés spécifiquement pour accélérer les réseaux de neurones (les multiplications de matrices) <span class="citation">[Hennessy & Patterson, 2017]</span>. Ils consomment très peu d'énergie.</p>
+
+    <p><strong>Exemples concrets :</strong> Le Neural Engine des iPhone d'Apple, les processeurs Tensor des smartphones Pixel, ou les NPU Qualcomm des nouveaux PC. Ces puces gèrent la reconnaissance vocale, la retouche photo automatique et la traduction en direct sur votre appareil, sans envoyer vos données sur un serveur externe.</p>
+
+    <p><strong>Rôle de l'OS :</strong> Choisir si un calcul doit aller sur le CPU, le GPU ou le NPU, tout en fournissant des outils simples aux développeurs (comme Core ML chez Apple).</p>
+
+    <h3>5.3 Le smartphone : Un SoC où tout cohabite</h3>
+    <p>Sur un téléphone, l'intégralité du matériel est regroupée sur une seule puce appelée <strong>SoC (System on Chip)</strong> : cœurs CPU big.LITTLE, GPU, NPU, modem et traitement d'image <span class="citation">[Tanenbaum & Bos, 2015]</span>. L'OS mobile (Android ou iOS) doit faire tourner tout ce monde en pensant à la batterie et à la chaleur avant la vitesse pure.</p>
+
+    <h3>5.4 Ce qui change pour l'OS</h3>
+    <ul>
+        <li><strong>Ordonnancement :</strong> L'OS ne distribue plus seulement du temps CPU, mais envoie des blocs de travail vers des composants très différents.</li>
+        <li><strong>Mémoire & Énergie :</strong> Éviter de recopier les données d'une puce à l'autre et éteindre les zones inactives du composant pour sauver la batterie.</li>
+        <li><strong>Firmware :</strong> Un petit programme interne (firmware) tourne directement sur le GPU ou le NPU. L'OS ne contrôle pas tout dans le détail, il dialogue avec le composant via des commandes.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+
+    <p class="no-indent">L'évolution des systèmes d'exploitation découle directement des limites physiques du matériel. Pour surmonter les blocages de fréquence et de température, l'OS a dû s'adapter à chaque étape : du modèle asymétrique au SMP, du verrou unique aux verrous fins, et de l'ordonnancement NUMA jusqu'à la gestion des smartphones hybrides actuels. L'OS moderne est désormais le chef d'orchestre d'une mosaïque de puces spécialisées.</p>
+
+    <h2>Bibliographie et Références Académiques</h2>
+
+    <ol class="biblio-list">
+        <li><strong>Amdahl, G. M. (1967).</strong> <em>Validity of the single processor approach to achieving large scale computing capabilities.</em> AFIPS Conference Proceedings, 30, 483-485.</li>
+        <li><strong>Bovet, D. P., & Cesati, M. (2005).</strong> <em>Understanding the Linux Kernel</em> (3rd ed.). O'Reilly Media.</li>
+        <li><strong>Coffman, E. G., Elphick, M., & Shoshani, A. (1971).</strong> <em>System Deadlocks.</em> ACM Computing Surveys, 3(2), 67-78.</li>
+        <li><strong>Dennard, R. H., et al. (1974).</strong> <em>Design of ion-implanted MOSFET's with very small physical dimensions.</em> IEEE Journal of Solid-State Circuits, 9(5), 256-268.</li>
+        <li><strong>Hennessy, J. L., & Patterson, D. A. (2017).</strong> <em>Computer Architecture: A Quantitative Approach</em> (6th ed.). Morgan Kaufmann.</li>
+        <li><strong>Love, R. (2010).</strong> <em>Linux Kernel Development</em> (3rd ed.). Addison-Wesley Professional.</li>
+        <li><strong>Moore, G. E. (1965).</strong> <em>Cramming more components onto integrated circuits.</em> Electronics, 38(8), 114-117.</li>
+        <li><strong>Silberschatz, A., Galvin, P. B., & Gagne, G. (2018).</strong> <em>Operating System Concepts</em> (10th ed.). Wiley.</li>
+        <li><strong>Stallings, W. (2018).</strong> <em>Operating Systems: Internals and Design Principles</em> (9th ed.). Pearson.</li>
+        <li><strong>Sutter, H. (2005).</strong> <em>The Free Lunch Is Over: A Fundamental Turn Toward Concurrency in Software.</em> Dr. Dobb's Journal, 30(3), 16-22.</li>
+        <li><strong>Tanenbaum, A. S., & Bos, H. (2015).</strong> <em>Modern Operating Systems</em> (4th ed.). Pearson.</li>
+    </ol>
+
+</body>
+</html>
