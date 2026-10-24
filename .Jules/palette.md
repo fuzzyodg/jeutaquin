@@ -1,0 +1,3 @@
+## 2025-05-24 - Semantic Action Controls & Keyboard Accessibility in Modals
+**Learning:** In vanilla JS multi-page apps with dynamically rendered cart items, using non-interactive elements like `<span>` for item removal breaks keyboard navigation and screen reader support. Additionally, custom slide-over panels (Cart) and overlays must handle global `Escape` key events to satisfy WCAG focus and modal dismissal expectations.
+**Action:** Always render interactive item actions using semantic `<button type="button">` with descriptive `aria-label` attributes (escaped via `escAttr()`), and bind a global `Escape` keydown handler to gracefully close active overlays and restore body scroll state.
