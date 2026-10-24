@@ -124,6 +124,36 @@
   }
 })();
 
+/* ---- Dismiss Overlays / Modals on Escape Key ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    // Dismiss Cart panel if open
+    const cartPanel = document.getElementById('cart-panel');
+    if (cartPanel && cartPanel.classList.contains('open')) {
+      Cart.close();
+      return;
+    }
+
+    // Dismiss Event modal if active
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal && eventModal.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+      return;
+    }
+
+    // Dismiss Mobile Navigation overlay if active
+    const burger = document.querySelector('.burger');
+    const navMob = document.querySelector('.nav-mobile');
+    const overlay = document.querySelector('.nav-overlay');
+    if (navMob && navMob.classList.contains('active')) {
+      burger?.classList.remove('active');
+      navMob.classList.remove('active');
+      overlay?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Formulaire réservation (contact) ---- */
 (function () {
   const form = document.getElementById('reservation-form');
@@ -198,15 +228,16 @@ const Cart = (function () {
           <div class="cart-item__price">${(item.price * item.qty).toLocaleString('fr-FR')} CFA</div>
         </div>
         <div class="cart-item__qty">
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
+          <button type="button" class="cart-item__qty-btn" aria-label="Diminuer la quantité de ${escAttr(item.name)}" onclick="Cart.changeQty('${esc(item.name)}', -1)">−</button>
           <span class="cart-item__qty-num">${item.qty}</span>
-          <button class="cart-item__qty-btn" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
+          <button type="button" class="cart-item__qty-btn" aria-label="Augmenter la quantité de ${escAttr(item.name)}" onclick="Cart.changeQty('${esc(item.name)}', 1)">+</button>
         </div>
-        <span class="cart-item__remove" onclick="Cart.remove('${esc(item.name)}')">🗑</span>
+        <button type="button" class="cart-item__remove" aria-label="Retirer ${escAttr(item.name)} du panier" onclick="Cart.remove('${esc(item.name)}')">🗑</button>
       </div>`).join('');
   }
 
   function esc(s) { return s.replace(/'/g, "\\'"); }
+  function escAttr(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 
   function open() {
     document.getElementById('cart-panel')?.classList.add('open');
