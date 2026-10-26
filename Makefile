@@ -23,20 +23,11 @@ install: all
 	@cp $(PROGS) $(BIN)/
 	@echo 'export PATH="'$$(pwd)'/bin:$$PATH"' > activer.sh
 	@echo 'mon_cd() {' >> activer.sh
-	@echo '    if [ "$$1" = "-" ]; then' >> activer.sh
-	@echo '        local dir' >> activer.sh
-	@echo '        dir=$$("'$$(pwd)'/bin/mon_cd" "-")' >> activer.sh
-	@echo '        if [ $$? -eq 0 ] && [ -n "$$dir" ]; then' >> activer.sh
-	@echo '            export OLDPWD="$$PWD"' >> activer.sh
-	@echo '            builtin cd "$$dir"' >> activer.sh
-	@echo '        fi' >> activer.sh
-	@echo '    else' >> activer.sh
-	@echo '        local dir' >> activer.sh
-	@echo '        dir=$$("'$$(pwd)'/bin/mon_cd" "$$@")' >> activer.sh
-	@echo '        if [ $$? -eq 0 ] && [ -n "$$dir" ]; then' >> activer.sh
-	@echo '            export OLDPWD="$$PWD"' >> activer.sh
-	@echo '            builtin cd "$$dir"' >> activer.sh
-	@echo '        fi' >> activer.sh
+	@echo '    local dir' >> activer.sh
+	@echo '    dir=$$("'$$(pwd)'/bin/mon_cd" "$$@")' >> activer.sh
+	@echo '    if [ $$? -eq 0 ] && [ -n "$$dir" ]; then' >> activer.sh
+	@echo '        export OLDPWD="$$PWD"' >> activer.sh
+	@echo '        builtin cd "$$dir"' >> activer.sh
 	@echo '    fi' >> activer.sh
 	@echo '}' >> activer.sh
 	@echo 'echo "=== Émulateur activé ! Commandes globales prêtes (mon_ls, mon_mkdir, mon_cd). ==="' >> activer.sh
@@ -50,7 +41,7 @@ install: all
 			fi; \
 		fi; \
 	done
-	@echo "Installation terminée. 'activer.sh' a été automatiquement configuré dans votre profil shell (~/.bashrc / ~/.zshrc)."
+	@echo "Installation terminée. Pour appliquer dans ce terminal, tapez 'source ~/.bashrc' ou ouvrez un nouveau terminal."
 
 clean:
 	rm -f $(PROGS)
