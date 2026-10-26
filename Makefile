@@ -2,29 +2,46 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 BIN_DIR = bin
 
-TARGETS = mon_ls mon_mkdir mon_cd mon_manuel
+TARGETS = ls mkdir cd manuel
 
 .PHONY: all install clean
 
 all: $(TARGETS)
 
-mon_ls: ls.c
+ls: ls.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-mon_mkdir: mkdir.c
+mkdir: mkdir.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-mon_cd: cd.c
+cd: cd.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-mon_manuel: manuel.c
+manuel: manuel.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 install: all
 	@mkdir -p $(BIN_DIR)
 	@cp $(TARGETS) $(BIN_DIR)/
 	@echo 'export PATH="'$$(pwd)'/bin:$$PATH"' > activer.sh
-	@echo 'echo "=== Émulateur activé ! Commandes globales prêtes. ==="' >> activer.sh
+	@echo 'cd() {' >> activer.sh
+	@echo '    if [ "$$1" = "-" ]; then' >> activer.sh
+	@echo '        local target_dir' >> activer.sh
+	@echo '        target_dir=$$("'$$(pwd)'/bin/cd" "-")' >> activer.sh
+	@echo '        if [ $$? -eq 0 ] && [ -n "$$target_dir" ]; then' >> activer.sh
+	@echo '            export OLDPWD="$$PWD"' >> activer.sh
+	@echo '            builtin cd "$$target_dir"' >> activer.sh
+	@echo '        fi' >> activer.sh
+	@echo '    else' >> activer.sh
+	@echo '        local target_dir' >> activer.sh
+	@echo '        target_dir=$$("'$$(pwd)'/bin/cd" "$$@")' >> activer.sh
+	@echo '        if [ $$? -eq 0 ] && [ -n "$$target_dir" ]; then' >> activer.sh
+	@echo '            export OLDPWD="$$PWD"' >> activer.sh
+	@echo '            builtin cd "$$target_dir"' >> activer.sh
+	@echo '        fi' >> activer.sh
+	@echo '    fi' >> activer.sh
+	@echo '}' >> activer.sh
+	@echo 'echo "=== Émulateur activé ! Commandes globales prêtes (ls, mkdir, cd, manuel). ==="' >> activer.sh
 	@chmod +x activer.sh
 	@echo "Installation terminée. Pour activer l'environnement, exécutez :"
 	@echo "source activer.sh"

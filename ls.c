@@ -129,7 +129,7 @@ static void print_entry(const FileEntry *entry, const Options *opts) {
 static void list_directory(const char *dirpath, const Options *opts, int print_dirname) {
     DIR *dir = opendir(dirpath);
     if (!dir) {
-        fprintf(stderr, "mon_ls: impossible d'accéder à '%s': %s\n", dirpath, strerror(errno));
+        fprintf(stderr, "ls: impossible d'accéder à '%s': %s\n", dirpath, strerror(errno));
         return;
     }
 
@@ -232,8 +232,8 @@ int main(int argc, char *argv[]) {
                         opts.long_format = 1;
                         break;
                     default:
-                        fprintf(stderr, "mon_ls: option invalide -- '%c'\n", argv[i][j]);
-                        fprintf(stderr, "Utilisation: mon_ls [-a] [-F] [-r] [-l] [répertoire...]\n");
+                        fprintf(stderr, "ls: option invalide -- '%c'\n", argv[i][j]);
+                        fprintf(stderr, "Utilisation: ls [-a] [-F] [-r] [-l] [répertoire...]\n");
                         return EXIT_FAILURE;
                 }
             }

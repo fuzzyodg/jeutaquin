@@ -32,7 +32,7 @@ static int make_path(const char *path, mode_t mode) {
             *p = '\0';
             if (mkdir(copypath, mode) != 0) {
                 if (errno != EEXIST) {
-                    fprintf(stderr, "mon_mkdir: impossible de créer le répertoire '%s': %s\n", copypath, strerror(errno));
+                    fprintf(stderr, "mkdir: impossible de créer le répertoire '%s': %s\n", copypath, strerror(errno));
                     free(copypath);
                     return -1;
                 }
@@ -44,7 +44,7 @@ static int make_path(const char *path, mode_t mode) {
 
     if (mkdir(copypath, mode) != 0) {
         if (errno != EEXIST) {
-            fprintf(stderr, "mon_mkdir: impossible de créer le répertoire '%s': %s\n", copypath, strerror(errno));
+            fprintf(stderr, "mkdir: impossible de créer le répertoire '%s': %s\n", copypath, strerror(errno));
             free(copypath);
             return -1;
         }
@@ -61,7 +61,7 @@ static int create_directory(const char *path, const Options *opts) {
         return make_path(path, mode);
     } else {
         if (mkdir(path, mode) != 0) {
-            fprintf(stderr, "mon_mkdir: impossible de créer le répertoire '%s': %s\n", path, strerror(errno));
+            fprintf(stderr, "mkdir: impossible de créer le répertoire '%s': %s\n", path, strerror(errno));
             return -1;
         }
     }
@@ -81,8 +81,8 @@ int main(int argc, char *argv[]) {
                         opts.create_parents = 1;
                         break;
                     default:
-                        fprintf(stderr, "mon_mkdir: option invalide -- '%c'\n", argv[i][j]);
-                        fprintf(stderr, "Utilisation: mon_mkdir [-p] <répertoire1> [répertoire2 ...]\n");
+                        fprintf(stderr, "mkdir: option invalide -- '%c'\n", argv[i][j]);
+                        fprintf(stderr, "Utilisation: mkdir [-p] <répertoire1> [répertoire2 ...]\n");
                         return EXIT_FAILURE;
                 }
             }
@@ -92,8 +92,8 @@ int main(int argc, char *argv[]) {
     }
 
     if (dir_count == 0) {
-        fprintf(stderr, "mon_mkdir: operand manquant\n");
-        fprintf(stderr, "Utilisation: mon_mkdir [-p] <répertoire1> [répertoire2 ...]\n");
+        fprintf(stderr, "mkdir: opérande manquant\n");
+        fprintf(stderr, "Utilisation: mkdir [-p] <répertoire1> [répertoire2 ...]\n");
         return EXIT_FAILURE;
     }
 
