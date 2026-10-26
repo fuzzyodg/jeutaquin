@@ -41,7 +41,16 @@ install: all
 	@echo '}' >> activer.sh
 	@echo 'echo "=== Émulateur activé ! Commandes globales prêtes (mon_ls, mon_mkdir, mon_cd). ==="' >> activer.sh
 	@chmod +x activer.sh
-	@echo "Installation terminée. Tapez 'source activer.sh' pour activer les commandes."
+	@ACT_PATH="$$(pwd)/activer.sh"; \
+	LINE="[ -f \"$$ACT_PATH\" ] && . \"$$ACT_PATH\""; \
+	for rc in "$$HOME/.bashrc" "$$HOME/.zshrc"; do \
+		if [ -f "$$rc" ]; then \
+			if ! grep -Fq "$$ACT_PATH" "$$rc"; then \
+				echo "$$LINE" >> "$$rc"; \
+			fi; \
+		fi; \
+	done
+	@echo "Installation terminée. 'activer.sh' a été automatiquement configuré dans votre profil shell (~/.bashrc / ~/.zshrc)."
 
 clean:
 	rm -f $(PROGS)
