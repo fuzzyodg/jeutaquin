@@ -4,7 +4,9 @@ BIN = bin
 
 PROGS = mon_ls mon_mkdir mon_cd
 
-.PHONY: all install clean
+.PHONY: all install shell clean
+
+.DEFAULT_GOAL := shell
 
 all: $(PROGS)
 
@@ -17,31 +19,34 @@ mon_mkdir: mkdir.c
 mon_cd: cd.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-
 install: all
 	@mkdir -p $(BIN)
 	@cp $(PROGS) $(BIN)/
-	@echo 'export PATH="'$$(pwd)'/bin:$$PATH"' > activer.sh
+	@echo '#!/usr/bin/env bash' > activer.sh
+	@echo 'if [ -z "$$_EMULATEUR_ACTIVATED" ]; then' >> activer.sh
+	@echo '    export _EMULATEUR_ACTIVATED=1' >> activer.sh
+	@echo '    if [ -f "$$HOME/.bashrc" ]; then' >> activer.sh
+	@echo '        . "$$HOME/.bashrc"' >> activer.sh
+	@echo '    fi' >> activer.sh
+	@echo 'fi' >> activer.sh
+	@echo 'DIR="$$( cd -- "$$( dirname -- "$${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"' >> activer.sh
+	@echo 'export PATH="$$DIR/bin:$$PATH"' >> activer.sh
 	@echo 'mon_cd() {' >> activer.sh
 	@echo '    local dir' >> activer.sh
-	@echo '    dir=$$("'$$(pwd)'/bin/mon_cd" "$$@")' >> activer.sh
+	@echo '    dir="$$("$$DIR/bin/mon_cd" "$$@")"' >> activer.sh
 	@echo '    if [ $$? -eq 0 ] && [ -n "$$dir" ]; then' >> activer.sh
 	@echo '        export OLDPWD="$$PWD"' >> activer.sh
 	@echo '        builtin cd "$$dir"' >> activer.sh
 	@echo '    fi' >> activer.sh
 	@echo '}' >> activer.sh
-	@echo 'echo "=== Émulateur activé ! Commandes globales prêtes (mon_ls, mon_mkdir, mon_cd). ==="' >> activer.sh
+	@echo 'export PS1="(emulateur) $$PS1"' >> activer.sh
+	@echo 'echo "=== Émulateur activé dans un shell temporaire ! ==="' >> activer.sh
+	@echo 'echo "Commandes disponibles : mon_ls, mon_mkdir, mon_cd"' >> activer.sh
+	@echo 'echo "Tapez '\''exit'\'' pour quitter l'\''émulateur."' >> activer.sh
 	@chmod +x activer.sh
-	@ACT_PATH="$$(pwd)/activer.sh"; \
-	LINE="[ -f \"$$ACT_PATH\" ] && . \"$$ACT_PATH\""; \
-	for rc in "$$HOME/.bashrc" "$$HOME/.zshrc"; do \
-		if [ -f "$$rc" ]; then \
-			if ! grep -Fq "$$ACT_PATH" "$$rc"; then \
-				echo "$$LINE" >> "$$rc"; \
-			fi; \
-		fi; \
-	done
-	@echo "Installation terminée. Pour appliquer dans ce terminal, tapez 'source ~/.bashrc' ou ouvrez un nouveau terminal."
+
+shell: install
+	@bash --rcfile activer.sh -i
 
 clean:
 	rm -f $(PROGS)
