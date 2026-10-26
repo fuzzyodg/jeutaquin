@@ -1,7 +1,7 @@
 # Compilation outputs
-ls
-mkdir
-cd
-manuel
+mon_ls
+mon_mkdir
+mon_cd
+mon_manuel
 bin/
 activer.sh

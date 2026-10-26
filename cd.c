@@ -10,21 +10,21 @@ int main(int argc, char *argv[]) {
     const char *target_dir = NULL;
 
     if (argc > 2) {
-        fprintf(stderr, "cd: trop d'arguments\n");
-        fprintf(stderr, "Utilisation: cd [répertoire]\n");
+        fprintf(stderr, "mon_cd: trop d'arguments\n");
+        fprintf(stderr, "Utilisation: mon_cd [répertoire]\n");
         return EXIT_FAILURE;
     }
 
     if (argc == 1 || (argc == 2 && strcmp(argv[1], "~") == 0)) {
         target_dir = getenv("HOME");
         if (!target_dir) {
-            fprintf(stderr, "cd: variable HOME non définie\n");
+            fprintf(stderr, "mon_cd: variable HOME non définie\n");
             return EXIT_FAILURE;
         }
     } else if (argc == 2 && strcmp(argv[1], "-") == 0) {
         target_dir = getenv("OLDPWD");
         if (!target_dir) {
-            fprintf(stderr, "cd: variable OLDPWD non définie\n");
+            fprintf(stderr, "mon_cd: variable OLDPWD non définie\n");
             return EXIT_FAILURE;
         }
     } else {
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (chdir(target_dir) != 0) {
-        fprintf(stderr, "cd: impossible d'accéder à '%s': %s\n", target_dir, strerror(errno));
+        fprintf(stderr, "mon_cd: impossible d'accéder à '%s': %s\n", target_dir, strerror(errno));
         return EXIT_FAILURE;
     }
 
