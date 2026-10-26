@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
-BIN_DIR = bin
+BIN = bin
 
-TARGETS = mon_ls mon_mkdir mon_cd mon_manuel
+PROGS = mon_ls mon_mkdir mon_cd mon_manuel
 
 .PHONY: all install clean
 
-all: $(TARGETS)
+all: $(PROGS)
 
 mon_ls: ls.c
 	$(CC) $(CFLAGS) -o $@ $<
@@ -21,32 +21,31 @@ mon_manuel: manuel.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 install: all
-	@mkdir -p $(BIN_DIR)
-	@cp $(TARGETS) $(BIN_DIR)/
+	@mkdir -p $(BIN)
+	@cp $(PROGS) $(BIN)/
 	@echo 'export PATH="'$$(pwd)'/bin:$$PATH"' > activer.sh
 	@echo 'mon_cd() {' >> activer.sh
 	@echo '    if [ "$$1" = "-" ]; then' >> activer.sh
-	@echo '        local target_dir' >> activer.sh
-	@echo '        target_dir=$$("'$$(pwd)'/bin/mon_cd" "-")' >> activer.sh
-	@echo '        if [ $$? -eq 0 ] && [ -n "$$target_dir" ]; then' >> activer.sh
+	@echo '        local dir' >> activer.sh
+	@echo '        dir=$$("'$$(pwd)'/bin/mon_cd" "-")' >> activer.sh
+	@echo '        if [ $$? -eq 0 ] && [ -n "$$dir" ]; then' >> activer.sh
 	@echo '            export OLDPWD="$$PWD"' >> activer.sh
-	@echo '            builtin cd "$$target_dir"' >> activer.sh
+	@echo '            builtin cd "$$dir"' >> activer.sh
 	@echo '        fi' >> activer.sh
 	@echo '    else' >> activer.sh
-	@echo '        local target_dir' >> activer.sh
-	@echo '        target_dir=$$("'$$(pwd)'/bin/mon_cd" "$$@")' >> activer.sh
-	@echo '        if [ $$? -eq 0 ] && [ -n "$$target_dir" ]; then' >> activer.sh
+	@echo '        local dir' >> activer.sh
+	@echo '        dir=$$("'$$(pwd)'/bin/mon_cd" "$$@")' >> activer.sh
+	@echo '        if [ $$? -eq 0 ] && [ -n "$$dir" ]; then' >> activer.sh
 	@echo '            export OLDPWD="$$PWD"' >> activer.sh
-	@echo '            builtin cd "$$target_dir"' >> activer.sh
+	@echo '            builtin cd "$$dir"' >> activer.sh
 	@echo '        fi' >> activer.sh
 	@echo '    fi' >> activer.sh
 	@echo '}' >> activer.sh
 	@echo 'echo "=== Émulateur activé ! Commandes globales prêtes (mon_ls, mon_mkdir, mon_cd, mon_manuel). ==="' >> activer.sh
 	@chmod +x activer.sh
-	@echo "Installation terminée. Pour activer l'environnement, exécutez :"
-	@echo "source activer.sh"
+	@echo "Installation terminée. Tapez 'source activer.sh' pour activer les commandes."
 
 clean:
-	rm -f $(TARGETS)
-	rm -rf $(BIN_DIR)
+	rm -f $(PROGS)
+	rm -rf $(BIN)
 	rm -f activer.sh

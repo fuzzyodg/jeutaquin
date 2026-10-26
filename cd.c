@@ -7,48 +7,45 @@
 #include <errno.h>
 
 int main(int argc, char *argv[]) {
-    const char *target_dir = NULL;
+    const char *dossier_cible = NULL;
 
     if (argc > 2) {
         fprintf(stderr, "mon_cd: trop d'arguments\n");
         fprintf(stderr, "Utilisation: mon_cd [répertoire]\n");
-        return EXIT_FAILURE;
+        return 1;
     }
 
+    // Gestion du dossier destination
     if (argc == 1 || (argc == 2 && strcmp(argv[1], "~") == 0)) {
-        target_dir = getenv("HOME");
-        if (!target_dir) {
+        dossier_cible = getenv("HOME");
+        if (!dossier_cible) {
             fprintf(stderr, "mon_cd: variable HOME non définie\n");
-            return EXIT_FAILURE;
+            return 1;
         }
     } else if (argc == 2 && strcmp(argv[1], "-") == 0) {
-        target_dir = getenv("OLDPWD");
-        if (!target_dir) {
+        dossier_cible = getenv("OLDPWD");
+        if (!dossier_cible) {
             fprintf(stderr, "mon_cd: variable OLDPWD non définie\n");
-            return EXIT_FAILURE;
+            return 1;
         }
     } else {
-        target_dir = argv[1];
+        dossier_cible = argv[1];
     }
 
-    char cwd_before[PATH_MAX];
-    if (getcwd(cwd_before, sizeof(cwd_before)) == NULL) {
-        cwd_before[0] = '\0';
+    // Changement de repertoire
+    if (chdir(dossier_cible) != 0) {
+        fprintf(stderr, "mon_cd: impossible d'accéder à '%s': %s\n", dossier_cible, strerror(errno));
+        return 1;
     }
 
-    if (chdir(target_dir) != 0) {
-        fprintf(stderr, "mon_cd: impossible d'accéder à '%s': %s\n", target_dir, strerror(errno));
-        return EXIT_FAILURE;
-    }
-
-    char cwd_after[PATH_MAX];
-    if (getcwd(cwd_after, sizeof(cwd_after)) == NULL) {
+    // On recupere le nouveau chemin courant
+    char rep_courant[PATH_MAX];
+    if (getcwd(rep_courant, sizeof(rep_courant)) != NULL) {
+        printf("%s\n", rep_courant);
+    } else {
         perror("getcwd");
-        return EXIT_FAILURE;
+        return 1;
     }
 
-    /* Print target path on stdout so shell function can execute cd or builtin */
-    printf("%s\n", cwd_after);
-
-    return EXIT_SUCCESS;
+    return 0;
 }

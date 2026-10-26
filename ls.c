@@ -11,58 +11,65 @@
 #include <time.h>
 #include <errno.h>
 
+// Structure pour stocker les options passees en parametre
 typedef struct {
-    int show_all;     /* -a */
-    int classify;     /* -F */
-    int reverse;      /* -r */
-    int long_format;  /* -l */
+    int opt_a; // afficher fichiers caches
+    int opt_F; // afficher indicateurs (/, *, etc.)
+    int opt_r; // tri inverse
+    int opt_l; // format long
 } Options;
 
+// Structure pour stocker les infos d'un fichier du dossier
 typedef struct {
-    char *name;
-    char *path;
+    char name[256];
+    char fullpath[1024];
     struct stat st;
     int has_stat;
-} FileEntry;
+} Fichier;
 
-static int compare_entries_asc(const void *a, const void *b) {
-    const FileEntry *e1 = (const FileEntry *)a;
-    const FileEntry *e2 = (const FileEntry *)b;
-    return strcmp(e1->name, e2->name);
+// Comparaison pour le tri alphabetique
+int compare_asc(const void *a, const void *b) {
+    Fichier *f1 = (Fichier *)a;
+    Fichier *f2 = (Fichier *)b;
+    return strcmp(f1->name, f2->name);
 }
 
-static int compare_entries_desc(const void *a, const void *b) {
-    const FileEntry *e1 = (const FileEntry *)a;
-    const FileEntry *e2 = (const FileEntry *)b;
-    return strcmp(e2->name, e1->name);
+int compare_desc(const void *a, const void *b) {
+    Fichier *f1 = (Fichier *)a;
+    Fichier *f2 = (Fichier *)b;
+    return strcmp(f2->name, f1->name);
 }
 
-static void print_permissions(mode_t mode) {
-    char p[11];
-    p[0] = S_ISDIR(mode)  ? 'd' :
-           S_ISLNK(mode)  ? 'l' :
-           S_ISCHR(mode)  ? 'c' :
-           S_ISBLK(mode)  ? 'b' :
-           S_ISFIFO(mode) ? 'p' :
-           S_ISSOCK(mode) ? 's' : '-';
+// Affichage des permissions au format drwxr-xr-x
+void afficher_droits(mode_t mode) {
+    char droits[11];
 
-    p[1] = (mode & S_IRUSR) ? 'r' : '-';
-    p[2] = (mode & S_IWUSR) ? 'w' : '-';
-    p[3] = (mode & S_IXUSR) ? 'x' : '-';
+    if (S_ISDIR(mode)) droits[0] = 'd';
+    else if (S_ISLNK(mode)) droits[0] = 'l';
+    else if (S_ISCHR(mode)) droits[0] = 'c';
+    else if (S_ISBLK(mode)) droits[0] = 'b';
+    else if (S_ISFIFO(mode)) droits[0] = 'p';
+    else if (S_ISSOCK(mode)) droits[0] = 's';
+    else droits[0] = '-';
 
-    p[4] = (mode & S_IRGRP) ? 'r' : '-';
-    p[5] = (mode & S_IWGRP) ? 'w' : '-';
-    p[6] = (mode & S_IXGRP) ? 'x' : '-';
+    droits[1] = (mode & S_IRUSR) ? 'r' : '-';
+    droits[2] = (mode & S_IWUSR) ? 'w' : '-';
+    droits[3] = (mode & S_IXUSR) ? 'x' : '-';
 
-    p[7] = (mode & S_IROTH) ? 'r' : '-';
-    p[8] = (mode & S_IWOTH) ? 'w' : '-';
-    p[9] = (mode & S_IXOTH) ? 'x' : '-';
+    droits[4] = (mode & S_IRGRP) ? 'r' : '-';
+    droits[5] = (mode & S_IWGRP) ? 'w' : '-';
+    droits[6] = (mode & S_IXGRP) ? 'x' : '-';
 
-    p[10] = '\0';
-    printf("%s", p);
+    droits[7] = (mode & S_IROTH) ? 'r' : '-';
+    droits[8] = (mode & S_IWOTH) ? 'w' : '-';
+    droits[9] = (mode & S_IXOTH) ? 'x' : '-';
+
+    droits[10] = '\0';
+    printf("%s", droits);
 }
 
-static char get_file_indicator(mode_t mode) {
+// Caractere special pour l'option -F
+char ObtenirIndicateur(mode_t mode) {
     if (S_ISDIR(mode)) return '/';
     if (S_ISLNK(mode)) return '@';
     if (S_ISFIFO(mode)) return '|';
@@ -71,188 +78,152 @@ static char get_file_indicator(mode_t mode) {
     return '\0';
 }
 
-static void print_entry(const FileEntry *entry, const Options *opts) {
-    char indicator = '\0';
-    if (opts->classify && entry->has_stat) {
-        indicator = get_file_indicator(entry->st.st_mode);
+void afficher_fichier(Fichier *f, Options *opts) {
+    char ind = '\0';
+    if (opts->opt_F && f->has_stat) {
+        ind = ObtenirIndicateur(f->st.st_mode);
     }
 
-    if (opts->long_format) {
-        if (entry->has_stat) {
-            print_permissions(entry->st.st_mode);
-            printf(" %2lu", (unsigned long)entry->st.st_nlink);
+    if (opts->opt_l) {
+        if (f->has_stat) {
+            afficher_droits(f->st.st_mode);
+            printf(" %2lu", (unsigned long)f->st.st_nlink);
 
-            struct passwd *pw = getpwuid(entry->st.st_uid);
-            struct group  *gr = getgrgid(entry->st.st_gid);
+            struct passwd *pw = getpwuid(f->st.st_uid);
+            struct group  *gr = getgrgid(f->st.st_gid);
 
-            if (pw) {
-                printf(" %-8s", pw->pw_name);
-            } else {
-                printf(" %-8u", entry->st.st_uid);
-            }
+            if (pw) printf(" %-8s", pw->pw_name);
+            else printf(" %-8u", f->st.st_uid);
 
-            if (gr) {
-                printf(" %-8s", gr->gr_name);
-            } else {
-                printf(" %-8u", entry->st.st_gid);
-            }
+            if (gr) printf(" %-8s", gr->gr_name);
+            else printf(" %-8u", f->st.st_gid);
 
-            printf(" %8lu", (unsigned long)entry->st.st_size);
+            printf(" %8lu", (unsigned long)f->st.st_size);
 
-            char date_str[64];
-            struct tm *tm_info = localtime(&entry->st.st_mtime);
-            if (tm_info) {
-                strftime(date_str, sizeof(date_str), "%b %e %H:%M", tm_info);
-                printf(" %s", date_str);
+            char datebuf[64];
+            struct tm *t = localtime(&f->st.st_mtime);
+            if (t) {
+                strftime(datebuf, sizeof(datebuf), "%b %e %H:%M", t);
+                printf(" %s", datebuf);
             } else {
                 printf(" %12s", "???");
             }
 
-            if (indicator != '\0') {
-                printf(" %s%c\n", entry->name, indicator);
-            } else {
-                printf(" %s\n", entry->name);
-            }
+            if (ind != '\0') printf(" %s%c\n", f->name, ind);
+            else printf(" %s\n", f->name);
         } else {
-            /* Fallback if stat failed */
-            printf("?????????? ? ?        ?        ?            ? %s\n", entry->name);
+            printf("?????????? ? ? ? ? ? %s\n", f->name);
         }
     } else {
-        if (indicator != '\0') {
-            printf("%s%c  ", entry->name, indicator);
-        } else {
-            printf("%s  ", entry->name);
-        }
+        if (ind != '\0') printf("%s%c  ", f->name, ind);
+        else printf("%s  ", f->name);
     }
 }
 
-static void list_directory(const char *dirpath, const Options *opts, int print_dirname) {
-    DIR *dir = opendir(dirpath);
-    if (!dir) {
-        fprintf(stderr, "mon_ls: impossible d'accéder à '%s': %s\n", dirpath, strerror(errno));
+void lister_dossier(const char *path, Options *opts, int plusieurs) {
+    DIR *d = opendir(path);
+    if (!d) {
+        fprintf(stderr, "mon_ls: impossible d'accéder à '%s': %s\n", path, strerror(errno));
         return;
     }
 
-    if (print_dirname) {
-        printf("%s:\n", dirpath);
+    if (plusieurs) {
+        printf("%s:\n", path);
     }
 
-    size_t capacity = 16;
-    size_t count = 0;
-    FileEntry *entries = malloc(capacity * sizeof(FileEntry));
-    if (!entries) {
+    int cap = 32;
+    int total = 0;
+    Fichier *liste = malloc(cap * sizeof(Fichier));
+    if (!liste) {
         perror("malloc");
-        closedir(dir);
+        closedir(d);
         return;
     }
 
-    struct dirent *dp;
-    while ((dp = readdir(dir)) != NULL) {
-        if (!opts->show_all && dp->d_name[0] == '.') {
+    struct dirent *ent;
+    while ((ent = readdir(d)) != NULL) {
+        // Ignorer fichiers cachés si pas -a
+        if (!opts->opt_a && ent->d_name[0] == '.') {
             continue;
         }
 
-        if (count >= capacity) {
-            capacity *= 2;
-            FileEntry *new_entries = realloc(entries, capacity * sizeof(FileEntry));
-            if (!new_entries) {
-                perror("realloc");
-                break;
-            }
-            entries = new_entries;
+        if (total >= cap) {
+            cap *= 2;
+            Fichier *tmp = realloc(liste, cap * sizeof(Fichier));
+            if (!tmp) break;
+            liste = tmp;
         }
 
-        entries[count].name = strdup(dp->d_name);
+        strncpy(liste[total].name, ent->d_name, 255);
+        liste[total].name[255] = '\0';
 
-        size_t full_path_len = strlen(dirpath) + strlen(dp->d_name) + 2;
-        entries[count].path = malloc(full_path_len);
-        if (entries[count].path) {
-            if (strcmp(dirpath, "/") == 0) {
-                snprintf(entries[count].path, full_path_len, "/%s", dp->d_name);
-            } else {
-                snprintf(entries[count].path, full_path_len, "%s/%s", dirpath, dp->d_name);
-            }
-        }
-
-        if (lstat(entries[count].path, &entries[count].st) == 0) {
-            entries[count].has_stat = 1;
+        if (strcmp(path, "/") == 0) {
+            snprintf(liste[total].fullpath, sizeof(liste[total].fullpath), "/%s", ent->d_name);
         } else {
-            entries[count].has_stat = 0;
+            snprintf(liste[total].fullpath, sizeof(liste[total].fullpath), "%s/%s", path, ent->d_name);
         }
 
-        count++;
-    }
-    closedir(dir);
+        if (lstat(liste[total].fullpath, &liste[total].st) == 0) {
+            liste[total].has_stat = 1;
+        } else {
+            liste[total].has_stat = 0;
+        }
 
-    /* Sort entries */
-    if (opts->reverse) {
-        qsort(entries, count, sizeof(FileEntry), compare_entries_desc);
+        total++;
+    }
+    closedir(d);
+
+    // Tri
+    if (opts->opt_r) {
+        qsort(liste, total, sizeof(Fichier), compare_desc);
     } else {
-        qsort(entries, count, sizeof(FileEntry), compare_entries_asc);
+        qsort(liste, total, sizeof(Fichier), compare_asc);
     }
 
-    /* Long format total block count calculation could be done if needed, but not required */
-
-    /* Print entries */
-    for (size_t i = 0; i < count; i++) {
-        print_entry(&entries[i], opts);
+    for (int i = 0; i < total; i++) {
+        afficher_fichier(&liste[i], opts);
     }
 
-    if (!opts->long_format && count > 0) {
+    if (!opts->opt_l && total > 0) {
         printf("\n");
     }
 
-    /* Cleanup */
-    for (size_t i = 0; i < count; i++) {
-        free(entries[i].name);
-        free(entries[i].path);
-    }
-    free(entries);
+    free(liste);
 }
 
 int main(int argc, char *argv[]) {
     Options opts = {0, 0, 0, 0};
-    char *dirs[256];
-    int dir_count = 0;
+    char *dossiers[256];
+    int nb_dossiers = 0;
 
+    // Analyse des arguments
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] == '-' && argv[i][1] != '\0') {
             for (int j = 1; argv[i][j] != '\0'; j++) {
-                switch (argv[i][j]) {
-                    case 'a':
-                        opts.show_all = 1;
-                        break;
-                    case 'F':
-                        opts.classify = 1;
-                        break;
-                    case 'r':
-                        opts.reverse = 1;
-                        break;
-                    case 'l':
-                        opts.long_format = 1;
-                        break;
-                    default:
-                        fprintf(stderr, "mon_ls: option invalide -- '%c'\n", argv[i][j]);
-                        fprintf(stderr, "Utilisation: mon_ls [-a] [-F] [-r] [-l] [répertoire...]\n");
-                        return EXIT_FAILURE;
+                if (argv[i][j] == 'a') opts.opt_a = 1;
+                else if (argv[i][j] == 'F') opts.opt_F = 1;
+                else if (argv[i][j] == 'r') opts.opt_r = 1;
+                else if (argv[i][j] == 'l') opts.opt_l = 1;
+                else {
+                    fprintf(stderr, "mon_ls: option invalide -- '%c'\n", argv[i][j]);
+                    fprintf(stderr, "Utilisation: mon_ls [-a] [-F] [-r] [-l] [répertoire...]\n");
+                    return 1;
                 }
             }
         } else {
-            dirs[dir_count++] = argv[i];
+            dossiers[nb_dossiers++] = argv[i];
         }
     }
 
-    if (dir_count == 0) {
-        dirs[0] = ".";
-        dir_count = 1;
+    if (nb_dossiers == 0) {
+        dossiers[0] = ".";
+        nb_dossiers = 1;
     }
 
-    for (int i = 0; i < dir_count; i++) {
-        if (i > 0) {
-            printf("\n");
-        }
-        list_directory(dirs[i], &opts, dir_count > 1);
+    for (int i = 0; i < nb_dossiers; i++) {
+        if (i > 0) printf("\n");
+        lister_dossier(dossiers[i], &opts, nb_dossiers > 1);
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }

@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void print_usage(void) {
+void afficher_aide(void) {
     printf("Utilisation : mon_manuel <nom_commande>\n");
     printf("Commandes disponibles : ls, mkdir, cd, manuel (ou mon_ls, mon_mkdir, mon_cd, mon_manuel)\n");
 }
 
-static void print_manual_ls(void) {
+void manuel_ls(void) {
     printf("NAME\n");
     printf("       mon_ls - affichage du contenu d'un répertoire\n\n");
     printf("SYNOPSIS\n");
@@ -22,7 +22,7 @@ static void print_manual_ls(void) {
     printf("       -l     Utiliser un format d'affichage long (permissions, propriétaire, groupe, taille, date).\n");
 }
 
-static void print_manual_mkdir(void) {
+void manuel_mkdir(void) {
     printf("NAME\n");
     printf("       mon_mkdir - création de répertoires\n\n");
     printf("SYNOPSIS\n");
@@ -33,7 +33,7 @@ static void print_manual_mkdir(void) {
     printf("       -p     Crée les répertoires parents si nécessaire, sans erreur si le répertoire existe déjà.\n");
 }
 
-static void print_manual_cd(void) {
+void manuel_cd(void) {
     printf("NAME\n");
     printf("       mon_cd - changement de répertoire de travail\n\n");
     printf("SYNOPSIS\n");
@@ -45,7 +45,7 @@ static void print_manual_cd(void) {
     printf("       Aucune option prise en charge.\n");
 }
 
-static void print_manual_manuel(void) {
+void manuel_manuel(void) {
     printf("NAME\n");
     printf("       mon_manuel - manuel d'utilisation des commandes émulées\n\n");
     printf("SYNOPSIS\n");
@@ -59,25 +59,25 @@ static void print_manual_manuel(void) {
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        print_usage();
-        return EXIT_FAILURE;
+        afficher_aide();
+        return 1;
     }
 
     const char *cmd = argv[1];
 
     if (strcmp(cmd, "ls") == 0 || strcmp(cmd, "mon_ls") == 0) {
-        print_manual_ls();
+        manuel_ls();
     } else if (strcmp(cmd, "mkdir") == 0 || strcmp(cmd, "mon_mkdir") == 0) {
-        print_manual_mkdir();
+        manuel_mkdir();
     } else if (strcmp(cmd, "cd") == 0 || strcmp(cmd, "mon_cd") == 0) {
-        print_manual_cd();
+        manuel_cd();
     } else if (strcmp(cmd, "manuel") == 0 || strcmp(cmd, "mon_manuel") == 0) {
-        print_manual_manuel();
+        manuel_manuel();
     } else {
         fprintf(stderr, "mon_manuel: aucune entrée de manuel pour '%s'\n", cmd);
-        print_usage();
-        return EXIT_FAILURE;
+        afficher_aide();
+        return 1;
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }
