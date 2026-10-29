@@ -1,0 +1,3 @@
+## 2026-10-29 - Accessible Cart Controls and Modal Escape Shortcuts
+**Learning:** In vanilla JS multi-page apps without UI frameworks, dynamic cart rendering can accidentally introduce non-semantic elements (`<span>` for delete) and missing ARIA labels or screen reader live region attributes. Global keydown handlers for `Escape` provide standard modal dismissal across cart panel, event modal, and mobile nav.
+**Action:** Always render interactive cart actions using semantic `<button type="button">` with descriptive `aria-label` attributes and ensure dynamic toast notifications set `role="status"` and `aria-live="polite"`.
