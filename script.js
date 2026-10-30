@@ -124,6 +124,28 @@
   }
 })();
 
+/* ---- Dismissal via Escape Key (Accessibility / Micro-UX) ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (typeof Cart !== 'undefined' && Cart.close) {
+      Cart.close();
+    }
+    const eventModal = document.getElementById('event-modal');
+    if (eventModal && eventModal.classList.contains('active')) {
+      eventModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    const burger = document.querySelector('.burger');
+    const navMob = document.querySelector('.nav-mobile');
+    const overlay = document.querySelector('.nav-overlay');
+    if (navMob && navMob.classList.contains('active')) {
+      burger?.classList.remove('active');
+      navMob.classList.remove('active');
+      overlay?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Formulaire réservation (contact) ---- */
 (function () {
   const form = document.getElementById('reservation-form');
