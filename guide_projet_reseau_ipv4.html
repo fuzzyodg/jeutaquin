@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Complet du Projet Réseau IPv4 : Analyse de Trafic & Détection d'Anomalies avec Wireshark</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+            @bottom-right {
+                content: counter(page) " / " counter(pages);
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 9pt;
+                color: #555;
+            }
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 10.5pt;
+            line-height: 1.45;
+            color: #222;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1a365d;
+            font-weight: bold;
+            margin-top: 1.1em;
+            margin-bottom: 0.4em;
+            page-break-after: avoid;
+        }
+
+        h1 {
+            font-size: 18pt;
+            text-align: center;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 12pt;
+            font-style: italic;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 13.5pt;
+            border-bottom: 1px solid #cbd5e0;
+            padding-bottom: 3px;
+            margin-top: 20px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 11.5pt;
+            color: #2b6cb0;
+            margin-top: 15px;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            font-size: 10.5pt;
+            color: #2d3748;
+            margin-top: 10px;
+            page-break-after: avoid;
+        }
+
+        p, ul, ol {
+            margin-top: 0;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1px 4px;
+            font-size: 9.5pt;
+            border-radius: 3px;
+        }
+
+        pre {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #2b6cb0;
+            padding: 8px 10px;
+            font-size: 9pt;
+            line-height: 1.3;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 8px 0 10px 0;
+            page-break-inside: avoid;
+        }
+
+        .callout {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        .callout-warning {
+            background-color: #fffbeb;
+            border-left: 4px solid #d97706;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9.5pt;
+            page-break-inside: avoid;
+        }
+
+        .table-custom th, .table-custom td {
+            border: 1px solid #cbd5e1;
+            padding: 5px 8px;
+            text-align: left;
+        }
+
+        .table-custom th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        .header-meta {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .header-meta table {
+            width: 100%;
+            border: none;
+            font-size: 10pt;
+        }
+
+        .header-meta td {
+            border: none;
+            padding: 3px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Analyse de Trafic & Détection d'Anomalies IPv4</h1>
+    <div class="subtitle">Guide d'Ingénierie Réseau : Architecture, Outils Linux & Commandes des 5 Étapes</div>
+
+    <div class="header-meta">
+        <table>
+            <tr>
+                <td style="width: 50%;"><strong>Projet :</strong> Protocoles Auxiliaires IPv4 (DHCP, ARP, ICMP, IGMP)</td>
+                <td style="width: 50%;"><strong>Hôte de travail :</strong> Windows (Windows 10 / 11)</td>
+            </tr>
+            <tr>
+                <td><strong>Hyperviseur recommandé :</strong> Oracle VirtualBox</td>
+                <td><strong>Outils d'analyse :</strong> Wireshark, TShark, tcpdump</td>
+            </tr>
+            <tr>
+                <td><strong>Systèmes invités :</strong> Debian 12 (Client/Serveur) &amp; Kali Linux (Audit)</td>
+                <td><strong>Outils Linux d'audit :</strong> dsniff (arpspoof), iproute2, Scapy</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>1. Comprendre le Projet et ses Enjeux</h2>
+    <p>
+        Les réseaux IPv4 reposent sur un ensemble de protocoles fondamentaux sans lesquels la communication de niveau 3 ne pourrait avoir lieu. Ces protocoles auxiliaires assurent la négociation d'adresses, la résolution d'adresses physiques, le diagnostic et le routage multicast :
+    </p>
+    <ul>
+        <li><strong>DHCP (Dynamic Host Configuration Protocol) :</strong> Permet la configuration automatique des paramètres IP (adresse IP, masque de sous-réseau, passerelle par défaut, serveurs DNS). Il s'appuie sur le protocole de transport UDP (ports 67 serveur et 68 client) à travers un cycle à 4 étapes clé nommé <strong>DORA</strong> (Discover, Offer, Request, Acknowledge).</li>
+        <li><strong>ARP (Address Resolution Protocol) :</strong> Assure la correspondance dynamique entre l'adresse logique (IPv4, 32 bits) et l'adresse physique matérielle (MAC, 48 bits) sur le réseau local. Ne disposant nativement d'aucun mécanisme d'authentification, ARP est vulnérable à l'usurpation (<em>ARP Spoofing / Cache Poisoning</em>).</li>
+        <li><strong>ICMP (Internet Control Message Protocol) :</strong> Véhicule les messages de diagnostic et de signalement d'erreurs (par ex. hôte ou réseau inaccessible, expiration de la durée de vie TTL lors d'un <em>traceroute</em>, requêtes et réponses d'écho <em>ping</em>).</li>
+        <li><strong>IGMP (Internet Group Management Protocol) :</strong> Permet aux hôtes de signaler leur appartenance à un groupe de diffusion multicast auprès des routeurs locaux.</li>
+    </ul>
+
+    <p>
+        L'objectif de ce projet est de déployer un banc d'essai expérimental virtuel, d'engendrer le trafic propre à chacun de ces protocoles, de le disséquer précisément avec l'analyseur de paquets <strong>Wireshark</strong>, et de simuler une anomalie de sécurité (ARP Cache Poisoning) afin de documenter les signatures révélatrices et les filtres de détection avancés.
+    </p>
+
+    <h2>2. Choix de l'Environnement et de la Virtualisation sous Windows</h2>
+    <p>
+        Sur une machine hôte physique équipée de Windows, plusieurs options s'offrent pour concevoir ce laboratoire réseau. Voici l'analyse comparative des architectures possibles :
+    </p>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Environnement</th>
+                <th>Avantages</th>
+                <th>Inconvénients</th>
+                <th>Verdict pour ce projet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Oracle VirtualBox<br>(Recommandé)</strong></td>
+                <td>
+                    • Isolation réseau complète via le mode <em>Réseau Interne</em> (intnet).<br>
+                    • Aucun risque de perturber le réseau physique ou la Box de votre domicile.<br>
+                    • Intégration fluide de Wireshark directement dans l'interface graphique de Kali ou Debian.<br>
+                    • Gestion parfaite de 3 VMs légères (Debian netinst + Kali).
+                </td>
+                <td>
+                    Nécessite ~6 à 8 Go de RAM libre sur Windows pour faire tourner 3 machines virtuelles simultanément.
+                </td>
+                <td>
+                    <strong>Idéal &amp; Robuste.</strong> C'est la solution la plus simple, la plus fiable et la plus représentative d'un réseau physique réel.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>GNS3 avec VPCS &amp; Docker</strong></td>
+                <td>
+                    Très économe en RAM (noeuds VPCS ultra-légers).
+                </td>
+                <td>
+                    Nécessite l'installation de la GNS3 VM sous Windows (WSL2 ou VMware) ; configuration de conteneurs Docker plus complexe pour configurer les serveurs DHCP et les attaques ARP.
+                </td>
+                <td>
+                    Moins convivial si vous souhaitez exécuter facilement des utilitaires Linux graphiques.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Conteneurs Docker purs</strong></td>
+                <td>
+                    Très rapide à démarrer, consommation minimale.
+                </td>
+                <td>
+                    Sous Windows, Docker Desktop tourne dans WSL2, ce qui complexifie la capture native L2 (ARP, DHCP broadcast) et le monitoring Wireshark.
+                </td>
+                <td>
+                    Déconseillé pour l'analyse précise des trames Ethernet de niveau 2.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>Recommandation d'architecture optimale :</strong>
+        <br>
+        Utiliser <strong>Oracle VirtualBox</strong> sur votre machine Windows avec <strong>3 machines virtuelles Linux</strong> reliées entre elles sur le même commutateur virtuel via un <strong>« Réseau Interne »</strong> nommé par exemple <code>lab-reseau</code> :
+        <ol>
+            <li><strong>VM 1 - Serveur (Debian 12 Légère / Minimal) :</strong> Rôle de serveur DHCP (et passerelle/hôte cible pour les tests). Configuration : 1 vCPU, 1024 Mo de RAM.</li>
+            <li><strong>VM 2 - Client (Debian 12 Légère / XFCE ou console) :</strong> Rôle de client DHCP et station de test légitime. Configuration : 1 vCPU, 1024 Mo de RAM.</li>
+            <li><strong>VM 3 - Observateur &amp; Auditeur (Kali Linux) :</strong> Équipée de Wireshark graphique pour capturer le trafic, et d'outils d'audit réseau (<code>arpspoof</code>, <code>dsniff</code>, <code>scapy</code>) pour simuler l'usurpation ARP de l'Étape 4. Configuration : 2 vCPUs, 2048 Mo de RAM.</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>3. Guide Détaillé &amp; Commandes des 5 Étapes du Projet</h2>
+
+    <h3>Étape 1 : Mise en Place de l'Environnement de Laboratoire</h3>
+    <p>
+        Cette étape consiste à préparer le commutateur virtuel, à raccorder les 3 machines virtuelles et à installer les outils logiciels Linux requis.
+    </p>
+
+    <h4>1.1. Configuration des cartes réseau dans VirtualBox</h4>
+    <p>
+        Pour chaque VM (dans la fenêtre de gestion de VirtualBox sous Windows) :
+    </p>
+    <ul>
+        <li>Ouvrez <em>Configuration &gt; Réseau &gt; Adaptateur 1</em>.</li>
+        <li>Cochez <em>Activer l'interface réseau</em>.</li>
+        <li>Dans <em>Mode d'accès réseau</em>, choisissez impérativement : <strong>Réseau Interne</strong>.</li>
+        <li>Dans <em>Nom</em>, saisissez le même nom pour les 3 machines : <code>lab-reseau</code>.</li>
+        <li>Déroulez <em>Avancé</em> et réglez <strong>Mode Promiscuité</strong> sur : <strong>Autoriser tout</strong> (indispensable pour que Kali et Wireshark puissent voir toutes les trames transitant sur le bus virtuel).</li>
+    </ul>
+
+    <div class="callout-warning">
+        <strong>Astuce pour l'accès Internet initial :</strong> Pour installer les paquets (apt install), configurez temporairement une <em>deuxième interface (Adaptateur 2)</em> en <strong>NAT</strong> sur chaque VM. Une fois les paquets installés, vous pourrez désactiver l'Adaptateur 2 pour travailler en circuit fermé étanche.
+    </div>
+
+    <h4>1.2. Commandes d'installation des outils sur chaque machine</h4>
+
+    <p><strong>Sur la VM Serveur (Debian) :</strong></p>
+    <pre><code># Mise à jour des dépôts
+sudo apt update
+
+# Installation du serveur DHCP et des utilitaires réseau
+sudo apt install -y isc-dhcp-server net-tools iproute2 tcpdump ethtool</code></pre>
+
+    <p><strong>Sur la VM Client (Debian) :</strong></p>
+    <pre><code>sudo apt update
+sudo apt install -y isc-dhcp-client net-tools iproute2 traceroute iputils-ping</code></pre>
+
+    <p><strong>Sur la VM Auditeur / Observateur (Kali Linux) :</strong></p>
+    <pre><code>sudo apt update
+# Installation de Wireshark, TShark, dsniff (contenant arpspoof) et Scapy
+sudo apt install -y wireshark tshark dsniff python3-scapy net-tools iputils-ping traceroute
+
+# Permettre à l'utilisateur non-root de capturer des trames avec Wireshark
+sudo usermod -aG wireshark $USER</code></pre>
+
+    <h4>1.3. Plan d'adressage IP du laboratoire</h4>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Machine</th>
+                <th>Rôle</th>
+                <th>Interface</th>
+                <th>Adresse IP fixe / dynamique</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>VM Serveur</strong></td>
+                <td>Serveur DHCP / Hôte A</td>
+                <td><code>eth0</code> ou <code>enp0s3</code></td>
+                <td><code>192.168.10.1 /24</code> (Statique)</td>
+            </tr>
+            <tr>
+                <td><strong>VM Client</strong></td>
+                <td>Station cliente / Hôte B</td>
+                <td><code>eth0</code> ou <code>enp0s3</code></td>
+                <td>Attribuée par DHCP (Plage <code>192.168.10.50</code> à <code>192.168.10.100</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>VM Kali</strong></td>
+                <td>Sonde Wireshark &amp; Attaquant</td>
+                <td><code>eth0</code> ou <code>enp0s3</code></td>
+                <td><code>192.168.10.200 /24</code> (Statique)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h3>Étape 2 : Capture et Analyse du Trafic DHCP (Processus DORA)</h3>
+    <p>
+        Le protocole DHCP fonctionne par échange de datagrammes UDP en diffusion (broadcast) et monodiffusion (unicast).
+    </p>
+
+    <h4>2.1. Configuration et démarrage du service DHCP sur la VM Serveur</h4>
+    <p>Identifiez le nom de l'interface réseau sur le serveur (via <code>ip -br link</code>) : notons-la <code>eth0</code>.</p>
+    <pre><code># 1. Attribuer l'adresse statique au serveur
+sudo ip addr flush dev eth0
+sudo ip addr add 192.168.10.1/24 dev eth0
+sudo ip link set eth0 up
+
+# 2. Spécifier l'interface d'écoute du serveur DHCP dans /etc/default/isc-dhcp-server
+sudo sed -i 's/INTERFACESv4=""/INTERFACESv4="eth0"/' /etc/default/isc-dhcp-server
+
+# 3. Écrire la configuration de la plage DHCP dans /etc/dhcp/dhcpd.conf
+sudo tee /etc/dhcp/dhcpd.conf << 'EOF'
+default-lease-time 600;
+max-lease-time 7200;
+authoritative;
+
+subnet 192.168.10.0 netmask 255.255.255.0 {
+    range 192.168.10.50 192.168.10.100;
+    option routers 192.168.10.1;
+    option subnet-mask 255.255.255.0;
+    option domain-name-servers 1.1.1.1, 8.8.8.8;
+}
+EOF
+
+# 4. Démarrer le service et vérifier son statut
+sudo systemctl restart isc-dhcp-server
+sudo systemctl status isc-dhcp-server --no-pager</code></pre>
+
+    <h4>2.2. Lancement de la capture Wireshark</h4>
+    <p>
+        Sur la VM Kali (ou sur le serveur via TShark/tcpdump) :
+    </p>
+    <pre><code># Lancer Wireshark en mode graphique
+wireshark &
+
+# Ou capturer en ligne de commande avec tshark dans un fichier .pcap
+sudo tshark -i eth0 -f "udp port 67 or udp port 68" -w /tmp/capture_dhcp.pcap</code></pre>
+    <p>Dans l'interface Wireshark, appliquez le filtre d'affichage : <code>dhcp</code> ou <code>bootp</code>.</p>
+
+    <h4>2.3. Déclenchement du processus d'allocation DORA sur la VM Client</h4>
+    <pre><code># 1. Libérer l'adresse IP actuelle (envoi d'un DHCP Release)
+sudo dhclient -r -v eth0
+
+# 2. Vider les résidus de configuration
+sudo ip addr flush dev eth0
+
+# 3. Solliciter une nouvelle attribution complète (DORA)
+sudo dhclient -v eth0
+
+# 4. Constater l'adresse obtenue
+ip addr show eth0</code></pre>
+
+    <h4>2.4. Grille d'analyse séquentielle du cycle DORA sous Wireshark</h4>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>Message DHCP</th>
+                <th>IP Source / Dest</th>
+                <th>MAC Source / Dest</th>
+                <th>Rôle et Contenu Analysé</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>D</strong></td>
+                <td><strong>DHCP Discover</strong></td>
+                <td><code>0.0.0.0</code> &rarr; <code>255.255.255.255</code></td>
+                <td>Client MAC &rarr; <code>ff:ff:ff:ff:ff:ff</code></td>
+                <td>Le client diffuse une requête pour localiser un serveur DHCP disponible. Contient le <em>Client MAC</em> et la liste des options requises (Option 55).</td>
+            </tr>
+            <tr>
+                <td><strong>O</strong></td>
+                <td><strong>DHCP Offer</strong></td>
+                <td><code>192.168.10.1</code> &rarr; <code>192.168.10.50</code> (ou broadcast)</td>
+                <td>Serveur MAC &rarr; Client MAC</td>
+                <td>Le serveur propose une adresse IP libre (champ <code>yiaddr</code> = <em>Your IP Address</em>), la durée du bail (Option 51) et les paramètres réseau.</td>
+            </tr>
+            <tr>
+                <td><strong>R</strong></td>
+                <td><strong>DHCP Request</strong></td>
+                <td><code>0.0.0.0</code> &rarr; <code>255.255.255.255</code></td>
+                <td>Client MAC &rarr; <code>ff:ff:ff:ff:ff:ff</code></td>
+                <td>Le client confirme formellement qu'il accepte l'offre proposée en précisant l'identifiant du serveur (Option 54) et l'adresse demandée (Option 50).</td>
+            </tr>
+            <tr>
+                <td><strong>A</strong></td>
+                <td><strong>DHCP ACK</strong></td>
+                <td><code>192.168.10.1</code> &rarr; <code>192.168.10.50</code> (ou broadcast)</td>
+                <td>Serveur MAC &rarr; Client MAC</td>
+                <td>Le serveur valide définitivement l'attribution et enregistre le bail dans sa base de données locale.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h3>Étape 3 : Investigation des Requêtes et Tables ARP</h3>
+    <p>
+        Le protocole ARP opère à la frontière entre les couches 2 (Liaison de données) et 3 (Réseau).
+    </p>
+
+    <h4>3.1. Commandes de manipulation du cache ARP sous Linux</h4>
+    <pre><code># Afficher le cache ARP actuel (format standard)
+ip neigh show
+# Ou commande historique :
+arp -n
+
+# Vider intégralement la table ARP sur le client (nécessite les privilèges root)
+sudo ip neigh flush all
+
+# Vérifier que le cache est vide
+ip neigh show</code></pre>
+
+    <h4>3.2. Génération de trafic de résolution ARP</h4>
+    <p>Sur la VM Client, après avoir vidé la table ARP, émettez un ping vers le serveur (<code>192.168.10.1</code>) :</p>
+    <pre><code># Exécuter 2 paquets ping vers le serveur
+ping -c 2 192.168.10.1
+
+# Examiner à nouveau le cache ARP pour voir l'entrée apprise dynamiquement
+ip neigh show</code></pre>
+
+    <h4>3.3. Analyse de la trame ARP dans Wireshark</h4>
+    <p>Filtre d'affichage Wireshark : <code>arp</code></p>
+    <ul>
+        <li><strong>ARP Request (Opcode 1) :</strong>
+            <ul>
+                <li>Trame Ethernet L2 : Adresse de destination = <code>ff:ff:ff:ff:ff:ff</code> (Broadcast). Tout le réseau reçoit la demande.</li>
+                <li>Charge utile ARP : <em>Sender MAC</em> = MAC Client, <em>Sender IP</em> = 192.168.10.50, <em>Target MAC</em> = <code>00:00:00:00:00:00</code> (inconnu), <em>Target IP</em> = 192.168.10.1 ("Who has 192.168.10.1? Tell 192.168.10.50").</li>
+            </ul>
+        </li>
+        <li><strong>ARP Reply (Opcode 2) :</strong>
+            <ul>
+                <li>Trame Ethernet L2 : Adresse de destination = MAC Client (Unicast strict).</li>
+                <li>Charge utile ARP : <em>Sender MAC</em> = MAC Serveur, <em>Sender IP</em> = 192.168.10.1 ("192.168.10.1 is at [MAC Serveur]").</li>
+            </ul>
+        </li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+
+    <h3>Étape 4 : Simulation et Détection d'une Usurpation ARP (ARP Spoofing)</h3>
+    <p>
+        L'usurpation de cache ARP (<em>ARP Poisoning</em>) exploite le fait qu'un système d'exploitation accepte et mémorise les paquets ARP Reply même s'il n'a émis aucune requête préalable (<em>Gratuitous ARP</em> ou réponse non sollicitée).
+    </p>
+
+    <h4>4.1. Configuration de la VM Attaquante (Kali Linux)</h4>
+    <p>
+        La machine Kali possède l'IP <code>192.168.10.200</code>. Elle va faire croire au Client (<code>192.168.10.50</code>) qu'elle est le Serveur (<code>192.168.10.1</code>).
+    </p>
+
+    <pre><code># 1. Vérifier l'état du routage IP (si vous souhaitez intercepter et relayer le trafic - mode MitM)
+sudo sysctl -w net.ipv4.ip_forward=1
+
+# 2. Lancer l'attaque d'empoisonnement avec l'outil Linux arpspoof (paquet dsniff)
+# Syntaxe : arpspoof -i <interface> -t <IP_Cible> <IP_Usurpée>
+sudo arpspoof -i eth0 -t 192.168.10.50 192.168.10.1
+
+# (Optionnel - Pour un empoisonnement bidirectionnel, ouvrir un 2ème terminal sur Kali) :
+sudo arpspoof -i eth0 -t 192.168.10.1 192.168.10.50</code></pre>
+
+    <p><strong>Alternative avec un script Python Scapy (génération de trames falsifiées à la demande) :</strong></p>
+    <pre><code># Script python pour injecter une réponse ARP forgée non sollicitée
+python3 -c "
+from scapy.all import *
+target_ip = '192.168.10.50'
+fake_ip = '192.168.10.1'
+# Opcode 2 = Reply (is-at)
+poison_packet = ARP(op=2, pdst=target_ip, psrc=fake_ip)
+send(poison_packet, count=10, inter=1)
+print('Paquets ARP empoisonnés émis !')
+"</code></pre>
+
+    <div class="page-break"></div>
+
+    <h4>4.2. Constat de la corruption sur la VM Client</h4>
+    <p>Sur la machine Client, observez comment la table ARP a été falsifiée :</p>
+    <pre><code>ip neigh show</code></pre>
+    <p>
+        <em>Observation :</em> L'adresse IP du serveur <code>192.168.10.1</code> est désormais associée à la véritable adresse MAC de la machine Kali ! Tout le trafic légitime destiné au serveur passe désormais par Kali.
+    </p>
+
+    <h4>4.3. Détection et Diagnostic sous Wireshark</h4>
+    <p>Wireshark intègre un moteur d'analyse experte capable de déceler l'usurpation :</p>
+    <ol>
+        <li><strong>Filtres de recherche d'anomalie :</strong>
+            <ul>
+                <li><code>arp.duplicate-address-frame</code> : Isole immédiatement les trames où une adresse IP apparaît associée à une adresse MAC différente de celle vue précédemment.</li>
+                <li><code>expert.severity == warning or expert.severity == error</code> : Répertorie les avertissements du moteur Wireshark. Vous verrez apparaître la mention explicite : <em>"Duplicate IP address detected for 192.168.10.1"</em>.</li>
+            </ul>
+        </li>
+        <li><strong>Menu Statistiques de Wireshark :</strong>
+            <ul>
+                <li><em>Statistiques &gt; Endpoints (Points de terminaison) :</em> Examinez les onglets <em>IPv4</em> et <em>Ethernet</em>. Vous repérerez deux adresses MAC distinctes générant du trafic pour la même adresse IPv4 <code>192.168.10.1</code>.</li>
+                <li><em>Statistiques &gt; Conversations :</em> Permet de visualiser le volume anormal de paquets ARP échangés en un laps de temps réduit (rafales d'annonces).</li>
+            </ul>
+        </li>
+    </ol>
+
+    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+
+    <h3>Étape 5 : Analyse des Messages de Diagnostic ICMP</h3>
+    <p>
+        Le protocole ICMP (type de protocole IP 1) transmet des messages d'information et d'anomalie réseau.
+    </p>
+
+    <h4>5.1. Commandes Linux pour générer différents codes et types ICMP</h4>
+    <pre><code># 1. Écho standard (Type 8 Echo Request, Type 0 Echo Reply)
+ping -c 3 192.168.10.1
+
+# 2. Modification de la taille du payload (données utiles)
+# Génère un paquet total de 1028 octets (1000 octets payload + 8 ICMP + 20 IP)
+ping -c 2 -s 1000 192.168.10.1
+
+# 3. Forcer la détection de la MTU / Ne pas fragmenter (Don't Fragment - DF)
+# Si la taille dépasse la MTU (1500), le système génère une erreur locale ou un ICMP Type 3 Code 4
+ping -c 2 -M do -s 1600 192.168.10.1
+
+# 4. Forcer l'expiration du Time-to-Live (TTL Exceeded - Type 11 Code 0)
+# En fixant le TTL à 1, le paquet est détruit dès le premier saut routeur
+ping -c 2 -t 1 1.1.1.1
+
+# 5. Déclenchement d'un Port Unreachable (Type 3 Code 3)
+# Envoyer un datagramme UDP vers un port fermé sur le serveur
+nc -u -z -v 192.168.10.1 54321
+
+# 6. Exécution d'un traceroute utilisant les paquets ICMP
+traceroute -I 192.168.10.1</code></pre>
+
+    <h4>5.2. Synthèse des Types et Codes ICMP à documenter sous Wireshark</h4>
+    <p>Filtre d'affichage Wireshark : <code>icmp</code></p>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Code</th>
+                <th>Désignation</th>
+                <th>Contexte d'apparition &amp; Champs à observer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>8</strong></td>
+                <td><strong>0</strong></td>
+                <td>Echo (ping) Request</td>
+                <td>Émis par le client. Observer les champs <em>Identifier</em> et <em>Sequence Number</em> (BE/LE).</td>
+            </tr>
+            <tr>
+                <td><strong>0</strong></td>
+                <td><strong>0</strong></td>
+                <td>Echo (ping) Reply</td>
+                <td>Réponse du destinataire. Les numéros de séquence et d'identifiant correspondent exactement à la requête.</td>
+            </tr>
+            <tr>
+                <td><strong>11</strong></td>
+                <td><strong>0</strong></td>
+                <td>Time-to-Live Exceeded</td>
+                <td>Le paquet IP a vu son champ TTL décrémenté à 0 par un équipement intermédiaire (base du <em>traceroute</em>).</td>
+            </tr>
+            <tr>
+                <td><strong>3</strong></td>
+                <td><strong>3</strong></td>
+                <td>Destination Unreachable : Port Unreachable</td>
+                <td>La machine de destination a bien reçu le paquet mais aucun service n'écoute sur le port UDP sollicité.</td>
+            </tr>
+            <tr>
+                <td><strong>3</strong></td>
+                <td><strong>1</strong></td>
+                <td>Destination Unreachable : Host Unreachable</td>
+                <td>Émis lorsqu'un hôte ne répond pas aux requêtes de résolution ARP locales après plusieurs tentatives.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h2>4. Note de Synthèse : Filtres Wireshark Avancés &amp; Livrables</h2>
+
+    <h3>4.1. Guide des filtres avancés pour repérer rapidement les anomalies</h3>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Objectif de Surveillance</th>
+                <th>Filtre d'affichage Wireshark recommandé</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Détection d'usurpation ARP</strong></td>
+                <td><code>arp.duplicate-address-frame</code> ou <code>arp.opcode == 2 and eth.dst == ff:ff:ff:ff:ff:ff</code> (Gratuitous ARP Reply diffusé)</td>
+            </tr>
+            <tr>
+                <td><strong>Tempête de requêtes ARP</strong></td>
+                <td><code>arp.opcode == 1</code> (Utiliser ensuite <em>Statistiques &gt; Graphique E/S</em> pour mesurer le débit de paquets/sec)</td>
+            </tr>
+            <tr>
+                <td><strong>Isolation stricte du trafic DHCP</strong></td>
+                <td><code>bootp.type == 1</code> (Requêtes/Discovers) ou <code>bootp.type == 2</code> (Offres/Acks)</td>
+            </tr>
+            <tr>
+                <td><strong>Détection de serveur DHCP pirate (Rogue DHCP)</strong></td>
+                <td><code>bootp.option.type == 53 and !(ip.src == 192.168.10.1)</code> (Détecte toute offre ne provenant pas du serveur officiel)</td>
+            </tr>
+            <tr>
+                <td><strong>Anomalies et erreurs ICMP</strong></td>
+                <td><code>icmp.type == 3</code> (Inaccessibilités) ou <code>icmp.type == 11</code> (Boucles de routage / TTL dépassé)</td>
+            </tr>
+            <tr>
+                <td><strong>Alertes et warnings globaux Wireshark</strong></td>
+                <td><code>expert.severity &gt;= _ws.expert.WARN</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4.2. Conseils pour la rédaction de vos livrables académiques</h3>
+    <ol>
+        <li>
+            <strong>Pour le Rapport Technique (Livrable 1) :</strong>
+            <ul>
+                <li>Prenez des captures d'écran nettes de la fenêtre Wireshark en sélectionnant les 3 panneaux (Liste des paquets, Arbre des détails du paquet déroulé sur le protocole cible, et Octets bruts).</li>
+                <li>Encadrez en rouge sur vos captures les champs clés analysés (par ex. pour DHCP : Option 53 Message Type, yiaddr ; pour ARP : Sender MAC/IP vs Target MAC/IP ; pour ICMP : Type et Code).</li>
+                <li>Pour l'attaque ARP Spoofing, fournissez deux captures comparatives d'écran : <em>La table ARP avant l'attaque</em> et <em>La table ARP corrompue après l'attaque</em>, accompagnées de la trame Wireshark marquée en avertissement rouge par l'analyseur d'experts.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Pour la Note de Synthèse (Livrable 2) :</strong>
+            <ul>
+                <li>Rappelez pourquoi les protocoles auxiliaires IPv4 ont été conçus sans chiffrement ni authentification à l'origine (modèle historique basé sur la confiance au sein du LAN).</li>
+                <li>Expliquez les mécanismes modernes de remédiation sur commutateurs administrables : <strong>DHCP Snooping</strong> (pour bloquer les faux serveurs DHCP) et <strong>DAI (Dynamic ARP Inspection)</strong> (pour valider la conformité des trames ARP avec la table DHCP).</li>
+            </ul>
+        </li>
+    </ol>
+
+    <div class="callout" style="margin-top: 25px;">
+        <strong>Résumé des commandes à retenir :</strong>
+        <br>
+        • <strong>DHCP :</strong> <code>sudo dhclient -r eth0 && sudo dhclient -v eth0</code> | Filtre : <code>dhcp</code> ou <code>bootp</code><br>
+        • <strong>ARP :</strong> <code>sudo ip neigh flush all && ping -c 2 &lt;IP&gt;</code> | Filtre : <code>arp</code><br>
+        • <strong>Attaque ARP :</strong> <code>sudo arpspoof -i eth0 -t &lt;Cible&gt; &lt;IP_Usurpée&gt;</code> | Filtre : <code>arp.duplicate-address-frame</code><br>
+        • <strong>ICMP :</strong> <code>ping -c 2 -s 1000 &lt;IP&gt;</code> et <code>traceroute -I &lt;IP&gt;</code> | Filtre : <code>icmp</code>
+    </div>
+
+</body>
+</html>
