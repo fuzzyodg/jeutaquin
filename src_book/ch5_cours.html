@@ -1,0 +1,130 @@
+<section id="chapitre-5" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 5</div>
+    <h1 class="chapter-title">Équations de Maxwell, Ondes Électromagnétiques et Antennes</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Essentiel du cours :</strong> En régime dépendant du temps, électricité et magnétisme s'unifient intimement : une variation temporelle de $\vec{B}$ crée un champ électrique $\vec{E}$ (loi de Faraday), et une variation temporelle de $\vec{E}$ crée un champ magnétique $\vec{B}$ (courant de déplacement de Maxwell). Cette couplage réciproque donne naissance aux ondes électromagnétiques se propageant dans le vide à la vitesse de la lumière $c$. C'est le fondement de toutes les télécommunications modernes (Wi-Fi, 4G/5G, satellites, radars).
+  </div>
+
+  <h2>5.1 L'Induction Électromagnétique (Loi de Faraday)</h2>
+  <p>
+    La variation au cours du temps du flux magnétique $\Phi = \iint_{\mathcal{S}} \vec{B}\cdot d\vec{S}$ traversant un circuit fermé engendre une <strong>force électromotrice induite (f.é.m.) $e(t)$</strong> :
+  </p>
+  <div class="theorem-box">
+    <div class="theorem-title">Loi de Faraday et Loi de Lenz</div>
+    $$e(t) = -\frac{d\Phi}{dt} = -\frac{d}{dt} \iint_{\mathcal{S}} \vec{B}\cdot d\vec{S}$$
+    Le <strong>signe moins</strong> traduit la <strong>loi de Lenz</strong> : <em>les effets du courant induit s'opposent toujours à la cause qui lui a donné naissance</em> (principe de modération de la nature).
+    Sous forme locale :
+    $$\vec{\mathrm{rot}}\,\vec{E} = -\frac{\partial \vec{B}}{\partial t} \quad \text{(Équation de Maxwell-Faraday)}$$
+  </div>
+
+  <h2>5.2 Le Courant de Déplacement et les Quatre Équations de Maxwell</h2>
+  <p>
+    Pour rétablir la continuité de la conservation de la charge ($\mathrm{div}\,\vec{j} + \partial \rho/\partial t = 0$), James Clerk Maxwell a découvert qu'un champ électrique variant dans le temps agit exactement comme un courant électrique réel : c'est la <strong>densité de courant de déplacement $\vec{j}_D = \varepsilon_0 \frac{\partial \vec{E}}{\partial t}$</strong>.
+  </p>
+
+  <div class="theorem-box">
+    <div class="theorem-title">Les Quatre Équations Fondamentales de Maxwell</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nom de l'équation</th>
+          <th>Forme Locale (Ponctuelle)</th>
+          <th>Forme Globale (Intégrale)</th>
+          <th>Signification Physique</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Maxwell-Gauss (MG)</strong></td>
+          <td>$\mathrm{div}\,\vec{E} = \frac{\rho}{\varepsilon_0}$</td>
+          <td>$\oiint_\Sigma \vec{E}\cdot d\vec{S} = \frac{Q_{\mathrm{int}}}{\varepsilon_0}$</td>
+          <td>Les charges sont les sources scalaires du champ électrique.</td>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Thomson (MT)</strong></td>
+          <td>$\mathrm{div}\,\vec{B} = 0$</td>
+          <td>$\oiint_\Sigma \vec{B}\cdot d\vec{S} = 0$</td>
+          <td>Conservation du flux magnétique ; absence de monopôle magnétique.</td>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Faraday (MF)</strong></td>
+          <td>$\vec{\mathrm{rot}}\,\vec{E} = -\frac{\partial \vec{B}}{\partial t}$</td>
+          <td>$\oint_\mathcal{C} \vec{E}\cdot d\vec{\ell} = -\frac{d\Phi_B}{dt}$</td>
+          <td>Un champ magnétique variable engendre un champ électrique tourbillonnaire.</td>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Ampère (MA)</strong></td>
+          <td>$\vec{\mathrm{rot}}\,\vec{B} = \mu_0\left(\vec{j} + \varepsilon_0\frac{\partial \vec{E}}{\partial t}\right)$</td>
+          <td>$\oint_\mathcal{C} \vec{B}\cdot d\vec{\ell} = \mu_0(I + I_D)$</td>
+          <td>Les courants réels et les variations de champ électrique engendrent $\vec{B}$.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>5.3 Équation de Propagation et Onde Plane Progressive</h2>
+  <p>
+    Dans le vide dépourvu de charges ($\rho = 0$) et de courants ($\vec{j} = \vec{0}$), en appliquant le rotationnel du rotationnel :
+    $$\vec{\mathrm{rot}}(\vec{\mathrm{rot}}\,\vec{E}) = \vec{\nabla}(\mathrm{div}\,\vec{E}) - \Delta \vec{E} = -\frac{\partial}{\partial t}(\vec{\mathrm{rot}}\,\vec{B}) = -\mu_0 \varepsilon_0 \frac{\partial^2 \vec{E}}{\partial t^2}$$
+    Sachant que $\mathrm{div}\,\vec{E} = 0$, on obtient directement la célèbre <strong>équation d'onde de D'Alembert</strong> :
+  </p>
+  $$\Delta \vec{E} - \frac{1}{c^2}\frac{\partial^2 \vec{E}}{\partial t^2} = \vec{0} \quad \text{avec} \quad c = \frac{1}{\sqrt{\varepsilon_0 \mu_0}} \approx 3 \times 10^8\text{ m}\cdot\text{s}^{-1}$$
+
+  <div class="figure-container">
+    <img src="fig_em_wave.svg" alt="Onde Électromagnétique 3D" class="svg-fig">
+    <div class="figure-caption">Figure 5.1 – Onde électromagnétique plane progressive harmonique 3D. Le champ électrique $\vec{E}$, le champ magnétique $\vec{B}$ et le vecteur d'onde de propagation $\vec{k}$ forment un trièdre direct orthogonal droit.</div>
+  </div>
+
+  <h3>Propriétés fondamentales de l'Onde Plane Progressive Harmonique (OPPH) :</h3>
+  <ul>
+    <li><strong>Transversalité :</strong> L'onde est transverse : $\vec{E} \perp \vec{k}$ et $\vec{B} \perp \vec{k}$.</li>
+    <li><strong>Relation de phase et amplitude :</strong> Les champs $\vec{E}$ et $\vec{B}$ oscillent rigoureusement en phase dans le vide. Leurs amplitudes vérifient :
+      $$B_0 = \frac{E_0}{c} \iff \vec{B} = \frac{\vec{u}_k \wedge \vec{E}}{c}$$
+    </li>
+    <li><strong>Vecteur de Poynting $\vec{\Pi}$ :</strong> Représente la densité surfacique de puissance transportée par l'onde (en $\mathrm{W\cdot m^{-2}}$) :
+      $$\vec{\Pi} = \frac{\vec{E} \wedge \vec{B}}{\mu_0}$$
+      Sa moyenne temporelle pour une onde harmonique est : $\langle \Pi \rangle = \frac{E_0^2}{2 \mu_0 c} = \frac{E_0^2}{2 \eta_0}$ où $\eta_0 = \sqrt{\mu_0/\varepsilon_0} \approx 377\,\Omega$ est l'impédance caractéristique d'onde du vide.
+    </li>
+  </ul>
+
+  <h2>5.4 Théorie des Antennes et Télécommunications</h2>
+  <h3>A. Le Rayonnement : Dipôle élémentaire de Hertz</h3>
+  <p>
+    Une charge accélérée rayonne de l'énergie. Pour un petit dipôle de longueur $d\ell$ oscillant à la pulsation $\omega = 2\pi f$, le champ lointain ($r \gg \lambda$) s'écrit :
+    $$E_\theta(r, \theta) = \frac{I_0 d\ell\,\omega\,\mu_0}{4\pi r} \sin\theta \cos(\omega(t - r/c))$$
+    La résistance de rayonnement d'une antenne courte dipolaire s'exprime par :
+    $$R_{\mathrm{rad}} = 80\pi^2 \left(\frac{h}{\lambda}\right)^2$$
+  </p>
+
+  <h3>B. Grandeurs Caractéristiques d'une Antenne</h3>
+  <ul>
+    <li><strong>Gain isotrope $G$ :</strong> Rapport entre la puissance rayonnée dans la direction privilégiée et celle d'une antenne isotrope idéale ($G_{\mathrm{dBi}} = 10\log_{10} G$).</li>
+    <li><strong>PIRE (Puissance Isotrope Rayonnée Équivalente) :</strong> Puissance fictive qu'il faudrait injecter dans une antenne isotrope pour obtenir la même intensité dans l'axe :
+      $$\mathrm{PIRE} = P_E \cdot G_E \iff \mathrm{PIRE}_{\mathrm{dBm}} = P_{E,\mathrm{dBm}} - \text{Pertes}_{\mathrm{câble}} + G_{E,\mathrm{dBi}}$$
+    </li>
+    <li><strong>Surface Équivalente de Réception $A_e$ :</strong> Reliée au gain par la relation universelle :
+      $$A_e = \frac{\lambda^2}{4\pi} G_R$$
+    </li>
+  </ul>
+
+  <h3>C. Bilan de Liaison en Espace Libre (Formule de Friis)</h3>
+  <div class="theorem-box">
+    <div class="theorem-title">Formule de Friis (Bilan de propagation radio)</div>
+    $$\frac{P_R}{P_E} = G_E \, G_R \left(\frac{\lambda}{4\pi d}\right)^2$$
+    En décibels, l'affaiblissement d'espace libre s'écrit :
+    $$L_p = 20\log_{10}\left(\frac{4\pi d}{\lambda}\right) = 32{,}44 + 20\log_{10}(d_{\mathrm{km}}) + 20\log_{10}(f_{\mathrm{MHz}})$$
+    Le bilan de puissance reçu s'établit par une simple addition/soustraction en dBm :
+    $$P_{R,\mathrm{dBm}} = P_{E,\mathrm{dBm}} - \text{Pertes}_E + G_{E,\mathrm{dBi}} - L_p + G_{R,\mathrm{dBi}} - \text{Pertes}_R$$
+  </div>
+
+  <h3>D. Première Zone de Fresnel</h3>
+  <p>
+    En télécoms, pour qu'une liaison hertzienne fonctionne à pleine puissance en espace libre, la visibilité géométrique directe ne suffit pas : il faut que l'ellipsoïde de Fresnel soit dégagé d'au moins 60 % de son rayon $r_1$ :
+    $$r_1 = \sqrt{\frac{\lambda \, d_1 d_2}{d_1 + d_2}}$$
+    Au milieu du trajet ($d_1 = d_2 = d/2$), le rayon maximal de dégagement nécessaire vaut :
+    $$r_{1,\max} = \frac{1}{2}\sqrt{\lambda \, d}$$
+  </p>
+</section>

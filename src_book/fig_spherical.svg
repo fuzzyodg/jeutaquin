@@ -1,0 +1,80 @@
+<svg width="600" height="420" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" style="background:#fcfcfd; border:1px solid #d0d7de; border-radius:8px; margin:15px auto; display:block;">
+  <defs>
+    <marker id="s-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e293b"/>
+    </marker>
+    <marker id="s-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0284c7"/>
+    </marker>
+    <marker id="s-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626"/>
+    </marker>
+    <marker id="s-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" font-family="Times New Roman, serif" font-size="18" font-weight="bold" fill="#0f172a">Repère Sphérique 3D : (r, θ, φ ; e_r, e_θ, e_φ)</text>
+
+  <!-- Origin (220, 260) -->
+  <!-- Sphere Outline & Equator -->
+  <circle cx="220" cy="240" r="140" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>
+  <ellipse cx="220" cy="240" rx="140" ry="40" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Axes -->
+  <line x1="220" y1="240" x2="100" y2="310" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#s-arr)"/>
+  <text x="85" y="320" font-family="Times New Roman, serif" font-size="15" fill="#64748b">x</text>
+
+  <line x1="220" y1="240" x2="420" y2="240" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#s-arr)"/>
+  <text x="430" y="245" font-family="Times New Roman, serif" font-size="15" fill="#64748b">y</text>
+
+  <line x1="220" y1="240" x2="220" y2="50" stroke="#1e293b" stroke-width="2" marker-end="url(#s-arr)"/>
+  <text x="215" y="40" font-family="Times New Roman, serif" font-size="16" font-weight="bold" fill="#1e293b">z</text>
+  <text x="205" y="255" font-family="Times New Roman, serif" font-size="15" font-style="italic">O</text>
+
+  <!-- Point M on Sphere surface: r = 140, theta=45 deg, phi=35 deg -->
+  <!-- Position of M: (315, 140) -->
+  <!-- Projection H on equator: (315, 260) -->
+  <line x1="220" y1="240" x2="315" y2="260" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <line x1="315" y1="260" x2="315" y2="140" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="315" cy="260" r="3" fill="#64748b"/>
+  <text x="325" y="270" font-family="Times New Roman, serif" font-size="13" fill="#64748b">H</text>
+
+  <!-- Vector OM -->
+  <line x1="220" y1="240" x2="315" y2="140" stroke="#dc2626" stroke-width="2.5" marker-end="url(#s-red)"/>
+  <circle cx="315" cy="140" r="5" fill="#dc2626"/>
+  <text x="325" y="130" font-family="Times New Roman, serif" font-size="16" font-weight="bold" fill="#dc2626">M(r, θ, φ)</text>
+  <text x="250" y="180" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#dc2626">r = OM</text>
+
+  <!-- Angle theta (colatitude, from Oz) -->
+  <path d="M 220,170 A 70,70 0 0,1 260,198" fill="none" stroke="#7c3aed" stroke-width="2"/>
+  <text x="245" y="165" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#7c3aed">θ (colatitude)</text>
+
+  <!-- Angle phi (azimuth, from Ox in xy plane) -->
+  <path d="M 180,265 A 50,20 0 0,0 260,250" fill="none" stroke="#ea580c" stroke-width="2"/>
+  <text x="215" y="285" font-family="Times New Roman, serif" font-size="14" font-weight="bold" fill="#ea580c">φ (azimut)</text>
+
+  <!-- Local mobile basis vectors at M -->
+  <!-- e_r (radial outgoing) -->
+  <line x1="315" y1="140" x2="365" y2="88" stroke="#dc2626" stroke-width="2.5" marker-end="url(#s-red)"/>
+  <text x="370" y="85" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#dc2626">e_r</text>
+
+  <!-- e_theta (tangent to meridian, increasing theta) -->
+  <line x1="315" y1="140" x2="360" y2="175" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#s-arr)"/>
+  <text x="368" y="185" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#7c3aed">e_θ</text>
+
+  <!-- e_phi (tangent to parallel, increasing phi) -->
+  <line x1="315" y1="140" x2="280" y2="125" stroke="#ea580c" stroke-width="2.5" marker-end="url(#s-arr)"/>
+  <text x="260" y="115" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#ea580c">e_φ</text>
+
+  <!-- Box for Spherical Properties -->
+  <rect x="375" y="250" width="215" height="155" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="385" y="270" font-family="Times New Roman, serif" font-size="13" font-weight="bold" fill="#0f172a">Formulaire Sphérique :</text>
+  <text x="385" y="290" font-family="Times New Roman, serif" font-size="12" fill="#334155">• x = r sin θ cos φ</text>
+  <text x="385" y="308" font-family="Times New Roman, serif" font-size="12" fill="#334155">• y = r sin θ sin φ</text>
+  <text x="385" y="326" font-family="Times New Roman, serif" font-size="12" fill="#334155">• z = r cos θ</text>
+  <text x="385" y="346" font-family="Times New Roman, serif" font-size="12" fill="#334155">• dOM = dr e_r + r dθ e_θ + r sinθ dφ e_φ</text>
+  <text x="385" y="366" font-family="Times New Roman, serif" font-size="12" fill="#334155">• Volume : dτ = r² sin θ dr dθ dφ</text>
+  <text x="385" y="386" font-family="Times New Roman, serif" font-size="12" fill="#334155">• dS_sphère = r² sin θ dθ dφ e_r</text>
+</svg>

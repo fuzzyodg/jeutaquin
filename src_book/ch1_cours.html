@@ -1,0 +1,151 @@
+<section id="chapitre-1" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 1</div>
+    <h1 class="chapter-title">Charge Électrique, Loi de Coulomb et Champ Électrostatique</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Essentiel du cours :</strong> La charge électrique est la propriété intrinsèque de la matière à l'origine des phénomènes électrostatiques. Elle est discrète (quantifiée), invariante par changement de référentiel et rigoureusement conservée. Deux charges ponctuelles exercent l'une sur l'autre la force de Coulomb. Une distribution de charges modifie les propriétés de l'espace environnant en y créant un champ vectoriel : le champ électrostatique $\vec{E}$.
+  </div>
+
+  <h2>1.1 La Charge Électrique et ses Propriétés Fondamentales</h2>
+  <ul>
+    <li><strong>Quantification de la charge :</strong> Toute charge observable dans la nature est un multiple entier de la charge élémentaire $e = 1{,}602 \times 10^{-19}\text{ C}$ :
+      $$q = N \cdot e \quad (N \in \mathbb{Z})$$
+      Le proton porte $+e$, l'électron porte $-e$, le neutron porte $0$.
+    </li>
+    <li><strong>Conservation globale :</strong> Dans un système électriquement isolé, la somme algébrique des charges électriques est strictement constante au cours du temps.
+      $$\sum q_i = \mathrm{Cte}$$
+    </li>
+    <li><strong>Invariance relativiste :</strong> Contrairement à la masse ou au temps, la charge électrique portée par une particule ne dépend pas de sa vitesse par rapport à l'observateur.
+    </li>
+  </ul>
+
+  <h2>1.2 Les Distributions Continues de Charge</h2>
+  <p>À l'échelle macroscopique, le très grand nombre de charges élémentaires permet d'adopter une description continue :</p>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Type de distribution</th>
+        <th>Élément de géométrie</th>
+        <th>Charge infinitésimale $dq$</th>
+        <th>Unité SI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Volumique</strong> (boule, bloc)</td>
+        <td>Volume élémentaire $d\tau$</td>
+        <td>$dq = \rho(P)\,d\tau$</td>
+        <td>$\rho$ en $\mathrm{C\cdot m^{-3}}$</td>
+      </tr>
+      <tr>
+        <td><strong>Surfacique</strong> (nappe, plaque, sphère creuse)</td>
+        <td>Surface élémentaire $dS$</td>
+        <td>$dq = \sigma(P)\,dS$</td>
+        <td>$\sigma$ en $\mathrm{C\cdot m^{-2}}$</td>
+      </tr>
+      <tr>
+        <td><strong>Linéique</strong> (fil fin, tige, anneau)</td>
+        <td>Longueur élémentaire $d\ell$</td>
+        <td>$dq = \lambda(P)\,d\ell$</td>
+        <td>$\lambda$ en $\mathrm{C\cdot m^{-1}}$</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>1.3 La Loi de Coulomb et le Champ Électrostatique</h2>
+  <p>
+    Deux charges ponctuelles immobiles $q_1$ et $q_2$ situées aux points $P_1$ et $P_2$ séparées par la distance $r = P_1P_2$ exercent l'une sur l'autre des forces mutuelles colinéaires à la droite les joignant :
+  </p>
+  $$\vec{F}_{1 \to 2} = \frac{1}{4\pi\varepsilon_0} \frac{q_1 q_2}{r^2} \vec{u}_{12}$$
+  <p>
+    où $\varepsilon_0 \approx 8{,}854 \times 10^{-12}\text{ F}\cdot\text{m}^{-1}$ (ou $\text{C}^2\cdot\text{N}^{-1}\cdot\text{m}^{-2}$) est la permittivité diélectrique du vide, et $\frac{1}{4\pi\varepsilon_0} \approx 9 \times 10^9\text{ N}\cdot\text{m}^2\cdot\text{C}^{-2}$.
+  </p>
+
+  <div class="definition-box">
+    <div class="definition-title">Définition du Champ Électrostatique $\vec{E}$</div>
+    <p>
+      Une charge test $q$ placée en un point $M$ subit la force électrique $\vec{F} = q\,\vec{E}(M)$. Le champ électrostatique créé en $M$ par une charge ponctuelle $q$ située en $P$ est donné par :
+      $$\vec{E}(M) = \frac{q}{4\pi\varepsilon_0 PM^2} \vec{u}_{PM} = \frac{q}{4\pi\varepsilon_0} \frac{\vec{PM}}{\|\vec{PM}\|^3}$$
+      Par le <strong>principe de superposition</strong>, le champ total créé par une distribution continue de charges réparties dans un domaine $\mathcal{D}$ s'obtient par sommation vectorielle (intégration) :
+      $$\vec{E}(M) = \frac{1}{4\pi\varepsilon_0} \iiint_{\mathcal{D}} \frac{dq(P)}{PM^2} \vec{u}_{PM}$$
+    </p>
+  </div>
+
+  <h2>1.4 FOCUS MAJEUR : Symétries, Antisymétries et Invariances</h2>
+  <div class="abstract-box">
+    <strong>Pourquoi ce focus ?</strong> Le calcul intégral direct du champ $\vec{E}$ est très lourd et source d'erreurs. L'analyse des symétries et des invariances permet, en quelques lignes de raisonnement qualitatif, de déterminer <em>à l'avance</em> la direction exacte de $\vec{E}$ et de réduire le nombre de variables dont dépend sa norme.
+  </div>
+
+  <div class="figure-container">
+    <img src="fig_symmetry.svg" alt="Symétrie et Antisymétrie 3D" class="svg-fig">
+    <div class="figure-caption">Figure 1.1 – Comportement des champs vectoriels face aux plans de symétrie $\Pi$ et d'antisymétrie $\Pi^*$. Le champ électrique $\vec{E}$ est un vecteur polaire (vrai vecteur), tandis que le champ magnétique $\vec{B}$ est un vecteur axial (pseudovecteur).</div>
+  </div>
+
+  <h3>A. Définitions géométriques rigoureuses</h3>
+  <p>
+    Soit une distribution de charges caractérisée par sa densité volumique $\rho(P)$. Notons $s_\Pi$ la réflexion (symétrie miroir) par rapport à un plan $\Pi$ de l'espace. Pour tout point $P$, son image par le miroir est notée $P' = s_\Pi(P)$.
+  </p>
+  <ul>
+    <li><strong>Plan de Symétrie $\Pi$ pour les charges :</strong> $\Pi$ est un plan de symétrie si des points symétriques portent exactement la même charge :
+      $$\rho(P') = +\rho(P)$$
+    </li>
+    <li><strong>Plan d'Antisymétrie $\Pi^*$ pour les charges :</strong> $\Pi^*$ est un plan d'antisymétrie si le point symétrique porte la charge opposée :
+      $$\rho(P') = -\rho(P)$$
+    </li>
+  </ul>
+
+  <h3>B. Le Comportement du Champ Électrique $\vec{E}$ (Vecteur Vrai / Polaire)</h3>
+  <p>
+    Le champ électrique $\vec{E}$ est directement lié à la force physique $\vec{F} = q\vec{E}$. Il se transforme donc exactement comme les déplacements spatiaux sous l'effet des réflexions miroirs :
+  </p>
+
+  <div class="theorem-box">
+    <div class="theorem-title">Règles fondamentales pour le champ électrique $\vec{E}$</div>
+    <p>
+      1. <strong>En tout point $M$ appartenant à un plan de symétrie $\Pi$ :</strong><br>
+      Le vecteur champ électrostatique $\vec{E}(M)$ est <strong>strictement contenu dans le plan $\Pi$</strong>.<br>
+      $$\vec{E}(M) \in \Pi \iff \vec{E}(M) \cdot \vec{n}_\Pi = 0$$
+      <em>Démonstration intuitive :</em> Si $\vec{E}(M)$ avait une composante non nulle perpendiculaire au miroir (vers la gauche), par symétrie de la distribution elle devrait aussi être vers la droite. Une même grandeur vectorielle ne pouvant pointer simultanément à gauche et à droite en un même point, sa composante normale est obligatoirement nulle.<br><br>
+
+      2. <strong>En tout point $M$ appartenant à un plan d'antisymétrie $\Pi^*$ :</strong><br>
+      Le vecteur champ électrostatique $\vec{E}(M)$ est <strong>strictement orthogonal au plan $\Pi^*$</strong>.<br>
+      $$\vec{E}(M) \perp \Pi^* \iff \vec{E}(M) \text{ est colinéaire à } \vec{n}_{\Pi^*}$$
+      <em>Démonstration intuitive :</em> Si $\vec{E}(M)$ possédait une composante tangente à $\Pi^*$, l'antisymétrie (inversion du signe des sources) transformerait cette composante en son opposée. Or $M$ étant invariant par réflexion, la composante tangente doit vérifier $E_t = -E_t$, ce qui impose $E_t = 0$.
+    </p>
+  </div>
+
+  <div class="method-box">
+    <div class="method-title">Boîte à Méthode : Trouver la direction de $\vec{E}$ en 3 étapes</div>
+    <p>
+      <strong>Étape 1 :</strong> Repérer la position du point d'étude $M$ dans l'espace.<br>
+      <strong>Étape 2 :</strong> Identifier au moins deux plans de symétrie ou d'antisymétrie passant par le point $M$ :
+      <ul>
+        <li>Si $M$ se trouve à l'intersection de deux plans de symétrie distincts $\Pi_1$ et $\Pi_2$, alors $\vec{E}(M)$ appartient à leur intersection droite :
+          $$\vec{E}(M) \text{ est colinéaire à } (\Pi_1 \cap \Pi_2)$$
+        </li>
+        <li>Si $M$ se trouve sur un plan de symétrie $\Pi$ et sur un plan d'antisymétrie $\Pi^*$, $\vec{E}(M)$ est perpendiculaire à $\Pi^*$ tout en restant dans $\Pi$.</li>
+        <li>Si $M$ est au centre de symétrie ou à l'intersection de trois plans d'antisymétrie orthogonaux, alors $\vec{E}(M) = \vec{0}$.</li>
+      </ul>
+      <strong>Étape 3 :</strong> Conclure immédiatement sur le vecteur unitaire porteur : par exemple $\vec{E}(M) = E(M)\,\vec{e}_r$.
+    </p>
+  </div>
+
+  <h3>C. Les Invariances (Principe de Curie)</h3>
+  <p>
+    Une invariance spatiale indique qu'une opération géométrique (translation ou rotation) laisse la distribution de sources inchangée dans l'espace. Selon le <strong>principe de Curie</strong> : <em>"Les effets possèdent au moins les symétries des causes qui les engendrent."</em>
+  </p>
+  <ul>
+    <li><strong>Invariance par translation le long de $Oz$ :</strong> Si la distribution est infinie selon $z$, une translation $z \to z + \Delta z$ ne change rien à la distribution. Par conséquent, la norme et les composantes du champ ne dépendent pas de $z$ :
+      $$\frac{\partial \vec{E}}{\partial z} = \vec{0} \implies \vec{E} = \vec{E}(r, \theta)$$
+    </li>
+    <li><strong>Invariance par rotation autour de $Oz$ :</strong> Si la distribution est invariante par rotation autour de l'axe $Oz$ (symétrie de révolution), le champ ne dépend pas de l'angle $\theta$ :
+      $$\frac{\partial \vec{E}}{\partial \theta} = \vec{0} \implies \vec{E} = \vec{E}(r, z)$$
+    </li>
+    <li><strong>Cas cumulé (cylindre ou fil infini) :</strong> Invariance par translation selon $z$ ET par rotation selon $\theta$. On en déduit instantanément :
+      $$\vec{E}(M) = E(r)\,\vec{e}_r$$
+      Le champ est purement radial et ne dépend plus que d'une seule variable scalaire $r$ !
+    </li>
+  </ul>
+</section>

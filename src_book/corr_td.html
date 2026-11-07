@@ -1,0 +1,450 @@
+<section id="exercices-td" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">ANNEXE MÉTHODOLOGIQUE & CORRIGÉS III</div>
+    <h1 class="chapter-title">Corrigés Intégraux des 8 Travaux Dirigés (TD 1 à TD 8)</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Objectif :</strong> Résolution complète, pédagogique et approfondie des 8 grands Travaux Dirigés du Chapitre 6 du cours IBAM, reliant la physique fondamentale à l'informatique, aux télécommunications et à l'électronique des composants.
+  </div>
+
+  <!-- TD 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 1</span>
+      <span class="exercise-title">Unités, Analyse Dimensionnelle & Vraisemblance d'un Résultat</span>
+    </div>
+    <div class="exercise-statement">
+      Objectif : contrôler un résultat par l'analyse dimensionnelle et les cas limites.<br>
+      1. À partir de la loi de Coulomb, montrer que $\varepsilon_0$ s'exprime en $\mathrm{C^2\cdot N^{-1}\cdot m^{-2}}$. Vérifier que $\mathrm{N\cdot C^{-1}}$ et $\mathrm{V\cdot m^{-1}}$ sont deux écritures de la même unité.<br>
+      2. À partir de la force entre deux fils parallèles, montrer que $\mu_0$ s'exprime en $\mathrm{N\cdot A^{-2}}$. En déduire que $1/\sqrt{\varepsilon_0\mu_0}$ est une vitesse.<br>
+      3. Montrer que l'impédance d'onde $\eta_0 = \sqrt{\mu_0/\varepsilon_0}$ s'exprime en ohms ($\Omega$).<br>
+      4. Éliminer les expressions fausses pour le champ sur l'axe d'une spire de rayon $R$ parmi les quatre proposées à l'aide de trois tests : (i) homogénéité, (ii) valeur au centre $B(0) = \mu_0 I / 2R$, (iii) comportement dipolaire à grande distance.<br>
+      5. Conclure : un résultat qui passe un test est-il forcément juste ? Un résultat qui échoue est-il forcément faux ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Unités de $\varepsilon_0$ et du champ électrique :</strong><br>
+        • De la loi de Coulomb $F = \frac{1}{4\pi\varepsilon_0} \frac{q^2}{r^2}$, on tire $\varepsilon_0 = \frac{q^2}{4\pi F r^2}$. En unités SI : $[\varepsilon_0] = \frac{\text{C}^2}{\text{N}\cdot\text{m}^2} = \mathbf{\text{C}^2\cdot\text{N}^{-1}\cdot\text{m}^{-2}}$.<br>
+        • Pour le champ électrique : par définition $F = qE \implies [E] = \frac{\text{N}}{\text{C}}$. Or le travail $W = qU \implies 1\text{ J} = 1\text{ N}\cdot\text{m} = 1\text{ C}\cdot\text{V}$, donc $1\text{ N}/\text{C} = 1\text{ V}/\text{m}$. Les deux unités sont rigoureusement identiques.
+      </p>
+      <p>
+        <strong>2. Unité de $\mu_0$ et vitesse de la lumière :</strong><br>
+        • La force par unité de longueur entre deux fils parallèles distants de $d$ est $\frac{F}{L} = \frac{\mu_0 I^2}{2\pi d}$, d'où $\mu_0 = \frac{2\pi d}{I^2} \frac{F}{L}$. En unités : $[\mu_0] = \frac{\text{m}}{\text{A}^2} \frac{\text{N}}{\text{m}} = \mathbf{\text{N}\cdot\text{A}^{-2}}$ (ou $\text{H}\cdot\text{m}^{-1}$).<br>
+        • Dimension du produit $\varepsilon_0 \mu_0$ :
+        $$[\varepsilon_0 \mu_0] = (\text{C}^2\cdot\text{N}^{-1}\cdot\text{m}^{-2}) \times (\text{N}\cdot\text{A}^{-2}) = \frac{\text{C}^2}{\text{A}^2\cdot\text{m}^2}$$
+        Or le courant est $I = dq/dt \implies 1\text{ A} = 1\text{ C}\cdot\text{s}^{-1}$, d'où $\text{C}/\text{A} = \text{s}$.<br>
+        Il vient : $[\varepsilon_0 \mu_0] = \frac{\text{s}^2}{\text{m}^2} = \frac{1}{v^2}$. Donc $\mathbf{\frac{1}{\sqrt{\varepsilon_0\mu_0}}}$ a bien la dimension d'une <strong>vitesse $[\text{m}\cdot\text{s}^{-1}]$</strong> (c'est $c$).
+      </p>
+      <p>
+        <strong>3. Impédance du vide $\eta_0 = \sqrt{\mu_0/\varepsilon_0}$ :</strong><br>
+        $$[\eta_0]^2 = \frac{[\mu_0]}{[\varepsilon_0]} = \frac{\text{N}\cdot\text{A}^{-2}}{\text{C}^2\cdot\text{N}^{-1}\cdot\text{m}^{-2}} = \frac{\text{N}^2\cdot\text{m}^2}{\text{A}^2\cdot\text{C}^2} = \left(\frac{\text{N}\cdot\text{m}}{\text{A}\cdot\text{C}}\right)^2 = \left(\frac{\text{J}}{\text{A}\cdot(\text{A}\cdot\text{s})}\right)^2 = \left(\frac{\text{W}}{\text{A}^2}\right)^2$$
+        Or par la loi d'Ohm $P = R I^2 \implies 1\text{ W}/\text{A}^2 = 1\,\Omega$. Donc $[\eta_0] = \mathbf{\Omega\text{ (Ohms)}}$.
+      </p>
+      <p>
+        <strong>4. Test des 4 expressions proposées pour la spire :</strong><br>
+        Les formules proposées sont : (a) $\frac{\mu_0 I R^2}{2(R^2+z^2)^{3/2}}$, (b) $\frac{\mu_0 I}{2\sqrt{R^2+z^2}}$, (c) $\frac{\mu_0 I R}{2(R^2+z^2)}$, (d) $\frac{\mu_0 I R^2}{2(R^2+z^2)}$.
+        <ul>
+          <li><strong>(i) Homogénéité :</strong> Le champ doit être homogène à $\mu_0 I / \text{longueur}$.
+            Dans (d), le terme est en $\mu_0 I R^2 / \text{longueur}^2 = \mu_0 I$ (sans dimension de longueur). <strong>La formule (d) est fausse car non homogène.</strong>
+          </li>
+          <li><strong>(ii) Valeur au centre ($z = 0$) :</strong> On sait que $B(0) = \frac{\mu_0 I}{2R}$.
+            Pour (c) : en $z=0$, $B(0) = \frac{\mu_0 I R}{2 R^2} = \frac{\mu_0 I}{2R}$ (passe le test).
+            Pour (b) : en $z=0$, $B(0) = \frac{\mu_0 I}{2R}$ (passe le test).
+            Pour (a) : en $z=0$, $B(0) = \frac{\mu_0 I R^2}{2 R^3} = \frac{\mu_0 I}{2R}$ (passe le test).
+          </li>
+          <li><strong>(iii) Grande distance ($z \gg R$) :</strong> Une boucle de courant à grande distance est un dipôle magnétique créant un champ décroissant en $1/z^3$.
+            Pour (b) : décroît en $1/z$ $\implies$ <strong>Faux</strong> (ce serait le comportement d'un fil infini !).
+            Pour (c) : décroît en $1/z^2$ $\implies$ <strong>Faux</strong> (ce serait une charge électrique ponctuelle !).
+            Pour (a) : décroît en $\frac{\mu_0 I R^2}{2 z^3} \propto 1/z^3$ $\implies$ <strong>Conforme au modèle dipolaire.</strong>
+          </li>
+        </ul>
+        La seule formule exacte est donc <strong>la formule (a)</strong>.
+      </p>
+      <p>
+        <strong>5. Règle épistémologique fondamentale :</strong><br>
+        • Un résultat qui <strong>échoue à un test</strong> est <strong>FORCÉMENT FAUX</strong>.<br>
+        • Un résultat qui <strong>passe un test</strong> n'est <strong>PAS FORCÉMENT JUSTE</strong> (il est seulement plausible ; par exemple un facteur numérique sans dimension erroné, comme un facteur 2 ou $\pi$ oublié, passe tous les tests dimensionnels).
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 2</span>
+      <span class="exercise-title">Prévoir un Champ par les Symétries & Analyse des Invariances</span>
+    </div>
+    <div class="exercise-statement">
+      Pour chaque situation, préciser : le système de coordonnées adapté, les invariances, les plans de symétrie/antisymétrie utiles, et déduire la direction du champ :<br>
+      1. Deux fils parallèles infinis ($+\lambda$ et $-\lambda$) distants de $2a$ (ligne bifilaire) : $M$ quelconque, puis $M$ dans le plan médiateur.<br>
+      2. Huit charges $q$ identiques aux sommets d'un cube : $M$ au centre, puis $M$ sur l'axe reliant deux faces opposées.<br>
+      3. Spire circulaire d'axe $Oz$ parcourue par $I$ : $M$ sur l'axe, puis dans le plan de la spire.<br>
+      4. Solénoïde infini d'axe $Oz$ : $M$ quelconque intérieur.<br>
+      5. Le piège : doublet $(+q, -q)$, potentiel nul sur le plan médiateur. Pourquoi le champ n'y est-il pas nul ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Ligne bifilaire ($+\lambda$ en $x = -a$, $-\lambda$ en $x = +a$) :</strong><br>
+        • Repère cartésien ou cylindrique bipolaire. Invariance par translation selon $z$ ($\vec{E}$ indépendant de $z$).<br>
+        • Pour $M$ quelconque : le plan horizontal passant par $M$ est un plan de symétrie $\Pi$ $\implies E_z = 0$. Le champ est plan : $\vec{E}(x,y) = E_x\vec{e}_x + E_y\vec{e}_y$.<br>
+        • Pour $M$ dans le plan médiateur ($x = 0$) : Le plan médiateur $(yOz)$ sépare $+\lambda$ et $-\lambda$ ; c'est un <strong>plan d'antisymétrie $\Pi^*$</strong> pour les charges ! Le champ électrique $\vec{E}$ y est donc <strong>strictement orthogonal à ce plan</strong> : $\mathbf{\vec{E}(0, y) = E_x(y)\,\vec{e}_x}$ (orienté du fil positif vers le fil négatif).
+      </p>
+      <p>
+        <strong>2. Huit charges $q$ aux sommets d'un cube :</strong><br>
+        • Au centre du cube : Par symétrie centrale par rapport au centre $O$, la configuration est invariante par $M \to -M$. Comme $\vec{E}(-M) = -\vec{E}(M)$ pour un vrai vecteur, l'invariance impose $\vec{E}(O) = -\vec{E}(O) \implies \mathbf{\vec{E}(O) = \vec{0}}$.<br>
+        • Sur l'axe passant par les centres de deux faces opposées (axe $Oz$) : L'axe $Oz$ est l'intersection de deux plans de symétrie orthogonaux $\Pi_1$ et $\Pi_2$ coupant les faces en leur milieu. Le champ est donc <strong>purement selon l'axe : $\vec{E}(z) = E_z(z)\,\vec{e}_z$</strong>.
+      </p>
+      <p>
+        <strong>3. Spire circulaire d'axe $Oz$ :</strong><br>
+        • Sur l'axe $Oz$ : Tout plan contenant $Oz$ est un plan d'antisymétrie pour le courant $I$. Le champ magnétique $\vec{B}$ est dans tous ces plans, donc selon leur intersection : $\mathbf{\vec{B}(z) = B_z(z)\,\vec{e}_z}$.<br>
+        • Dans le plan de la spire ($z = 0$) : Le plan de la spire est un plan de symétrie pour le courant $\Pi$ $\implies \vec{B}$ y est <strong>orthogonal au plan : $\vec{B}(r) = B_z(r)\,\vec{e}_z$</strong>.
+      </p>
+      <p>
+        <strong>4. Solénoïde infini d'axe $Oz$ :</strong><br>
+        Invariance par translation selon $z$ et rotation selon $\theta$. Tout plan contenant l'axe $Oz$ est plan d'antisymétrie pour les spires de courant $\implies \vec{B}$ est colinéaire à l'axe : $\mathbf{\vec{B} = B_z(r)\,\vec{e}_z}$. (Et le théorème d'Ampère prouve qu'il est même uniforme à l'intérieur : $B = \mu_0 n I$).
+      </p>
+      <p>
+        <strong>5. Démystification du Piège :</strong><br>
+        Le potentiel $V$ est constant (nul) sur le plan médiateur. Or le champ électrique est le <strong>gradient</strong> du potentiel : $\vec{E} = -\vec{\nabla}V$.<br>
+        Le gradient mesure la variation <em>spatiale</em> de $V$. Le fait que $V = 0$ sur le plan prouve simplement que la dérivée tangentielle est nulle : $E_t = -\partial V/\partial t = 0$. Mais la dérivée normale $\partial V/\partial n$ est maximale car $V > 0$ d'un côté (vers $+q$) et $V < 0$ de l'autre (vers $-q$). Le champ traverse donc le plan avec une intensité non nulle perpendiculaire au plan.
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 3</span>
+      <span class="exercise-title">Condensateur Plan et Mémoire DRAM en Informatique</span>
+    </div>
+    <div class="exercise-statement">
+      1. Rappeler le champ d'un plan infini $\sigma$. Par superposition, déterminer $\vec{E}$ pour deux armatures $+ \sigma$ ($z=0$) et $-\sigma$ ($z=d$).<br>
+      2. Vérifier la relation de passage sur chaque armature.<br>
+      3. Calculer la tension $U$ et la capacité $C = Q/U$.<br>
+      4. Calculer l'énergie stockée par $\frac{1}{2}\varepsilon_0 E^2$ et retrouver $\frac{1}{2}CU^2$.<br>
+      5. Application DRAM : cellule de capacité $C \approx 10\text{ fF}$ chargée sous $U = 1\text{ V}$.<br>
+      (a) Nombre d'électrons par bit et énergie stockée.<br>
+      (b) Estimation de l'aire $S$ avec $d = 1\text{ nm}$. Commenter au regard de la taille réelle ($< 0{,}01\,\mu\text{m}^2$).<br>
+      (c) Rafraîchissement toutes les $64\text{ ms}$. Quel courant de fuite maximal tolère-t-on pour ne pas perdre plus de $50\ \%$ de charge ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Superposition :</strong> Le champ d'un plan seul de densité $\sigma$ est $E = \frac{\sigma}{2\varepsilon_0}\vec{n}$.<br>
+        • Pour $z < 0$ : $\vec{E} = -\frac{\sigma}{2\varepsilon_0}\vec{e}_z + \frac{\sigma}{2\varepsilon_0}\vec{e}_z = \mathbf{\vec{0}}$.<br>
+        • Entre les armatures ($0 < z < d$) : les deux plans créent un champ dans le même sens :
+        $$\mathbf{\vec{E} = \frac{\sigma}{\varepsilon_0}\vec{e}_z}$$
+        • Pour $z > d$ : $\vec{E} = +\frac{\sigma}{2\varepsilon_0}\vec{e}_z - \frac{\sigma}{2\varepsilon_0}\vec{e}_z = \mathbf{\vec{0}}$.
+      </p>
+      <p>
+        <strong>2. Relations de passage :</strong> En $z=0$, $\vec{E}_{\text{apres}} - \vec{E}_{\text{avant}} = \frac{\sigma}{\varepsilon_0}\vec{e}_z - \vec{0} = \frac{\sigma}{\varepsilon_0}\vec{e}_z$, conforme à la densité surfacique $+\sigma$. Même vérification en $z=d$ avec $-\sigma$.
+      </p>
+      <p>
+        <strong>3. Tension et Capacité :</strong><br>
+        $$U = V(0) - V(d) = \int_0^d E\,dz = E \cdot d = \frac{\sigma d}{\varepsilon_0}$$
+        Avec $Q = \sigma S$, la capacité vaut : $\mathbf{C = \frac{Q}{U} = \frac{\varepsilon_0 S}{d}}$.
+      </p>
+      <p>
+        <strong>4. Énergie électrostatique :</strong><br>
+        $$W_e = \iiint \frac{1}{2}\varepsilon_0 E^2\,d\tau = \frac{1}{2}\varepsilon_0 \left(\frac{\sigma}{\varepsilon_0}\right)^2 (S \cdot d) = \frac{1}{2} \frac{\sigma^2 S d}{\varepsilon_0} = \frac{1}{2} \left(\frac{\varepsilon_0 S}{d}\right) \left(\frac{\sigma d}{\varepsilon_0}\right)^2 = \mathbf{\frac{1}{2} C U^2}$$
+      </p>
+      <p>
+        <strong>5. Application à la DRAM :</strong><br>
+        (a) Charge du bit "1" : $Q = C U = 10 \times 10^{-15}\text{ F} \times 1\text{ V} = 10^{-14}\text{ C}$.<br>
+        Nombre d'électrons : $N = \frac{Q}{e} = \frac{10^{-14}}{1{,}602 \times 10^{-19}} \approx \mathbf{62\,400\text{ électrons}}$.<br>
+        Énergie stockée : $W = \frac{1}{2} C U^2 = 0{,}5 \times 10^{-14}\text{ J} = \mathbf{5\text{ fJ}}$ ($5 \times 10^{-15}\text{ J}$).<br><br>
+        (b) Surface théorique plane : $S = \frac{C d}{\varepsilon_0} = \frac{10 \times 10^{-15} \times 10^{-9}}{8{,}85 \times 10^{-12}} \approx 1{,}13 \times 10^{-12}\text{ m}^2 = \mathbf{1{,}13\,\mu\text{m}^2}$.<br>
+        <em>Commentaire crucial pour l'informatique :</em> Une cellule de RAM réelle occupe moins de $0{,}01\,\mu\text{m}^2$ au sol. Pour obtenir une telle surface avec une si petite empreinte, les ingénieurs en semi-conducteurs gravent des tranchées ou des cylindres verticaux profonds en 3D (condensateurs "trench" ou "stacked 3D") et utilisent des diélectriques "high-k" (oxyde d'hafnium $\mathrm{HfO_2}$) à forte permittivité relative $\varepsilon_r \gg 1$.<br><br>
+        (c) Courant de fuite maximal toléré : $\Delta Q = Q / 2 = 5 \times 10^{-15}\text{ C}$ sur $\Delta t = 64\text{ ms} = 0{,}064\text{ s}$ :
+        $$I_{\mathrm{fuite,\max}} = \frac{\Delta Q}{\Delta t} = \frac{5 \times 10^{-15}\text{ C}}{0{,}064\text{ s}} \approx \mathbf{7{,}8 \times 10^{-14}\text{ A} = 78\text{ fA}}$$
+        Les transistors d'accès doivent avoir une résistance à l'état bloqué gigantesque ($R_{\mathrm{off}} > 10^{13}\,\Omega$) pour éviter la corruption des données en mémoire !
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 4</span>
+      <span class="exercise-title">Théorème de Gauss avec Densité de Charge Non Uniforme</span>
+    </div>
+    <div class="exercise-statement">
+      Un cylindre infini de rayon $a$ porte la densité volumique radiale $\rho(r) = \rho_0 \frac{r}{a}$ pour $r \le a$ ($\rho = 0$ pour $r > a$).<br>
+      1. Montrer que $\vec{E} = E(r)\vec{e}_r$.<br>
+      2. Calculer la charge linéique $\lambda$ portée par une longueur unité.<br>
+      3. Appliquer Gauss pour $r > a$ et $r < a$.<br>
+      4. Vérifier la continuité en $r = a$. Était-elle prévisible ?<br>
+      5. Vérifier avec l'équation de Maxwell-Gauss locale.<br>
+      6. Expliquer l'erreur classique d'un étudiant écrivant $Q_{\mathrm{int}} = \rho \times \pi r^2 h$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Symétries & Invariances :</strong> Invariance par translation selon $z$ et rotation selon $\theta$. Les plans méridiens contenant l'axe $Oz$ et les plans horizontaux sont plans de symétrie $\implies \mathbf{\vec{E} = E(r)\,\vec{e}_r}$.
+      </p>
+      <p>
+        <strong>2. Charge linéique $\lambda$ :</strong><br>
+        Sur une tranche de hauteur $h = 1$ mètre, la charge totale contenue dans le cylindre s'obtient par intégration en couronnes élémentaires $d\tau = 2\pi r dr$ :
+        $$\lambda = \int_0^a \rho(r) \cdot 2\pi r\,dr = \int_0^a \left(\rho_0 \frac{r}{a}\right) 2\pi r\,dr = \frac{2\pi\rho_0}{a} \int_0^a r^2\,dr = \frac{2\pi\rho_0}{a} \left[ \frac{r^3}{3} \right]_0^a = \mathbf{\frac{2\pi\rho_0 a^2}{3}}$$
+      </p>
+      <p>
+        <strong>3. Application du Théorème de Gauss :</strong><br>
+        Surface de Gauss : cylindre de rayon $r$ et hauteur $h$. Le flux sortant est $\Phi = E(r) \cdot 2\pi r h$.
+        <ul>
+          <li><strong>À l'extérieur ($r \ge a$) :</strong> $Q_{\mathrm{int}} = \lambda \cdot h = \frac{2\pi\rho_0 a^2 h}{3}$.
+            $$E(r) \cdot 2\pi r h = \frac{2\pi\rho_0 a^2 h}{3\varepsilon_0} \implies \mathbf{E(r) = \frac{\rho_0 a^2}{3\varepsilon_0 r}}$$
+          </li>
+          <li><strong>À l'intérieur ($r < a$) :</strong> On intègre $\rho(r)$ de $0$ à $r$ :
+            $$Q_{\mathrm{int}} = h \int_0^r \rho(u) \cdot 2\pi u\,du = h \frac{2\pi\rho_0}{a} \left[ \frac{u^3}{3} \right]_0^r = \frac{2\pi\rho_0 h r^3}{3a}$$
+            $$E(r) \cdot 2\pi r h = \frac{2\pi\rho_0 h r^3}{3a\varepsilon_0} \implies \mathbf{E(r) = \frac{\rho_0 r^2}{3\varepsilon_0 a}}$$
+          </li>
+        </ul>
+      </p>
+      <p>
+        <strong>4. Continuité en $r = a$ :</strong><br>
+        $E(a^-) = \frac{\rho_0 a^2}{3\varepsilon_0 a} = \frac{\rho_0 a}{3\varepsilon_0}$ et $E(a^+) = \frac{\rho_0 a^2}{3\varepsilon_0 a} = \frac{\rho_0 a}{3\varepsilon_0}$. Le champ est parfaitement continu.<br>
+        <em>Prévisibilité :</em> C'était certain car il n'existe <strong>aucune densité surfacique de charge $\sigma$</strong> à la surface du cylindre ($\sigma = 0 \implies \Delta E_n = 0$).
+      </p>
+      <p>
+        <strong>5. Vérification avec Maxwell-Gauss local :</strong><br>
+        $$\mathrm{div}\,\vec{E} = \frac{1}{r} \frac{d}{dr}(r E_r) = \frac{1}{r} \frac{d}{dr}\left(r \cdot \frac{\rho_0 r^2}{3\varepsilon_0 a}\right) = \frac{\rho_0}{3\varepsilon_0 a} \frac{1}{r} \frac{d}{dr}(r^3) = \frac{\rho_0}{3\varepsilon_0 a} \frac{3r^2}{r} = \frac{\rho_0 r}{\varepsilon_0 a} = \mathbf{\frac{\rho(r)}{\varepsilon_0}}$$
+        L'équation locale est rigoureusement satisfaite.
+      </p>
+      <p>
+        <strong>6. Analyse de l'erreur classique :</strong> L'écriture $Q_{\mathrm{int}} = \rho \cdot \mathcal{V}$ n'est valable <em>que si la densité volumique est uniforme (constante)</em>. Quand la densité varie avec l'espace ($\rho = \rho(r)$), il est impératif d'intégrer : $Q_{\mathrm{int}} = \iiint \rho\,d\tau$.
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 5</span>
+      <span class="exercise-title">Du Potentiel au Champ : Potentiel Quadripolaire & Piège à Ions</span>
+    </div>
+    <div class="exercise-statement">
+      Dans une région vide de charges, le potentiel créé par quatre électrodes est $V(x,y) = V_0 \frac{x^2 - y^2}{a^2}$ ($V_0 > 0$).<br>
+      1. Vérifier que $V$ satisfait l'équation de Laplace. Était-ce nécessaire ?<br>
+      2. Calculer le champ $\vec{E}(x,y)$.<br>
+      3. Déterminer et tracer les équipotentielles. Emplacement des électrodes à $\pm V_0$.<br>
+      4. Montrer que les lignes de champ ont pour équation $xy = \mathrm{Cte}$. Vérifier l'orthogonalité.<br>
+      5. Étudier la stabilité d'un ion positif placé en l'origine $O$. Relier au col de montagne.<br>
+      6. Démontrer l'impossibilité générale de piéger une charge avec des champs statiques (Théorème d'Earnshaw).
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Équation de Laplace :</strong><br>
+        $$\frac{\partial^2 V}{\partial x^2} = \frac{\partial}{\partial x}\left(\frac{2V_0 x}{a^2}\right) = +\frac{2V_0}{a^2}, \quad \frac{\partial^2 V}{\partial y^2} = \frac{\partial}{\partial y}\left(-\frac{2V_0 y}{a^2}\right) = -\frac{2V_0}{a^2}, \quad \frac{\partial^2 V}{\partial z^2} = 0$$
+        $$\Delta V = \frac{2V_0}{a^2} - \frac{2V_0}{a^2} + 0 = \mathbf{0}$$
+        C'était obligatoire car la région est vide de charges ($\rho = 0$).
+      </p>
+      <p>
+        <strong>2. Champ électrique :</strong><br>
+        $$\vec{E} = -\vec{\nabla}V = -\left(\frac{\partial V}{\partial x}\vec{e}_x + \frac{\partial V}{\partial y}\vec{e}_y\right) = \mathbf{-\frac{2V_0}{a^2}x\,\vec{e}_x + \frac{2V_0}{a^2}y\,\vec{e}_y}$$
+      </p>
+      <p>
+        <strong>3. Équipotentielles :</strong><br>
+        $V(x,y) = \mathrm{Cte} \iff x^2 - y^2 = C$. Ce sont des <strong>hyperboles équilatères</strong> ayant pour asymptotes les bissectrices $y = \pm x$ ($V = 0$).<br>
+        Les électrodes à $+V_0$ sont sur l'axe $Ox$ en $(\pm a, 0)$, et celles à $-V_0$ sur l'axe $Oy$ en $(0, \pm a)$.
+      </p>
+      <p>
+        <strong>4. Lignes de champ :</strong><br>
+        L'équation différentielle des lignes de champ est $\frac{dx}{E_x} = \frac{dy}{E_y}$ :
+        $$\frac{dx}{-2V_0 x / a^2} = \frac{dy}{+2V_0 y / a^2} \iff \frac{dx}{x} = -\frac{dy}{y} \iff \frac{dx}{x} + \frac{dy}{y} = 0 \iff d(\ln(xy)) = 0 \implies \mathbf{xy = \mathrm{Cte}}$$
+        Ce sont également des hyperboles, ayant pour asymptotes les axes de coordonnées. Les pentes des équipotentielles ($dy/dx|_V = x/y$) et des lignes de champ ($dy/dx|_E = -y/x$) ont un produit égal à $-1$ : elles se coupent donc <strong>à angle droit ($90^\circ$)</strong>.
+      </p>
+      <p>
+        <strong>5. Stabilité de l'ion positif en $O$ :</strong><br>
+        L'énergie potentielle est $E_p = qV = \frac{q V_0}{a^2}(x^2 - y^2)$.<br>
+        • Si l'ion s'écarte selon $x$ : $F_x = q E_x = -\frac{2qV_0}{a^2}x$. La force est de rappel vers $O$ (l'équilibre est <strong>stable selon $x$</strong>).<br>
+        • Si l'ion s'écarte selon $y$ : $F_y = q E_y = +\frac{2qV_0}{a^2}y$. La force est répulsive et l'éjecte au loin (l'équilibre est <strong>instable selon $y$</strong>).<br>
+        Le point d'équilibre est un <strong>point-selle (col de montagne)</strong> : la particule ne peut jamais être stable dans toutes les directions.
+      </p>
+      <p>
+        <strong>6. Théorème d'Earnshaw :</strong><br>
+        Pour qu'un point d'équilibre soit stable en 3D pour une charge positive ($E_p = qV$), le potentiel devrait présenter un minimum strict, ce qui exigerait que toutes les dérivées secondes soient strictement positives : $\frac{\partial^2 V}{\partial x^2} > 0$, $\frac{\partial^2 V}{\partial y^2} > 0$, $\frac{\partial^2 V}{\partial z^2} > 0$, impliquant $\Delta V > 0$. Or dans le vide, l'équation de Laplace impose $\Delta V \equiv 0$. Les dérivées secondes ne peuvent pas être toutes du même signe. <strong>Il est donc physiquement impossible de piéger une charge de manière stable avec des champs électrostatiques statiques.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 6 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 6</span>
+      <span class="exercise-title">Bobine Torique, Calcul d'Inductance & CEM</span>
+    </div>
+    <div class="exercise-statement">
+      Un fil est enroulé régulièrement en $N$ spires jointives sur un tore d'axe $Oz$, de section rectangulaire (rayon intérieur $a$, rayon extérieur $b$, hauteur $h$), parcouru par $I$.<br>
+      1. Montrer que tout plan contenant $Oz$ est un plan de symétrie pour les courants. En déduire la direction de $\vec{B}$.<br>
+      2. Appliquer Ampère et déterminer $B(r)$ à l'intérieur et à l'extérieur.<br>
+      3. Calculer le flux $\Phi$ et l'inductance $L = \Phi/I$.<br>
+      4. A.N. : $N = 200$, $a = 1\text{ cm}$, $b = 2\text{ cm}$, $h = 1\text{ cm}$, $I = 0{,}5\text{ A}$. Calculer $L$ et $B_{\max}, B_{\min}$.<br>
+      5. Pourquoi le tore est-il idéal pour les alimentations à découpage (CEM) ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Symétries :</strong> Tout plan méridien contenant $Oz$ coupe les spires de façon symétrique pour le sens de parcours global du courant. C'est un plan de symétrie $\Pi$ pour les courants $\implies \vec{B} \perp \Pi$, donc le champ est purement orthoradial : $\mathbf{\vec{B} = B(r)\,\vec{e}_\theta}$.
+      </p>
+      <p>
+        <strong>2. Théorème d'Ampère :</strong> Contour : cercle d'axe $Oz$ de rayon $r$. Circulation : $\oint \vec{B}\cdot d\vec{\ell} = B(r) \cdot 2\pi r$.
+        <ul>
+          <li>Pour $r < a$ (dans l'évidement central) : aucun fil n'est enlacé ($I_{\mathrm{enl}} = 0$) $\implies \mathbf{B = 0}$.</li>
+          <li>Pour $r > b$ (à l'extérieur du tore) : le contour enlace les spires d'aller et les spires de retour ($I_{\mathrm{enl}} = +NI - NI = 0$) $\implies \mathbf{B = 0}$.</li>
+          <li>À l'intérieur du tore ($a < r < b$) : le contour enlace les $N$ brins intérieurs portant le courant $I$ ($I_{\mathrm{enl}} = N I$) :
+            $$B(r) \cdot 2\pi r = \mu_0 N I \implies \mathbf{B(r) = \frac{\mu_0 N I}{2\pi r}}$$
+          </li>
+        </ul>
+      </p>
+      <p>
+        <strong>3. Flux et Inductance propre $L$ :</strong><br>
+        Le flux à travers UNE spire s'obtient en intégrant sur le rectangle de section ($r \in [a, b]$, $z \in [0, h]$) avec $dS = h\,dr$ :
+        $$\Phi_1 = \int_a^b B(r) h\,dr = \frac{\mu_0 N I h}{2\pi} \int_a^b \frac{dr}{r} = \frac{\mu_0 N I h}{2\pi} \ln\left(\frac{b}{a}\right)$$
+        Le flux total à travers les $N$ spires vaut $\Phi = N \Phi_1 = \frac{\mu_0 N^2 I h}{2\pi} \ln(b/a)$.<br>
+        L'inductance propre $L = \Phi / I$ est donc :
+        $$\mathbf{L = \frac{\mu_0 N^2 h}{2\pi} \ln\left(\frac{b}{a}\right)}$$
+      </p>
+      <p>
+        <strong>4. Application Numérique :</strong><br>
+        $N = 200$, $h = 0{,}01\text{ m}$, $a = 0{,}01\text{ m}$, $b = 0{,}02\text{ m}$, $I = 0{,}5\text{ A}$ :
+        $$L = \frac{4\pi \times 10^{-7} \times 200^2 \times 0{,}01}{2\pi} \ln(2) = 2 \times 10^{-7} \times 40000 \times 0{,}01 \times 0{,}69315 \approx \mathbf{55{,}45\,\mu\text{H}}$$
+        Valeurs limites du champ :
+        $$B_{\max} = B(a) = \frac{4\pi \times 10^{-7} \times 200 \times 0{,}5}{2\pi \times 0{,}01} = \frac{2 \times 10^{-7} \times 100}{0{,}01} = \mathbf{2\text{ mT}}$$
+        $$B_{\min} = B(b) = \frac{B_{\max}}{2} = \mathbf{1\text{ mT}}$$
+      </p>
+      <p>
+        <strong>5. Avantage CEM (Compatibilité Électromagnétique) :</strong><br>
+        Le champ magnétique est <strong>strictement confiné à l'intérieur du tore</strong> ($B = 0$ partout à l'extérieur). Dans une alimentation à découpage de serveur ou de PC, les bobines toriques ne provoquent aucune pollution inductive sur les pistes voisines du circuit imprimé ni sur les processeurs.
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 7 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 7</span>
+      <span class="exercise-title">Le Badge Sans Contact (NFC) & Couplage Inductif</span>
+    </div>
+    <div class="exercise-statement">
+      Lecteur NFC : 1 spire de rayon $R = 3\text{ cm}$, $i(t) = I_0\cos\omega t$ avec $I_0 = 0{,}5\text{ A}$ et $f = 13{,}56\text{ MHz}$.<br>
+      Carte : $N_2 = 4$ spires de surface $S_2 = 10\text{ cm}^2$ à la distance $z$.<br>
+      1. Calculer $\lambda$. ARQS applicable ? Champ proche ou lointain ?<br>
+      2. Exprimer l'amplitude $B_0(z)$.<br>
+      3. Exprimer le flux et la f.é.m. induite $e(t)$ et son amplitude $e_0(z)$.<br>
+      4. Calculer $e_0$ pour $z = 2\text{ cm}$ et $z = 10\text{ cm}$. Portée si la puce exige $2\text{ V}$ ? Décroissance à grande distance ?<br>
+      5. Comment la carte sans pile peut-elle "répondre" au lecteur ? (Rétromodulation de charge).<br>
+      6. Pourquoi la faible portée est-elle un atout de sécurité ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Longueur d'onde et domaine de fonctionnement :</strong><br>
+        $$\lambda = \frac{c}{f} = \frac{3 \times 10^8}{13{,}56 \times 10^6} \approx \mathbf{22{,}12\text{ m}}$$
+        La taille du dispositif ($z \sim \text{quelques cm}$) est des centaines de fois inférieure à $\lambda$ ($d \ll \lambda$) : l'<strong>ARQS (Approximation des Régimes Quasi-Stationnaires)</strong> est parfaitement valable. Le système fonctionne en <strong>champ proche inductif (Near Field Communication)</strong>.
+      </p>
+      <p>
+        <strong>2. Amplitude du champ magnétique sur l'axe :</strong><br>
+        D'après le cours au chapitre 4 pour une spire circulaire de rayon $R$ :
+        $$\mathbf{B_0(z) = \frac{\mu_0 I_0 R^2}{2 (R^2 + z^2)^{3/2}}}$$
+      </p>
+      <p>
+        <strong>3. Flux et f.é.m. induite :</strong><br>
+        Le flux total à travers la bobine de la carte est $\Phi(t) = N_2 B(z, t) S_2 = N_2 B_0(z) S_2 \cos(\omega t)$.<br>
+        D'après la loi de Faraday, $e(t) = -\frac{d\Phi}{dt} = N_2 B_0(z) S_2 \omega \sin(\omega t)$. L'amplitude de la f.é.m. est donc :
+        $$\mathbf{e_0(z) = N_2 S_2 \omega \frac{\mu_0 I_0 R^2}{2 (R^2 + z^2)^{3/2}}}$$
+        avec $\omega = 2\pi f = 2\pi \times 13{,}56 \times 10^6 \approx 8{,}52 \times 10^7\text{ rad/s}$.
+      </p>
+      <p>
+        <strong>4. Calculs numériques et portée :</strong><br>
+        • Pour $z = 2\text{ cm} = 0{,}02\text{ m}$ ($R^2+z^2 = 0{,}03^2 + 0{,}02^2 = 0{,}0013\text{ m}^2$) :
+        $$B_0(0{,}02) = \frac{4\pi \times 10^{-7} \times 0{,}5 \times 0{,}0009}{2 \times (0{,}0013)^{1{,}5}} \approx 6{,}04\,\mu\text{T}$$
+        $$e_0 = 4 \times (10 \times 10^{-4}\text{ m}^2) \times (8{,}52 \times 10^7) \times (6{,}04 \times 10^{-6}) \approx \mathbf{2{,}06\text{ V}}$$
+        • Pour $z = 10\text{ cm} = 0{,}10\text{ m}$ :
+        $$B_0(0{,}10) = \frac{2\pi \times 10^{-7} \times 0{,}5 \times 0{,}0009}{(0{,}03^2 + 0{,}10^2)^{1{,}5}} = \frac{2{,}827 \times 10^{-10}}{1{,}136 \times 10^{-3}} \approx 0{,}249\,\mu\text{T}$$
+        $$e_0 \approx \mathbf{0{,}085\text{ V} = 85\text{ mV}}$$
+        <em>Portée :</em> La puce exigeant $2\text{ V}$ pour s'alimenter, la portée maximale est d'environ <strong>$z \approx 2\text{ cm}$</strong>.<br>
+        À grande distance ($z \gg R$), $e_0 \propto 1/z^3$ : la tension chute de façon vertigineuse dès que l'on s'écarte de la borne.
+      </p>
+      <p>
+        <strong>5. Rétromodulation de charge (Comment la carte répond sans batterie) :</strong><br>
+        La carte est alimentée passivement par l'énergie du champ radiofréquence redressée par diode. Pour transmettre ses données (numéro de carte, cryptogramme bancaire), la puce active un petit transistor qui commute une résistance en parallèle sur son antenne. Cette variation de charge modifie l'impédance mutuelle vue par le lecteur, entraînant de légères variations d'amplitude de courant dans la bobine du lecteur. Le lecteur démodule ces fluctuations pour lire les données.
+      </p>
+      <p>
+        <strong>6. Sécurité du paiement sans contact :</strong><br>
+        La portée ultra-courte ($< 4\text{ cm}$) empêche tout piratage à distance à l'insu de l'utilisateur dans les transports en commun ou la rue, rendant les transactions bancaires sécurisées physiquement par proximité volontaire.
+      </p>
+    </div>
+  </div>
+
+  <!-- TD 8 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">TD 8</span>
+      <span class="exercise-title">Dimensionnement d'une Liaison Radio Rurale à 5,8 GHz</span>
+    </div>
+    <div class="exercise-statement">
+      Liaison point à point de distance $d = 12\text{ km}$ à $f = 5{,}8\text{ GHz}$. Émetteur de $P_E = 20\text{ dBm}$, $1\text{ dB}$ de perte de câble, sensibilité récepteur $-75\text{ dBm}$, marge requise $15\text{ dB}$.<br>
+      1. Calculer l'affaiblissement d'espace libre $L_p$.<br>
+      2. En déduire le gain minimal $G$ des paraboles. Avec $G = 27\text{ dBi}$, quelle est la puissance reçue ?<br>
+      3. Diamètre $D$ pour $G = 27\text{ dBi}$ avec rendement $\eta = 0{,}55$.<br>
+      4. Raisonnement en dB : impact si distance double ? Comparaison si passage à $2{,}4\text{ GHz}$ à diamètre constant.<br>
+      5. Bruit thermique ($B = 20\text{ MHz}$, $NF = 6\text{ dB}$), SNR et capacité de Shannon théorique.<br>
+      6. Calcul de la PIRE et réglementation.<br>
+      7. Rayon de la première zone de Fresnel $r_1$ au milieu du trajet et contrainte de hauteur.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Affaiblissement d'espace libre $L_p$ :</strong><br>
+        $\lambda = \frac{c}{f} = \frac{3 \times 10^8}{5{,}8 \times 10^9} \approx 0{,}0517\text{ m} = 5{,}17\text{ cm}$.<br>
+        $$L_p = 32{,}44 + 20\log_{10}(12) + 20\log_{10}(5800) = 32{,}44 + 21{,}58 + 75{,}27 = \mathbf{129{,}29\text{ dB}}$$
+      </p>
+      <p>
+        <strong>2. Gain minimal et puissance reçue :</strong><br>
+        On exige $P_R \ge -75\text{ dBm} + 15\text{ dB} = -60\text{ dBm}$.<br>
+        Le bilan s'écrit : $P_R = 20 - 1 + G - 129{,}29 + G - 1 = 2G - 111{,}29\text{ dBm}$.<br>
+        $$2G - 111{,}29 \ge -60 \implies 2G \ge 51{,}29 \implies \mathbf{G_{\min} \ge 25{,}65\text{ dBi}}$$
+        Avec des antennes choisies de $G = 27\text{ dBi}$ :
+        $$P_R = 2(27) - 111{,}29 = 54 - 111{,}29 = \mathbf{-57{,}29\text{ dBm}}$$
+        La marge réelle vaut $-57{,}29 - (-75) = \mathbf{17{,}71\text{ dB}}$ (supérieure aux 15 dB requis).
+      </p>
+      <p>
+        <strong>3. Diamètre $D$ de la parabole :</strong><br>
+        $G = 27\text{ dBi} \implies G_{\text{linéaire}} = 10^{2{,}7} \approx 501{,}19$.<br>
+        $$G = \eta \left(\frac{\pi D}{\lambda}\right)^2 \implies D = \frac{\lambda}{\pi} \sqrt{\frac{G}{\eta}} = \frac{0{,}0517}{\pi} \sqrt{\frac{501{,}19}{0{,}55}} = 0{,}01646 \times \sqrt{911{,}25} = 0{,}01646 \times 30{,}19 \approx \mathbf{0{,}50\text{ m} = 50\text{ cm}}$$
+      </p>
+      <p>
+        <strong>4. Raisonnement rapide en décibels :</strong><br>
+        (a) Si la distance double ($d \times 2$), $L_p$ augmente de $20\log_{10}(2) \approx \mathbf{6\text{ dB}}$. La puissance reçue diminue de $6\text{ dB}$. Pour compenser, chaque antenne doit gagner $+3\text{ dBi}$ ($2 \times 3 = 6\text{ dB}$).<br>
+        (b) À diamètre d'antenne fixé, le gain de la parabole est proportionnel à $f^2$ ($G \propto f^2$). L'atténuation en espace libre est $L_p \propto f^2$. La puissance reçue varie donc comme :
+        $$\frac{P_R}{P_E} \propto \frac{G_E G_R}{L_p} \propto \frac{f^2 \cdot f^2}{f^2} = f^2$$
+        Passer à $2{,}4\text{ GHz}$ diminuerait $f^2$, et la puissance reçue chuterait de $20\log_{10}(5{,}8/2{,}4) \approx 7{,}7\text{ dB}$ ! Contrairement à l'intuition naïve, <strong>la liaison serait moins bonne à 2,4 GHz</strong> à encombrement d'antenne égal.
+      </p>
+      <p>
+        <strong>5. Bruit thermique, SNR et Shannon :</strong><br>
+        Puissance de bruit thermique :
+        $$P_{\mathrm{bruit}} = kT + 10\log_{10}(B) + NF = -174 + 10\log_{10}(20 \times 10^6) + 6 = -174 + 73 + 6 = \mathbf{-95\text{ dBm}}$$
+        • Rapport signal sur bruit nominal (sans marge) :
+        $$\mathrm{SNR}_{\text{nom}} = P_R - P_{\mathrm{bruit}} = -57{,}29 - (-95) = \mathbf{37{,}71\text{ dB}}$$
+        • SNR avec la marge de 15 dB déduite : $\mathrm{SNR}_{\text{marge}} = 37{,}71 - 15 = \mathbf{22{,}71\text{ dB}}$ ($\mathrm{SNR}_{\text{lin}} \approx 186{,}6$).<br>
+        Capacité de Shannon maximale théorique :
+        $$C = B \log_2(1 + \mathrm{SNR}_{\text{lin}}) = 20 \times 10^6 \times \log_2(1 + 186{,}6) \approx 20 \times 7{,}55 \approx \mathbf{151\text{ Mbit/s}}$$
+      </p>
+      <p>
+        <strong>6. Réglementation et PIRE :</strong><br>
+        $$\mathrm{PIRE} = P_E - \text{Pertes}_E + G_E = 20 - 1 + 27 = \mathbf{46\text{ dBm} \approx 40\text{ W}}$$
+        La PIRE doit respecter la législation des télécommunications locale (ARCEP au Burkina Faso ou en France) pour éviter le brouillage des radars météorologiques opérant sur la même bande $5{,}8\text{ GHz}$.
+      </p>
+      <p>
+        <strong>7. Première zone de Fresnel :</strong><br>
+        Au milieu du trajet ($d_1 = d_2 = 6\text{ km} = 6000\text{ m}$) :
+        $$r_1 = \sqrt{\frac{\lambda d}{4}} = \frac{1}{2}\sqrt{\lambda d} = \frac{1}{2}\sqrt{0{,}0517 \times 12000} = \frac{1}{2}\sqrt{620{,}4} = \frac{1}{2} \times 24{,}91 \approx \mathbf{12{,}45\text{ m}}$$
+        <strong>Contrainte d'installation :</strong> Les pylônes doivent être suffisamment hauts pour que la ligne de visée passe à au moins $12{,}5\text{ mètres}$ au-dessus de tout obstacle intermédiaire (cimes d'arbres, collines, toitures).
+      </p>
+    </div>
+  </div>
+</section>

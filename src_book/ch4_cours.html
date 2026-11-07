@@ -1,0 +1,107 @@
+<section id="chapitre-4" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 4</div>
+    <h1 class="chapter-title">Magnétostatique : Courants, Loi de Biot et Savart & Théorème d'Ampère</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Essentiel du cours :</strong> Les charges en mouvement (courants électriques stationnaires) créent un champ magnétique $\vec{B}$. C'est un vecteur axial (pseudovecteur) dont le flux à travers toute surface fermée est nul ($\mathrm{div}\,\vec{B} = 0$, Maxwell-Thomson). Sa circulation sur un contour fermé est régie par le théorème d'Ampère ($\oint \vec{B}\cdot d\vec{\ell} = \mu_0 I_{\mathrm{enlacé}}$), dont la forme locale est $\vec{\mathrm{rot}}\,\vec{B} = \mu_0 \vec{j}$.
+  </div>
+
+  <h2>4.1 Force de Lorentz et Définition de $\vec{B}$</h2>
+  <p>
+    Une particule de charge $q$ se déplaçant à la vitesse $\vec{v}$ dans une région où règnent un champ électrique $\vec{E}$ et un champ magnétique $\vec{B}$ subit la <strong>force totale de Lorentz</strong> :
+  </p>
+  $$\vec{F} = q\left(\vec{E} + \vec{v} \wedge \vec{B}\right)$$
+  <ul>
+    <li>La force magnétique $\vec{F}_m = q\,\vec{v}\wedge\vec{B}$ est <strong>strictement orthogonale</strong> à la vitesse $\vec{v}$. Par conséquent, sa puissance mécanique instantanée est rigoureusement nulle :
+      $$\mathcal{P} = \vec{F}_m \cdot \vec{v} = q(\vec{v}\wedge\vec{B})\cdot\vec{v} \equiv 0$$
+      <em>Le champ magnétique ne travaille jamais sur une charge ponctuelle ! Il courbe la trajectoire des particules sans jamais modifier leur énergie cinétique ni leur norme de vitesse.</em>
+    </li>
+    <li>L'unité du champ magnétique dans le Système International est le <strong>Tesla ($\mathrm{T}$)</strong> ($1\text{ T} = 1\text{ N}\cdot\text{A}^{-1}\cdot\text{m}^{-1} = 10^4\text{ Gauss}$).</li>
+  </ul>
+
+  <h2>4.2 Loi de Biot et Savart</h2>
+  <p>
+    Un élément de courant infinitésimal $I\,d\vec{\ell}$ situé en un point $P$ crée au point d'observation $M$ le champ magnétique élémentaire suivant :
+  </p>
+  <div class="theorem-box">
+    <div class="theorem-title">Loi Fondamentale de Biot et Savart</div>
+    $$d\vec{B}(M) = \frac{\mu_0}{4\pi} \frac{I\,d\vec{\ell} \wedge \vec{u}_{PM}}{PM^2} = \frac{\mu_0}{4\pi} \frac{I\,d\vec{\ell} \wedge \vec{PM}}{\|\vec{PM}\|^3}$$
+    où $\mu_0 = 4\pi \times 10^{-7}\text{ H}\cdot\text{m}^{-1} \approx 1{,}2566 \times 10^{-6}\text{ N}\cdot\text{A}^{-2}$ est la perméabilité magnétique du vide.
+  </div>
+
+  <h2>4.3 Symétries et Antisymétries pour le Champ Magnétique $\vec{B}$</h2>
+  <div class="abstract-box">
+    <strong>ATTENTION AU PIÈGE MAJEUR :</strong> Le champ magnétique $\vec{B}$ est un <strong>vecteur axial (pseudovecteur)</strong> résultant d'un produit vectoriel ($I\,d\vec{\ell} \wedge \vec{u}$). Il réagit de façon <em>exactement inverse</em> au champ électrique $\vec{E}$ face aux symétries !
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Type de plan géométrique</th>
+        <th>Champ Électrique $\vec{E}(M)$</th>
+        <th>Champ Magnétique $\vec{B}(M)$</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Plan de Symétrie $\Pi$</strong> des sources</td>
+        <td>$\vec{E}(M) \in \Pi$ (dans le plan)</td>
+        <td>$\vec{B}(M) \perp \Pi$ (orthogonal au plan)</td>
+      </tr>
+      <tr>
+        <td><strong>Plan d'Antisymétrie $\Pi^*$</strong> des sources</td>
+        <td>$\vec{E}(M) \perp \Pi^*$ (orthogonal au plan)</td>
+      <td>$\vec{B}(M) \in \Pi^*$ (dans le plan)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="zoom-box">
+    <div class="zoom-title">Règle mnémotechnique infaillible</div>
+    <p>
+      • Pour le champ électrique $\vec{E}$ : <em>"Symétrie reste DEDANS, Antisymétrie sort DEHORS."</em><br>
+      • Pour le champ magnétique $\vec{B}$ : <em>"Symétrie sort DEHORS ($\perp$), Antisymétrie reste DEDANS ($\in$)."</em><br><br>
+      <strong>Exemple d'application immédiate (Fil infini parcouru par $I$) :</strong><br>
+      Tout plan contenant l'axe $Oz$ est un plan d'antisymétrie $\Pi^*$ pour les courants (le courant coule le long du plan). Donc $\vec{B}$ est dans tous ces plans. Le plan horizontal $(xOy)$ perpendiculaire au fil est un plan d'antisymétrie $\Pi^*$. L'intersection montre immédiatement que $\vec{B}$ est colinéaire à $\vec{e}_\theta$ : les lignes de champ magnétique s'enroulent en cercles concentriques autour du fil !
+    </p>
+  </div>
+
+  <h2>4.4 Théorème d'Ampère</h2>
+  <div class="theorem-box">
+    <div class="theorem-title">Théorème d'Ampère (Forme Globale Intégrale)</div>
+    <p>
+      La circulation du champ magnétique $\vec{B}$ le long de toute courbe fermée orientée $\mathcal{C}$ (appelée <em>contour d'Ampère</em>) est égale au produit de $\mu_0$ par la somme algébrique des courants électriques $I_{\mathrm{enlacés}}$ traversant la surface ouverte délimitée par ce contour :
+      $$\oint_{\mathcal{C}} \vec{B} \cdot d\vec{\ell} = \mu_0 I_{\mathrm{enlacé}}$$
+      Le sens de comptage algébrique des courants est donné par la règle de la main droite appliquée au sens de parcours choisi sur le contour $\mathcal{C}$.
+    </p>
+  </div>
+
+  <div class="method-box">
+    <div class="method-title">Boîte à Méthode : Appliquer le Théorème d'Ampère en 4 étapes</div>
+    <p>
+      <strong>Étape 1 : Direction et Invariances :</strong> Déterminer la direction de $\vec{B}$ par symétries (ex: $\vec{B} = B(r)\,\vec{e}_\theta$) et ses invariances par translation et rotation.<br>
+      <strong>Étape 2 : Choix du contour d'Ampère $\mathcal{C}$ :</strong> Choisir une ligne de champ fermée (très souvent un cercle de rayon $r$ centré sur l'axe pour un fil ou câble, ou un rectangle pour un solénoïde).<br>
+      <strong>Étape 3 : Calcul de la circulation :</strong>
+      $$\oint_{\mathcal{C}} \vec{B} \cdot d\vec{\ell} = \oint B(r)\,r\,d\theta = B(r) \cdot (2\pi r)$$
+      <strong>Étape 4 : Calcul de $I_{\mathrm{enlacé}}$ et résolution :</strong> Sommer tous les courants passant à travers le disque délimité par le contour d'Ampère, puis isoler $B(r)$ :
+      $$B(r) \cdot 2\pi r = \mu_0 I_{\mathrm{enlacé}} \implies B(r) = \frac{\mu_0 I_{\mathrm{enlacé}}}{2\pi r}$$
+    </p>
+  </div>
+
+  <h2>4.5 Équations Locales de la Magnétostatique</h2>
+  <ul>
+    <li><strong>Conservation du flux magnétique (Équation de Maxwell-Thomson) :</strong>
+      $$\mathrm{div}\,\vec{B} = 0 \iff \oiint_{\Sigma} \vec{B}\cdot d\vec{S} = 0$$
+      <em>Interprétation :</em> Les lignes de champ magnétique n'ont ni début ni fin ; ce sont des boucles fermées sur elles-mêmes. Il n'existe aucun monopôle magnétique isolé dans la nature.
+    </li>
+    <li><strong>Forme locale d'Ampère (Maxwell-Ampère statique) :</strong> Par le théorème de Stokes :
+      $$\oint_{\mathcal{C}} \vec{B}\cdot d\vec{\ell} = \iint_{\mathcal{S}} (\vec{\mathrm{rot}}\,\vec{B})\cdot d\vec{S} = \mu_0 \iint_{\mathcal{S}} \vec{j}\cdot d\vec{S} \implies \vec{\mathrm{rot}}\,\vec{B} = \mu_0 \vec{j}$$
+    </li>
+    <li><strong>Le Potentiel Vecteur $\vec{A}$ :</strong> Puisque $\mathrm{div}\,\vec{B} = 0$, le champ magnétique dérive toujours d'un potentiel vecteur :
+      $$\vec{B} = \vec{\mathrm{rot}}\,\vec{A}$$
+      En jauge de Coulomb ($\mathrm{div}\,\vec{A} = 0$), il vérifie l'équation vectorielle de Poisson : $\Delta \vec{A} = -\mu_0 \vec{j}$.
+    </li>
+  </ul>
+</section>

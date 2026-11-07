@@ -1,0 +1,536 @@
+<section id="exercices-chapitres" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">ANNEXE MÉTHODOLOGIQUE & CORRIGÉS II</div>
+    <h1 class="chapter-title">Corrigés Détaillés des 17 Exercices de Fin de Chapitre (Cours IBAM)</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Objectif :</strong> Résolution complète, rédigée avec rigueur pédagogique, de l'ensemble des exercices proposés à la fin des chapitres 1 à 5 du cours d'électromagnétisme.
+  </div>
+
+  <h2>Chapitre 1 : Charges & Champ Électrostatique</h2>
+
+  <!-- CHAP 1 - EX 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 1 – Exercice 1</span>
+      <span class="exercise-title">Triangle équilatéral de charges identiques</span>
+    </div>
+    <div class="exercise-statement">
+      Trois charges $q$ identiques occupent les sommets d'un triangle équilatéral de côté $a$. Déterminer la force subie par l'une d'elles. Que vaut le champ au centre du triangle ? Justifier par la symétrie sans calcul.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Force subie par la charge au sommet $A$ :</strong><br>
+        Notons $A$, $B$, $C$ les trois sommets du triangle équilatéral de côté $a$. L'angle en chaque sommet vaut $60^\circ$.<br>
+        La charge $q$ en $A$ subit la répulsion de la charge en $B$ ($\vec{F}_{B\to A}$) et celle en $C$ ($\vec{F}_{C\to A}$) :
+        $$\|\vec{F}_{B\to A}\| = \|\vec{F}_{C\to A}\| = F_0 = \frac{q^2}{4\pi\varepsilon_0 a^2}$$
+        Les deux forces ont la même norme et font entre elles un angle de $60^\circ$. Par symétrie, la résultante $\vec{F}_{\mathrm{tot}} = \vec{F}_{B\to A} + \vec{F}_{C\to A}$ est portée par la bissectrice intérieure issue de $A$ (qui s'éloigne du centre) :
+        $$F_{\mathrm{tot}} = 2 F_0 \cos\left(\frac{60^\circ}{2}\right) = 2 F_0 \cos(30^\circ) = 2 F_0 \frac{\sqrt{3}}{2} = \sqrt{3} F_0$$
+        $$\mathbf{\vec{F}_{\mathrm{tot}} = \frac{\sqrt{3}\,q^2}{4\pi\varepsilon_0 a^2} \vec{u}_{\mathrm{ext}}}$$
+      </p>
+      <p>
+        <strong>2. Champ au centre de gravité $G$ du triangle :</strong><br>
+        <strong>Justification sans calcul par la symétrie :</strong> Le centre $G$ est invariant par les rotations d'angles $\pm 120^\circ$ dans le plan du triangle. Si le vecteur champ $\vec{E}(G)$ était non nul, une rotation de $120^\circ$ le transformerait en un vecteur distinct, ce qui violerait le principe de Curie car la configuration de charges est strictement invariante sous cette rotation. Le seul vecteur invariant par une rotation d'un tiers de tour est le vecteur nul :
+        $$\mathbf{\vec{E}(G) = \vec{0}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 1 - EX 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 1 – Exercice 2</span>
+      <span class="exercise-title">Point de champ électrique nul entre deux charges</span>
+    </div>
+    <div class="exercise-statement">
+      Deux charges positives $q$ et $4q$ sont distantes de $d$. Montrer que le champ s'annule en un point du segment situé à $d/3$ de la charge $q$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        Plaçons la charge $q_1 = q$ en $x = 0$ et la charge $q_2 = 4q$ en $x = d$ sur l'axe $(Ox)$.<br>
+        Pour un point $M(x)$ situé sur le segment joignant les charges ($0 < x < d$), les deux champs sont opposés :
+        $$\vec{E}_1(x) = +\frac{q}{4\pi\varepsilon_0 x^2}\vec{e}_x, \quad \vec{E}_2(x) = -\frac{4q}{4\pi\varepsilon_0 (d-x)^2}\vec{e}_x$$
+        Le champ s'annule si et seulement si les deux normes sont égales :
+        $$\frac{q}{4\pi\varepsilon_0 x^2} = \frac{4q}{4\pi\varepsilon_0 (d-x)^2} \iff \frac{1}{x^2} = \frac{4}{(d-x)^2}$$
+        Puisque $x \in ]0, d[$, prenons la racine carrée positive des deux côtés :
+        $$\frac{1}{x} = \frac{2}{d - x} \iff d - x = 2x \iff 3x = d \implies \mathbf{x = \frac{d}{3}}$$
+        Le champ s'annule donc exactement au premier tiers du segment, plus proche de la petite charge $q$, ce qui compense son intensité quatre fois plus faible.
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 1 - EX 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 1 – Exercice 3</span>
+      <span class="exercise-title">Champ sur l'axe d'un anneau chargé</span>
+    </div>
+    <div class="exercise-statement">
+      Un anneau circulaire de rayon $R$ porte une charge totale $Q$ uniformément répartie. Montrer que sur son axe $Oz$, à la cote $z$ : $\vec{E}(z) = \frac{Q z}{4\pi\varepsilon_0 (R^2 + z^2)^{3/2}} \vec{e}_z$. Vérifier les cas limites $z = 0$ et $z \gg R$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Symétries :</strong> Tout plan contenant l'axe $Oz$ est un plan de symétrie $\Pi$ de la distribution. En tout point de l'axe, le champ est donc colinéaire à l'axe : $\vec{E}(z) = E_z(z)\,\vec{e}_z$.<br>
+        <strong>2. Intégration :</strong> Chaque élément de charge $dq = \lambda R\,d\theta$ situé sur l'anneau est à la même distance $r = \sqrt{R^2 + z^2}$ du point $M(0,0,z)$.<br>
+        La composante selon $z$ créée par $dq$ vaut :
+        $$dE_z = \frac{dq}{4\pi\varepsilon_0 r^2} \cos\alpha = \frac{dq}{4\pi\varepsilon_0 (R^2+z^2)} \frac{z}{\sqrt{R^2+z^2}} = \frac{z\,dq}{4\pi\varepsilon_0 (R^2+z^2)^{3/2}}$$
+        Puisque $z$ et $R$ sont constants lors du parcours de l'anneau, on intègre directement :
+        $$E_z(z) = \frac{z}{4\pi\varepsilon_0 (R^2+z^2)^{3/2}} \oint dq = \mathbf{\frac{Q z}{4\pi\varepsilon_0 (R^2+z^2)^{3/2}}}$$
+        <strong>3. Contrôle des cas limites :</strong>
+        <ul>
+          <li>En $z = 0$ (au centre de l'anneau) : $E_z(0) = 0$, cohérent avec la symétrie centrale.</li>
+          <li>Pour $z \gg R$ : $(R^2+z^2)^{3/2} \approx (z^2)^{3/2} = z^3$, d'où $E_z \approx \frac{Q z}{4\pi\varepsilon_0 z^3} = \frac{Q}{4\pi\varepsilon_0 z^2}$ : à grande distance, l'anneau se comporte exactement comme une charge ponctuelle $Q$.</li>
+        </ul>
+      </p>
+    </div>
+  </div>
+
+  <h2>Chapitre 2 : Théorème de Gauss & Flux</h2>
+
+  <!-- CHAP 2 - EX 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 2 – Exercice 1</span>
+      <span class="exercise-title">Sphère chargée uniformément en surface & Relation de passage</span>
+    </div>
+    <div class="exercise-statement">
+      Une sphère de rayon $R$ porte la charge $Q$ uniformément répartie en surface ($\sigma = Q/(4\pi R^2)$). Déterminer $\vec{E}$ partout dans l'espace. Vérifier la relation de passage en $r = R$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        Par symétrie sphérique, $\vec{E}(M) = E(r)\,\vec{e}_r$. On choisit une surface de Gauss sphérique de rayon $r$.<br>
+        Le flux vaut $\Phi = E(r) \cdot 4\pi r^2$.
+        <ul>
+          <li><strong>À l'intérieur ($r < R$) :</strong> Aucune charge n'est contenue dans la sphère ($Q_{\mathrm{int}} = 0$). Donc :
+            $$\mathbf{\vec{E}_{\mathrm{int}} = \vec{0}}$$
+          </li>
+          <li><strong>À l'extérieur ($r > R$) :</strong> La surface englobe toute la charge de la sphère ($Q_{\mathrm{int}} = Q$). Donc :
+            $$E(r) \cdot 4\pi r^2 = \frac{Q}{\varepsilon_0} \implies \mathbf{\vec{E}_{\mathrm{ext}} = \frac{Q}{4\pi\varepsilon_0 r^2} \vec{e}_r}$$
+          </li>
+        </ul>
+        <strong>Vérification de la relation de passage en $r = R$ :</strong><br>
+        Juste à l'extérieur : $E(R^+) = \frac{Q}{4\pi\varepsilon_0 R^2} = \frac{4\pi R^2 \sigma}{4\pi\varepsilon_0 R^2} = \frac{\sigma}{\varepsilon_0}$.<br>
+        Juste à l'intérieur : $E(R^-) = 0$.<br>
+        Le saut de la composante normale vaut :
+        $$\Delta E_n = E(R^+) - E(R^-) = \frac{\sigma}{\varepsilon_0} - 0 = \mathbf{\frac{\sigma}{\varepsilon_0}}$$
+        La relation de passage $\vec{E}_{\mathrm{ext}} - \vec{E}_{\mathrm{int}} = \frac{\sigma}{\varepsilon_0}\vec{n}_{\mathrm{ext}}$ est rigoureusement vérifiée.
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 2 - EX 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 2 – Exercice 2</span>
+      <span class="exercise-title">Câble coaxial électrostatique & Absence de champ externe</span>
+    </div>
+    <div class="exercise-statement">
+      Un cylindre infini de rayon $R_1$ porte la densité linéique $+\lambda$ ; une gaine coaxiale de rayon $R_2 > R_1$ porte $-\lambda$. Déterminer $E(r)$ dans les trois régions. Pourquoi ce câble ne rayonne-t-il aucun champ vers l'extérieur ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        Par symétrie cylindrique, le champ est radial : $\vec{E} = E(r)\,\vec{e}_r$. La surface de Gauss est un cylindre de rayon $r$ et de hauteur $h$. Le flux sortant est $\Phi = E(r) \cdot 2\pi r h$.
+        <ul>
+          <li><strong>Zone 1 ($r < R_1$) :</strong> $Q_{\mathrm{int}} = 0 \implies \mathbf{E(r) = 0}$.</li>
+          <li><strong>Zone 2 ($R_1 < r < R_2$) :</strong> $Q_{\mathrm{int}} = +\lambda h$.
+            $$E(r) \cdot 2\pi r h = \frac{\lambda h}{\varepsilon_0} \implies \mathbf{E(r) = \frac{\lambda}{2\pi\varepsilon_0 r}}$$
+          </li>
+          <li><strong>Zone 3 ($r > R_2$) :</strong> La surface englobe à la fois le cylindre intérieur et la gaine externe :
+            $$Q_{\mathrm{int}} = (+\lambda + (-\lambda)) h = 0 \implies \mathbf{E(r) = 0}$$
+          </li>
+        </ul>
+        <strong>Conclusion applicative (Réseaux / Câbles coaxiaux) :</strong> Le champ électrique est strictement confiné entre les deux conducteurs ($R_1 < r < R_2$). À l'extérieur, le champ est rigoureusement nul : le câble est <em>auto-blindé</em>. Il ne perturbe pas l'environnement extérieur et est protégé des parasites électromagnétiques externes.
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 2 - EX 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 2 – Exercice 3</span>
+      <span class="exercise-title">Calcul de Divergence en cartésiennes & Boule chargée</span>
+    </div>
+    <div class="exercise-statement">
+      Vérifier que $\mathrm{div}\,\vec{E} = 0$ hors de la charge pour $\vec{E} = \frac{q}{4\pi\varepsilon_0}\frac{\vec{r}}{r^3}$ en cartésiennes. Retrouver $\rho$ à l'intérieur d'une boule uniformément chargée à partir de $\vec{E} = \frac{\rho}{3\varepsilon_0}\vec{r}$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Calcul en coordonnées cartésiennes :</strong><br>
+        On a $\vec{r} = x\vec{e}_x + y\vec{e}_y + z\vec{e}_z$ et $r = (x^2+y^2+z^2)^{1/2}$. Ainsi $E_x = C \cdot x (x^2+y^2+z^2)^{-3/2}$.<br>
+        Dérivons par rapport à $x$ :
+        $$\frac{\partial E_x}{\partial x} = C \left[ 1 \cdot r^{-3} + x \cdot \left(-\frac{3}{2}\right)(2x) r^{-5} \right] = C \left[ \frac{1}{r^3} - \frac{3x^2}{r^5} \right]$$
+        Par permutation circulaire des coordonnées pour $y$ et $z$ :
+        $$\frac{\partial E_y}{\partial y} = C \left[ \frac{1}{r^3} - \frac{3y^2}{r^5} \right], \quad \frac{\partial E_z}{\partial z} = C \left[ \frac{1}{r^3} - \frac{3z^2}{r^5} \right]$$
+        Sommons les trois dérivées pour obtenir la divergence :
+        $$\mathrm{div}\,\vec{E} = C \left[ \frac{3}{r^3} - \frac{3(x^2+y^2+z^2)}{r^5} \right] = C \left[ \frac{3}{r^3} - \frac{3r^2}{r^5} \right] = C \left[ \frac{3}{r^3} - \frac{3}{r^3} \right] = \mathbf{0}$$
+      </p>
+      <p>
+        <strong>2. Boule uniformément chargée :</strong><br>
+        Le champ s'écrit $\vec{E} = \frac{\rho_0}{3\varepsilon_0}(x\vec{e}_x + y\vec{e}_y + z\vec{e}_z)$.<br>
+        $$\mathrm{div}\,\vec{E} = \frac{\rho_0}{3\varepsilon_0}\left(\frac{\partial x}{\partial x} + \frac{\partial y}{\partial y} + \frac{\partial z}{\partial z}\right) = \frac{\rho_0}{3\varepsilon_0}(1 + 1 + 1) = \frac{\rho_0}{3\varepsilon_0} \times 3 = \frac{\rho_0}{\varepsilon_0}$$
+        D'après l'équation de Maxwell-Gauss ($\mathrm{div}\,\vec{E} = \rho/\varepsilon_0$), on retrouve immédiatement $\rho = \rho_0$.
+      </p>
+    </div>
+  </div>
+
+  <h2>Chapitre 3 : Potentiel & Énergie Électrostatiques</h2>
+
+  <!-- CHAP 3 - EX 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 3 – Exercice 1</span>
+      <span class="exercise-title">Potentiel et Champ d'un Doublet (Dipôle) électrostatique</span>
+    </div>
+    <div class="exercise-statement">
+      Deux charges $+q$ et $-q$ sont en $z = \pm d/2$. Montrer que loin du doublet ($r \gg d$), $V \simeq \frac{p\cos\theta}{4\pi\varepsilon_0 r^2}$ avec $p = qd$. En déduire les composantes $E_r$ et $E_\theta$ du champ électrique.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Développement du potentiel :</strong><br>
+        Soit $r_+$ la distance à la charge $+q$ et $r_-$ la distance à $-q$. Par le théorème d'Al-Kashi au premier ordre en $d/r$ :
+        $$\frac{1}{r_\pm} = \frac{1}{\sqrt{r^2 \mp rd\cos\theta + (d/2)^2}} \simeq \frac{1}{r}\left(1 \pm \frac{d}{2r}\cos\theta\right)$$
+        Le potentiel total est la somme des potentiels :
+        $$V(M) = \frac{q}{4\pi\varepsilon_0}\left(\frac{1}{r_+} - \frac{1}{r_-}\right) \simeq \frac{q}{4\pi\varepsilon_0 r}\left(1 + \frac{d}{2r}\cos\theta - \left(1 - \frac{d}{2r}\cos\theta\right)\right) = \mathbf{\frac{qd\cos\theta}{4\pi\varepsilon_0 r^2} = \frac{p\cos\theta}{4\pi\varepsilon_0 r^2}}$$
+      </p>
+      <p>
+        <strong>2. Déduction du champ électrique $\vec{E} = -\vec{\nabla}V$ :</strong><br>
+        En coordonnées sphériques :
+        $$E_r = -\frac{\partial V}{\partial r} = -\frac{p\cos\theta}{4\pi\varepsilon_0}\left(-\frac{2}{r^3}\right) = \mathbf{\frac{2p\cos\theta}{4\pi\varepsilon_0 r^3}}$$
+        $$E_\theta = -\frac{1}{r}\frac{\partial V}{\partial \theta} = -\frac{1}{r} \frac{p(-\sin\theta)}{4\pi\varepsilon_0 r^2} = \mathbf{\frac{p\sin\theta}{4\pi\varepsilon_0 r^3}}$$
+        $$E_\phi = 0$$
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 3 - EX 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 3 – Exercice 2</span>
+      <span class="exercise-title">Canon à électrons et vitesse d'accélération</span>
+    </div>
+    <div class="exercise-statement">
+      Un électron initialement au repos est accéléré sous une tension de $U = 2\text{ kV}$. Calculer son énergie cinétique en $\mathrm{eV}$ et en $\mathrm{J}$, puis sa vitesse $v$. La mécanique classique est-elle justifiée ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Énergie cinétique :</strong><br>
+        Par le théorème de l'énergie cinétique, $\Delta E_c = -q \Delta V = e U$ (car $q = -e$ et $\Delta V = -U$) :
+        $$E_c = 2\text{ keV} = \mathbf{2000\text{ eV}}$$
+        En Joules ($1\text{ eV} = 1{,}602 \times 10^{-19}\text{ J}$) :
+        $$E_c = 2000 \times 1{,}602 \times 10^{-19}\text{ J} = \mathbf{3{,}204 \times 10^{-16}\text{ J}}$$
+      </p>
+      <p>
+        <strong>2. Calcul de la vitesse classique :</strong><br>
+        $E_c = \frac{1}{2}m_e v^2$ avec $m_e = 9{,}109 \times 10^{-31}\text{ kg}$ :
+        $$v = \sqrt{\frac{2 E_c}{m_e}} = \sqrt{\frac{2 \times 3{,}204 \times 10^{-16}}{9{,}109 \times 10^{-31}}} = \sqrt{7{,}035 \times 10^{14}} \approx \mathbf{2{,}65 \times 10^7\text{ m/s}}$$
+      </p>
+      <p>
+        <strong>3. Discussion relativiste :</strong><br>
+        Le rapport à la vitesse de la lumière vaut $\frac{v}{c} = \frac{2{,}65 \times 10^7}{3 \times 10^8} \approx 0{,}088$ (soit $8{,}8\ \% \text{ de } c$).<br>
+        L'énergie de repos de l'électron est $m_e c^2 \approx 511\text{ keV}$. Puisque $E_c = 2\text{ keV} \ll 511\text{ keV}$ ($E_c / m_e c^2 \approx 0{,}4\ \%$), le facteur de Lorentz est $\gamma \approx 1{,}004$ (erreur inférieure à $0{,}4\ \%$). <strong>La mécanique classique est donc pleinement justifiée.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 3 - EX 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 3 – Exercice 3</span>
+      <span class="exercise-title">Énergie électrostatique d'un carré de charges</span>
+    </div>
+    <div class="exercise-statement">
+      Quatre charges $q$ identiques occupent les sommets d'un carré de côté $a$. Calculer l'énergie électrostatique du système.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        L'énergie électrostatique d'un ensemble de $N$ charges s'écrit comme la somme sur toutes les paires distinctes :
+        $$W_e = \sum_{1 \le i < j \le 4} \frac{q_i q_j}{4\pi\varepsilon_0 r_{ij}}$$
+        Pour un carré de 4 sommets, il y a $\binom{4}{2} = 6$ paires au total :
+        <ul>
+          <li><strong>4 paires adjacentes</strong> situées le long des côtés à la distance $r = a$ :
+            $$W_1 = 4 \times \frac{q^2}{4\pi\varepsilon_0 a}$$
+          </li>
+          <li><strong>2 paires opposées</strong> situées le long des diagonales à la distance $r = a\sqrt{2}$ :
+            $$W_2 = 2 \times \frac{q^2}{4\pi\varepsilon_0 a\sqrt{2}} = \sqrt{2} \frac{q^2}{4\pi\varepsilon_0 a}$$
+          </li>
+        </ul>
+        En sommant les deux contributions :
+        $$\mathbf{W_e = \frac{q^2}{4\pi\varepsilon_0 a} \left(4 + \sqrt{2}\right) \approx 5{,}414 \times \frac{q^2}{4\pi\varepsilon_0 a}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 3 - EX 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 3 – Exercice 4</span>
+      <span class="exercise-title">Simulation et Solution Analytique de Laplace pour un Coaxial</span>
+    </div>
+    <div class="exercise-statement">
+      Résoudre l'équation de Laplace pour un câble coaxial dont le conducteur central de rayon $R_1$ est à $V_1 = 1\text{ V}$ et la gaine de rayon $R_2$ à $V_2 = 0\text{ V}$. Démontrer le profil $V(r)$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        Dans l'espace intermédiaire sans charge entre les deux conducteurs ($R_1 < r < R_2$), le potentiel obéit à l'équation de Laplace $\Delta V = 0$.<br>
+        Par symétrie cylindrique, $V$ ne dépend que de la distance radiale $r$ :
+        $$\Delta V = \frac{1}{r} \frac{d}{dr}\left(r \frac{dV}{dr}\right) = 0$$
+        En multipliant par $r$, $\frac{d}{dr}\left(r \frac{dV}{dr}\right) = 0 \implies r \frac{dV}{dr} = A \implies \frac{dV}{dr} = \frac{A}{r}$.<br>
+        En intégrant une seconde fois :
+        $$V(r) = A \ln(r) + B$$
+        Appliquons les conditions aux limites :
+        $$\begin{cases} V(R_2) = A \ln R_2 + B = 0 \implies B = -A \ln R_2 \\ V(R_1) = A \ln(R_1/R_2) = V_1 = 1\text{ V} \implies A = \frac{1}{\ln(R_1/R_2)} = -\frac{1}{\ln(R_2/R_1)} \end{cases}$$
+        En réinjectant :
+        $$\mathbf{V(r) = \frac{\ln(R_2/r)}{\ln(R_2/R_1)}}$$
+        Cette solution analytique correspond rigoureusement à la convergence obtenue par méthode numérique itérative de Jacobi ou de relaxation.
+      </p>
+    </div>
+  </div>
+
+  <h2>Chapitre 4 : Magnétostatique</h2>
+
+  <!-- CHAP 4 - EX 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 4 – Exercice 1</span>
+      <span class="exercise-title">Spectromètre de masse pour les isotopes du Carbone</span>
+    </div>
+    <div class="exercise-statement">
+      Des ions $^{12}\mathrm{C}^+$ et $^{14}\mathrm{C}^+$ accélérés sous $U = 5\text{ kV}$ pénètrent perpendiculairement dans un champ magnétique uniforme $B = 0{,}2\text{ T}$. Calculer les rayons de leurs trajectoires et la distance séparant leurs points d'impact après un demi-tour ($m = A \times 1{,}66 \times 10^{-27}\text{ kg}$, $q = e$).
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Vitesse d'entrée :</strong> $\frac{1}{2}m v^2 = qU \implies v = \sqrt{\frac{2qU}{m}}$.<br>
+        <strong>2. Trajectoire circulaire dans le champ magnétique :</strong> La force de Lorentz fournit l'accélération centripète :
+        $$q v B = \frac{m v^2}{R} \implies R = \frac{m v}{q B} = \frac{\sqrt{2 m q U}}{q B} = \frac{1}{B}\sqrt{\frac{2 m U}{q}}$$
+        <strong>Applications numériques :</strong>
+        <ul>
+          <li>Pour $^{12}\mathrm{C}^+$ ($m_{12} = 12 \times 1{,}66 \times 10^{-27} = 1{,}992 \times 10^{-26}\text{ kg}$) :
+            $$R_{12} = \frac{1}{0{,}2} \sqrt{\frac{2 \times 1{,}992 \times 10^{-26} \times 5000}{1{,}602 \times 10^{-19}}} = 5 \times \sqrt{1{,}243 \times 10^{-3}} = 5 \times 0{,}03526\text{ m} = \mathbf{17{,}63\text{ cm}}$$
+          </li>
+          <li>Pour $^{14}\mathrm{C}^+$ ($m_{14} = 14 \times 1{,}66 \times 10^{-27} = 2{,}324 \times 10^{-26}\text{ kg}$) :
+            $$R_{14} = R_{12} \sqrt{\frac{14}{12}} = 17{,}63 \times 1{,}0801 = \mathbf{19{,}04\text{ cm}}$$
+          </li>
+        </ul>
+        <strong>3. Distance de séparation des impacts après un demi-tour :</strong><br>
+        Après un demi-tour, les particules touchent le détecteur à une distance de l'entrée égale à leur diamètre $2R$. L'écartement entre les deux points d'impact vaut :
+        $$\Delta x = 2R_{14} - 2R_{12} = 2(19{,}04 - 17{,}63) = 2 \times 1{,}41\text{ cm} = \mathbf{2{,}82\text{ cm}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 4 - EX 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 4 – Exercice 2</span>
+      <span class="exercise-title">Câble coaxial magnétique & Absence de champ externe</span>
+    </div>
+    <div class="exercise-statement">
+      Un câble coaxial est formé d'un conducteur central (rayon $a$) parcouru par le courant $+I$ et d'une gaine extérieure (rayon $b$) parcourue par $-I$. Déterminer $B(r)$ dans les trois régions. Pourquoi le câble ne crée-t-il aucun champ à l'extérieur ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        Par symétrie axiale, $\vec{B} = B(r)\,\vec{e}_\theta$. Le contour d'Ampère est un cercle de rayon $r$. La circulation est $\oint \vec{B}\cdot d\vec{\ell} = B(r) \cdot 2\pi r$.
+        <ul>
+          <li><strong>À l'intérieur de l'âme centrale ($r < a$) :</strong> Avec une densité volumique uniforme $j = I/(\pi a^2)$ :
+            $$I_{\mathrm{enl}} = j \cdot \pi r^2 = I \frac{r^2}{a^2} \implies B(r) = \mathbf{\frac{\mu_0 I r}{2\pi a^2}}$$
+          </li>
+          <li><strong>Entre les deux conducteurs ($a < r < b$) :</strong> Le contour n'enlace que l'âme centrale ($I_{\mathrm{enl}} = I$) :
+            $$B(r) \cdot 2\pi r = \mu_0 I \implies \mathbf{B(r) = \frac{\mu_0 I}{2\pi r}}$$
+          </li>
+          <li><strong>À l'extérieur du câble ($r > b$) :</strong> Le contour enlace à la fois l'âme et la gaine :
+            $$I_{\mathrm{enl}} = +I + (-I) = 0 \implies \mathbf{B(r) = 0}$$
+          </li>
+        </ul>
+        <strong>Conclusion :</strong> À l'extérieur du câble, le champ magnétique est rigoureusement nul. Le courant de retour annule exactement l'effet magnétique du courant d'aller : aucun rayonnement parasite n'est émis.
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 4 - EX 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 4 – Exercice 3</span>
+      <span class="exercise-title">Champ au centre d'une spire carrée</span>
+    </div>
+    <div class="exercise-statement">
+      Montrer qu'un segment fini de longueur $2a$ crée, à la distance $a$ de son milieu, $B = \frac{\mu_0 I}{4\pi a}\sqrt{2}$. En déduire le champ au centre d'une spire carrée de côté $2a$ et le comparer à celui d'une spire circulaire de rayon $a$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Champ d'un segment fini rectiligne :</strong><br>
+        D'après la loi de Biot et Savart intégrée pour un fil sous des angles $\theta_1$ et $\theta_2$ :
+        $$B = \frac{\mu_0 I}{4\pi d}(\sin\theta_2 - \sin\theta_1)$$
+        Ici la distance au milieu est $d = a$. Les extrémités du segment de demi-longueur $a$ sont vues sous les angles $\pm 45^\circ$, donc $\sin\theta_2 = \sin(45^\circ) = \frac{\sqrt{2}}{2}$ et $\sin\theta_1 = -\frac{\sqrt{2}}{2}$ :
+        $$B_{\mathrm{segment}} = \frac{\mu_0 I}{4\pi a}\left(\frac{\sqrt{2}}{2} - \left(-\frac{\sqrt{2}}{2}\right)\right) = \mathbf{\frac{\mu_0 I \sqrt{2}}{4\pi a}}$$
+      </p>
+      <p>
+        <strong>2. Champ au centre de la spire carrée :</strong><br>
+        La spire carrée est formée de 4 segments identiques parcourus dans le même sens de rotation. Leurs champs au centre s'additionnent constructivement :
+        $$B_{\mathrm{carré}} = 4 \times B_{\mathrm{segment}} = 4 \times \frac{\mu_0 I \sqrt{2}}{4\pi a} = \mathbf{\frac{\sqrt{2}\,\mu_0 I}{\pi a} \approx 1{,}414 \times \frac{\mu_0 I}{\pi a}}$$
+      </p>
+      <p>
+        <strong>3. Comparaison avec la spire circulaire de rayon $a$ :</strong><br>
+        Au centre d'une spire circulaire de rayon $a$, le champ vaut $B_{\mathrm{cercle}} = \frac{\mu_0 I}{2a} = \frac{\pi}{2} \frac{\mu_0 I}{\pi a} \approx 1{,}571 \times \frac{\mu_0 I}{\pi a}$.<br>
+        Le champ de la spire circulaire est légèrement plus intense (environ $11\ \%$ de plus) car l'intégralité du fil est à la distance minimale $a$, alors que les coins du carré sont plus éloignés ($r = a\sqrt{2}$).
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 4 - EX 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 4 – Exercice 4</span>
+      <span class="exercise-title">Ligne électrique et perturbation du champ magnétique terrestre</span>
+    </div>
+    <div class="exercise-statement">
+      À quelle distance d'une ligne parcourue par $I = 100\text{ A}$ le champ créé est-il égal au champ terrestre ($B_T \approx 30\,\mu\text{T}$) ? Que penser de l'utilisation d'une boussole sous une ligne électrique ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        Le champ créé par un fil rectiligne infini est $B(r) = \frac{\mu_0 I}{2\pi r}$.<br>
+        On cherche $r$ tel que $B(r) = B_T$ :
+        $$r = \frac{\mu_0 I}{2\pi B_T} = \frac{4\pi \times 10^{-7} \times 100}{2\pi \times 30 \times 10^{-6}} = \frac{2 \times 10^{-7} \times 100}{30 \times 10^{-6}} = \frac{2 \times 10^{-5}}{3 \times 10^{-5}} = \mathbf{\frac{2}{3}\text{ m} \approx 67\text{ cm}}$$
+        <strong>Conclusion pratique :</strong> À moins de $67\text{ cm}$ du câble, le champ magnétique créé dépasse le champ magnétique terrestre. Cependant, à $5$ ou $10\text{ mètres}$ (hauteur standard des lignes électriques au-dessus du sol), le champ ne vaut plus que $2$ à $4\,\mu\text{T}$, soit moins de $10\ \%$ du champ terrestre. Néanmoins, à proximité immédiate des transformateurs ou armoires de distribution, une boussole magnétique classique est complètement déviée et inutilisable.
+      </p>
+    </div>
+  </div>
+
+  <h2>Chapitre 5 : Ondes Électromagnétiques & Antennes</h2>
+
+  <!-- CHAP 5 - EX 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 5 – Exercice 1</span>
+      <span class="exercise-title">Caractéristiques d'une onde plane Wi-Fi (2,4 GHz)</span>
+    </div>
+    <div class="exercise-statement">
+      Une onde plane de fréquence $f = 2{,}4\text{ GHz}$ a une amplitude électrique $E_0 = 2\text{ V}\cdot\text{m}^{-1}$. Calculer sa longueur d'onde $\lambda$, son amplitude magnétique $B_0$, et sa densité de puissance moyenne $\langle \Pi \rangle$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Longueur d'onde :</strong>
+        $$\lambda = \frac{c}{f} = \frac{3 \times 10^8\text{ m/s}}{2{,}4 \times 10^9\text{ Hz}} = \mathbf{0{,}125\text{ m} = 12{,}5\text{ cm}}$$
+        <strong>2. Amplitude du champ magnétique $B_0$ :</strong>
+        $$B_0 = \frac{E_0}{c} = \frac{2}{3 \times 10^8} = \mathbf{6{,}67 \times 10^{-9}\text{ T} = 6{,}67\text{ nT}}$$
+        <strong>3. Densité de puissance moyenne $\langle \Pi \rangle$ (Vecteur de Poynting) :</strong>
+        $$\langle \Pi \rangle = \frac{E_0^2}{2 \eta_0} = \frac{2^2}{2 \times 377\,\Omega} = \frac{4}{754} \approx \mathbf{5{,}3 \times 10^{-3}\text{ W/m}^2 = 5{,}3\text{ mW/m}^2}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 5 - EX 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 5 – Exercice 2</span>
+      <span class="exercise-title">Antenne courte, résistance de rayonnement et rendement IoT</span>
+    </div>
+    <div class="exercise-statement">
+      Une antenne de $h = 10\text{ cm}$ fonctionne à $f = 100\text{ MHz}$. Calculer sa résistance de rayonnement (modèle du dipôle élémentaire). Si ses pertes ohmiques valent $R_{\mathrm{pertes}} = 1\,\Omega$, quel est son rendement ? Conclure sur les objets connectés.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Longueur d'onde :</strong> $\lambda = \frac{c}{f} = \frac{3 \times 10^8}{10^8} = 3\text{ m}$.<br>
+        Puisque $h = 0{,}1\text{ m} \ll \lambda$, le modèle du dipôle court est valable :
+        $$R_{\mathrm{rad}} = 80\pi^2 \left(\frac{h}{\lambda}\right)^2 = 80\pi^2 \left(\frac{0{,}1}{3}\right)^2 = 80\pi^2 \times \frac{0{,}01}{9} = \frac{0{,}8\pi^2}{9} \approx \mathbf{0{,}877\,\Omega}$$
+        <strong>2. Rendement de rayonnement :</strong>
+        $$\eta = \frac{R_{\mathrm{rad}}}{R_{\mathrm{rad}} + R_{\mathrm{pertes}}} = \frac{0{,}877}{0{,}877 + 1} = \frac{0{,}877}{1{,}877} \approx \mathbf{46{,}7\ \%}$$
+        Plus de la moitié de l'énergie électrique fournie est perdue en chaleur dans le cuivre !<br>
+        <strong>Conclusion pour l'IoT :</strong> Plus un objet connecté est miniaturisé par rapport à la longueur d'onde, plus sa résistance de rayonnement s'effondre (en $(h/\lambda)^2$), ce qui dégrade considérablement l'autonomie et la portée radio.
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 5 - EX 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 5 – Exercice 3</span>
+      <span class="exercise-title">Désadaptation d'impédance, coefficient de réflexion et ROS</span>
+    </div>
+    <div class="exercise-statement">
+      Une antenne d'impédance $Z_{\mathrm{in}} = 75\,\Omega$ est reliée à un câble coaxial de $Z_0 = 50\,\Omega$. Calculer le coefficient de réflexion $\Gamma$, le Rapport d'Ondes Stationnaires (ROS), la fraction de puissance réfléchie et la perte de désadaptation en $\mathrm{dB}$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Coefficient de réflexion en tension $\Gamma$ :</strong>
+        $$\Gamma = \frac{Z_{\mathrm{in}} - Z_0}{Z_{\mathrm{in}} + Z_0} = \frac{75 - 50}{75 + 50} = \frac{25}{125} = \mathbf{0{,}20}$$
+        <strong>2. Rapport d'Ondes Stationnaires (ROS / SWR) :</strong>
+        $$\mathrm{ROS} = \frac{1 + |\Gamma|}{1 - |\Gamma|} = \frac{1 + 0{,}20}{1 - 0{,}20} = \frac{1{,}20}{0{,}80} = \mathbf{1{,}50}$$
+        <strong>3. Fraction de puissance réfléchie :</strong>
+        $$\frac{P_{\mathrm{réfl}}}{P_{\mathrm{inc}}} = |\Gamma|^2 = (0{,}20)^2 = \mathbf{0{,}04 \quad (4\ \%)}$$
+        La puissance transmise vaut $1 - |\Gamma|^2 = 96\ \%$.<br>
+        <strong>4. Perte de désadaptation (Mismatch Loss) en dB :</strong>
+        $$L_{\mathrm{mismatch}} = -10\log_{10}(1 - |\Gamma|^2) = -10\log_{10}(0{,}96) \approx \mathbf{0{,}177\text{ dB}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 5 - EX 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 5 – Exercice 4</span>
+      <span class="exercise-title">Liaison radio point à point à 5,8 GHz</span>
+    </div>
+    <div class="exercise-statement">
+      Deux bâtiments distants de $d = 3\text{ km}$ sont reliés à $f = 5{,}8\text{ GHz}$ par deux paraboles de $G = 24\text{ dBi}$. L'émetteur délivre $P_E = 20\text{ dBm}$, chaque câble introduit $1{,}5\text{ dB}$ de pertes et la sensibilité du récepteur est de $-80\text{ dBm}$. Calculer la puissance reçue en espace libre et la marge disponible.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Affaiblissement en espace libre $L_p$ :</strong><br>
+        $L_p = 32{,}44 + 20\log_{10}(d_{\mathrm{km}}) + 20\log_{10}(f_{\mathrm{MHz}})$ avec $d = 3\text{ km}$ et $f = 5800\text{ MHz}$ :
+        $$L_p = 32{,}44 + 20\log_{10}(3) + 20\log_{10}(5800) = 32{,}44 + 9{,}54 + 75{,}27 = \mathbf{117{,}25\text{ dB}}$$
+        <strong>2. Bilan de puissance reçue $P_R$ :</strong>
+        $$P_{R} = P_E - \text{Pertes}_E + G_E - L_p + G_R - \text{Pertes}_R$$
+        $$P_R = 20 - 1{,}5 + 24 - 117{,}25 + 24 - 1{,}5 = \mathbf{-52{,}25\text{ dBm}}$$
+        <strong>3. Marge de liaison disponible :</strong>
+        $$\text{Marge} = P_R - P_{\mathrm{sensibilité}} = -52{,}25 - (-80) = \mathbf{+27{,}75\text{ dB}}$$
+        <strong>Commentaire :</strong> Avec près de $28\text{ dB}$ de marge, la liaison est extrêmement robuste et résistera sans coupure aux fortes pluies et intempéries tropicales.
+      </p>
+    </div>
+  </div>
+
+  <!-- CHAP 5 - EX 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Chapitre 5 – Exercice 5</span>
+      <span class="exercise-title">Réseau d'antennes et déphasage de faisceau (Beamforming)</span>
+    </div>
+    <div class="exercise-statement">
+      On veut obtenir un gain total de $12\text{ dBi}$ avec des antennes patch de gain individuel $6\text{ dBi}$. Combien d'éléments faut-il ? Pour un réseau de 8 éléments espacés de $d = \lambda/2$, quel déphasage $\Phi$ faut-il appliquer pour pointer le faisceau à $\theta_0 = 30^\circ$ de la normale ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée :</div>
+      <p>
+        <strong>1. Nombre d'éléments $N$ :</strong><br>
+        Le gain d'un réseau de $N$ éléments identiques alimentés en phase est multiplié par $N$ : $G_{\mathrm{total}} = G_{\mathrm{patch}} \cdot N$.<br>
+        En dBi : $G_{\mathrm{total, dBi}} = G_{\mathrm{patch, dBi}} + 10\log_{10} N \implies 12 = 6 + 10\log_{10} N \implies 10\log_{10} N = 6\text{ dB}$.<br>
+        $$N = 10^{0{,}6} \approx \mathbf{4\text{ éléments}}$$
+      </p>
+      <p>
+        <strong>2. Déphasage $\Phi$ pour le pointage du faisceau (Beamforming 5G) :</strong><br>
+        Le déphasage géométrique entre deux antennes consécutives séparées de $d = \lambda/2$ pour une onde émise sous l'angle $\theta_0 = 30^\circ$ par rapport à la normale est :
+        $$\Delta \phi_{\mathrm{géo}} = k d \sin\theta_0 = \left(\frac{2\pi}{\lambda}\right)\left(\frac{\lambda}{2}\right)\sin(30^\circ) = \pi \times \frac{1}{2} = \frac{\pi}{2}\text{ rad} = 90^\circ$$
+        Pour que les contributions interfèrent de façon purement constructive dans cette direction, le déphasage d'alimentation progressif à appliquer entre antennes adjacentes doit compenser ce retard :
+        $$\mathbf{\Phi = -\frac{\pi}{2}\text{ rad} = -90^\circ}$$
+      </p>
+    </div>
+  </div>
+</section>
