@@ -307,6 +307,28 @@ const Cart = (function () {
   return { add, remove, changeQty, clear, open, close };
 })();
 
+/* ---- Fermeture des panneaux et modales avec la touche Échap ---- */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const cartPanel = document.getElementById('cart-panel');
+    if (cartPanel && cartPanel.classList.contains('open')) {
+      document.getElementById('cart-close')?.click();
+      return;
+    }
+    const modal = document.getElementById('event-modal');
+    if (modal && modal.classList.contains('active')) {
+      modal.querySelector('.modal__close')?.click();
+      return;
+    }
+    const navMob = document.querySelector('.nav-mobile');
+    if (navMob && navMob.classList.contains('active')) {
+      document.querySelector('.burger')?.classList.remove('active');
+      navMob.classList.remove('active');
+      document.querySelector('.nav-overlay')?.classList.remove('active');
+    }
+  }
+});
+
 /* ---- Toast notification ---- */
 function showToast(msg) {
   let toast = document.getElementById('cart-toast');
