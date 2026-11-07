@@ -1,0 +1,96 @@
+<section id="chapitre-3" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 3</div>
+    <h1 class="chapter-title">Potentiel et Énergie Électrostatiques</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Essentiel du cours :</strong> Le champ électrostatique est à circulation conservative : son travail ne dépend pas du chemin suivi. Il dérive d'un potentiel scalaire $V$ par la relation $\vec{E} = -\vec{\nabla}V$. Ce potentiel obéit à l'équation de Poisson $\Delta V = -\rho/\varepsilon_0$ (ou Laplace dans le vide). L'énergie emmagasinée par un système de charges peut s'interpréter comme l'énergie de constitution du système ou comme une énergie localisée dans le champ avec la densité volumique $w_e = \frac{1}{2}\varepsilon_0 E^2$.
+  </div>
+
+  <h2>3.1 Circulation Conservative et Définition du Potentiel $V$</h2>
+  <p>
+    Pour toute courbe fermée $\mathcal{C}$, la circulation du champ électrostatique est rigoureusement nulle :
+    $$\oint_{\mathcal{C}} \vec{E} \cdot d\vec{\ell} = 0 \iff \vec{\mathrm{rot}}\,\vec{E} = \vec{0}$$
+    Entre deux points $A$ et $B$, l'intégrale $\int_A^B \vec{E}\cdot d\vec{\ell}$ est indépendante du chemin suivi. On définit alors le <strong>potentiel électrostatique $V(M)$</strong> tel que la circulation élémentaire soit l'opposée de la différentielle du potentiel :
+  </p>
+  $$d V = -\vec{E} \cdot d\vec{OM} \iff \vec{E} = -\vec{\mathrm{grad}}\,V = -\vec{\nabla}V$$
+  <p>Le potentiel s'exprime en <strong>Volts ($\mathrm{V}$)</strong>. La différence de potentiel entre deux points est la tension électrique :</p>
+  $$U_{AB} = V_A - V_B = \int_A^B \vec{E} \cdot d\vec{\ell}$$
+
+  <div class="zoom-box">
+    <div class="zoom-title">Pourquoi le signe moins dans $\vec{E} = -\vec{\nabla}V$ ?</div>
+    <p>
+      Le gradient d'une fonction scalaire pointe toujours vers les valeurs <em>croissantes</em>. Le signe moins signifie que le vecteur champ électrique $\vec{E}$ est toujours orienté vers les <strong>potentiels décroissants</strong> (dans le sens de la pente descendante, analogue au courant d'une rivière s'écoulant vers les altitudes plus basses). Une charge positive libre est spontanément accélérée vers les bas potentiels.
+    </p>
+  </div>
+
+  <h2>3.2 Potentiel d'une Charge Ponctuelle et Superposition</h2>
+  <p>
+    En intégrant $\vec{E} = \frac{q}{4\pi\varepsilon_0 r^2}\vec{e}_r$ avec la convention usuelle d'un potentiel nul à l'infini ($V(r \to \infty) = 0$) :
+  </p>
+  $$V(r) = \frac{q}{4\pi\varepsilon_0 r}$$
+  <p>
+    Pour une collection discrète de charges $q_i$ ou une distribution continue de charges réparties dans un domaine $\mathcal{D}$ :
+  </p>
+  $$V(M) = \frac{1}{4\pi\varepsilon_0} \sum_i \frac{q_i}{r_i} = \frac{1}{4\pi\varepsilon_0} \iiint_{\mathcal{D}} \frac{dq(P)}{PM}$$
+  <p>
+    <em>Avantage majeur sur le champ :</em> Le calcul de $V(M)$ est une intégrale <strong>scalaire</strong>, infiniment plus simple à calculer qu'une intégrale vectorielle ! Une fois $V(M)$ obtenu, il suffit de prendre l'opposé de son gradient pour déterminer le champ $\vec{E}(M)$.
+  </p>
+
+  <h2>3.3 Surfaces Équipotentielles et Topographie du Champ</h2>
+  <div class="definition-box">
+    <div class="definition-title">Surfaces Équipotentielles</div>
+    <p>
+      Une surface équipotentielle est le lieu géométrique des points où le potentiel est constant : $V(x,y,z) = Cte$.
+      Sur une telle surface, tout déplacement élémentaire tangent vérifie $dV = 0$. Par conséquent :
+      $$dV = -\vec{E} \cdot d\vec{\ell}_{\text{tangent}} = 0 \implies \vec{E} \perp \text{Surface Équipotentielle}$$
+      <strong>Propriétés fondamentales :</strong>
+      <ul>
+        <li>Les lignes de champ électrostatique coupent <strong>toujours orthogonalement</strong> les surfaces équipotentielles.</li>
+        <li>Les lignes de champ sont dirigées des hauts potentiels vers les bas potentiels.</li>
+        <li>Plus les surfaces équipotentielles sont rapprochées dans l'espace, plus la norme du champ électrique y est intense (gradient fort).</li>
+      </ul>
+    </p>
+  </div>
+
+  <h2>3.4 Équations de Poisson et de Laplace</h2>
+  <p>
+    En combinant l'équation de Maxwell-Gauss ($\mathrm{div}\,\vec{E} = \rho/\varepsilon_0$) et la relation liant champ et potentiel ($\vec{E} = -\vec{\nabla}V$), on obtient directement :
+  </p>
+  <div class="theorem-box">
+    <div class="theorem-title">Équation de Poisson</div>
+    $$\mathrm{div}(-\vec{\nabla}V) = \frac{\rho}{\varepsilon_0} \iff \Delta V = -\frac{\rho}{\varepsilon_0}$$
+    Dans les régions de l'espace dépourvues de charges électriques libres ($\rho = 0$), cette équation devient l'<strong>Équation de Laplace</strong> :
+    $$\Delta V = 0 \iff \frac{\partial^2 V}{\partial x^2} + \frac{\partial^2 V}{\partial y^2} + \frac{\partial^2 V}{\partial z^2} = 0$$
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-title">Théorème d'Earnshaw et Stabilité électrostatique</div>
+    <p>
+      Une fonction solution de l'équation de Laplace ($\Delta V = 0$) ne peut présenter <em>ni maximum strict, ni minimum strict</em> à l'intérieur de son domaine de définition (ses extremums se trouvent toujours sur les bords).<br>
+      <strong>Conséquence physique capitale :</strong> Il est strictement impossible de piéger de façon stable une particule chargée dans le vide à l'aide de champs électrostatiques statiques seuls ! Pour confiner des ions ou des électrons (ex: spectromètre de masse, informatique quantique), on doit obligatoirement utiliser des champs magnétiques ou des champs électriques radiofréquences variables (piège de Paul, Prix Nobel 1989).
+    </p>
+  </div>
+
+  <h2>3.5 Énergie Électrostatique et Condensateurs</h2>
+  <h3>A. Énergie d'un système de charges</h3>
+  <p>L'énergie potentielle électrostatique requise pour assembler une collection de charges ponctuelles à partir de l'infini est :</p>
+  $$W_e = \frac{1}{2} \sum_{i=1}^N q_i V(P_i)$$
+  <p>Pour une distribution continue volumique de charge : $W_e = \frac{1}{2} \iiint_{\mathcal{V}} \rho(M)\,V(M)\,d\tau$.</p>
+
+  <h3>B. Densité volumique d'énergie du champ</h3>
+  <p>L'énergie peut être interprétée comme étant stockée directement dans l'espace au sein du champ électrique lui-même, avec la densité volumique :</p>
+  $$w_e = \frac{1}{2}\varepsilon_0 \|\vec{E}\|^2 \quad (\text{en }\mathrm{J\cdot m^{-3}})$$
+  $$W_e = \iiint_{\text{tout l'espace}} \frac{1}{2}\varepsilon_0 E^2\,d\tau$$
+
+  <h3>C. Capacité et Énergie d'un Condensateur</h3>
+  <p>
+    Un condensateur est formé de deux conducteurs métalliques en influence totale portant des charges $+Q$ et $-Q$ sous une différence de potentiel $U = V_1 - V_2$. La capacité électrique $C$ est définie par :
+  </p>
+  $$C = \frac{Q}{U} \quad (\text{en Farads }\mathrm{F})$$
+  <p>Pour un <strong>condensateur plan</strong> d'aire $S$ et d'épaisseur diélectrique $d$ :</p>
+  $$C = \frac{\varepsilon_0 S}{d}$$
+  <p>L'énergie stockée sous la tension $U$ s'exprime sous les trois formes équivalentes :</p>
+  $$W_e = \frac{1}{2} C U^2 = \frac{1}{2} \frac{Q^2}{C} = \frac{1}{2} Q U$$
+</section>

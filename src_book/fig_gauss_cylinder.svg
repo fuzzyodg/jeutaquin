@@ -1,0 +1,53 @@
+<svg width="600" height="360" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" style="background:#fcfcfd; border:1px solid #d0d7de; border-radius:8px; margin:15px auto; display:block;">
+  <defs>
+    <marker id="g-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626"/>
+    </marker>
+    <marker id="g-n" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <text x="300" y="26" text-anchor="middle" font-family="Times New Roman, serif" font-size="17" font-weight="bold" fill="#0f172a">Application du Théorème de Gauss : Cylindre Fermé Σ</text>
+
+  <!-- Central Charged Line Oz -->
+  <line x1="300" y1="30" x2="300" y2="330" stroke="#dc2626" stroke-width="4"/>
+  <text x="312" y="45" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#dc2626">Axe Oz (Charge λ)</text>
+
+  <!-- Gauss Cylinder -->
+  <!-- Top Base -->
+  <ellipse cx="300" cy="110" rx="120" ry="35" fill="#e0f2fe" fill-opacity="0.7" stroke="#0284c7" stroke-width="2"/>
+  <text x="300" y="95" text-anchor="middle" font-family="Times New Roman, serif" font-size="13" font-weight="bold" fill="#0369a1">Base Supérieure S_sup : n ⟂ E ⇒ Flux = 0</text>
+
+  <!-- Cylinder Lateral surface -->
+  <path d="M 180,110 L 180,250 A 120,35 0 0,0 420,250 L 420,110" fill="#bae6fd" fill-opacity="0.3" stroke="#0284c7" stroke-width="2"/>
+
+  <!-- Bottom Base -->
+  <ellipse cx="300" cy="250" rx="120" ry="35" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,4"/>
+  <path d="M 180,250 A 120,35 0 0,0 420,250" fill="none" stroke="#0284c7" stroke-width="2"/>
+  <text x="300" y="300" text-anchor="middle" font-family="Times New Roman, serif" font-size="13" font-weight="bold" fill="#0369a1">Base Inférieure S_inf : n ⟂ E ⇒ Flux = 0</text>
+
+  <!-- Normal vector and Field vector on lateral surface -->
+  <!-- On right edge (420, 180) -->
+  <line x1="420" y1="180" x2="480" y2="180" stroke="#0284c7" stroke-width="2.5" marker-end="url(#g-n)"/>
+  <text x="485" y="175" font-family="Times New Roman, serif" font-size="14" font-weight="bold" fill="#0284c7">n_ext = e_r</text>
+
+  <line x1="420" y1="180" x2="520" y2="180" stroke="#dc2626" stroke-width="2.5" marker-end="url(#g-arr)"/>
+  <text x="525" y="195" font-family="Times New Roman, serif" font-size="15" font-weight="bold" fill="#dc2626">E(r) e_r</text>
+
+  <!-- Radius r and Height h -->
+  <line x1="300" y1="180" x2="420" y2="180" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="350" y="173" font-family="Times New Roman, serif" font-size="14" font-weight="bold" fill="#475569">rayon r</text>
+
+  <line x1="160" y1="110" x2="160" y2="250" stroke="#475569" stroke-width="1.5"/>
+  <line x1="155" y1="110" x2="165" y2="110" stroke="#475569" stroke-width="1.5"/>
+  <line x1="155" y1="250" x2="165" y2="250" stroke="#475569" stroke-width="1.5"/>
+  <text x="145" y="185" text-anchor="end" font-family="Times New Roman, serif" font-size="14" font-weight="bold" fill="#475569">hauteur h</text>
+
+  <!-- Key formula box -->
+  <rect x="20" y="40" width="140" height="90" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="30" y="60" font-family="Times New Roman, serif" font-size="12" font-weight="bold" fill="#0f172a">Flux Total :</text>
+  <text x="30" y="78" font-family="Times New Roman, serif" font-size="12" fill="#334155">Φ = E(r) · (2π r h)</text>
+  <text x="30" y="98" font-family="Times New Roman, serif" font-size="12" font-weight="bold" fill="#0f172a">Gauss :</text>
+  <text x="30" y="116" font-family="Times New Roman, serif" font-size="12" fill="#334155">Φ = Q_int / ε₀</text>
+</svg>

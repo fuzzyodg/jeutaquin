@@ -1,0 +1,361 @@
+<section id="exercices-calcul-vectoriel" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">ANNEXE MÉTHODOLOGIQUE & CORRIGÉS I</div>
+    <h1 class="chapter-title">Corrigés Détaillés des 10 Exercices de Calcul Vectoriel</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Objectif :</strong> Résolution complète, rédigée ligne par ligne avec toutes les justifications théoriques, des dix exercices d'entraînement aux opérateurs vectoriels, intégrales curvilignes, flux et théorèmes intégraux.
+  </div>
+
+  <!-- EXERCICE 1.1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.1</span>
+      <span class="exercise-title">Circulation d'un champ selon deux chemins & Caractère de gradient</span>
+    </div>
+    <div class="exercise-statement">
+      On considère le champ vectoriel : $\vec{A} = (3x^2 + 6y)\vec{e}_x - 14yz\vec{e}_y + 20xz^2\vec{e}_z$.<br>
+      Calculer la circulation de $\vec{A}$ entre les points $(0,0,0)$ et $(1,1,1)$ le long des chemins suivants :<br>
+      a) Le segment de droite joignant ces deux points.<br>
+      b) Les segments de droite allant de $(0,0,0)$ à $(1,0,0)$, puis de $(1,0,0)$ à $(1,1,0)$, et enfin de $(1,1,0)$ jusqu'à $(1,1,1)$.<br>
+      Ce champ vectoriel est-il un gradient ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>1. Définition de la circulation élémentaire :</strong><br>
+        En coordonnées cartésiennes, $d\vec{\ell} = dx\,\vec{e}_x + dy\,\vec{e}_y + dz\,\vec{e}_z$. Le produit scalaire s'écrit :
+        $$d\mathcal{C} = \vec{A} \cdot d\vec{\ell} = (3x^2 + 6y)\,dx - 14yz\,dy + 20xz^2\,dz$$
+      </p>
+      <p>
+        <strong>a) Chemin du segment de droite reliant $(0,0,0)$ à $(1,1,1)$ :</strong><br>
+        L'équation paramétrique du segment est $x(t) = t$, $y(t) = t$, $z(t) = t$ avec $t \in [0, 1]$.<br>
+        On a donc $dx = dy = dz = dt$. En remplaçant directement :
+        $$\vec{A} \cdot d\vec{\ell} = (3t^2 + 6t)\,dt - 14t^2\,dt + 20t^3\,dt = (20t^3 - 11t^2 + 6t)\,dt$$
+        En intégrant de $t = 0$ à $t = 1$ :
+        $$\mathcal{C}_a = \int_0^1 (20t^3 - 11t^2 + 6t)\,dt = \left[ 5t^4 - \frac{11}{3}t^3 + 3t^2 \right]_0^1 = 5 - \frac{11}{3} + 3 = 8 - \frac{11}{3} = \mathbf{\frac{13}{3}}$$
+      </p>
+      <p>
+        <strong>b) Chemin découpé en trois segments d'axes :</strong>
+        <ul>
+          <li><strong>Segment 1 : $(0,0,0) \to (1,0,0)$ :</strong> On a $y = 0$, $z = 0$, donc $dy = dz = 0$. Il reste :
+            $$\mathcal{C}_1 = \int_0^1 (3x^2 + 0)\,dx = [x^3]_0^1 = 1$$
+          </li>
+          <li><strong>Segment 2 : $(1,0,0) \to (1,1,0)$ :</strong> On a $x = 1$, $z = 0$, donc $dx = dz = 0$. Il reste :
+            $$\mathcal{C}_2 = \int_0^1 (-14y \cdot 0)\,dy = 0$$
+          </li>
+          <li><strong>Segment 3 : $(1,1,0) \to (1,1,1)$ :</strong> On a $x = 1$, $y = 1$, donc $dx = dy = 0$. Il reste :
+            $$\mathcal{C}_3 = \int_0^1 (20 \cdot 1 \cdot z^2)\,dz = \left[ \frac{20}{3}z^3 \right]_0^1 = \frac{20}{3}$$
+          </li>
+        </ul>
+        La circulation totale le long de ce second chemin est la somme :
+        $$\mathcal{C}_b = \mathcal{C}_1 + \mathcal{C}_2 + \mathcal{C}_3 = 1 + 0 + \frac{20}{3} = \mathbf{\frac{23}{3}}$$
+      </p>
+      <p>
+        <strong>Conclusion sur le caractère de gradient :</strong><br>
+        On constate que $\mathcal{C}_a = \frac{13}{3} \neq \mathcal{C}_b = \frac{23}{3}$.<br>
+        La circulation entre les deux mêmes points dépend du chemin suivi. Par conséquent, la circulation n'est pas conservative : <strong>le champ vectoriel $\vec{A}$ n'est PAS un gradient</strong> (son rotationnel est non nul).
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.2</span>
+      <span class="exercise-title">Circulation du champ radial unitaire le long de courbes polaires</span>
+    </div>
+    <div class="exercise-statement">
+      Soit le champ vectoriel $\vec{V}(M) = \frac{\vec{OM}}{OM} = \vec{e}_r$.<br>
+      Calculer la circulation de $\vec{V}$ le long de :<br>
+      a) la spirale logarithmique d'équation polaire $r = a\,e^{k\theta}$ entre $\theta_1$ et $\theta_2$.<br>
+      b) la cardioïde d'équation polaire $r = a(1 + \cos\theta)$ entre $0$ et $\pi$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>Forme différentielle générale :</strong><br>
+        En coordonnées polaires dans le plan, le déplacement élémentaire est $d\vec{OM} = dr\,\vec{e}_r + r\,d\theta\,\vec{e}_\theta$.<br>
+        Le produit scalaire avec $\vec{V} = \vec{e}_r$ est extrêmement simple grâce à l'orthogonalité de la base :
+        $$d\mathcal{C} = \vec{V} \cdot d\vec{OM} = \vec{e}_r \cdot (dr\,\vec{e}_r + r\,d\theta\,\vec{e}_\theta) = dr$$
+        <em>Remarque fondamentale :</em> La circulation élémentaire est une différentielle exacte totale : $d\mathcal{C} = dr$. La circulation ne dépend que du rayon initial $r_i$ et du rayon final $r_f$ ! $\mathcal{C} = r_f - r_i$.
+      </p>
+      <p>
+        <strong>a) Pour la spirale logarithmique $r = a\,e^{k\theta}$ :</strong><br>
+        $$\mathcal{C} = \int_{r(\theta_1)}^{r(\theta_2)} dr = r(\theta_2) - r(\theta_1) = \mathbf{a\left(e^{k\theta_2} - e^{k\theta_1}\right)}$$
+      </p>
+      <p>
+        <strong>b) Pour la cardioïde $r = a(1 + \cos\theta)$ entre $\theta = 0$ et $\theta = \pi$ :</strong><br>
+        Au point de départ ($\theta = 0$) : $r_1 = a(1 + \cos 0) = 2a$.<br>
+        Au point d'arrivée ($\theta = \pi$) : $r_2 = a(1 + \cos \pi) = a(1 - 1) = 0$.<br>
+        $$\mathcal{C} = \int_{2a}^0 dr = 0 - 2a = \mathbf{-2a}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.3</span>
+      <span class="exercise-title">Caractère de gradient et détermination du potentiel scalaire</span>
+    </div>
+    <div class="exercise-statement">
+      On considère le champ vectoriel : $\vec{V} = (2x - y)\vec{e}_x + (2y - x)\vec{e}_y - 4z\vec{e}_z$.<br>
+      Montrer que ce champ est un gradient, et déterminer la fonction scalaire $\phi$ dont il dérive par la relation $\vec{V} = -\vec{\mathrm{grad}}\,\phi$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>1. Condition nécessaire et suffisante (Rotationnel nul) :</strong><br>
+        Pour qu'un champ dérive d'un potentiel sur $\mathbb{R}^3$, il faut et il suffit que son rotationnel soit identiquement nul :
+        $$\vec{\mathrm{rot}}\,\vec{V} = \begin{pmatrix} \frac{\partial V_z}{\partial y} - \frac{\partial V_y}{\partial z} \\ \frac{\partial V_x}{\partial z} - \frac{\partial V_z}{\partial x} \\ \frac{\partial V_y}{\partial x} - \frac{\partial V_x}{\partial y} \end{pmatrix} = \begin{pmatrix} 0 - 0 \\ 0 - 0 \\ \frac{\partial(2y-x)}{\partial x} - \frac{\partial(2x-y)}{\partial y} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ -1 - (-1) \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} = \vec{0}$$
+        Le rotationnel étant nul partout dans l'espace simplement connexe, le champ $\vec{V}$ <strong>dérive bien d'un potentiel scalaire $\phi$</strong>.
+      </p>
+      <p>
+        <strong>2. Intégration du système aux dérivées partielles :</strong><br>
+        On cherche $\phi(x,y,z)$ tel que $\vec{V} = -\vec{\nabla}\phi$ :
+        $$\begin{cases}
+        \frac{\partial \phi}{\partial x} = -V_x = -2x + y & (1) \\
+        \frac{\partial \phi}{\partial y} = -V_y = x - 2y & (2) \\
+        \frac{\partial \phi}{\partial z} = -V_z = 4z & (3)
+        \end{cases}$$
+        En intégrant l'équation (1) par rapport à $x$ :
+        $$\phi(x, y, z) = -x^2 + xy + g(y, z)$$
+        En dérivant cette expression par rapport à $y$ et en identifiant avec (2) :
+        $$\frac{\partial \phi}{\partial y} = x + \frac{\partial g}{\partial y} = x - 2y \implies \frac{\partial g}{\partial y} = -2y \implies g(y, z) = -y^2 + h(z)$$
+        On a donc $\phi(x, y, z) = -x^2 + xy - y^2 + h(z)$. En dérivant par rapport à $z$ et en identifiant avec (3) :
+        $$\frac{\partial \phi}{\partial z} = h'(z) = 4z \implies h(z) = 2z^2 + Cte$$
+        <strong>Conclusion :</strong>
+        $$\mathbf{\phi(x, y, z) = -x^2 - y^2 + xy + 2z^2 + C}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.4</span>
+      <span class="exercise-title">Champ dérivant d'un potentiel dépendant d'une fonction inconnue</span>
+    </div>
+    <div class="exercise-statement">
+      Un champ de vecteur $\vec{E}$ est caractérisé par ses composantes cartésiennes : $\vec{E} = (yz)\vec{e}_x + (zx)\vec{e}_y + f(x,y)\vec{e}_z$, où $f$ ne dépend que de $x$ et $y$.<br>
+      1) Déterminer la fonction $f$ pour que le champ $\vec{E}$ dérive d'un potentiel $V$ tel que $\vec{E} = -\vec{\mathrm{grad}}\,V$.<br>
+      2) Déterminer alors l'expression du potentiel $V(x,y,z)$.<br>
+      3) Quelle est la circulation du champ $\vec{E}$ entre $A(0,0,0)$ et $B(1,1,1)$ ?
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>1) Détermination de la fonction $f(x,y)$ :</strong><br>
+        La condition $\vec{\mathrm{rot}}\,\vec{E} = \vec{0}$ donne :
+        $$\frac{\partial E_z}{\partial y} - \frac{\partial E_y}{\partial z} = \frac{\partial f}{\partial y} - x = 0 \implies \frac{\partial f}{\partial y} = x$$
+        $$\frac{\partial E_x}{\partial z} - \frac{\partial E_z}{\partial x} = y - \frac{\partial f}{\partial x} = 0 \implies \frac{\partial f}{\partial x} = y$$
+        $$\frac{\partial E_y}{\partial x} - \frac{\partial E_x}{\partial y} = z - z = 0 \quad \text{(toujours vérifié)}$$
+        En intégrant $\frac{\partial f}{\partial x} = y$, on a $f(x,y) = xy + k(y)$. Puis $\frac{\partial f}{\partial y} = x + k'(y) = x \implies k'(y) = 0 \implies k = \mathrm{Cte}$.<br>
+        En choisissant la constante nulle pour la fonction la plus simple : $\mathbf{f(x, y) = xy + C_0}$ (généralement $f(x,y) = xy$).
+      </p>
+      <p>
+        <strong>2) Détermination du potentiel $V(x,y,z)$ :</strong><br>
+        On résout $\vec{E} = -\vec{\nabla}V$, soit :
+        $$\frac{\partial V}{\partial x} = -yz, \quad \frac{\partial V}{\partial y} = -xz, \quad \frac{\partial V}{\partial z} = -xy$$
+        L'intégration immédiate fournit :
+        $$\mathbf{V(x, y, z) = -xyz + Cte}$$
+      </p>
+      <p>
+        <strong>3) Circulation de $\vec{E}$ entre $A(0,0,0)$ et $B(1,1,1)$ :</strong><br>
+        Puisque le champ dérive d'un potentiel scalaire, sa circulation est conservative et s'exprime directement par la différence de potentiel :
+        $$\mathcal{C}_{AB} = \int_A^B \vec{E}\cdot d\vec{\ell} = V(A) - V(B) = V(0,0,0) - V(1,1,1) = 0 - (-1 \times 1 \times 1) = \mathbf{+1\text{ V}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.5 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.5</span>
+      <span class="exercise-title">Gradient, Divergence et Rotationnel du champ en $1/r^2$</span>
+    </div>
+    <div class="exercise-statement">
+      1) On considère le champ vectoriel à symétrie sphérique $\vec{V} = \frac{\vec{e}_r}{r^2}$. Montrer que ce champ dérive de la fonction scalaire $f(r) = -\frac{1}{r}$ par la relation $\vec{V} = -\vec{\mathrm{grad}}\,f(r)$.<br>
+      2) Calculer $\mathrm{div}\left(\frac{\vec{e}_r}{r^2}\right)$ et $\vec{\mathrm{rot}}\left(\frac{\vec{e}_r}{r^2}\right)$ pour tout $r > 0$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>1) Gradient d'une fonction radiale :</strong><br>
+        Pour une fonction dépendant uniquement de la distance radiale $r$, son gradient en coordonnées sphériques se réduit à sa composante radiale :
+        $$\vec{\mathrm{grad}}\,f(r) = \frac{df}{dr}\vec{e}_r = \frac{d}{dr}\left(-\frac{1}{r}\right)\vec{e}_r = -\left(-\frac{1}{r^2}\right)\vec{e}_r = \frac{1}{r^2}\vec{e}_r$$
+        Par conséquent :
+        $$-\vec{\mathrm{grad}}\,f(r) = -\frac{1}{r^2}\vec{e}_r$$
+        <em>Remarque sur la convention de signe :</em> Si l'on pose $\vec{V} = \vec{\mathrm{grad}}\left(-\frac{1}{r}\right)$, on a bien $\vec{V} = \frac{1}{r^2}\vec{e}_r$. Dans le cadre du potentiel électrostatique ($V = \frac{q}{4\pi\varepsilon_0 r}$), on a bien $\vec{E} = -\vec{\nabla}V = \frac{q}{4\pi\varepsilon_0 r^2}\vec{e}_r$.
+      </p>
+      <p>
+        <strong>2) Calcul de la divergence et du rotationnel :</strong><br>
+        Pour un champ purement radial $\vec{V} = V_r(r)\,\vec{e}_r$ avec $V_r(r) = \frac{1}{r^2}$ :<br>
+        En coordonnées sphériques, la divergence s'écrit :
+        $$\mathrm{div}\,\vec{V} = \frac{1}{r^2}\frac{\partial (r^2 V_r)}{\partial r} = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2 \cdot \frac{1}{r^2}\right) = \frac{1}{r^2}\frac{\partial (1)}{\partial r} = \mathbf{0} \quad (\forall r > 0)$$
+        Le rotationnel d'un champ radial pur est identiquement nul :
+        $$\vec{\mathrm{rot}}\,\vec{V} = \frac{1}{r\sin\theta}\left[\frac{\partial V_r}{\partial \phi}\right]\dots \equiv \mathbf{\vec{0}}$$
+        <em>Interprétation physique :</em> Hors de l'origine ($r > 0$), le champ électrique d'une charge ponctuelle est à divergence nulle et à rotationnel nul. En $r = 0$, la divergence est une distribution de Dirac : $\mathrm{div}\left(\frac{\vec{e}_r}{r^2}\right) = 4\pi \delta(\vec{r})$.
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.6 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.6</span>
+      <span class="exercise-title">Flux d'un champ vectoriel à travers la surface d'un cube</span>
+    </div>
+    <div class="exercise-statement">
+      Calculer le flux du champ de vecteurs $\vec{V}(M) = 4xz\,\vec{e}_x - y^2\,\vec{e}_y + yz\,\vec{e}_z$ à travers la surface fermée du cube unité limité par $x \in [0, 1]$, $y \in [0, 1]$ et $z \in [0, 1]$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>Méthode recommandée : Application du Théorème de Green-Ostrogradsky :</strong><br>
+        Puisque la surface du cube $\Sigma$ est fermée, le flux sortant total s'obtient instantanément en intégrant la divergence du champ sur le volume intérieur $\mathcal{V}$ du cube :
+        $$\Phi = \oiint_{\Sigma} \vec{V} \cdot d\vec{S}_{\mathrm{ext}} = \iiint_{\mathcal{V}} (\mathrm{div}\,\vec{V})\,d\tau$$
+      </p>
+      <p>
+        <strong>1. Calcul de la divergence :</strong>
+        $$\mathrm{div}\,\vec{V} = \frac{\partial V_x}{\partial x} + \frac{\partial V_y}{\partial y} + \frac{\partial V_z}{\partial z} = \frac{\partial(4xz)}{\partial x} + \frac{\partial(-y^2)}{\partial y} + \frac{\partial(yz)}{\partial z} = 4z - 2y + y = 4z - y$$
+      </p>
+      <p>
+        <strong>2. Intégration sur le volume du cube $[0,1]^3$ :</strong>
+        $$\Phi = \int_0^1 dx \int_0^1 dy \int_0^1 (4z - y)\,dz$$
+        $$\int_0^1 (4z - y)\,dz = \left[ 2z^2 - yz \right]_0^1 = 2 - y$$
+        $$\int_0^1 (2 - y)\,dy = \left[ 2y - \frac{y^2}{2} \right]_0^1 = 2 - \frac{1}{2} = \frac{3}{2}$$
+        $$\Phi = \left(\int_0^1 dx\right) \times \frac{3}{2} = 1 \times \frac{3}{2} = \mathbf{\frac{3}{2}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.7 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.7</span>
+      <span class="exercise-title">Flux à travers la surface totale d'un hémisphère</span>
+    </div>
+    <div class="exercise-statement">
+      Calculer le flux du champ vectoriel $\vec{V}(M) = xz^2\,\vec{e}_x + (x^2y - z^3)\vec{e}_y + (2xy + y^2z)\vec{e}_z$ à travers la surface totale de l'hémisphère limité par $z = \sqrt{a^2 - x^2 - y^2}$ et le plan de base $z = 0$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        La surface totale étant fermée (calotte hémisphérique + disque de base en $z=0$), on applique le théorème d'Ostrogradsky :
+        $$\Phi = \iiint_{\mathcal{V}} (\mathrm{div}\,\vec{V})\,d\tau$$
+      </p>
+      <p>
+        <strong>Calcul de la divergence :</strong>
+        $$\mathrm{div}\,\vec{V} = \frac{\partial(xz^2)}{\partial x} + \frac{\partial(x^2y - z^3)}{\partial y} + \frac{\partial(2xy + y^2z)}{\partial z} = z^2 + x^2 + y^2 = x^2 + y^2 + z^2 = r^2$$
+        En coordonnées sphériques, $\mathrm{div}\,\vec{V} = r^2$.
+      </p>
+      <p>
+        <strong>Intégration sur le demi-volume sphérique ($r \in [0, a]$, $\theta \in [0, \pi/2]$, $\phi \in [0, 2\pi]$) :</strong>
+        $$\Phi = \int_0^a r^2 \cdot (r^2\,dr) \int_0^{\pi/2} \sin\theta\,d\theta \int_0^{2\pi} d\phi$$
+        $$\int_0^a r^4\,dr = \frac{a^5}{5}, \quad \int_0^{\pi/2} \sin\theta\,d\theta = [-\cos\theta]_0^{\pi/2} = 1, \quad \int_0^{2\pi} d\phi = 2\pi$$
+        $$\Phi = \frac{a^5}{5} \times 1 \times 2\pi = \mathbf{\frac{2\pi a^5}{5}}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.8 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.8</span>
+      <span class="exercise-title">Égalité des flux sortant et rentrant sur une surface hémisphérique</span>
+    </div>
+    <div class="exercise-statement">
+      Soit le champ vectoriel $\vec{V} = 2z\,\vec{e}_x + 3\,\vec{e}_y + 2xy\,\vec{e}_z$.<br>
+      1) Montrer que le flux de $\vec{V}$ sortant à travers l'hémisphère de rayon $R$ ($z \ge 0$) est égal au flux rentrant à travers le disque de base $z = 0$.<br>
+      2) En déduire le flux sortant à travers l'hémisphère.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>1) Preuve par la divergence :</strong><br>
+        Calculons la divergence du champ :
+        $$\mathrm{div}\,\vec{V} = \frac{\partial(2z)}{\partial x} + \frac{\partial(3)}{\partial y} + \frac{\partial(2xy)}{\partial z} = 0 + 0 + 0 = 0$$
+        La divergence est identiquement nulle partout ! D'après le théorème d'Ostrogradsky appliqué au volume fermé de l'hémisphère $\Sigma = S_{\mathrm{dôme}} \cup S_{\mathrm{disque}}$ :
+        $$\Phi_{\mathrm{fermé}} = \iint_{S_{\mathrm{dôme}}} \vec{V} \cdot d\vec{S}_{\mathrm{sortant}} + \iint_{S_{\mathrm{disque}}} \vec{V} \cdot d\vec{S}_{\mathrm{ext}} = \iiint \mathrm{div}\,\vec{V}\,d\tau = 0$$
+        Sur le disque de base, la normale extérieure pointe vers le bas : $d\vec{S}_{\mathrm{ext}} = -dx\,dy\,\vec{e}_z$.<br>
+        Le flux rentrant à travers la base est orienté vers l'intérieur (vers le haut, $+d\vec{S}_{\mathrm{rentrant}} = +dx\,dy\,\vec{e}_z$) :
+        $$\iint_{S_{\mathrm{dôme}}} \vec{V} \cdot d\vec{S}_{\mathrm{sortant}} = \iint_{S_{\mathrm{disque}}} \vec{V} \cdot (\vec{e}_z\,dS) = \Phi_{\mathrm{rentrant, disque}}$$
+      </p>
+      <p>
+        <strong>2) Calcul du flux :</strong><br>
+        Sur le disque du plan $z=0$, la composante de $\vec{V}$ selon $\vec{e}_z$ vaut $V_z = 2xy$.<br>
+        $$\Phi = \iint_{\text{Disque } x^2+y^2 \le R^2} 2xy\,dx\,dy$$
+        Par symétrie d'imparité de la fonction $f(x,y) = 2xy$ sur le domaine circulaire centré en $O$ (le changement $x \to -x$ donne $-2xy$), l'intégrale est strictement nulle :
+        $$\mathbf{\Phi_{\mathrm{dôme}} = 0}$$
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.9 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.9</span>
+      <span class="exercise-title">Flux du champ en $K\vec{r}/r^3$ (Théorème de Gauss vectoriel)</span>
+    </div>
+    <div class="exercise-statement">
+      Déterminer le flux du champ de vecteurs $\vec{V} = K\frac{\vec{r}}{r^3}$ ($\vec{r} = \vec{OM}$) à travers une surface fermée contenant l'origine $O$, puis à travers une surface fermée ne contenant pas le point $O$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        <strong>1. Surface ne contenant pas l'origine $O$ :</strong><br>
+        À l'extérieur de l'origine ($r \neq 0$), la divergence de $\frac{\vec{r}}{r^3} = \frac{\vec{e}_r}{r^2}$ est strictement nulle ($\mathrm{div}\,\vec{V} = 0$, voir Exercice 1.5).<br>
+        D'après Ostrogradsky, puisque le volume $\mathcal{V}$ ne contient aucune singularité :
+        $$\mathbf{\Phi = \iiint_{\mathcal{V}} (\mathrm{div}\,\vec{V})\,d\tau = 0}$$
+      </p>
+      <p>
+        <strong>2. Surface fermée contenant l'origine $O$ :</strong><br>
+        Le champ étant singulier en $r = 0$, on isole l'origine par une petite sphère de rayon $\epsilon$. Par conservation du flux dans la région intermédiaire sans singularité, le flux à travers n'importe quelle surface fermée entourant $O$ est égal au flux à travers cette sphère :
+        $$\Phi = \iint_{\text{Sphère } \epsilon} K\frac{\vec{e}_r}{\epsilon^2} \cdot (\epsilon^2\sin\theta\,d\theta\,d\phi\,\vec{e}_r) = K \iint_{\text{Sphère}} \sin\theta\,d\theta\,d\phi = K \times 4\pi = \mathbf{4\pi K}$$
+        <em>Remarque capitale :</em> C'est exactement l'analogue de la loi de Gauss en électrostatique ! Avec $K = \frac{q}{4\pi\varepsilon_0}$, on retrouve immédiatement $\Phi = 4\pi \left(\frac{q}{4\pi\varepsilon_0}\right) = \frac{q}{\varepsilon_0}$.
+      </p>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1.10 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <span class="exercise-badge">Exercice 1.10</span>
+      <span class="exercise-title">Vérification explicite du Théorème de Stokes</span>
+    </div>
+    <div class="exercise-statement">
+      Vérifier le théorème de Stokes pour le champ $\vec{V} = 2y\,\vec{e}_x + 3x\,\vec{e}_y - z^2\,\vec{e}_z$, dans le cas où $\mathcal{S}$ est l'hémisphère supérieur d'équation $x^2 + y^2 + z^2 = 9$ ($z \ge 0$), et $\mathcal{C}$ le contour circulaire sur lequel il s'appuie dans le plan $z = 0$.
+    </div>
+    <div class="solution-box">
+      <div class="solution-title">Solution détaillée pas à pas :</div>
+      <p>
+        Le théorème de Stokes affirme que : $\oint_{\mathcal{C}} \vec{V} \cdot d\vec{\ell} = \iint_{\mathcal{S}} (\vec{\mathrm{rot}}\,\vec{V}) \cdot d\vec{S}$.
+      </p>
+      <p>
+        <strong>1. Calcul de la circulation le long de $\mathcal{C}$ :</strong><br>
+        Le contour $\mathcal{C}$ est le cercle de rayon $R = 3$ dans le plan $z = 0$, parcouru dans le sens direct :
+        $$x(\theta) = 3\cos\theta, \quad y(\theta) = 3\sin\theta, \quad z = 0, \quad \theta \in [0, 2\pi]$$
+        $$dx = -3\sin\theta\,d\theta, \quad dy = 3\cos\theta\,d\theta, \quad dz = 0$$
+        $$\vec{V} \cdot d\vec{\ell} = 2y\,dx + 3x\,dy - 0 = 2(3\sin\theta)(-3\sin\theta\,d\theta) + 3(3\cos\theta)(3\cos\theta\,d\theta)$$
+        $$\vec{V} \cdot d\vec{\ell} = (-18\sin^2\theta + 27\cos^2\theta)\,d\theta$$
+        En intégrant sur $\theta \in [0, 2\pi]$ sachant que la moyenne de $\sin^2\theta$ et $\cos^2\theta$ sur une période est $\pi$ :
+        $$\mathcal{C}_{\mathrm{irc}} = -18\pi + 27\pi = \mathbf{9\pi}$$
+      </p>
+      <p>
+        <strong>2. Calcul du flux du rotationnel à travers l'hémisphère :</strong><br>
+        Calculons d'abord le rotationnel de $\vec{V}$ :
+        $$\vec{\mathrm{rot}}\,\vec{V} = \begin{pmatrix} 0 - 0 \\ 0 - 0 \\ \frac{\partial(3x)}{\partial x} - \frac{\partial(2y)}{\partial y} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 3 - 2 \end{pmatrix} = \mathbf{1\,\vec{e}_z}$$
+        Le rotationnel est constant et dirigé selon $\vec{e}_z$ ! D'après la propriété d'invariance du flux du rotationnel par déformation de surface s'appuyant sur le même contour (ou en calculant directement sur le dôme) :<br>
+        Sur le dôme sphérique de rayon $R=3$ : $d\vec{S} = R^2\sin\theta\,d\theta\,d\phi\,\vec{e}_r$.<br>
+        Le produit scalaire est $(\vec{\mathrm{rot}}\,\vec{V})\cdot d\vec{S} = \vec{e}_z \cdot \vec{e}_r\,dS = \cos\theta \, (9\sin\theta\,d\theta\,d\phi)$ :
+        $$\iint_{\mathcal{S}} (\vec{\mathrm{rot}}\,\vec{V}) \cdot d\vec{S} = 9 \int_0^{2\pi} d\phi \int_0^{\pi/2} \sin\theta\cos\theta\,d\theta = 9 \times (2\pi) \times \left[ \frac{\sin^2\theta}{2} \right]_0^{\pi/2} = 18\pi \times \frac{1}{2} = \mathbf{9\pi}$$
+      </p>
+      <p>
+        <strong>Conclusion :</strong> On trouve rigoureusement $\oint_{\mathcal{C}} \vec{V} \cdot d\vec{\ell} = 9\pi = \iint_{\mathcal{S}} (\vec{\mathrm{rot}}\,\vec{V}) \cdot d\vec{S}$. Le théorème de Stokes est parfaitement vérifié.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,96 @@
+<section id="chapitre-2" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 2</div>
+    <h1 class="chapter-title">Flux Électrostatique, Théorème de Gauss et Équations Locales</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Essentiel du cours :</strong> Le théorème de Gauss est l'une des relations les plus puissantes de toute la physique classique. Il relie le flux sortant du champ électrostatique à travers une surface fermée fictive à la quantité totale de charge électrique contenue à l'intérieur. Sous sa forme locale, il s'exprime par la première équation fondamentale de Maxwell : $\mathrm{div}\,\vec{E} = \rho/\varepsilon_0$.
+  </div>
+
+  <h2>2.1 Le Flux du Champ Électrostatique</h2>
+  <div class="definition-box">
+    <div class="definition-title">Définition du Flux Électrique</div>
+    <p>
+      Soit une surface orientée $\mathcal{S}$ munie de son vecteur normal unitaire $\vec{n}_{\mathrm{ext}}$ en chaque point. Le flux élémentaire à travers la facette $d\vec{S} = dS\,\vec{n}_{\mathrm{ext}}$ est :
+      $$d\Phi = \vec{E}(M) \cdot d\vec{S} = \vec{E}(M) \cdot \vec{n}_{\mathrm{ext}}\,dS$$
+      Le flux total traversant la surface fermée $\Sigma$ est l'intégrale de surface :
+      $$\Phi = \oiint_{\Sigma} \vec{E} \cdot d\vec{S}_{\mathrm{ext}}$$
+      Par convention universelle, pour une <strong>surface fermée</strong>, le vecteur unitaire $\vec{n}_{\mathrm{ext}}$ est toujours orienté vers <em>l'extérieur</em> du volume fermé. Le flux s'exprime en $\mathrm{V\cdot m}$ ou $\mathrm{N\cdot m^2\cdot C^{-1}}$.
+    </p>
+  </div>
+
+  <h2>2.2 Énoncé du Théorème de Gauss</h2>
+  <div class="theorem-box">
+    <div class="theorem-title">Théorème de Gauss (Forme Globale Intégrale)</div>
+    <p>
+      Le flux du champ électrostatique $\vec{E}$ à travers toute surface fermée $\Sigma$ orientée vers l'extérieur (appelée <em>surface de Gauss</em>) est égal au quotient de la charge totale intérieure $Q_{\mathrm{int}}$ par la permittivité du vide $\varepsilon_0$, quelle que soit la forme de la surface :
+      $$\oiint_{\Sigma} \vec{E} \cdot d\vec{S}_{\mathrm{ext}} = \frac{Q_{\mathrm{int}}}{\varepsilon_0}$$
+      où $Q_{\mathrm{int}}$ est la somme algébrique des charges situées strictement à l'intérieur du volume délimité par $\Sigma$. Les charges situées à l'extérieur ne contribuent pas au flux total.
+    </p>
+  </div>
+
+  <div class="figure-container">
+    <img src="fig_gauss_cylinder.svg" alt="Surface de Gauss Cylindrique" class="svg-fig">
+    <div class="figure-caption">Figure 2.1 – Application du Théorème de Gauss à une surface cylindrique fermée $\Sigma = S_{\mathrm{lat}} \cup S_{\mathrm{sup}} \cup S_{\mathrm{inf}}$ entourant un fil ou cylindre chargé.</div>
+  </div>
+
+  <h2>2.3 BOÎTE À MÉTHODE : Résoudre tout problème avec Gauss en 5 étapes</h2>
+  <div class="method-box">
+    <div class="method-title">La Procédure Infaillible en 5 Étapes</div>
+    <p>
+      <strong>Étape 1 : Analyse des symétries</strong><br>
+      Identifier les plans de symétrie passant par le point $M$ pour prouver la colinéarité de $\vec{E}$ avec un vecteur unitaire de base (ex: $\vec{E} = E(r)\,\vec{e}_r$).<br><br>
+
+      <strong>Étape 2 : Analyse des invariances</strong><br>
+      Déterminer par translation et rotation quelles sont les variables dont dépend la norme du champ (ex: $E$ ne dépend ni de $\theta$ ni de $z$, donc $E = E(r)$).<br><br>
+
+      <strong>Étape 3 : Choix judicieux de la surface de Gauss $\Sigma$</strong><br>
+      La surface de Gauss DOIT posséder la même symétrie que la source et passer obligatoirement par le point de calcul $M$ :
+      <ul>
+        <li>Pour une symétrie sphérique : choisir une <strong>sphère</strong> fermée de centre $O$ et de rayon $r$.</li>
+        <li>Pour une symétrie cylindrique : choisir un <strong>cylindre fermé</strong> d'axe $Oz$, de rayon $r$ et de hauteur $h$, constitué d'une surface latérale et de deux bases fermées.</li>
+        <li>Pour un plan infini : choisir un <strong>cylindre ("boîte de pilules")</strong> à cheval sur le plan, de section $S$ et parallèle aux lignes de champ.</li>
+      </ul>
+
+      <strong>Étape 4 : Calcul du flux $\Phi$</strong><br>
+      Décomposer l'intégrale sur les différentes faces de la surface de Gauss :
+      $$\Phi = \iint_{S_1} \vec{E}\cdot d\vec{S} + \iint_{S_2} \vec{E}\cdot d\vec{S} + \dots$$
+      Grâce au choix de $\Sigma$, sur chaque face, le produit scalaire est soit nul ($\vec{E} \perp \vec{n}$), soit constant ($\vec{E} \parallel \vec{n}$ et $\|\vec{E}\| = \mathrm{Cte}$). On peut alors sortir $E(r)$ de l'intégrale :
+      $$\Phi = E(r) \iint dS = E(r) \cdot \mathcal{A}_{\mathrm{utile}}$$
+
+      <strong>Étape 5 : Calcul de $Q_{\mathrm{int}}$ et conclusion</strong><br>
+      Calculer la charge intérieure en distinguant impérativement les zones de l'espace (ex: $r < R$ à l'intérieur de la matière chargée, et $r > R$ à l'extérieur). Égaler $\Phi = Q_{\mathrm{int}}/\varepsilon_0$ et isoler $E(r)$.
+    </p>
+  </div>
+
+  <h2>2.4 Forme Locale : L'Équation de Maxwell-Gauss</h2>
+  <p>
+    En appliquant le théorème de Green-Ostrogradsky au flux sortant :
+    $$\oiint_{\Sigma} \vec{E} \cdot d\vec{S}_{\mathrm{ext}} = \iiint_{\mathcal{V}} (\mathrm{div}\,\vec{E})\,d\tau = \frac{1}{\varepsilon_0} \iiint_{\mathcal{V}} \rho\,d\tau$$
+    Cette égalité étant vraie pour n'importe quel volume d'intégration $\mathcal{V}$, même infinitésimal, les intégrandes sont identiquement égaux en tout point de l'espace :
+  </p>
+  <div class="theorem-box">
+    <div class="theorem-title">Équation de Maxwell-Gauss (MG)</div>
+    $$\mathrm{div}\,\vec{E}(M) = \frac{\rho(M)}{\varepsilon_0}$$
+    <em>Interprétation :</em> Les charges électriques sont les sources scalaires directes du champ électrique. Dans le vide ($\rho = 0$), le champ électrostatique est à flux conservatif ($\mathrm{div}\,\vec{E} = 0$).
+  </div>
+
+  <h2>2.5 Discontinuité et Relations de Passage à travers une Interface Chargée</h2>
+  <p>
+    Considérons une surface séparant deux milieux $1$ et $2$ portant une densité surfacique de charge $\sigma$, orientée par la normale unitaire $\vec{n}_{1 \to 2}$ pointant du milieu 1 vers le milieu 2.
+  </p>
+  <ul>
+    <li><strong>Discontinuité de la composante normale :</strong> En appliquant Gauss à une petite boîte de hauteur $h \to 0$ :
+      $$E_{2n} - E_{1n} = \frac{\sigma}{\varepsilon_0}$$
+    </li>
+    <li><strong>Continuité de la composante tangentielle :</strong> En appliquant la circulation conservative de $\vec{E}$ ($\oint \vec{E}\cdot d\vec{\ell} = 0$) sur un rectangle infinitésimal :
+      $$E_{2t} - E_{1t} = 0$$
+    </li>
+  </ul>
+  <div class="theorem-box">
+    <div class="theorem-title">Relation de Passage Vectorielle Fondamentale</div>
+    $$\vec{E}_2 - \vec{E}_1 = \frac{\sigma}{\varepsilon_0} \vec{n}_{1 \to 2}$$
+    La composante normale subit un saut égal à $\sigma/\varepsilon_0$, tandis que la composante tangentielle est rigoureusement continue.
+  </div>
+</section>

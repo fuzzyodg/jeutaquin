@@ -1,0 +1,316 @@
+<section id="chapitre-0" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 0</div>
+    <h1 class="chapter-title">Fondations Mathématiques : Repères de l'Espace en 3D & Calcul Vectoriel</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Objectif pédagogique :</strong> Maîtriser parfaitement la géométrie de l'espace tridimensionnel, le rôle physique de chaque coordonnée et de chaque vecteur unitaire, le déplacement élémentaire $d\vec{OM}$, les éléments de surface et de volume, ainsi que les quatre opérateurs différentiels fondamentaux ($\vec{\nabla}$, $\mathrm{div}$, $\vec{\mathrm{rot}}$, $\Delta$). Ce chapitre pose le socle géométrique absolu sans lequel l'électrostatique et la magnétostatique ne peuvent être comprises.
+  </div>
+
+  <h2>0.1 Pourquoi trois systèmes de coordonnées ?</h2>
+  <p>
+    En physique, les lois fondamentales sont universelles et indépendantes du système de coordonnées choisi. Cependant, la <em>difficulté des calculs</em> dépend directement du choix du repère. Si un problème présente une symétrie sphérique (comme une charge ponctuelle ou une planète), l'utilisation des coordonnées cartésiennes conduit à des équations inextricables, alors que les coordonnées sphériques réduisent le problème à une seule variable scalaire : le rayon $r$.
+  </p>
+
+  <div class="method-box">
+    <div class="method-title">Règle d'or du choix du repère</div>
+    <p>
+      • <strong>Symétrie cartésienne (plans, parallélépipèdes) :</strong> Repère Cartésien $(x, y, z)$.<br>
+      • <strong>Symétrie cylindrique ou axiale (fils infinis, câbles coaxiaux, solénoïdes, tores) :</strong> Repère Cylindrique $(r, \theta, z)$.<br>
+      • <strong>Symétrie sphérique ou centrale (charges ponctuelles, sphères chargées, dipôles) :</strong> Repère Sphérique $(r, \theta, \phi)$.
+    </p>
+  </div>
+
+  <h2>0.2 Le Repère Cartésien tridimensionnel $\mathcal{R}(O ; \vec{e}_x, \vec{e}_y, \vec{e}_z)$</h2>
+  <p>
+    C'est le repère le plus intuitif, formé de trois axes fixes et mutuellement orthogonaux se coupant en l'origine $O$.
+  </p>
+
+  <div class="figure-container">
+    <img src="fig_cartesian.svg" alt="Repère Cartésien 3D" class="svg-fig">
+    <div class="figure-caption">Figure 0.1 – Repère Cartésien 3D, coordonnées $(x, y, z)$, base orthonormée directe fixe $(\vec{e}_x, \vec{e}_y, \vec{e}_z)$ et élément différentiel de volume $d\tau = dx\,dy\,dz$.</div>
+  </div>
+
+  <h3>Rôles des composants et vecteurs unitaires :</h3>
+  <ul>
+    <li><strong>$x$ (abscisse) :</strong> Distance algébrique mesurée le long de l'axe $(Ox)$ en mètres ($\mathrm{m}$).</li>
+    <li><strong>$y$ (ordonnée) :</strong> Distance algébrique mesurée le long de l'axe $(Oy)$ en mètres ($\mathrm{m}$).</li>
+    <li><strong>$z$ (cote) :</strong> Distance algébrique mesurée verticalement le long de l'axe $(Oz)$ en mètres ($\mathrm{m}$).</li>
+    <li><strong>$(\vec{e}_x, \vec{e}_y, \vec{e}_z)$ :</strong> Vecteurs unitaires fixes dans le temps et dans l'espace. Leurs dérivées par rapport aux coordonnées sont strictement nulles :
+      $$\frac{\partial \vec{e}_x}{\partial x} = \frac{\partial \vec{e}_x}{\partial y} = \frac{\partial \vec{e}_x}{\partial z} = \vec{0}$$
+      Ils forment un trièdre direct : $\vec{e}_x \wedge \vec{e}_y = \vec{e}_z$, $\vec{e}_y \wedge \vec{e}_z = \vec{e}_x$, $\vec{e}_z \wedge \vec{e}_x = \vec{e}_y$.
+    </li>
+  </ul>
+
+  <h3>Formulaire différentiel fondamental cartésien :</h3>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Grandeur</th>
+        <th>Expression Mathématique</th>
+        <th>Interprétation Physique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Vecteur position</strong></td>
+        <td>$\vec{OM} = x\,\vec{e}_x + y\,\vec{e}_y + z\,\vec{e}_z$</td>
+        <td>Localisation absolue du point $M$ par rapport à $O$.</td>
+      </tr>
+      <tr>
+        <td><strong>Déplacement élémentaire</strong></td>
+        <td>$d\vec{OM} = dx\,\vec{e}_x + dy\,\vec{e}_y + dz\,\vec{e}_z$</td>
+        <td>Vecteur tangent le long d'une trajectoire infinitésimale.</td>
+      </tr>
+      <tr>
+        <td><strong>Distance au carré</strong></td>
+        <td>$d\ell^2 = dx^2 + dy^2 + dz^2$</td>
+        <td>Métrique euclidienne standard de l'espace tridimensionnel.</td>
+      </tr>
+      <tr>
+        <td><strong>Éléments de surface</strong></td>
+        <td>
+          $d\vec{S}_x = dy\,dz\,\vec{e}_x$<br>
+          $d\vec{S}_y = dx\,dz\,\vec{e}_y$<br>
+          $d\vec{S}_z = dx\,dy\,\vec{e}_z$
+        </td>
+        <td>Facettes orientées perpendiculaires à chaque axe de coordonnées.</td>
+      </tr>
+      <tr>
+        <td><strong>Élément de volume</strong></td>
+        <td>$d\tau = dx\,dy\,dz$</td>
+        <td>Volume d'un parallélépipède infinitésimal ("brique").</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>0.3 Le Repère Cylindrique $\mathcal{R}(O ; \vec{e}_r, \vec{e}_\theta, \vec{e}_z)$</h2>
+  <p>
+    Le repère cylindrique est le prolongement naturel des coordonnées polaires planes en dimension 3 par l'adjonction de l'axe vertical $Oz$.
+  </p>
+
+  <div class="figure-container">
+    <img src="fig_cylindrical.svg" alt="Repère Cylindrique 3D" class="svg-fig">
+    <div class="figure-caption">Figure 0.2 – Repère Cylindrique 3D, coordonnées $(r, \theta, z)$, base mobile locale $(\vec{e}_r, \vec{e}_\theta, \vec{e}_z)$ et projection $H$ sur le plan $(xOy)$.</div>
+  </div>
+
+  <h3>Rôles des composants et vecteurs unitaires :</h3>
+  <ul>
+    <li><strong>$r$ (rayon polaire ou distance à l'axe) :</strong> Distance orthogonale du point $M$ à l'axe $Oz$, soit $r = \|\vec{OH}\| = \sqrt{x^2+y^2}$ avec $r \in [0, +\infty[$.</li>
+    <li><strong>$\theta$ (angle azimutal ou angle polaire) :</strong> Angle orienté entre le demi-axe $(Ox)$ et le vecteur $\vec{OH}$, mesuré dans le plan horizontal $(xOy)$ avec $\theta \in [0, 2\pi[$.</li>
+    <li><strong>$z$ (cote) :</strong> Hauteur algébrique le long de l'axe $Oz$, identique à la cote cartésienne ($z \in ]-\infty, +\infty[$).</li>
+    <li><strong>$\vec{e}_r$ (vecteur unitaire radial) :</strong> Dirigé orthogonalement à l'axe $Oz$, fuyant l'axe vers l'extérieur. <em>Attention : sa direction dépend de $\theta$ !</em>
+      $$\vec{e}_r = \cos\theta\,\vec{e}_x + \sin\theta\,\vec{e}_y$$
+    </li>
+    <li><strong>$\vec{e}_\theta$ (vecteur unitaire orthoradial ou tangentiel) :</strong> Situé dans le plan horizontal $(xOy)$, orthogonal à $\vec{e}_r$, pointant dans le sens des $\theta$ croissants :
+      $$\vec{e}_\theta = -\sin\theta\,\vec{e}_x + \cos\theta\,\vec{e}_y = \frac{d\vec{e}_r}{d\theta}$$
+    </li>
+    <li><strong>$\vec{e}_z$ :</strong> Vecteur vertical fixe le long de l'axe du cylindre.</li>
+  </ul>
+
+  <div class="zoom-box">
+    <div class="zoom-title">Zoom Méthode : La dérivée des vecteurs de base mobiles</div>
+    <p>
+      Contrairement au repère cartésien, la base cylindrique tourne lorsque le point se déplace angulairement :
+      $$\frac{\partial \vec{e}_r}{\partial \theta} = \vec{e}_\theta \quad \text{et} \quad \frac{\partial \vec{e}_\theta}{\partial \theta} = -\vec{e}_r$$
+      Toutes les autres dérivées partielles ($\partial / \partial r$ et $\partial / \partial z$) sont nulles. C'est cette variation de direction qui génère les termes géométriques dans les opérateurs $\mathrm{div}$ et $\vec{\mathrm{rot}}$.
+    </p>
+  </div>
+
+  <h3>Formulaire différentiel cylindrique :</h3>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Grandeur</th>
+        <th>Expression Mathématique</th>
+        <th>Interprétation Physique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Passage cartésien</strong></td>
+        <td>$x = r\cos\theta, \quad y = r\sin\theta, \quad z = z$</td>
+        <td>Relations de conversion bijective $(r,\theta,z) \leftrightarrow (x,y,z)$.</td>
+      </tr>
+      <tr>
+        <td><strong>Vecteur position</strong></td>
+        <td>$\vec{OM} = r\,\vec{e}_r + z\,\vec{e}_z$</td>
+        <td>Remarquez l'absence de $\vec{e}_\theta$ ! La direction radiale porte entièrement la composante horizontale.</td>
+      </tr>
+      <tr>
+        <td><strong>Déplacement élémentaire</strong></td>
+        <td>$d\vec{OM} = dr\,\vec{e}_r + r\,d\theta\,\vec{e}_\theta + dz\,\vec{e}_z$</td>
+        <td>L'arc de cercle horizontal élémentaire mesure $r\,d\theta$.</td>
+      </tr>
+      <tr>
+        <td><strong>Surface latérale</strong></td>
+        <td>$d\vec{S}_{\mathrm{lat}} = (r\,d\theta\,dz)\,\vec{e}_r$</td>
+        <td>Élément de surface de la paroi d'un tube ou d'un cylindre de rayon $r$.</td>
+      </tr>
+      <tr>
+        <td><strong>Bases horizontales</strong></td>
+        <td>$d\vec{S}_z = (r\,dr\,d\theta)\,\vec{e}_z$</td>
+        <td>Élément de surface d'un disque ou d'une section transversale.</td>
+      </tr>
+      <tr>
+        <td><strong>Élément de volume</strong></td>
+        <td>$d\tau = r\,dr\,d\theta\,dz$</td>
+        <td>Volume élémentaire d'un secteur de couronne cylindrique. Le facteur $r$ est le déterminant jacobien.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>0.4 Le Repère Sphérique $\mathcal{R}(O ; \vec{e}_r, \vec{e}_\theta, \vec{e}_\phi)$</h2>
+  <p>
+    Le repère sphérique repère un point dans l'espace à l'aide d'une distance à l'origine et de deux angles : la colatitude $\theta$ et la longitude (azimut) $\phi$.
+  </p>
+
+  <div class="figure-container">
+    <img src="fig_spherical.svg" alt="Repère Sphérique 3D" class="svg-fig">
+    <div class="figure-caption">Figure 0.3 – Repère Sphérique 3D, coordonnées $(r, \theta, \phi)$, base mobile locale $(\vec{e}_r, \vec{e}_\theta, \vec{e}_\phi)$, colatitude $\theta \in [0, \pi]$ et azimut $\phi \in [0, 2\pi]$.</div>
+  </div>
+
+  <h3>Rôles des composants et vecteurs unitaires :</h3>
+  <ul>
+    <li><strong>$r$ (rayon sphérique) :</strong> Distance absolue du point $M$ à l'origine $O$, soit $r = \|\vec{OM}\| = \sqrt{x^2+y^2+z^2}$ avec $r \in [0, +\infty[$.</li>
+    <li><strong>$\theta$ (colatitude ou angle zénithal) :</strong> Angle entre l'axe vertical $(Oz)$ et le vecteur position $\vec{OM}$, avec $\theta \in [0, \pi]$. ($\theta = 0$ correspond au pôle Nord, $\theta = \pi/2$ à l'équateur, $\theta = \pi$ au pôle Sud).</li>
+    <li><strong>$\phi$ (azimut ou longitude) :</strong> Angle entre le demi-axe $(Ox)$ et la projection $H$ de $M$ dans le plan horizontal $(xOy)$, avec $\phi \in [0, 2\pi[$.</li>
+    <li><strong>$\vec{e}_r$ (vecteur radial sortant) :</strong> Dirigé selon la droite $(OM)$, du centre $O$ vers $M$ :
+      $$\vec{e}_r = \sin\theta\cos\phi\,\vec{e}_x + \sin\theta\sin\phi\,\vec{e}_y + \cos\theta\,\vec{e}_z$$
+    </li>
+    <li><strong>$\vec{e}_\theta$ (vecteur orthoradial ou méridien) :</strong> Tangent au méridien passant par $M$, dirigé dans le sens des $\theta$ croissants (du pôle Nord vers le pôle Sud) :
+      $$\vec{e}_\theta = \cos\theta\cos\phi\,\vec{e}_x + \cos\theta\sin\phi\,\vec{e}_y - \sin\theta\,\vec{e}_z = \frac{\partial \vec{e}_r}{\partial \theta}$$
+    </li>
+    <li><strong>$\vec{e}_\phi$ (vecteur azimutal ou parallèle) :</strong> Tangent au parallèle passant par $M$, dirigé dans le sens de rotation d'ouest en est (sens direct autour de $Oz$) :
+      $$\vec{e}_\phi = -\sin\phi\,\vec{e}_x + \cos\phi\,\vec{e}_y = \frac{1}{\sin\theta}\frac{\partial \vec{e}_r}{\partial \phi}$$
+    </li>
+  </ul>
+
+  <h3>Formulaire différentiel sphérique :</h3>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Grandeur</th>
+        <th>Expression Mathématique</th>
+        <th>Interprétation Physique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Passage cartésien</strong></td>
+        <td>
+          $x = r\sin\theta\cos\phi$<br>
+          $y = r\sin\theta\sin\phi$<br>
+          $z = r\cos\theta$
+        </td>
+        <td>Conversion trigonométrique fondamentale dans l'espace.</td>
+      </tr>
+      <tr>
+        <td><strong>Vecteur position</strong></td>
+        <td>$\vec{OM} = r\,\vec{e}_r$</td>
+        <td>Expression d'une extrême élégance : la position est entièrement portée par le vecteur radial unitaire.</td>
+      </tr>
+      <tr>
+        <td><strong>Déplacement élémentaire</strong></td>
+        <td>$d\vec{OM} = dr\,\vec{e}_r + r\,d\theta\,\vec{e}_\theta + r\sin\theta\,d\phi\,\vec{e}_\phi$</td>
+        <td>Trois déplacements infinitésimaux orthogonaux : radial ($dr$), le long du méridien ($r\,d\theta$), le long du parallèle ($r\sin\theta\,d\phi$).</td>
+      </tr>
+      <tr>
+        <td><strong>Surface de sphère</strong></td>
+        <td>$d\vec{S} = r^2\sin\theta\,d\theta\,d\phi\,\vec{e}_r$</td>
+        <td>Facette élémentaire sur une sphère de rayon constant $r$. Intégrée sur toute la sphère, elle donne $\mathcal{S} = 4\pi r^2$.</td>
+      </tr>
+      <tr>
+        <td><strong>Angle solide élémentaire</strong></td>
+        <td>$d\Omega = \frac{dS_{\perp}}{r^2} = \sin\theta\,d\theta\,d\phi$</td>
+        <td>Portion de champ de vision dans l'espace. L'angle solide sous-tendu par tout l'espace vaut $\Omega_{\mathrm{total}} = 4\pi\text{ sr}$.</td>
+      </tr>
+      <tr>
+        <td><strong>Élément de volume</strong></td>
+        <td>$d\tau = r^2\sin\theta\,dr\,d\theta\,d\phi$</td>
+        <td>Volume d'une cellule sphérique infinitésimale. Le jacobien est $J = r^2\sin\theta$.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>0.5 Les Opérateurs Différentiels Vectoriels</h2>
+  <p>
+    Les équations de l'électromagnétisme reposent sur quatre opérations spatiales fondamentales :
+  </p>
+
+  <h3>1. Le Gradient $\vec{\mathrm{grad}}\,f = \vec{\nabla}f$</h3>
+  <p>
+    Appliqué à un champ scalaire $f(M)$ (ex: potentiel électrique $V$), il produit un <strong>champ de vecteurs</strong> indiquant la direction et le sens de la plus grande variation croissante de $f$. Sa norme mesure le taux de variation par unité de longueur.
+  </p>
+  <ul>
+    <li>Cartésien : $\vec{\nabla}f = \frac{\partial f}{\partial x}\vec{e}_x + \frac{\partial f}{\partial y}\vec{e}_y + \frac{\partial f}{\partial z}\vec{e}_z$</li>
+    <li>Cylindrique : $\vec{\nabla}f = \frac{\partial f}{\partial r}\vec{e}_r + \frac{1}{r}\frac{\partial f}{\partial \theta}\vec{e}_\theta + \frac{\partial f}{\partial z}\vec{e}_z$</li>
+    <li>Sphérique : $\vec{\nabla}f = \frac{\partial f}{\partial r}\vec{e}_r + \frac{1}{r}\frac{\partial f}{\partial \theta}\vec{e}_\theta + \frac{1}{r\sin\theta}\frac{\partial f}{\partial \phi}\vec{e}_\phi$</li>
+  </ul>
+  <p><strong>Propriété fondamentale :</strong> $df = \vec{\nabla}f \cdot d\vec{OM}$. Le champ électrostatique dérive du potentiel selon $\vec{E} = -\vec{\nabla}V$.</p>
+
+  <h3>2. La Divergence $\mathrm{div}\,\vec{A} = \vec{\nabla}\cdot\vec{A}$</h3>
+  <p>
+    Appliquée à un champ vectoriel $\vec{A}(M)$, elle produit un <strong>champ scalaire</strong> mesurant le taux volumique d'expansion ou de création de flux net sortant autour d'un point. Si $\mathrm{div}\,\vec{A} > 0$, le point est une source (ex: charge positive) ; si $\mathrm{div}\,\vec{A} < 0$, c'est un puits (ex: charge négative).
+  </p>
+  <ul>
+    <li>Cartésien : $\mathrm{div}\,\vec{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}$</li>
+    <li>Cylindrique : $\mathrm{div}\,\vec{A} = \frac{1}{r}\frac{\partial (r A_r)}{\partial r} + \frac{1}{r}\frac{\partial A_\theta}{\partial \theta} + \frac{\partial A_z}{\partial z}$</li>
+    <li>Sphérique : $\mathrm{div}\,\vec{A} = \frac{1}{r^2}\frac{\partial (r^2 A_r)}{\partial r} + \frac{1}{r\sin\theta}\frac{\partial (\sin\theta A_\theta)}{\partial \theta} + \frac{1}{r\sin\theta}\frac{\partial A_\phi}{\partial \phi}$</li>
+  </ul>
+
+  <h3>3. Le Rotationnel $\vec{\mathrm{rot}}\,\vec{A} = \vec{\nabla}\wedge\vec{A}$</h3>
+  <p>
+    Appliqué à un champ vectoriel $\vec{A}(M)$, il produit un <strong>champ de vecteurs</strong> mesurant la tendance du champ à tourbillonner localement autour d'un axe. Sa direction indique l'axe de rotation maximal selon la règle du tire-bouchon.
+  </p>
+  <ul>
+    <li>Cartésien :
+      $$\vec{\mathrm{rot}}\,\vec{A} = \left(\frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z}\right)\vec{e}_x + \left(\frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x}\right)\vec{e}_y + \left(\frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y}\right)\vec{e}_z$$
+    </li>
+    <li>Cylindrique :
+      $$\vec{\mathrm{rot}}\,\vec{A} = \left(\frac{1}{r}\frac{\partial A_z}{\partial \theta} - \frac{\partial A_\theta}{\partial z}\right)\vec{e}_r + \left(\frac{\partial A_r}{\partial z} - \frac{\partial A_z}{\partial r}\right)\vec{e}_\theta + \frac{1}{r}\left(\frac{\partial(r A_\theta)}{\partial r} - \frac{\partial A_r}{\partial \theta}\right)\vec{e}_z$$
+    </li>
+  </ul>
+
+  <h3>4. Le Laplacien Scalaire $\Delta f = \mathrm{div}(\vec{\mathrm{grad}}\,f)$</h3>
+  <p>
+    Il mesure l'écart entre la valeur d'une fonction en un point et sa moyenne sur une petite sphère entourant ce point.
+    $$\Delta f = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} + \frac{\partial^2 f}{\partial z^2}$$
+    En cylindrique : $\Delta f = \frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial f}{\partial r}\right) + \frac{1}{r^2}\frac{\partial^2 f}{\partial \theta^2} + \frac{\partial^2 f}{\partial z^2}$.
+  </p>
+
+  <div class="tip-box">
+    <div class="tip-title">Identités Vectorielles Majeures (À graver dans sa mémoire)</div>
+    <p>
+      1. <strong>Le rotationnel d'un gradient est TOUJOURS nul :</strong>
+      $$\vec{\mathrm{rot}}(\vec{\mathrm{grad}}\,f) = \vec{\nabla}\wedge(\vec{\nabla}f) \equiv \vec{0}$$
+      <em>Conséquence physique :</em> Tout champ électrostatique vérifiant $\vec{E} = -\vec{\nabla}V$ a automatiquement une circulation conservative et un rotationnel nul ($\vec{\mathrm{rot}}\,\vec{E} = \vec{0}$).<br><br>
+      2. <strong>La divergence d'un rotationnel est TOUJOURS nulle :</strong>
+      $$\mathrm{div}(\vec{\mathrm{rot}}\,\vec{A}) = \vec{\nabla}\cdot(\vec{\nabla}\wedge\vec{A}) \equiv 0$$
+      <em>Conséquence physique :</em> Le champ magnétique dérivant d'un potentiel vecteur ($\vec{B} = \vec{\mathrm{rot}}\,\vec{A}$) vérifie strictement $\mathrm{div}\,\vec{B} = 0$ (pas de monopôles magnétiques).<br><br>
+      3. <strong>Formule du double produit vectoriel appliquée à nabla :</strong>
+      $$\vec{\mathrm{rot}}(\vec{\mathrm{rot}}\,\vec{A}) = \vec{\mathrm{grad}}(\mathrm{div}\,\vec{A}) - \vec{\Delta}\vec{A}$$
+      C'est l'identité clé utilisée par Maxwell pour prédire l'existence des ondes électromagnétiques !
+    </p>
+  </div>
+
+  <h2>0.6 Les Deux Grands Théorèmes Intégraux</h2>
+  <div class="theorem-box">
+    <div class="theorem-title">Théorème de Green-Ostrogradsky (Théorème de la divergence)</div>
+    <p>
+      Le flux sortant d'un champ vectoriel $\vec{A}$ à travers une surface fermée $\Sigma$ délimitant un volume $\mathcal{V}$ est égal à l'intégrale volumique de la divergence de ce champ :
+      $$\Phi = \iint_{\Sigma} \vec{A} \cdot d\vec{S}_{\mathrm{ext}} = \iiint_{\mathcal{V}} (\mathrm{div}\,\vec{A})\,d\tau$$
+      <em>Ce théorème transforme une intégrale de surface fermée (flux) en une intégrale de volume. C'est le passage direct entre la forme intégrale du théorème de Gauss et sa forme locale (Maxwell-Gauss).</em>
+    </p>
+  </div>
+
+  <div class="theorem-box">
+    <div class="theorem-title">Théorème de Stokes-Ampère (Théorème du rotationnel)</div>
+    <p>
+      La circulation d'un champ vectoriel $\vec{A}$ le long d'une courbe fermée orientée $\mathcal{C}$ est égale au flux de son rotationnel à travers toute surface ouverte $\mathcal{S}$ s'appuyant sur ce contour :
+      $$\mathcal{C}_{\mathrm{irc}} = \oint_{\mathcal{C}} \vec{A} \cdot d\vec{\ell} = \iint_{\mathcal{S}} (\vec{\mathrm{rot}}\,\vec{A}) \cdot d\vec{S}$$
+      L'orientation de $d\vec{S}$ et le sens de parcours de $\mathcal{C}$ sont liés par la règle du tire-bouchon de Maxwell (ou de la main droite). C'est le passage direct entre le théorème d'Ampère intégral et l'équation locale de Maxwell-Ampère.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,236 @@
+<section id="chapitre-1" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-number">CHAPITRE 1</div>
+    <h1 class="chapter-title">Charge Électrique, Loi de Coulomb et Champ Électrostatique</h1>
+  </div>
+
+  <div class="abstract-box">
+    <strong>Essentiel du cours :</strong> La charge électrique est la propriété intrinsèque de la matière à l'origine des phénomènes électrostatiques. Elle est discrète (quantifiée), invariante par changement de référentiel et rigoureusement conservée. Deux charges ponctuelles exercent l'une sur l'autre la force de Coulomb. Une distribution de charges modifie les propriétés de l'espace environnant en y créant un champ vectoriel : le champ électrostatique $\vec{E}$.
+  </div>
+
+  <h2>1.1 La Charge Électrique et ses Propriétés Fondamentales</h2>
+  <ul>
+    <li><strong>Quantification de la charge :</strong> Toute charge observable dans la nature est un multiple entier de la charge élémentaire $e = 1{,}602 \times 10^{-19}\text{ C}$ :
+      $$q = N \cdot e \quad (N \in \mathbb{Z})$$
+      Le proton porte $+e$, l'électron porte $-e$, le neutron porte $0$.
+    </li>
+    <li><strong>Conservation globale :</strong> Dans un système électriquement isolé, la somme algébrique des charges électriques est strictement constante au cours du temps.
+      $$\sum q_i = \mathrm{Cte}$$
+    </li>
+    <li><strong>Invariance relativiste :</strong> Contrairement à la masse ou au temps, la charge électrique portée par une particule ne dépend pas de sa vitesse par rapport à l'observateur.
+    </li>
+  </ul>
+
+  <h2>1.2 Les Distributions Continues de Charge</h2>
+  <p>À l'échelle macroscopique, le très grand nombre de charges élémentaires permet d'adopter une description continue :</p>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Type de distribution</th>
+        <th>Élément de géométrie</th>
+        <th>Charge infinitésimale $dq$</th>
+        <th>Unité SI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Volumique</strong> (boule, bloc)</td>
+        <td>Volume élémentaire $d\tau$</td>
+        <td>$dq = \rho(P)\,d\tau$</td>
+        <td>$\rho$ en $\mathrm{C\cdot m^{-3}}$</td>
+      </tr>
+      <tr>
+        <td><strong>Surfacique</strong> (nappe, plaque, sphère creuse)</td>
+        <td>Surface élémentaire $dS$</td>
+        <td>$dq = \sigma(P)\,dS$</td>
+        <td>$\sigma$ en $\mathrm{C\cdot m^{-2}}$</td>
+      </tr>
+      <tr>
+        <td><strong>Linéique</strong> (fil fin, tige, anneau)</td>
+        <td>Longueur élémentaire $d\ell$</td>
+        <td>$dq = \lambda(P)\,d\ell$</td>
+        <td>$\lambda$ en $\mathrm{C\cdot m^{-1}}$</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>1.3 La Loi de Coulomb et le Champ Électrostatique</h2>
+  <p>
+    Deux charges ponctuelles immobiles $q_1$ et $q_2$ situées aux points $P_1$ et $P_2$ séparées par la distance $r = P_1P_2$ exercent l'une sur l'autre des forces mutuelles colinéaires à la droite les joignant :
+  </p>
+  $$\vec{F}_{1 \to 2} = \frac{1}{4\pi\varepsilon_0} \frac{q_1 q_2}{r^2} \vec{u}_{12}$$
+  <p>
+    où $\varepsilon_0 \approx 8{,}854 \times 10^{-12}\text{ F}\cdot\text{m}^{-1}$ (ou $\text{C}^2\cdot\text{N}^{-1}\cdot\text{m}^{-2}$) est la permittivité diélectrique du vide, et $\frac{1}{4\pi\varepsilon_0} \approx 9 \times 10^9\text{ N}\cdot\text{m}^2\cdot\text{C}^{-2}$.
+  </p>
+
+  <div class="definition-box">
+    <div class="definition-title">Définition du Champ Électrostatique $\vec{E}$</div>
+    <p>
+      Une charge test $q$ placée en un point $M$ subit la force électrique $\vec{F} = q\,\vec{E}(M)$. Le champ électrostatique créé en $M$ par une charge ponctuelle $q$ située en $P$ est donné par :
+      $$\vec{E}(M) = \frac{q}{4\pi\varepsilon_0 PM^2} \vec{u}_{PM} = \frac{q}{4\pi\varepsilon_0} \frac{\vec{PM}}{\|\vec{PM}\|^3}$$
+      Par le <strong>principe de superposition</strong>, le champ total créé par une distribution continue de charges réparties dans un domaine $\mathcal{D}$ s'obtient par sommation vectorielle (intégration) :
+      $$\vec{E}(M) = \frac{1}{4\pi\varepsilon_0} \iiint_{\mathcal{D}} \frac{dq(P)}{PM^2} \vec{u}_{PM}$$
+    </p>
+  </div>
+
+  <h2>1.4 FOCUS MAJEUR : Symétries, Antisymétries et Invariances</h2>
+  <div class="abstract-box">
+    <strong>Pourquoi ce focus ?</strong> Le calcul intégral direct du champ $\vec{E}$ est très lourd et source d'erreurs. L'analyse des symétries et des invariances permet, en quelques lignes de raisonnement qualitatif, de déterminer <em>à l'avance</em> la direction exacte de $\vec{E}$ et de réduire le nombre de variables dont dépend sa norme.
+  </div>
+
+  <div class="figure-container">
+    <img src="fig_symmetry.svg" alt="Symétrie et Antisymétrie 3D" class="svg-fig">
+    <div class="figure-caption">Figure 1.1 – Comportement des champs vectoriels face aux plans de symétrie $\Pi$ et d'antisymétrie $\Pi^*$. Le champ électrique $\vec{E}$ est un vecteur polaire (vrai vecteur), tandis que le champ magnétique $\vec{B}$ est un vecteur axial (pseudovecteur).</div>
+  </div>
+
+  <h3>A. Définitions géométriques rigoureuses</h3>
+  <p>
+    Soit une distribution de charges caractérisée par sa densité volumique $\rho(P)$. Notons $s_\Pi$ la réflexion (symétrie miroir) par rapport à un plan $\Pi$ de l'espace. Pour tout point $P$, son image par le miroir est notée $P' = s_\Pi(P)$.
+  </p>
+  <ul>
+    <li><strong>Plan de Symétrie $\Pi$ pour les charges :</strong> $\Pi$ est un plan de symétrie si des points symétriques portent exactement la même charge :
+      $$\rho(P') = +\rho(P)$$
+    </li>
+    <li><strong>Plan d'Antisymétrie $\Pi^*$ pour les charges :</strong> $\Pi^*$ est un plan d'antisymétrie si le point symétrique porte la charge opposée :
+      $$\rho(P') = -\rho(P)$$
+    </li>
+  </ul>
+
+  <h3>B. Le Comportement du Champ Électrique $\vec{E}$ (Vecteur Vrai / Polaire)</h3>
+  <p>
+    Le champ électrique $\vec{E}$ est directement lié à la force physique $\vec{F} = q\vec{E}$. Il se transforme donc exactement comme les déplacements spatiaux sous l'effet des réflexions miroirs :
+  </p>
+
+  <div class="theorem-box">
+    <div class="theorem-title">Règles fondamentales pour le champ électrique $\vec{E}$</div>
+    <p>
+      1. <strong>En tout point $M$ appartenant à un plan de symétrie $\Pi$ :</strong><br>
+      Le vecteur champ électrostatique $\vec{E}(M)$ est <strong>strictement contenu dans le plan $\Pi$</strong>.<br>
+      $$\vec{E}(M) \in \Pi \iff \vec{E}(M) \cdot \vec{n}_\Pi = 0$$
+      <em>Démonstration intuitive :</em> Si $\vec{E}(M)$ avait une composante non nulle perpendiculaire au miroir (vers la gauche), par symétrie de la distribution elle devrait aussi être vers la droite. Une même grandeur vectorielle ne pouvant pointer simultanément à gauche et à droite en un même point, sa composante normale est obligatoirement nulle.<br><br>
+
+      2. <strong>En tout point $M$ appartenant à un plan d'antisymétrie $\Pi^*$ :</strong><br>
+      Le vecteur champ électrostatique $\vec{E}(M)$ est <strong>strictement orthogonal au plan $\Pi^*$</strong>.<br>
+      $$\vec{E}(M) \perp \Pi^* \iff \vec{E}(M) \text{ est colinéaire à } \vec{n}_{\Pi^*}$$
+      <em>Démonstration intuitive :</em> Si $\vec{E}(M)$ possédait une composante tangente à $\Pi^*$, l'antisymétrie (inversion du signe des sources) transformerait cette composante en son opposée. Or $M$ étant invariant par réflexion, la composante tangente doit vérifier $E_t = -E_t$, ce qui impose $E_t = 0$.
+    </p>
+  </div>
+
+  <div class="method-box">
+    <div class="method-title">Boîte à Méthode : Trouver la direction de $\vec{E}$ en 3 étapes</div>
+    <p>
+      <strong>Étape 1 :</strong> Repérer la position du point d'étude $M$ dans l'espace.<br>
+      <strong>Étape 2 :</strong> Identifier au moins deux plans de symétrie ou d'antisymétrie passant par le point $M$ :
+      <ul>
+        <li>Si $M$ se trouve à l'intersection de deux plans de symétrie distincts $\Pi_1$ et $\Pi_2$, alors $\vec{E}(M)$ appartient à leur intersection droite :
+          $$\vec{E}(M) \text{ est colinéaire à } (\Pi_1 \cap \Pi_2)$$
+        </li>
+        <li>Si $M$ se trouve sur un plan de symétrie $\Pi$ et sur un plan d'antisymétrie $\Pi^*$, $\vec{E}(M)$ est perpendiculaire à $\Pi^*$ tout en restant dans $\Pi$.</li>
+        <li>Si $M$ est au centre de symétrie ou à l'intersection de trois plans d'antisymétrie orthogonaux, alors $\vec{E}(M) = \vec{0}$.</li>
+      </ul>
+      <strong>Étape 3 :</strong> Conclure immédiatement sur le vecteur unitaire porteur : par exemple $\vec{E}(M) = E(M)\,\vec{e}_r$.
+    </p>
+  </div>
+
+  <h3>C. Les Invariances (Principe de Curie)</h3>
+  <p>
+    Une invariance spatiale indique qu'une opération géométrique (translation ou rotation) laisse la distribution de sources inchangée dans l'espace. Selon le <strong>principe de Curie</strong> : <em>"Les effets possèdent au moins les symétries des causes qui les engendrent."</em>
+  </p>
+  <ul>
+    <li><strong>Invariance par translation le long de $Oz$ :</strong> Si la distribution est infinie selon $z$, une translation $z \to z + \Delta z$ ne change rien à la distribution. Par conséquent, la norme et les composantes du champ ne dépendent pas de $z$ :
+      $$\frac{\partial \vec{E}}{\partial z} = \vec{0} \implies \vec{E} = \vec{E}(r, \theta)$$
+    </li>
+    <li><strong>Invariance par rotation autour de $Oz$ :</strong> Si la distribution est invariante par rotation autour de l'axe $Oz$ (symétrie de révolution), le champ ne dépend pas de l'angle $\theta$ :
+      $$\frac{\partial \vec{E}}{\partial \theta} = \vec{0} \implies \vec{E} = \vec{E}(r, z)$$
+    </li>
+    <li><strong>Cas cumulé (cylindre ou fil infini) :</strong> Invariance par translation selon $z$ ET par rotation selon $\theta$. On en déduit instantanément :
+      $$\vec{E}(M) = E(r)\,\vec{e}_r$$
+      Le champ est purement radial et ne dépend plus que d'une seule variable scalaire $r$ !
+    </li>
+  </ul>
+
+  <h2>1.5 GUIDE PÉDAGOGIQUE INTUITIF : L'Art de Voir les Invariances et les Symétries sans Formules</h2>
+
+  <div class="abstract-box" style="background:#eef6ff; border-left:4px solid #1a5fb4;">
+    <strong>Le Déclic Fondamental :</strong> La plupart des étudiants bloquent sur les invariances et les symétries parce qu'ils tentent de mémoriser des formules au lieu d'adopter le <em>regard du voyageur aux yeux bandés</em>. Voici les métaphores visuelles et les réflexes physiques simples pour ne plus jamais douter.
+  </div>
+
+  <h3>1.5.1 L'Invariance : L'Expérience de Pensée du "Voyageur aux Yeux Bandés"</h3>
+  <p>
+    Dire qu'une grandeur physique (champ $\vec{E}$ ou potentiel $V$) <em>« ne dépend pas d'une variable »</em> signifie simplement : <strong>si vous changez cette variable, vous observez exactement le même paysage de charges !</strong>
+  </p>
+
+  <div class="method-box">
+    <div class="method-title">La métaphore magique du voyageur</div>
+    <p>
+      Imaginez que vous êtes assis au point d'observation $M$. Un complice vous bande les yeux. Pendant que vous ne voyez rien, votre complice modifie <em>une seule</em> coordonnée :
+      <ul>
+        <li><strong>Cas 1 : Invariance par Translation selon $z$ (Le train le long d'un câble infini)</strong><br>
+        Votre complice vous déplace de 10 mètres vers le haut le long de l'axe $z$. Il retire votre bandeau. Que voyez-vous ?<br>
+        Si le fil est infini et homogène, le fil s'étend toujours à l'infini au-dessus de vous et à l'infini en dessous de vous ! Rien n'a changé visuellement : même charge, même distance, même horizon infini. Vous êtes incapable de savoir si vous avez bougé de $1\text{ cm}$, $10\text{ m}$ ou $100\text{ km}$.<br>
+        <strong>Conclusion physique :</strong> Le champ électrique ne peut pas savoir à quelle altitude $z$ vous êtes ! Donc <strong>$\vec{E}$ ne dépend absolument pas de $z$</strong> ($\partial \vec{E}/\partial z = \vec{0}$).
+        </li>
+        <li style="margin-top:10px;"><strong>Cas 2 : Invariance par Rotation selon $\theta$ (Le carrousel autour d'un cylindre ou d'un fil)</strong><br>
+        Vous êtes à une distance $r$ d'un cylindre vertical uniforme. On vous bande les yeux et on vous fait tourner d'un angle $\theta = 45^\circ$ ou $180^\circ$ autour de l'axe du cylindre (comme sur un manège ou un carrousel), tout en restant à la même distance $r$.<br>
+        On retire votre bandeau : face à vous, le cylindre a exactement le même aspect circulaire, la même courbure, la même densité de charge homogène. Vous ne pouvez distinguer aucune marque, aucun repère angulaire.<br>
+        <strong>Conclusion physique :</strong> Puisque le décor physique est strictement identique sous n'importe quel angle, <strong>le champ $\vec{E}$ ne dépend absolument pas de l'angle $\theta$</strong> ($\partial \vec{E}/\partial \theta = \vec{0}$).
+        </li>
+        <li style="margin-top:10px;"><strong>Cas 3 : Invariance par Rotation Sphérique $(\theta, \phi)$ (La boule parfaite)</strong><br>
+        Prenez une sphère uniformément chargée. Si vous volez autour de la sphère à une altitude fixée $r$ (en changeant votre latitude $\theta$ ou votre longitude $\phi$), la sphère apparaît identique sous tous les angles de vue possibles (comme une bille d'acier immaculée).<br>
+        <strong>Conclusion physique :</strong> Le champ ne dépend ni de $\theta$ ni de $\phi$, il ne dépend que du rayon $r$ : <strong>$\vec{E}(M) = E(r)\,\vec{e}_r$</strong>.
+        </li>
+      </ul>
+    </p>
+  </div>
+
+  <div class="warning-box">
+    <strong>Contre-exemple crucial pour bien comprendre :</strong><br>
+    Que se passe-t-il si le cylindre ou le fil mesure seulement $2\text{ mètres}$ de long ?<br>
+    Si vous êtes au milieu ($z=0$), vous voyez $1\text{ m}$ vers le haut et $1\text{ m}$ vers le bas.<br>
+    Si votre complice vous déplace à $z = 0{,}9\text{ m}$, vous êtes tout près du bord supérieur ($10\text{ cm}$) et très loin du bord inférieur ($1{,}9\text{ m}$). Le décor a changé ! Vous sentez la fin de l'objet. <em>Dans ce cas, il n'y a PLUS d'invariance par translation selon $z$ !</em> Le champ dépend de $z$. L'invariance par translation n'est valable que pour des objets modélisés comme <strong>infinis</strong> (ou loin des bords).
+  </div>
+
+  <h3>1.5.2 Visualiser les Plans de Symétrie : La Métaphore du "Miroir Tranchant"</h3>
+  <p>
+    Pour trouver un plan de symétrie sans calcul, utilisez la métaphore du <strong>"couteau de cuisine"</strong> ou de la <strong>"feuille miroir"</strong> :
+  </p>
+  <ul>
+    <li>Prenez une feuille miroir imaginaire et <strong>coupez la figure en deux moitiés</strong> en passant obligatoirement par votre point d'observation $M$.</li>
+    <li>Regardez dans le miroir le reflet de la moitié restante : <em>le reflet reconstitue-t-il exactement la moitié que vous avez coupée, avec les mêmes charges (même signe et même valeur) ?</em></li>
+    <li>Si <strong>OUI</strong> : alors ce plan est un <strong>Plan de Symétrie $\Pi$</strong> !</li>
+    <li>Si le reflet reconstitue la figure mais avec des <strong>charges inversées</strong> (du négatif au lieu du positif, ou des courants qui circulent en sens inverse) : c'est un <strong>Plan d'Antisymétrie $\Pi^*$</strong> !</li>
+  </ul>
+
+  <div class="method-box">
+    <div class="method-title">Comment visualiser les 3 plans classiques passant par un point $M(r, \theta, z)$</div>
+    <p>
+      Soit un cylindre infini d'axe $Oz$ et un point $M$ situé à la distance $r$ de l'axe :
+      <ol>
+        <li><strong>Le Plan Méridien $\Pi_1 = (M, \vec{e}_r, \vec{e}_z)$ (Le plan qui coupe la bûche dans le sens de la longueur) :</strong><br>
+        Imaginez une hache qui fend la bûche de bois en passant par son axe vertical $Oz$ et par votre point $M$. Ce plan contient tout l'axe vertical $Oz$.<br>
+        À gauche du plan, il y a un demi-cylindre. À droite, l'autre demi-cylindre. Le reflet dans le miroir de la moitié gauche redonne exactement la moitié droite avec les mêmes charges positives. C'est un plan de symétrie $\Pi_1$.<br>
+        <em>Conséquence sur le champ :</em> Le champ $\vec{E}(M)$ doit être dans ce plan $\implies$ pas de composante selon $\vec{e}_\theta$ ($E_\theta = 0$).
+        </li>
+        <li style="margin-top:10px;"><strong>Le Plan Équatorial / Horizontal $\Pi_2 = (M, \vec{e}_r, \vec{e}_\theta)$ (Le plan qui tranche la bûche horizontalement) :</strong><br>
+        Imaginez une scie qui tranche horizontalement la bûche à la hauteur $z$ de votre point $M$.<br>
+        Au-dessus de la scie, le cylindre monte jusqu'à l'infini. En-dessous de la scie, le cylindre descend jusqu'à l'infini. Le reflet de la partie supérieure vers le bas reconstitue exactement la partie inférieure.<br>
+        C'est un second plan de symétrie $\Pi_2$.<br>
+        <em>Conséquence sur le champ :</em> Le champ $\vec{E}(M)$ doit être dans ce plan $\implies$ pas de composante selon $\vec{e}_z$ ($E_z = 0$).
+        </li>
+      </ol>
+      <strong>Le Miracle Géométrique :</strong><br>
+      $\vec{E}(M)$ doit être <em>à la fois</em> dans $\Pi_1$ (plan vertical passant par $M$) et dans $\Pi_2$ (plan horizontal passant par $M$). L'intersection de ces deux plans est une droite unique : la droite passant par $M$ et dirigée selon $\vec{e}_r$ !<br>
+      $$\vec{E}(M) \in (\Pi_1 \cap \Pi_2) \implies \vec{E}(M) = E_r\,\vec{e}_r$$
+      Sans avoir posé la moindre intégrale ni écrit la moindre équation compliquée, la symétrie vous donne la direction exacte du champ !
+    </p>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-title">Le Protocole Infaillible en 3 Questions pour l'Examen</div>
+    <ol>
+      <li><strong>Question 1 (Translation) :</strong> Si je glisse le long de l'objet, est-ce que les deux bouts sont à l'infini ? Si oui, le champ ne dépend pas de cette variable (ex: $z$).</li>
+      <li><strong>Question 2 (Rotation) :</strong> Si je tourne autour de l'objet ou si je fais pivoter l'objet sur son axe, est-ce que mon œil voit la moindre différence ? Si non, le champ ne dépend pas de l'angle (ex: $\theta$).</li>
+      <li><strong>Question 3 (Miroir) :</strong> Quels sont les plans passant par $M$ qui coupent l'objet en deux moitiés identiques ? Le champ $\vec{E}$ est coincé dans l'intersection de ces miroirs de symétrie !</li>
+    </ol>
+  </div>
+</section>
