@@ -148,4 +148,89 @@
       Le champ est purement radial et ne dépend plus que d'une seule variable scalaire $r$ !
     </li>
   </ul>
+
+  <h2>1.5 GUIDE PÉDAGOGIQUE INTUITIF : L'Art de Voir les Invariances et les Symétries sans Formules</h2>
+
+  <div class="abstract-box" style="background:#eef6ff; border-left:4px solid #1a5fb4;">
+    <strong>Le Déclic Fondamental :</strong> La plupart des étudiants bloquent sur les invariances et les symétries parce qu'ils tentent de mémoriser des formules au lieu d'adopter le <em>regard du voyageur aux yeux bandés</em>. Voici les métaphores visuelles et les réflexes physiques simples pour ne plus jamais douter.
+  </div>
+
+  <h3>1.5.1 L'Invariance : L'Expérience de Pensée du "Voyageur aux Yeux Bandés"</h3>
+  <p>
+    Dire qu'une grandeur physique (champ $\vec{E}$ ou potentiel $V$) <em>« ne dépend pas d'une variable »</em> signifie simplement : <strong>si vous changez cette variable, vous observez exactement le même paysage de charges !</strong>
+  </p>
+
+  <div class="method-box">
+    <div class="method-title">La métaphore magique du voyageur</div>
+    <p>
+      Imaginez que vous êtes assis au point d'observation $M$. Un complice vous bande les yeux. Pendant que vous ne voyez rien, votre complice modifie <em>une seule</em> coordonnée :
+      <ul>
+        <li><strong>Cas 1 : Invariance par Translation selon $z$ (Le train le long d'un câble infini)</strong><br>
+        Votre complice vous déplace de 10 mètres vers le haut le long de l'axe $z$. Il retire votre bandeau. Que voyez-vous ?<br>
+        Si le fil est infini et homogène, le fil s'étend toujours à l'infini au-dessus de vous et à l'infini en dessous de vous ! Rien n'a changé visuellement : même charge, même distance, même horizon infini. Vous êtes incapable de savoir si vous avez bougé de $1\text{ cm}$, $10\text{ m}$ ou $100\text{ km}$.<br>
+        <strong>Conclusion physique :</strong> Le champ électrique ne peut pas savoir à quelle altitude $z$ vous êtes ! Donc <strong>$\vec{E}$ ne dépend absolument pas de $z$</strong> ($\partial \vec{E}/\partial z = \vec{0}$).
+        </li>
+        <li style="margin-top:10px;"><strong>Cas 2 : Invariance par Rotation selon $\theta$ (Le carrousel autour d'un cylindre ou d'un fil)</strong><br>
+        Vous êtes à une distance $r$ d'un cylindre vertical uniforme. On vous bande les yeux et on vous fait tourner d'un angle $\theta = 45^\circ$ ou $180^\circ$ autour de l'axe du cylindre (comme sur un manège ou un carrousel), tout en restant à la même distance $r$.<br>
+        On retire votre bandeau : face à vous, le cylindre a exactement le même aspect circulaire, la même courbure, la même densité de charge homogène. Vous ne pouvez distinguer aucune marque, aucun repère angulaire.<br>
+        <strong>Conclusion physique :</strong> Puisque le décor physique est strictement identique sous n'importe quel angle, <strong>le champ $\vec{E}$ ne dépend absolument pas de l'angle $\theta$</strong> ($\partial \vec{E}/\partial \theta = \vec{0}$).
+        </li>
+        <li style="margin-top:10px;"><strong>Cas 3 : Invariance par Rotation Sphérique $(\theta, \phi)$ (La boule parfaite)</strong><br>
+        Prenez une sphère uniformément chargée. Si vous volez autour de la sphère à une altitude fixée $r$ (en changeant votre latitude $\theta$ ou votre longitude $\phi$), la sphère apparaît identique sous tous les angles de vue possibles (comme une bille d'acier immaculée).<br>
+        <strong>Conclusion physique :</strong> Le champ ne dépend ni de $\theta$ ni de $\phi$, il ne dépend que du rayon $r$ : <strong>$\vec{E}(M) = E(r)\,\vec{e}_r$</strong>.
+        </li>
+      </ul>
+    </p>
+  </div>
+
+  <div class="warning-box">
+    <strong>Contre-exemple crucial pour bien comprendre :</strong><br>
+    Que se passe-t-il si le cylindre ou le fil mesure seulement $2\text{ mètres}$ de long ?<br>
+    Si vous êtes au milieu ($z=0$), vous voyez $1\text{ m}$ vers le haut et $1\text{ m}$ vers le bas.<br>
+    Si votre complice vous déplace à $z = 0{,}9\text{ m}$, vous êtes tout près du bord supérieur ($10\text{ cm}$) et très loin du bord inférieur ($1{,}9\text{ m}$). Le décor a changé ! Vous sentez la fin de l'objet. <em>Dans ce cas, il n'y a PLUS d'invariance par translation selon $z$ !</em> Le champ dépend de $z$. L'invariance par translation n'est valable que pour des objets modélisés comme <strong>infinis</strong> (ou loin des bords).
+  </div>
+
+  <h3>1.5.2 Visualiser les Plans de Symétrie : La Métaphore du "Miroir Tranchant"</h3>
+  <p>
+    Pour trouver un plan de symétrie sans calcul, utilisez la métaphore du <strong>"couteau de cuisine"</strong> ou de la <strong>"feuille miroir"</strong> :
+  </p>
+  <ul>
+    <li>Prenez une feuille miroir imaginaire et <strong>coupez la figure en deux moitiés</strong> en passant obligatoirement par votre point d'observation $M$.</li>
+    <li>Regardez dans le miroir le reflet de la moitié restante : <em>le reflet reconstitue-t-il exactement la moitié que vous avez coupée, avec les mêmes charges (même signe et même valeur) ?</em></li>
+    <li>Si <strong>OUI</strong> : alors ce plan est un <strong>Plan de Symétrie $\Pi$</strong> !</li>
+    <li>Si le reflet reconstitue la figure mais avec des <strong>charges inversées</strong> (du négatif au lieu du positif, ou des courants qui circulent en sens inverse) : c'est un <strong>Plan d'Antisymétrie $\Pi^*$</strong> !</li>
+  </ul>
+
+  <div class="method-box">
+    <div class="method-title">Comment visualiser les 3 plans classiques passant par un point $M(r, \theta, z)$</div>
+    <p>
+      Soit un cylindre infini d'axe $Oz$ et un point $M$ situé à la distance $r$ de l'axe :
+      <ol>
+        <li><strong>Le Plan Méridien $\Pi_1 = (M, \vec{e}_r, \vec{e}_z)$ (Le plan qui coupe la bûche dans le sens de la longueur) :</strong><br>
+        Imaginez une hache qui fend la bûche de bois en passant par son axe vertical $Oz$ et par votre point $M$. Ce plan contient tout l'axe vertical $Oz$.<br>
+        À gauche du plan, il y a un demi-cylindre. À droite, l'autre demi-cylindre. Le reflet dans le miroir de la moitié gauche redonne exactement la moitié droite avec les mêmes charges positives. C'est un plan de symétrie $\Pi_1$.<br>
+        <em>Conséquence sur le champ :</em> Le champ $\vec{E}(M)$ doit être dans ce plan $\implies$ pas de composante selon $\vec{e}_\theta$ ($E_\theta = 0$).
+        </li>
+        <li style="margin-top:10px;"><strong>Le Plan Équatorial / Horizontal $\Pi_2 = (M, \vec{e}_r, \vec{e}_\theta)$ (Le plan qui tranche la bûche horizontalement) :</strong><br>
+        Imaginez une scie qui tranche horizontalement la bûche à la hauteur $z$ de votre point $M$.<br>
+        Au-dessus de la scie, le cylindre monte jusqu'à l'infini. En-dessous de la scie, le cylindre descend jusqu'à l'infini. Le reflet de la partie supérieure vers le bas reconstitue exactement la partie inférieure.<br>
+        C'est un second plan de symétrie $\Pi_2$.<br>
+        <em>Conséquence sur le champ :</em> Le champ $\vec{E}(M)$ doit être dans ce plan $\implies$ pas de composante selon $\vec{e}_z$ ($E_z = 0$).
+        </li>
+      </ol>
+      <strong>Le Miracle Géométrique :</strong><br>
+      $\vec{E}(M)$ doit être <em>à la fois</em> dans $\Pi_1$ (plan vertical passant par $M$) et dans $\Pi_2$ (plan horizontal passant par $M$). L'intersection de ces deux plans est une droite unique : la droite passant par $M$ et dirigée selon $\vec{e}_r$ !<br>
+      $$\vec{E}(M) \in (\Pi_1 \cap \Pi_2) \implies \vec{E}(M) = E_r\,\vec{e}_r$$
+      Sans avoir posé la moindre intégrale ni écrit la moindre équation compliquée, la symétrie vous donne la direction exacte du champ !
+    </p>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-title">Le Protocole Infaillible en 3 Questions pour l'Examen</div>
+    <ol>
+      <li><strong>Question 1 (Translation) :</strong> Si je glisse le long de l'objet, est-ce que les deux bouts sont à l'infini ? Si oui, le champ ne dépend pas de cette variable (ex: $z$).</li>
+      <li><strong>Question 2 (Rotation) :</strong> Si je tourne autour de l'objet ou si je fais pivoter l'objet sur son axe, est-ce que mon œil voit la moindre différence ? Si non, le champ ne dépend pas de l'angle (ex: $\theta$).</li>
+      <li><strong>Question 3 (Miroir) :</strong> Quels sont les plans passant par $M$ qui coupent l'objet en deux moitiés identiques ? Le champ $\vec{E}$ est coincé dans l'intersection de ces miroirs de symétrie !</li>
+    </ol>
+  </div>
 </section>
