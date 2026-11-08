@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fiches de Révision - Électromagnétisme & Calcul Vectoriel</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 13mm 16mm 13mm;
+      @bottom-center {
+        content: "Fiches de Révision • Électromagnétisme — Page " counter(page) " / " counter(pages);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 8pt;
+        color: #555;
+      }
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 9.5pt;
+      line-height: 1.4;
+      color: #111;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cover-page {
+      page-break-after: always;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 3px double #1a365d;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: #1a365d;
+      color: #fff;
+      font-size: 11pt;
+      font-weight: bold;
+      letter-spacing: 2px;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+    .cover-title {
+      font-size: 25pt;
+      font-weight: bold;
+      color: #0f172a;
+      margin: 0 0 15px 0;
+      line-height: 1.2;
+    }
+    .cover-subtitle {
+      font-size: 13pt;
+      font-style: italic;
+      color: #334155;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+    .cover-meta {
+      font-size: 10pt;
+      color: #475569;
+      line-height: 1.7;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 20px;
+      width: 80%;
+    }
+
+    .toc-container {
+      page-break-after: always;
+      padding: 15px 0;
+    }
+    .toc-title {
+      font-size: 16pt;
+      font-weight: bold;
+      color: #1a365d;
+      border-bottom: 2px solid #1a365d;
+      padding-bottom: 6px;
+      margin-bottom: 15px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .toc-module {
+      margin-bottom: 10px;
+    }
+    .toc-module-title {
+      font-weight: bold;
+      font-size: 10pt;
+      color: #0f172a;
+      background: #f1f5f9;
+      padding: 4px 8px;
+      border-left: 4px solid #2563eb;
+    }
+    .toc-list {
+      list-style: none;
+      padding-left: 12px;
+      margin: 4px 0;
+    }
+    .toc-list li {
+      padding: 2px 0;
+      font-size: 9pt;
+    }
+
+    .card-container {
+      page-break-before: always;
+      margin-bottom: 10px;
+    }
+    .card-header {
+      background: #0f2b48;
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 4px 4px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-id {
+      font-size: 9pt;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #93c5fd;
+    }
+    .card-title {
+      font-size: 12pt;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .box {
+      margin: 5px 0;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 9pt;
+    }
+    .box-title {
+      font-weight: bold;
+      font-size: 9.5pt;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .box-when {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      color: #1e3a8a;
+    }
+    .box-def {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 3px solid #0284c7;
+    }
+    .box-analogy {
+      background: #fffbeb;
+      border-left: 3px solid #d97706;
+      color: #78350f;
+    }
+    .box-method {
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      color: #14532d;
+    }
+    .box-example {
+      background: #faf5ff;
+      border-left: 3px solid #9333ea;
+      color: #581c87;
+    }
+    .box-traps {
+      background: #fef2f2;
+      border-left: 3px solid #dc2626;
+      color: #7f1d1d;
+    }
+    .box-checklist {
+      background: #f8fafc;
+      border: 1px dashed #64748b;
+    }
+    .box-quiz {
+      background: #f3f4f6;
+      border-left: 3px solid #4b5563;
+    }
+
+    .formula-highlight {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 4px;
+      border-radius: 4px;
+      text-align: center;
+      margin: 4px 0;
+    }
+    .steps-list {
+      margin: 3px 0;
+      padding-left: 18px;
+    }
+    .steps-list li {
+      margin-bottom: 3px;
+    }
+    .quiz-answers {
+      background: #e2e8f0;
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 8pt;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0;
+      font-size: 8.5pt;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #cbd5e1;
+      padding: 4px 6px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #1a365d;
+      color: #fff;
+    }
+    table.data-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COUVERTURE -->
+  <div class="cover-page">
+    <div class="cover-badge">FICHES DE RÉVISION OPÉRATIONNELLES</div>
+    <div class="cover-title">ÉLECTROMAGNÉTISME &amp; CALCUL VECTORIEL</div>
+    <div class="cover-subtitle">Méthodes pas à pas, analogies physiques concrètes, pièges d'examen et corrigés types tirés des cours et TD</div>
+    <div class="cover-meta">
+      <strong>Niveau :</strong> Licence Universitaire (MIAGE, Physique, Sciences pour l'Ingénieur)<br>
+      <strong>Programme officiel :</strong> Notations et démarches conformes au cours du Prof. Marcel B. Kébré<br>
+      <strong>Objectif d'Examen :</strong> Débloquer instantanément chaque énoncé <em>« Calculer X en utilisant Y »</em>
+    </div>
+  </div>
+
+  <!-- SOMMAIRE -->
+  <div class="toc-container">
+    <div class="toc-title">TABLEAU DE BORD DES FICHES DE RÉVISION</div>
+    <div class="toc-grid">
+      <div>
+        <div class="toc-module">
+          <div class="toc-module-title">MODULE 0 : CALCUL VECTORIEL</div>
+          <ul class="toc-list">
+            <li><strong>Fiche 0.1 :</strong> Choisir le bon système de coordonnées</li>
+            <li><strong>Fiche 0.2 :</strong> Retrouver les éléments différentiels sans par cœur</li>
+            <li><strong>Fiche 0.3 :</strong> Gradient, Divergence, Rotationnel &amp; Théorèmes</li>
+          </ul>
+        </div>
+        <div class="toc-module">
+          <div class="toc-module-title">MODULE 1 : ÉLECTROSTATIQUE &amp; SYMÉTRIES</div>
+          <ul class="toc-list">
+            <li><strong>Fiche 1.1 :</strong> Loi de Coulomb et Superposition des forces/champs</li>
+            <li><strong>Fiche 1.2 :</strong> L'Art des Invariances et Plans de Symétrie</li>
+            <li><strong>Fiche 1.3 :</strong> Calcul direct de $\vec{E}$ par intégration continue</li>
+          </ul>
+        </div>
+        <div class="toc-module">
+          <div class="toc-module-title">MODULE 2 : LE THÉORÈME DE GAUSS</div>
+          <ul class="toc-list">
+            <li><strong>Fiche 2.1 :</strong> Calculer le flux et choisir la surface fermée</li>
+            <li><strong>Fiche 2.2 :</strong> Méthode royale de Gauss en 5 étapes</li>
+            <li><strong>Fiche 2.3 :</strong> Forme locale $\mathrm{div}\vec{E} = \rho/\varepsilon_0$ &amp; Conditions d'interface</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="toc-module">
+          <div class="toc-module-title">MODULE 3 : POTENTIEL &amp; CONDENSATEURS</div>
+          <ul class="toc-list">
+            <li><strong>Fiche 3.1 :</strong> Calculer $\vec{E} = -\vec{\nabla}V$ et inversement (intégration)</li>
+            <li><strong>Fiche 3.2 :</strong> Résoudre Laplace/Poisson $\Delta V = 0$ (Condensateurs)</li>
+            <li><strong>Fiche 3.3 :</strong> Énergie électrostatique et Capacité $C = Q/U$</li>
+          </ul>
+        </div>
+        <div class="toc-module">
+          <div class="toc-module-title">MODULE 4 : MAGNÉTOSTATIQUE</div>
+          <ul class="toc-list">
+            <li><strong>Fiche 4.1 :</strong> Force de Lorentz et Spectromètre de masse</li>
+            <li><strong>Fiche 4.2 :</strong> Symétries du champ $\vec{B}$ (vecteur axial)</li>
+            <li><strong>Fiche 4.3 :</strong> Théorème d'Ampère en 4 étapes</li>
+            <li><strong>Fiche 4.4 :</strong> Potentiel vecteur $\vec{A}$ et conservation du flux</li>
+          </ul>
+        </div>
+        <div class="toc-module">
+          <div class="toc-module-title">MODULE 5 : MAXWELL, INDUCTION &amp; ONDES</div>
+          <ul class="toc-list">
+            <li><strong>Fiche 5.1 :</strong> Les 4 équations de Maxwell &amp; Induction de Faraday</li>
+            <li><strong>Fiche 5.2 :</strong> Onde plane progressive harmonique (OPPH)</li>
+            <li><strong>Fiche 5.3 :</strong> Vecteur de Poynting et Bilan de liaison (Friis)</li>
+            <li><strong>Fiche Bilan :</strong> Carte Mentale &amp; Réflexes « Si l'énoncé dit... »</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+\n  \n<!-- FICHE 0.1 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 0.1 • REPÈRES GÉOMÉTRIQUES</span>
+      <span class="card-title">Choisir le Bon Système de Coordonnées</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés de l'énoncé :</strong> <em>« cylindre, fil, câble coaxial, tube »</em> $\to$ Cylindrique ; <em>« sphère, boule, coquille, charge ponctuelle centrale »</em> $\to$ Sphérique ; <em>« plan infini, plaque, cube, condensateur plan »</em> $\to$ Cartésien.<br>
+      <strong>Règle d'or :</strong> Si tu choisis le bon repère, 90% des intégrales s'évaporent !
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Coordonnées officielles</div>
+      On repère un point $M$ dans l'espace 3D à l'aide de 3 variables scalaires et d'une base orthonormée directe :
+      <table class="data-table">
+        <tr>
+          <th>Système</th>
+          <th>Variables &amp; Domaines</th>
+          <th>Vecteur position $\vec{OM}$</th>
+          <th>Base locale</th>
+        </tr>
+        <tr>
+          <td><strong>Cartésien</strong></td>
+          <td>$x, y, z \in ]-\infty, +\infty[$</td>
+          <td>$x\vec{e}_x + y\vec{e}_y + z\vec{e}_z$</td>
+          <td>$(\vec{e}_x, \vec{e}_y, \vec{e}_z)$ (base fixe)</td>
+        </tr>
+        <tr>
+          <td><strong>Cylindrique</strong></td>
+          <td>$r \in [0, +\infty[$, $\theta \in [0, 2\pi[$, $z \in \mathbb{R}$</td>
+          <td>$r\vec{e}_r + z\vec{e}_z$</td>
+          <td>$(\vec{e}_r, \vec{e}_\theta, \vec{e}_z)$ ($\vec{e}_r, \vec{e}_\theta$ mobiles !)</td>
+        </tr>
+        <tr>
+          <td><strong>Sphérique</strong></td>
+          <td>$r \in [0, +\infty[$, $\theta \in [0, \pi]$, $\phi \in [0, 2\pi[$</td>
+          <td>$r\vec{e}_r$</td>
+          <td>$(\vec{e}_r, \vec{e}_\theta, \vec{e}_\phi)$ (les 3 mobiles !)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Choisir son outil de découpe</div>
+      <strong>Ce qui marche :</strong> Découper un gâteau rond en damiers rectangulaires avec une règle est un cauchemar mathématique. On utilise un couteau depuis le centre (rayon et angle). Chaque objet impose sa géométrie : le tuyau d'arrosage impose le cercle et la hauteur (cylindrique), le ballon impose le centre (sphérique).<br>
+      <strong>Là où l'analogie s'arrête :</strong> En mathématiques pures, on peut toujours utiliser le repère cartésien, mais les intégrales deviennent inextricables.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 La méthode en 3 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Identifier la forme géométrique de l'objet :</strong> Tranche plane $\to$ cartésien, axe rectiligne $\to$ cylindrique, point central $\to$ sphérique.</li>
+        <li><strong>Vérifier les constantes géométriques :</strong> La surface de l'objet doit correspondre à une coordonnée constante (ex: surface d'un cylindre = $r = R$ ; surface d'une sphère = $r = R$ ; plaque = $z = 0$).</li>
+        <li><strong>Écrire la base locale adaptée :</strong> Ne jamais mélanger des composantes de bases différentes !</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 2.1 &amp; TD 4 du cours)</div>
+      <strong>Énoncé :</strong> Un câble coaxial est formé d'un conducteur plein intérieur de rayon $R_1$ et d'une armature extérieure de rayon $R_2$, tous deux d'axe $Oz$. Quel système choisir ?<br>
+      <strong>Solution :</strong> L'axe de symétrie évident est $Oz$. Les frontières des conducteurs sont définies par $r = R_1$ et $r = R_2$. Le système idéal est le <strong>système cylindrique $(r, \theta, z)$</strong>.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Écrire $\vec{OM} = r\vec{e}_r + \theta\vec{e}_\theta + z\vec{e}_z$ : FAUX ! $\theta$ est un angle en radians, il ne peut pas être une longueur. En cylindrique, $\vec{OM} = r\vec{e}_r + z\vec{e}_z$.<br>
+      • Confondre $\theta$ en cylindrique ($[0, 2\pi[$) et $\theta$ en sphérique (colatitude $[0, \pi]$).
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Les frontières de mon domaine s'expriment-elles par une seule variable constante ($r = R$) ?<br>
+      [ ] Les angles sont-ils bien exprimés en radians ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Quelle est la dimension physique de la variable $\theta$ ?<br>
+      2. Pourquoi la dérivée $\frac{d\vec{e}_r}{d\theta}$ n'est-elle pas nulle ?<br>
+      3. Dans quel repère la surface d'une planète est-elle simplement $r = R_T$ ?
+      <div class="quiz-answers">Réponses : 1. Sans dimension (angle en radians). | 2. Parce que le vecteur unitaire tourne quand $\theta$ varie ($\frac{d\vec{e}_r}{d\theta} = \vec{e}_\theta$). | 3. En coordonnées sphériques.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 0.2 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 0.2 • GÉOMÉTRIE DIFFÉRENTIELLE</span>
+      <span class="card-title">Retrouver les Éléments Différentiels ($d\vec{\ell}, dS, d\tau$)</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« intégrer sur le volume »</em>, <em>« calculer le flux »</em>, <em>« calculer la circulation »</em>, <em>« charge totale $Q = \iiint \rho\,d\tau$ »</em>.<br>
+      <strong>Quand l'utiliser ?</strong> Chaque fois que tu dois poser une intégrale simple, double ou triple.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      Un élément différentiel est une petite boîte (volume), une petite fenêtre (surface) ou un petit pas (déplacement) :
+      $$\text{Cylindrique : } d\vec{\ell} = dr\,\vec{e}_r + r\,d\theta\,\vec{e}_\theta + dz\,\vec{e}_z \implies d\tau = r\,dr\,d\theta\,dz$$
+      $$\text{Sphérique : } d\vec{\ell} = dr\,\vec{e}_r + r\,d\theta\,\vec{e}_\theta + r\sin\theta\,d\phi\,\vec{e}_\phi \implies d\tau = r^2\sin\theta\,dr\,d\theta\,d\phi$$
+      Surfaces élémentaires remarquables :
+      • Cylindre latéral ($r = \text{Cte}$) : $d\vec{S} = r\,d\theta\,dz\,\vec{e}_r$<br>
+      • Sphère ($r = \text{Cte}$) : $d\vec{S} = r^2\sin\theta\,d\theta\,d\phi\,\vec{e}_r$
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le pas de danse et l'éventail</div>
+      <strong>Ce qui marche :</strong> Quand tu avances tout droit d'un petit pas, tu fais $dr$ mètres. Mais quand tu tournes la tête d'un petit angle $d\theta$, plus ton bras est tendu loin ($r$), plus l'arc balayé est grand : arc $= r\,d\theta$. Voilà pourquoi l'angle est toujours multiplié par le bras de levier $r$ pour faire des mètres !<br>
+      <strong>Là où l'analogie s'arrête :</strong> En sphérique, le cercle horizontal de latitude a pour rayon réel $r\sin\theta$ (projection), d'où le facteur supplémentaire $\sin\theta$.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 La règle magique pour construire $d\tau$ et $dS$</div>
+      <ol class="steps-list">
+        <li><strong>Écrire le déplacement élémentaire $d\vec{\ell}$ :</strong> Chaque terme DOIT avoir la dimension d'une longueur (mètres).</li>
+        <li><strong>Pour le volume $d\tau$ :</strong> Multiplier les 3 coefficients de longueur : $d\tau = (dr) \cdot (r\,d\theta) \cdot (dz) = r\,dr\,d\theta\,dz$.</li>
+        <li><strong>Pour la surface $dS$ :</strong> Bloquer la coordonnée constante (ex: $r = R \implies dr = 0$) et multiplier les deux autres longueurs : $dS = (R\,d\theta)(dz)$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 6 du Calcul Vectoriel)</div>
+      <strong>Énoncé :</strong> Calculer la charge totale d'une sphère de rayon $R$ ayant une densité de charge volumique $\rho(r) = \rho_0 \frac{r}{R}$.<br>
+      <strong>Solution :</strong> $Q = \iiint \rho(r)\,d\tau = \int_0^R \rho_0 \frac{r}{R} r^2\,dr \int_0^\pi \sin\theta\,d\theta \int_0^{2\pi} d\phi$.<br>
+      $\int_0^\pi \sin\theta\,d\theta = 2$, $\int_0^{2\pi} d\phi = 2\pi \implies 4\pi$. D'où $Q = 4\pi \frac{\rho_0}{R} \int_0^R r^3\,dr = 4\pi \frac{\rho_0}{R} \frac{R^4}{4} = \pi \rho_0 R^3$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Oublier le $r$ dans $r\,dr\,d\theta\,dz$ : le résultat de l'intégrale est faux et non homogène !<br>
+      • Oublier le $r^2\sin\theta$ en sphérique : l'intégrale sur la sphère donne $4\pi r^2$ uniquement grâce à $\sin\theta$.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] L'élément de volume $d\tau$ a-t-il bien la dimension de mètres cube ($\text{m}^3$) ?<br>
+      [ ] L'intégrale de $\sin\theta\,d\theta$ entre $0$ et $\pi$ donne-t-elle bien $2$ ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Que vaut l'élément de volume en coordonnées cartésiennes ?<br>
+      2. Pourquoi $d\theta\,d\phi$ ne peut-il pas représenter une surface physique ?<br>
+      3. Que vaut l'aire totale de la sphère de rayon $R$ obtenue en intégrant $dS$ ?
+      <div class="quiz-answers">Réponses : 1. $d\tau = dx\,dy\,dz$. | 2. Car un produit d'angles est sans dimension (radians carrés), il manque $r^2\sin\theta$ pour faire des $\text{m}^2$. | 3. $\iint r^2\sin\theta\,d\theta\,d\phi = 4\pi R^2$.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 0.3 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 0.3 • OPÉRATEURS DIFFÉRENTIELS</span>
+      <span class="card-title">Gradient, Divergence, Rotationnel &amp; Théorèmes Intégraux</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« dériver le champ »</em>, <em>« vérifier que le champ dérive d'un potentiel »</em>, <em>« calculer $\mathrm{div}\vec{E}$ »</em>, <em>« appliquer le théorème de Green-Ostrogradsky ou Stokes »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      • <strong>Gradient ($\vec{\nabla}V$) :</strong> Transforme un champ scalaire en vecteur pointant vers la plus forte croissance.<br>
+      • <strong>Divergence ($\mathrm{div}\vec{A} = \vec{\nabla}\cdot\vec{A}$) :</strong> Scalaire mesurant si un point est une source d'émission ($>0$) ou un puits ($<0$).<br>
+      • <strong>Rotationnel ($\vec{\mathrm{rot}}\vec{A} = \vec{\nabla}\wedge\vec{A}$) :</strong> Vecteur mesurant la tendance du fluide vectoriel à tourbillonner.<br>
+      $$\text{Green-Ostrogradsky : } \oiint_{\Sigma} \vec{A}\cdot d\vec{S} = \iiint_{V} \mathrm{div}\vec{A}\,d\tau$$
+      $$\text{Stokes : } \oint_{\mathcal{C}} \vec{A}\cdot d\vec{\ell} = \iint_{S} (\vec{\mathrm{rot}}\vec{A})\cdot d\vec{S}$$
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : La baignoire et le petit moulin</div>
+      <strong>Ce qui marche :</strong>
+      • Le robinet qui crache de l'eau a une **divergence positive** (source). Le trou d'évacuation a une **divergence négative** (puits). Partout ailleurs où l'eau s'écoule simplement, $\mathrm{div}\vec{v} = 0$.<br>
+      • Si tu poses un petit moulin à aubes dans l'eau : s'il se met à tourner sur lui-même, il y a du **rotationnel** ($\vec{\mathrm{rot}}\vec{v} \neq \vec{0}$) ! S'il avance sans tourner, le champ est irrotationnel.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Les identités nulles fondamentales</div>
+      <ol class="steps-list">
+        <li><strong>Un gradient ne tourbillonne jamais :</strong> $\vec{\mathrm{rot}}(\vec{\mathrm{grad}}\,V) = \vec{0} \implies$ tout champ qui dérive d'un potentiel a une circulation conservative ($\vec{E} = -\vec{\nabla}V \implies \vec{\mathrm{rot}}\vec{E} = \vec{0}$ en électrostatique).</li>
+        <li><strong>Un tourbillon n'a ni source ni puits :</strong> $\mathrm{div}(\vec{\mathrm{rot}}\vec{A}) = 0 \implies$ le champ magnétique n'a jamais de monopôle ($\vec{B} = \vec{\mathrm{rot}}\vec{A} \implies \mathrm{div}\vec{B} = 0$).</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 5 du Calcul Vectoriel)</div>
+      <strong>Énoncé :</strong> Soit le champ en coordonnées sphériques $\vec{A} = \frac{k}{r^2}\vec{e}_r$. Calculer $\mathrm{div}\vec{A}$ pour $r \neq 0$.<br>
+      <strong>Solution :</strong> En sphérique, $\mathrm{div}\vec{A} = \frac{1}{r^2}\frac{\partial}{\partial r}(r^2 A_r) = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2 \frac{k}{r^2}\right) = \frac{1}{r^2}\frac{\partial}{\partial r}(k) = 0$.<br>
+      Le champ coulombien a une divergence rigoureusement nulle partout en dehors de la charge source !
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Confondre $\mathrm{div}\vec{A}$ (qui donne un **scalaire**) et $\vec{\mathrm{rot}}\vec{A}$ (qui donne un **vecteur**).<br>
+      • Utiliser les formules cartésiennes simples en cylindrique ou sphérique : il y a des termes en $1/r$ et $1/r^2$ à ne jamais omettre.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Le résultat de ma divergence est-il bien un nombre ou une fonction scalaire ?<br>
+      [ ] Le théorème d'Ostrogradsky est-il appliqué sur une surface bien fermée ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Que vaut le rotationnel d'un champ électrostatique $\vec{E}$ ?<br>
+      2. Le flux d'un rotationnel à travers une surface fermée peut-il être non nul ?<br>
+      3. Que relie le théorème de Stokes ?
+      <div class="quiz-answers">Réponses : 1. $\vec{\mathrm{rot}}\vec{E} = \vec{0}$. | 2. Non, il est toujours nul ($\oiint \vec{\mathrm{rot}}\vec{A}\cdot d\vec{S} = 0$). | 3. La circulation le long d'une boucle fermée $\mathcal{C}$ et le flux du rotationnel à travers la surface qui s'appuie dessus.</div>
+    </div>
+  </div>
+\n  \n<!-- FICHE 1.1 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 1.1 • CHARGES PONCTUELLES</span>
+      <span class="card-title">Principe de Superposition &amp; Force de Coulomb</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés de l'énoncé :</strong> <em>« deux ou trois charges ponctuelles $q_1, q_2, q_3$ »</em>, <em>« calculer la force résultante sur une charge »</em>, <em>« champ total créé par un système discret »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formule officielle</div>
+      Deux charges immobiles s'attirent (signes contraires) ou se repoussent (même signe) selon la droite qui les joint :
+      $$\vec{F}_{1 \to 2} = \frac{1}{4\pi\varepsilon_0} \frac{q_1 q_2}{r_{12}^2} \vec{u}_{1 \to 2} \quad \text{et} \quad \vec{E}(M) = \sum_{i=1}^N \frac{q_i}{4\pi\varepsilon_0 r_i^2} \vec{u}_i$$
+      • $\vec{F}$ en Newtons ($\text{N}$), $\vec{E}$ en $\text{V}\cdot\text{m}^{-1}$ (ou $\text{N}\cdot\text{C}^{-1}$), $q_i$ en Coulombs ($\text{C}$), $r$ en mètres ($\text{m}$).<br>
+      • $\frac{1}{4\pi\varepsilon_0} \approx 9 \times 10^9\text{ N}\cdot\text{m}^2\cdot\text{C}^{-2}$ ; $\vec{u}_i = \frac{\vec{P_i M}}{\|\vec{P_i M}\|}$ pointe de la source vers le point d'étude.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le tir à la corde à plusieurs équipes</div>
+      <strong>Ce qui marche :</strong> Si 3 équipes tirent sur une corde attachée à un anneau central, l'anneau subit la résultante géométrique (vectorielle) des tractions. Si deux équipes tirent avec la même force en sens opposé, elles s'annulent.<br>
+      <strong>Là où l'analogie s'arrête :</strong> Dans la corde, la force est transmise par contact. En électrostatique, elle s'exerce à distance à travers le vide par le champ $\vec{E}$.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 La méthode en 4 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Faire un schéma clair :</strong> Placer les charges $P_i$ et le point $M$.</li>
+        <li><strong>Calculer chaque vecteur unitaire :</strong> $\vec{P_i M} = (x_M - x_i)\vec{e}_x + (y_M - y_i)\vec{e}_y$ et $r_i = \|\vec{P_i M}\|$.</li>
+        <li><strong>Projeter chaque champ élémentaire sur les axes :</strong> Écrire $E_{ix}$ et $E_{iy}$.</li>
+        <li><strong>Additionner composante par composante :</strong> $E_x = \sum E_{ix}$ et $E_y = \sum E_{iy}$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 1.1 du cours)</div>
+      <strong>Énoncé :</strong> $q_1 = +2\text{ nC}$ en $A(-1, 0)$ et $q_2 = -2\text{ nC}$ en $B(+1, 0)$. Calculer $\vec{E}$ en $M(0, 1)\text{ m}$.<br>
+      <strong>Solution :</strong> $r_A = r_B = \sqrt{2}\text{ m}$. Par symétrie, les composantes verticales $E_y$ s'annulent.<br>
+      $\vec{E}(M) = 2 \frac{q_1}{4\pi\varepsilon_0 (\sqrt{2})^2} \cos(45^\circ)\vec{e}_x = 2 \frac{9\cdot 10^9 \cdot 2\cdot 10^{-9}}{2} \frac{1}{\sqrt{2}}\vec{e}_x = 9\sqrt{2}\,\vec{e}_x \approx 12{,}7\,\vec{e}_x\text{ V}\cdot\text{m}^{-1}$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Additionner les normes scalaires au lieu des vecteurs ($E \neq E_1 + E_2$).<br>
+      • Oublier le signe de la charge : une charge négative crée un champ centripète (qui pointe vers elle).
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Le résultat est-il bien un vecteur avec ses unités ?<br>
+      [ ] Le sens du vecteur fuit-il les charges positives pour pointer vers les négatives ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Si on double la distance entre deux charges, la force est divisée par... ?<br>
+      2. Le champ au milieu de deux charges égales $+q$ et $+q$ est-il nul ?<br>
+      3. Une charge exerce-t-elle une force sur elle-même ?
+      <div class="quiz-answers">Réponses : 1. Par 4 ($r^2$). | 2. Oui, par symétrie les deux champs se compensent. | 3. Non, la force propre est exclue.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 1.2 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 1.2 • GÉOMÉTRIE &amp; PRINCIPE DE CURIE</span>
+      <span class="card-title">L'Art des Invariances et Plans de Symétrie</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« étudier les symétries »</em>, <em>« trouver la direction du champ »</em>, <em>« de quelles variables dépend $\vec{E}$ »</em>, <em>« avant d'appliquer Gauss »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Règles fondamentales pour $\vec{E}$</div>
+      $$\text{Si } M \in \Pi \text{ (Plan de Symétrie)} \implies \vec{E}(M) \in \Pi$$
+      $$\text{Si } M \in \Pi^* \text{ (Plan d'Antisymétrie)} \implies \vec{E}(M) \perp \Pi^*$$
+      • <strong>Invariance :</strong> Si une translation ou une rotation laisse la distribution identique, la variable correspondante disparaît de la formule de $\vec{E}$.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le voyageur aux yeux bandés et la bûche fendue</div>
+      <strong>Ce qui marche :</strong>
+      • Tu te déplaces le long d'un fil infini les yeux bandés : tu retires ton bandeau, le décor est rigoureusement identique $\implies \vec{E}$ ne dépend pas de $z$.<br>
+      • Tu tranches un cylindre en deux avec une lame miroir passant par $M$ : le reflet de la moitié gauche redonne exactement la moitié droite. $\vec{E}$ ne peut pas pencher à gauche ou à droite, il est emprisonné dans le plan du miroir !
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Le protocole en 3 questions</div>
+      <ol class="steps-list">
+        <li><strong>Translation :</strong> L'objet est-il infini selon $z$ ? $\to \vec{E}$ ne dépend pas de $z$.</li>
+        <li><strong>Rotation :</strong> Faire tourner l'objet autour de l'axe change-t-il la vue ? Non $\to \vec{E}$ ne dépend pas de $\theta$.</li>
+        <li><strong>Miroirs passant par $M$ :</strong> Trouver deux plans de symétrie $\Pi_1$ et $\Pi_2$. Le champ est sur leur droite d'intersection : $\vec{E}(M) = E_r(r)\,\vec{e}_r$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 2.1 du cours &amp; TD 4)</div>
+      <strong>Cylindre infini uniforme d'axe $Oz$ :</strong><br>
+      • Invariance par translation selon $z$ et rotation selon $\theta \implies \vec{E} = \vec{E}(r)$.<br>
+      • Plan méridien $\Pi_1 = (M, \vec{e}_r, \vec{e}_z)$ plan de symétrie $\implies E_\theta = 0$.<br>
+      • Plan horizontal $\Pi_2 = (M, \vec{e}_r, \vec{e}_\theta)$ plan de symétrie $\implies E_z = 0$.<br>
+      • Intersection : $\vec{E}(M) = E_r(r)\,\vec{e}_r$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Utiliser un plan qui ne passe pas par le point d'étude $M$.<br>
+      • Appliquer l'invariance par translation sur un objet fini (cylindre de $20\text{ cm}$).
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Tous mes plans passent-ils bien par $M$ ?<br>
+      [ ] Le résultat vectoriel final ne dépend-il plus que d'une seule variable scalaire ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Si $M$ est à l'intersection de deux plans d'antisymétrie $\Pi_1^*$ et $\Pi_2^*$, que vaut $\vec{E}(M)$ ?<br>
+      2. Le champ créé par une sphère chargée dépend-il de la latitude $\theta$ ?<br>
+      3. Quel est le type vectoriel du champ électrique $\vec{E}$ (polaire ou axial) ?
+      <div class="quiz-answers">Réponses : 1. $\vec{E}(M) = \vec{0}$. | 2. Non, invariance sphérique complète $\vec{E} = E(r)\vec{e}_r$. | 3. Polaire (vrai vecteur).</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 1.3 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 1.3 • DISTRIBUTIONS CONTINUES</span>
+      <span class="card-title">Calcul Direct de $\vec{E}$ par Intégration</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« fil rectiligne de longueur finie $2L$ »</em>, <em>« anneau circulaire sur son axe »</em>, <em>« demi-cercle chargé »</em>, <em>« intégrer la loi de Coulomb »</em>.<br>
+      <strong>Quand l'utiliser ?</strong> Quand la géométrie n'a pas assez de symétrie pour utiliser le théorème de Gauss (ex: objet de longueur finie ou point quelconque).
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formule officielle</div>
+      On découpe l'objet en petits morceaux de charge infinitésimale $dq$, chacun créant un champ $d\vec{E}$. On additionne tous ces vecteurs par intégrale :
+      $$\vec{E}(M) = \frac{1}{4\pi\varepsilon_0} \int_{\text{source}} \frac{dq(P)}{PM^2} \vec{u}_{PM}$$
+      Avec $dq = \lambda\,d\ell$ (fil), $dq = \sigma\,dS$ (surface), ou $dq = \rho\,d\tau$ (volume).
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le concert de milliers de voix</div>
+      <strong>Ce qui marche :</strong> Dans une chorale disposée en arc de cercle, chaque choriste chante avec une certaine intensité ($dq$). En face, tes oreilles reçoivent une onde de chaque personne. Par symétrie, les voix qui viennent de droite équilibrent celles de gauche : le son net semble venir pile du centre de la scène.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 La méthode en 5 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Repérer la symétrie :</strong> Prouver qu'une des composantes est nulle (ex: $E_y = 0$). Ne calculer QUE la composante non nulle (ex: $E_x$).</li>
+        <li><strong>Exprimer $dq$ :</strong> $dq = \lambda\,dx$ ou $\lambda R\,d\theta$.</li>
+        <li><strong>Exprimer la distance $PM$ et l'angle :</strong> $PM = \sqrt{x^2 + z^2}$ et $\cos\alpha = z/PM$.</li>
+        <li><strong>Projeter le champ élémentaire :</strong> $dE_z = dE \cos\alpha = \frac{dq}{4\pi\varepsilon_0 PM^2} \cos\alpha$.</li>
+        <li><strong>Intégrer sur la longueur totale :</strong> Choisir une seule variable d'intégration (la position $x$ ou l'angle $\alpha$).</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 1.2 du cours – Anneau chargé)</div>
+      <strong>Énoncé :</strong> Un anneau circulaire de rayon $R$, d'axe $Oz$, porte une charge totale $Q$ uniformément répartie ($\lambda = Q/(2\pi R)$). Calculer $\vec{E}$ en tout point $M(0, 0, z)$ de son axe.<br>
+      <strong>Solution pas à pas :</strong>
+      1. Symétrie : L'axe $Oz$ est axe de révolution $\implies \vec{E}(M) = E_z\,\vec{e}_z$. Les composantes radiales s'annulent 2 à 2.<br>
+      2. Distance : Tout point $P$ de l'anneau est à la même distance $PM = \sqrt{R^2 + z^2}$.<br>
+      3. Projection : $dE_z = \frac{dq}{4\pi\varepsilon_0 PM^2} \frac{z}{PM} = \frac{z\,dq}{4\pi\varepsilon_0 (R^2 + z^2)^{3/2}}$.<br>
+      4. Intégration : Tous les termes sont constants sauf $dq$ !
+      $$E_z = \frac{z}{4\pi\varepsilon_0 (R^2 + z^2)^{3/2}} \oint dq = \frac{Q z}{4\pi\varepsilon_0 (R^2 + z^2)^{3/2}}$$
+      $$\vec{E}(z) = \frac{Q z}{4\pi\varepsilon_0 (R^2 + z^2)^{3/2}} \vec{e}_z$$
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Sortir une variable de l'intégrale : $PM$ dépend souvent du point d'intégration $P$, on ne peut pas le sortir de l'intégrale (sauf cas magique de l'anneau où $PM = \text{Cte}$) !<br>
+      • Oublier de projeter et intégrer la norme directement : donne un résultat complètement faux.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Au centre ($z = 0$), le champ s'annule-t-il bien ($\vec{E}(0) = \vec{0}$) ? OUI !<br>
+      [ ] À très grande distance ($z \gg R$), retrouve-t-on le champ d'une charge ponctuelle $Q/(4\pi\varepsilon_0 z^2)$ ? OUI !
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Que vaut le champ au centre d'un anneau circulaire uniformément chargé ?<br>
+      2. Pourquoi est-il souvent plus facile d'intégrer avec la variable angulaire $\alpha$ qu'avec $x$ ?<br>
+      3. Quelle est l'unité de la densité linéique de charge $\lambda$ ?
+      <div class="quiz-answers">Réponses : 1. Nul ($\vec{0}$) par symétrie centrale. | 2. Car les intégrales de $\cos\alpha\,d\alpha$ sont des sinus directs sans radicaux complexes. | 3. $\text{C}\cdot\text{m}^{-1}$.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 2.1 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 2.1 • FLUX ÉLECTRIQUE</span>
+      <span class="card-title">Calculer le Flux &amp; Choisir la Surface de Gauss</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« flux du champ électrique »</em>, <em>« choisir une surface de Gauss »</em>, <em>« appliquer le théorème de Gauss »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formule officielle</div>
+      Le flux à travers une surface fermée $\Sigma_G$ mesure le nombre net de lignes de champ qui en sortent :
+      $$\Phi = \oiint_{\Sigma_G} \vec{E}\cdot d\vec{S} = \frac{Q_{\text{int}}}{\varepsilon_0}$$
+      • Pour un cylindre : $\Phi = E(r) \cdot (2\pi r h)$ (flux latéral seul, couvercles nuls).<br>
+      • Pour une sphère : $\Phi = E(r) \cdot (4\pi r^2)$.<br>
+      • Pour un plan infini : $\Phi = 2 E(z) \cdot S$ (flux sortant par les deux bases).
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le filet de pêche sous-marin</div>
+      <strong>Ce qui marche :</strong> Des ampoules sous l'eau rayonnent de la lumière. Tu lances un filet de pêche fermé. La lumière totale qui s'échappe des mailles dépend UNIQUEMENT du nombre d'ampoules à l'intérieur du filet. Les ampoules extérieures font entrer de la lumière qui ressort aussitôt (bilan net = 0).
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Critères de choix de la surface de Gauss</div>
+      <ol class="steps-list">
+        <li>La surface DOIT être strictement fermée (sans ouverture).</li>
+        <li>Elle DOIT passer par le point d'observation $M$.</li>
+        <li>Sur chaque face, $\vec{E}$ doit être soit strictement perpendiculaire ($E_n = 0$), soit strictement colinéaire et de norme constante ($\vec{E}\cdot d\vec{S} = E\,dS$).</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 2.1 du cours)</div>
+      <strong>Surface cylindrique de Gauss :</strong><br>
+      $\Phi = \iint_{\text{lat}} \vec{E}\cdot d\vec{S} + \iint_{\text{haut}} \vec{E}\cdot d\vec{S} + \iint_{\text{bas}} \vec{E}\cdot d\vec{S}$.<br>
+      Comme $\vec{E} = E(r)\vec{e}_r$, sur les bases plates $d\vec{S} = \pm dS\vec{e}_z \implies \vec{E}\cdot d\vec{S} = 0$.<br>
+      Sur la face latérale, $d\vec{S} = dS\vec{e}_r \implies \vec{E}\cdot d\vec{S} = E(r) dS$. D'où $\Phi = E(r) (2\pi r h)$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Choisir une surface ouverte (comme un disque plat).<br>
+      • Oublier d'orienter le vecteur surface vers **l'extérieur** de la surface fermée.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] L'intégrale de flux se réduit-elle bien à une simple multiplication $E \times \text{Aire}$ ?<br>
+      [ ] Le flux est-il bien homogène à des $\text{V}\cdot\text{m}$ ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Que vaut le flux sortant d'une surface fermée contenant une charge nulle ?<br>
+      2. Quelle est la surface de Gauss adaptée à une sphère pleine ?<br>
+      3. Une charge extérieure à la surface modifie-t-elle le flux total $\Phi$ ?
+      <div class="quiz-answers">Réponses : 1. Nul ($\Phi = 0$). | 2. Une sphère concentrique de rayon $r$. | 3. Non, son flux entrant compense exactement son flux sortant.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 2.2 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 2.2 • THÉORÈME DE GAUSS</span>
+      <span class="card-title">Méthode Royale de Gauss en 5 Étapes</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« calculer le champ créé par un cylindre infini, un fil infini, une sphère pleine ou creuse, un plan infini »</em>.<br>
+      <strong>Règle d'or :</strong> Dès qu'il y a une symétrie cylindrique, sphérique ou plane infinie, Gauss est la méthode la plus rapide du monde.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formule officielle</div>
+      $$\Phi = \oiint_{\Sigma_G} \vec{E}\cdot d\vec{S} = \frac{Q_{\text{int}}}{\varepsilon_0}$$
+      Le flux à travers une surface fermée fermant un volume $V_G$ ne dépend que des charges situées à l'intérieur de ce volume.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le contrôle douanier du volume</div>
+      <strong>Ce qui marche :</strong> La douane entoure une zone fermée ($\Sigma_G$). Elle compte combien de passagers payants ($Q_{\text{int}}$) sont nés à l'intérieur de la zone. Ceux qui viennent de l'extérieur entrent par une porte et ressortent par une autre porte : leur passage net est nul.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Les 5 étapes systématiques</div>
+      <ol class="steps-list">
+        <li><strong>Symétries et invariances :</strong> Prouver la direction et la variable unique : $\vec{E} = E(r)\,\vec{e}_r$.</li>
+        <li><strong>Surface de Gauss adaptée :</strong> Choisir $\Sigma_G$ passant par $M$ :
+          • Cylindre (rayon $r$, hauteur $h$) $\implies \Phi = E(r) \cdot 2\pi r h$<br>
+          • Sphère (rayon $r$) $\implies \Phi = E(r) \cdot 4\pi r^2$<br>
+          • Boîte sur plan $\implies \Phi = 2 E(z) \cdot S$</li>
+        <li><strong>Calcul de $Q_{\text{int}}$ zone par zone :</strong>
+          • Intérieur de la matière chargée ($r < R$) : charge partielle intégrée.<br>
+          • Extérieur ($r > R$) : TOUTE la charge de l'objet est prise en compte, et rien de plus !</li>
+        <li><strong>Égalité de Gauss :</strong> $\Phi = Q_{\text{int}}/\varepsilon_0 \implies$ isoler la norme $E(r)$.</li>
+        <li><strong>Conclusion vectorielle :</strong> Réécrire le vecteur avec son orientation et tester la continuité à $r = R$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 2.1 &amp; TD 4 du cours)</div>
+      <strong>Cylindre chargé en volume ($\rho = \text{Cte}$) de rayon $R$ :</strong><br>
+      • Zone 1 ($r \le R$) : $Q_{\text{int}} = \rho (\pi r^2 h) \implies E(r)\cdot 2\pi r h = \frac{\rho \pi r^2 h}{\varepsilon_0} \implies \vec{E}_{\text{int}} = \frac{\rho r}{2\varepsilon_0}\vec{e}_r$<br>
+      • Zone 2 ($r \ge R$) : $Q_{\text{int}} = \rho (\pi R^2 h) \implies E(r)\cdot 2\pi r h = \frac{\rho \pi R^2 h}{\varepsilon_0} \implies \vec{E}_{\text{ext}} = \frac{\rho R^2}{2\varepsilon_0 r}\vec{e}_r$
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Mettre $r$ au lieu de $R$ dans $Q_{\text{int}}$ quand $r > R$ : Erreur fatale n°1 !<br>
+      • Oublier de multiplier par 2 le flux d'un plan infini (les 2 faces de la boîte comptent !).
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La hauteur arbitraire $h$ a-t-elle disparu du résultat final ?<br>
+      [ ] Pour $r=R$, les deux formules (intérieure et extérieure) donnent-elles la même valeur ? OUI : $\frac{\rho R}{2\varepsilon_0}$.
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Quelle est la surface de Gauss d'un fil infini ?<br>
+      2. Pourquoi le flux à travers les couvercles plats d'un cylindre de Gauss est-il nul ?<br>
+      3. Que vaut le champ à l'intérieur d'un conducteur à l'équilibre électrostatique ?
+      <div class="quiz-answers">Réponses : 1. Un cylindre coaxial fermé. | 2. Car $\vec{E}$ est radial, donc perpendiculaire aux normales des couvercles ($\vec{E}\cdot\vec{n} = 0$). | 3. Rigoureusement nul ($\vec{E}_{\text{int}} = \vec{0}$).</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 2.3 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 2.3 • ÉQUATIONS LOCALES &amp; INTERFACES</span>
+      <span class="card-title">Forme Locale de Gauss &amp; Conditions aux Limites</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« équation de Maxwell-Gauss »</em>, <em>« discontinuité du champ à la traversée d'une surface »</em>, <em>« condition de passage »</em>, <em>« densité surfacique de charge $\sigma$ »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      • <strong>Forme locale (Maxwell-Gauss) :</strong> $\mathrm{div}\vec{E} = \frac{\rho}{\varepsilon_0}$ (en chaque point de l'espace).<br>
+      • <strong>Condition de passage (Théorème de Coulomb) :</strong> À la traversée d'une nappe chargée avec la densité surfacique $\sigma$, la composante normale du champ saute d'une valeur $\sigma/\varepsilon_0$ :
+      $$\vec{E}_2 - \vec{E}_1 = \frac{\sigma}{\varepsilon_0} \vec{n}_{1 \to 2}$$
+      La composante tangentielle est toujours continue : $E_{2,t} = E_{1,t}$.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : La marche d'escalier</div>
+      <strong>Ce qui marche :</strong> Traverser une charge volumique $\rho$ est comme monter une rampe douce : le champ électrique varie continûment sans à-coup. En revanche, traverser une feuille chargée infiniment fine ($\sigma$) équivaut à franchir une marche d'escalier brutale : le champ subit une discontinuité instantanée égale à la hauteur de la marche $\sigma/\varepsilon_0$.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Utiliser la condition de passage en 3 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Identifier la normale :</strong> Définir le vecteur unitaire $\vec{n}_{1 \to 2}$ allant du milieu 1 vers le milieu 2.</li>
+        <li><strong>Faire la différence des champs normaux :</strong> $E_{2n} - E_{1n}$.</li>
+        <li><strong>Égaler à $\sigma/\varepsilon_0$ :</strong> Permet soit de trouver le saut de champ, soit de déduire la densité de charge de surface $\sigma$ présente sur un conducteur !</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 2.2 du cours – Condensateur plan)</div>
+      <strong>Énoncé :</strong> À la surface d'un conducteur chargé, le champ intérieur est nul ($\vec{E}_1 = \vec{0}$). Quel est le champ à la sortie immédiate ?<br>
+      <strong>Solution :</strong> $\vec{E}_2 - \vec{0} = \frac{\sigma}{\varepsilon_0}\vec{n} \implies \vec{E}_{\text{ext}} = \frac{\sigma}{\varepsilon_0}\vec{n}$. C'est la relation fondamentale de Coulomb à la surface des conducteurs.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Inverser l'ordre dans le saut : c'est toujours $\vec{E}(\text{arrivée}) - \vec{E}(\text{départ})$ dans le sens du vecteur normal.<br>
+      • Croire que le potentiel $V$ saute : NON ! Le potentiel électrique $V$ est TOUJOURS STRICTEMENT CONTINU à la traversée d'une surface chargée.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La composante normale présente-t-elle bien un saut de $\sigma/\varepsilon_0$ ?<br>
+      [ ] Le potentiel $V$ reste-t-il bien continu sans aucun saut ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Quelle équation intégrale donne l'équation locale $\mathrm{div}\vec{E} = \rho/\varepsilon_0$ via Green-Ostrogradsky ?<br>
+      2. Le potentiel électrique $V$ peut-il être discontinu à la traversée d'un plan chargé ?<br>
+      3. Que vaut la composante tangentielle de $\vec{E}$ à la surface d'un métal parfait à l'équilibre ?
+      <div class="quiz-answers">Réponses : 1. Le théorème de Gauss $\oiint \vec{E}\cdot d\vec{S} = Q_{\text{int}}/\varepsilon_0$. | 2. Non, jamais, $V$ est toujours continu. | 3. Elle est nulle ($E_t = 0$), le champ est purement normal.</div>
+    </div>
+  </div>
+\n  \n<!-- FICHE 3.1 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 3.1 • GRADIENT &amp; CIRCULATION</span>
+      <span class="card-title">Calculer $\vec{E} = -\vec{\nabla}V$ et Inversement (Intégration)</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« déduire le champ du potentiel »</em>, <em>« calculer $V(r)$ connaissant $\vec{E}$ »</em>, <em>« différence de potentiel $V_A - V_B$ »</em>, <em>« équipotentielles »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      $$\vec{E} = -\vec{\mathrm{grad}}\,V = -\vec{\nabla}V \iff dV = -\vec{E}\cdot d\vec{\ell}$$
+      $$V(B) - V(A) = -\int_A^B \vec{E}\cdot d\vec{\ell}$$
+      • Cartésien : $\vec{E} = -\left(\frac{\partial V}{\partial x}\vec{e}_x + \frac{\partial V}{\partial y}\vec{e}_y + \frac{\partial V}{\partial z}\vec{e}_z\right)$<br>
+      • Cylindrique : $\vec{E} = -\left(\frac{\partial V}{\partial r}\vec{e}_r + \frac{1}{r}\frac{\partial V}{\partial \theta}\vec{e}_\theta + \frac{\partial V}{\partial z}\vec{e}_z\right)$
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : La colline topographique et la bille qui dévale</div>
+      <strong>Ce qui marche :</strong> L'altitude $h(x,y)$ est le potentiel $V$. Une bille (charge positive $+q$) roule vers le bas selon la ligne de plus grande pente : c'est le vecteur $-\vec{\nabla}V = \vec{E}$. Les courbes de niveau sont les surfaces équipotentielles ($V = \text{Cte}$). Le champ $\vec{E}$ est TOUJOURS perpendiculaire aux surfaces équipotentielles !
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 De $\vec{E}$ vers $V$ en 3 étapes</div>
+      <ol class="steps-list">
+        <li>Écrire la relation 1D : $dV = -E(r)\,dr$.</li>
+        <li>Intégrer pour trouver la primitive : $V(r) = -\int E(r)\,dr + \text{Constante}$.</li>
+        <li>Déterminer la constante avec la référence fixée (ex: $V(\infty)=0$ pour un système fini, ou $V(R)=0$).</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 4 du Calcul Vectoriel)</div>
+      <strong>Énoncé :</strong> $V(x,y,z) = 2x^2 y - 3z$. Trouver $\vec{E}$ au point $M(1, 2, -1)$.<br>
+      <strong>Solution :</strong><br>
+      $\frac{\partial V}{\partial x} = 4xy$, $\frac{\partial V}{\partial y} = 2x^2$, $\frac{\partial V}{\partial z} = -3$.<br>
+      $\vec{E} = -4xy\,\vec{e}_x - 2x^2\,\vec{e}_y + 3\,\vec{e}_z$.<br>
+      En $M(1,2,-1)$ : $\vec{E}(M) = -8\vec{e}_x - 2\vec{e}_y + 3\vec{e}_z\text{ V}\cdot\text{m}^{-1}$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Oublier le signe « $-$ » devant le gradient.<br>
+      • Oublier le terme en $1/r$ dans la dérivée angulaire en coordonnées cylindriques.<br>
+      • Choisir $V(\infty)=0$ pour un câble infini : le potentiel d'un fil infini diverge à l'infini (en $\ln r$) !
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Le signe moins a-t-il bien été appliqué ?<br>
+      [ ] Les lignes de champ sont-elles bien orthogonales aux équipotentielles ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Si $V = \text{Cte}$ dans toute une région, que vaut $\vec{E}$ ?<br>
+      2. Le travail électrostatique pour déplacer une charge entre deux points dépend-il du chemin ?<br>
+      3. Quelle est l'unité du gradient de potentiel ?
+      <div class="quiz-answers">Réponses : 1. $\vec{E} = \vec{0}$. | 2. Non, la force est conservative ($W = q(V_A - V_B)$). | 3. $\text{V}\cdot\text{m}^{-1}$.</div>
+    </div>
+  </div>
+\n  \n<!-- FICHE 3.2 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 3.2 • ÉQUATIONS DE LAPLACE &amp; POISSON</span>
+      <span class="card-title">Résoudre $\Delta V = 0$ dans les Condensateurs</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« déterminer le potentiel entre deux armatures »</em>, <em>« résoudre l'équation de Laplace »</em>, <em>« condensateur plan / cylindrique / sphérique »</em>, <em>« conditions aux limites $V(0)=0$ et $V(d)=V_0$ »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      En combinant $\vec{E} = -\vec{\nabla}V$ et $\mathrm{div}\vec{E} = \rho/\varepsilon_0$, on obtient l'équation de Poisson :
+      $$\Delta V = -\frac{\rho}{\varepsilon_0}$$
+      Dans une région sans charges libres entre deux électrodes ($\rho = 0$), elle devient l'équation de Laplace :
+      $$\Delta V = 0$$
+      • 1D Cartésien : $\frac{d^2 V}{dx^2} = 0 \implies V(x) = A x + B$<br>
+      • 1D Cylindrique : $\frac{1}{r}\frac{d}{dr}\left(r\frac{dV}{dr}\right) = 0 \implies V(r) = A \ln(r) + B$<br>
+      • 1D Sphérique : $\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{dV}{dr}\right) = 0 \implies V(r) = \frac{A}{r} + B$
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : La toile élastique tendue</div>
+      <strong>Ce qui marche :</strong> L'équation de Laplace $\Delta V = 0$ régit la forme d'une toile élastique (ou membrane de tambour) tendue entre deux armatures rigides fixées à des hauteurs différentes $V_1$ et $V_2$. La toile ne présente aucune bosse locale (aucun extremum local) : elle glisse de façon la plus lisse possible entre les deux bords.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 La méthode en 4 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Identifier la dépendance spatiale :</strong> Selon la symétrie, $V = V(x)$ ou $V(r)$.</li>
+        <li><strong>Intégrer deux fois de suite :</strong> Faire apparaître les deux constantes d'intégration $A$ et $B$.</li>
+        <li><strong>Appliquer les conditions aux limites :</strong> Poser $V(\text{bord 1}) = V_1$ et $V(\text{bord 2}) = V_2$ pour calculer $A$ et $B$.</li>
+        <li><strong>Déduire le champ $\vec{E}$ :</strong> Calculer $\vec{E} = -\vec{\nabla}V$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice TD 3 – Condensateur plan DRAM)</div>
+      <strong>Énoncé :</strong> Deux plaques en $x=0$ ($V=0$) et $x=d$ ($V=V_0$). Diélectrique $\rho=0$. Déterminer $V(x)$ et $\vec{E}$.<br>
+      <strong>Solution pas à pas :</strong><br>
+      1. $\frac{d^2 V}{dx^2} = 0 \implies V(x) = A x + B$.<br>
+      2. En $x=0$ : $V(0) = B = 0$.<br>
+      3. En $x=d$ : $V(d) = A d = V_0 \implies A = \frac{V_0}{d}$.<br>
+      4. D'où $V(x) = \frac{V_0}{d} x$. Le champ vaut $\vec{E} = -\frac{dV}{dx}\vec{e}_x = -\frac{V_0}{d}\vec{e}_x$ (champ uniforme !).
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Oublier une constante d'intégration lors de la double intégration.<br>
+      • Intégrer $\frac{1}{r}\frac{d}{dr}(r V') = 0$ en croyant que $V(r) = A r + B$ ! En cylindrique, c'est obligatoirement un logarithme $\ln(r)$ !
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La solution $V(x)$ vérifie-t-elle bien les potentiels fixés sur chaque armature ?<br>
+      [ ] Le champ $\vec{E}$ pointe-t-il bien du potentiel le plus élevé vers le plus bas ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Le potentiel $V$ solution de $\Delta V = 0$ peut-il posséder un maximum local strict entre les armatures ?<br>
+      2. Quelle est la forme générale de $V(r)$ entre deux cylindres coaxiaux sans charge ?<br>
+      3. Que vaut $\Delta V$ à l'intérieur d'un nuage de charge de densité volumique $\rho$ ?
+      <div class="quiz-answers">Réponses : 1. Non (Théorème d'Earnshaw), les extrema sont toujours situés sur les frontières. | 2. $V(r) = A \ln(r) + B$. | 3. $\Delta V = -\rho/\varepsilon_0$.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 3.3 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 3.3 • ÉNERGIE &amp; CAPACITÉ</span>
+      <span class="card-title">Énergie Électrostatique et Capacité $C = Q/U$</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« calculer la capacité $C$ »</em>, <em>« énergie stockée dans le condensateur »</em>, <em>« densité volumique d'énergie $w_e$ »</em>, <em>« travail pour charger »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      • <strong>Capacité $C$ (en Farads $\text{F}$) :</strong> Rapport entre la charge accumulée sur une armature et la tension $U$ entre elles :
+      $$C = \frac{Q}{U} \quad (U = V_1 - V_2)$$
+      • <strong>Densité d'énergie électrostatique $w_e$ (en $\text{J}\cdot\text{m}^{-3}$) :</strong> $w_e = \frac{1}{2}\varepsilon_0 E^2$<br>
+      • <strong>Énergie totale stockée $W_e$ (en Joules $\text{J}$) :</strong>
+      $$W_e = \iiint w_e\,d\tau = \frac{1}{2} C U^2 = \frac{1}{2} \frac{Q^2}{C} = \frac{1}{2} Q U$$
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le réservoir d'eau pressurisé</div>
+      <strong>Ce qui marche :</strong> La capacité $C$ est la section au sol d'un réservoir d'eau. La tension $U$ est la hauteur d'eau (pression). La charge $Q$ est le volume total de liquide stocké. Pour une même hauteur $U$, un grand réservoir ($C$ élevé) stocke beaucoup plus d'eau ($Q = C U$). L'énergie stockée est l'énergie potentielle accumulée en pompant l'eau.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Les 4 étapes pour calculer $C$ à coup sûr</div>
+      <ol class="steps-list">
+        <li><strong>Supposer une charge $+Q$ sur l'armature 1 et $-Q$ sur l'armature 2.</strong></li>
+        <li><strong>Calculer le champ $\vec{E}$ entre les armatures</strong> (par Gauss ou par le saut $\sigma/\varepsilon_0$).</li>
+        <li><strong>Calculer la tension $U$ par circulation :</strong> $U = V_1 - V_2 = \int_1^2 \vec{E}\cdot d\vec{\ell}$.</li>
+        <li><strong>Faire le quotient :</strong> $C = \frac{Q}{U}$ (les $Q$ doivent se simplifier !).</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 3.1 &amp; TD 3 – Condensateur plan)</div>
+      <strong>Énoncé :</strong> Deux plaques d'aire $S$ distantes de $d$. Armature 1 porte $+Q = \sigma S$. Calculer $C$.<br>
+      <strong>Solution :</strong><br>
+      1. Champ entre les plaques : $E = \frac{\sigma}{\varepsilon_0} = \frac{Q}{\varepsilon_0 S}$.<br>
+      2. Tension : $U = \int_0^d E\,dx = E \cdot d = \frac{Q d}{\varepsilon_0 S}$.<br>
+      3. Capacité : $C = \frac{Q}{U} = \frac{Q}{\frac{Q d}{\varepsilon_0 S}} = \varepsilon_0 \frac{S}{d}$.<br>
+      4. Si on insère un diélectrique de permittivité relative $\varepsilon_r$ : $C = \varepsilon_r \varepsilon_0 \frac{S}{d}$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Trouver une capacité négative : une capacité géométrique $C$ est TOUJOURS strictement positive ! Si elle est négative, tu as inversé les bornes dans l'intégrale de tension.<br>
+      • Oublier le facteur $1/2$ dans l'énergie $W = \frac{1}{2} C U^2$.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La charge $Q$ s'est-elle bien éliminée de l'expression finale de $C$ ?<br>
+      [ ] $C$ ne dépend-il que des paramètres géométriques ($S, d, R_1, R_2$) et du milieu ($\varepsilon$) ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Si on divise la distance $d$ entre deux armatures planes par 2, que devient la capacité $C$ ?<br>
+      2. Que devient l'énergie d'un condensateur isolé si on écarte ses armatures à charge $Q$ constante ?<br>
+      3. Quelle est l'unité de la densité d'énergie électrostatique $w_e$ ?
+      <div class="quiz-answers">Réponses : 1. Elle est multipliée par 2 ($C \propto 1/d$). | 2. Comme $C$ diminue et $W = Q^2/(2C)$, l'énergie augmente (l'opérateur fournit un travail mécanique contre l'attraction). | 3. En Joules par mètre cube ($\text{J}\cdot\text{m}^{-3}$).</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 4.1 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 4.1 • ACTIONS MAGNÉTIQUES</span>
+      <span class="card-title">Force de Lorentz &amp; Mouvement des Particules</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« particule chargée de vitesse $\vec{v}$ »</em>, <em>« champ magnétique uniforme $\vec{B}$ »</em>, <em>« rayon de courbure $R$ »</em>, <em>« filtre de Wien »</em>, <em>« spectromètre de masse »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formule officielle</div>
+      Une particule de charge $q$ animée d'une vitesse $\vec{v}$ dans une région où règnent un champ électrique $\vec{E}$ et un champ magnétique $\vec{B}$ subit la force de Lorentz :
+      $$\vec{F} = q\Big(\vec{E} + \vec{v}\wedge\vec{B}\Big)$$
+      • La partie magnétique $\vec{F}_m = q\,\vec{v}\wedge\vec{B}$ est toujours orthogonale à la vitesse $\vec{v}$.<br>
+      • **Conséquence majeure :** La force magnétique ne travaille JAMAIS ($P = \vec{F}_m \cdot \vec{v} = 0$). Elle modifie la direction de la trajectoire, mais JAMAIS l'énergie cinétique ni la vitesse scalaire de la particule !
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le virage en voiture sur une piste sans frottement</div>
+      <strong>Ce qui marche :</strong> La force magnétique agit comme le volant d'une voiture : elle fait braquer le véhicule en courbe sans toucher à la pédale d'accélérateur. La vitesse sur le compteur reste de $100\text{ km/h}$, mais la direction tourne. Seul le champ électrique $\vec{E}$ peut jouer le rôle de l'accélérateur ou du frein.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Mouvement circulaire uniforme dans $\vec{B}$ uniforme</div>
+      <ol class="steps-list">
+        <li><strong>Appliquer le PFD :</strong> $m\vec{a} = q\,\vec{v}\wedge\vec{B}$.</li>
+        <li><strong>Accélération normale :</strong> Le mouvement est plan circulaire uniforme $\implies a = v^2/R$.</li>
+        <li><strong>Égaler la force magnétique et l'inertie :</strong> $m \frac{v^2}{R} = |q| v B$.</li>
+        <li><strong>En déduire le rayon de giration (ou cyclotron) :</strong>
+          $$R = \frac{m v}{|q| B} \quad \text{et la pulsation cyclotron } \omega_c = \frac{|q| B}{m}$$</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 4.1 du cours – Spectromètre de masse)</div>
+      <strong>Énoncé :</strong> Deux isotopes de même charge $q = +e$ et de vitesses identiques $v_0$ entrent dans une zone de champ $\vec{B} = B\vec{e}_z$. Calculer la distance $D$ séparant leurs points d'impact après un demi-tour.<br>
+      <strong>Solution :</strong> Chaque isotope décrit un demi-cercle de diamètre $2R_i = \frac{2 m_i v_0}{e B}$. La séparation sur le détecteur est :
+      $$D = |2R_2 - 2R_1| = \frac{2 v_0}{e B} |m_2 - m_1|$$
+      C'est le principe fondamental de séparation isotopique !
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Oublier la règle des trois doigts de la main droite pour $\vec{v}\wedge\vec{B}$, ou oublier le signe négatif si la particule est un électron ($q = -e$) : le virage part alors dans le sens inverse !<br>
+      • Prétendre que la force magnétique accélère la vitesse d'une particule : IMPOSSIBLE, son travail est nul.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La force magnétique est-elle bien perpendiculaire à $\vec{v}$ et à $\vec{B}$ ?<br>
+      [ ] Le rayon $R$ est-il proportionnel à la masse $m$ ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Quelle est la puissance développée par la composante magnétique de la force de Lorentz ?<br>
+      2. Quelle trajectoire décrit une charge dont la vitesse initiale est parallèle aux lignes de champ $\vec{B}$ ?<br>
+      3. Que vaut la vitesse sélectionnée dans un filtre de Wien où $\vec{E} \perp \vec{B}$ ?
+      <div class="quiz-answers">Réponses : 1. Nulle ($P = 0$). | 2. Une ligne droite rectiligne uniforme car $\vec{v}\wedge\vec{B} = \vec{0}$. | 3. $v = E/B$ (où la force électrique compense exactement la force magnétique).</div>
+    </div>
+  </div>
+\n  \n<!-- FICHE 4.2 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 4.2 • SYMÉTRIES DU CHAMP MAGNÉTIQUE</span>
+      <span class="card-title">Le Comportement de $\vec{B}$ (Vecteur Axial)</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« symétries des courants »</em>, <em>« déterminer la direction de $\vec{B}$ avant Ampère »</em>, <em>« plan de symétrie / d'antisymétrie pour les courants »</em>.<br>
+      <strong>ATTENTION DANGER :</strong> C'est exactement l'INVERSE du champ électrique $\vec{E}$ !
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Règles fondamentales</div>
+      Le champ magnétique $\vec{B}$ est un <strong>vecteur axial (pseudovecteur)</strong> lié au sens de rotation des courants :
+      $$\text{Si } M \in \Pi \text{ (Plan de Symétrie des courants)} \implies \vec{B}(M) \perp \Pi$$
+      $$\text{Si } M \in \Pi^* \text{ (Plan d'Antisymétrie des courants)} \implies \vec{B}(M) \in \Pi^*$$
+      • Plan $\Pi$ pour les courants : les courants symétriques vont dans la direction du reflet miroir.<br>
+      • Plan $\Pi^*$ pour les courants : les courants symétriques sont inversés par rapport au miroir.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le reflet d'une toupie qui tourne</div>
+      <strong>Ce qui marche :</strong> Si tu regardes une toupie tourner dans un miroir, le sens d'aiguilles d'une montre s'inverse dans le reflet ! C'est pour cela que les grandeurs de rotation (comme $\vec{B}$) changent de signe par réflexion. Ainsi, face à un plan de symétrie de courants $\Pi$, $\vec{B}$ ne peut pas être couché dans le plan : il est forcé d'en sortir perpendiculairement !
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Trouver la direction de $\vec{B}$ pour un fil infini selon $Oz$</div>
+      <ol class="steps-list">
+        <li><strong>Invariances :</strong> Fil infini selon $z \implies$ indépendant de $z$. Révolution circulaire $\implies$ indépendant de $\theta$. Donc $\vec{B} = \vec{B}(r)$.</li>
+        <li><strong>Plans de symétrie passant par $M(r, \theta, z)$ :</strong>
+          • Le plan méridien $\Pi = (M, \vec{e}_r, \vec{e}_z)$ contient le fil et son courant : c'est un plan de symétrie $\Pi$ !<br>
+          $\implies \vec{B}(M) \perp \Pi \implies \vec{B}(M)$ est orthogonal à $\vec{e}_r$ et à $\vec{e}_z$.</li>
+        <li><strong>Conclusion immédiate :</strong> $\vec{B}(M)$ ne peut être porté QUE par le vecteur orthoradial $\vec{e}_\theta$ :
+          $$\vec{B}(M) = B(r)\,\vec{e}_\theta$$</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 4.2 &amp; TD 6 – Fil et Bobine torique)</div>
+      <strong>Énoncé :</strong> Soit un tore d'axe $Oz$ bobiné régulièrement. Déterminer la direction du champ $\vec{B}$ à l'intérieur.<br>
+      <strong>Solution :</strong> Tout plan contenant l'axe $Oz$ est un plan d'antisymétrie $\Pi^*$ pour les spires de courant. Donc $\vec{B} \in \Pi^*$. Le plan équatorial est un plan de symétrie $\implies \vec{B}$ est circulaire : $\vec{B} = B(r, z)\,\vec{e}_\theta$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Appliquer les règles de $\vec{E}$ à $\vec{B}$ : Mettre $\vec{B} \in \Pi$ donnera zéro à la question ! Retiens le moyen mnémotechnique : <em>« $\vec{E}$ Aime la symétrie ($\vec{E} \in \Pi$), $\vec{B}$ la Bafoue ($\vec{B} \perp \Pi$) ! »</em>
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Ai-je bien inversé la règle : $\vec{B}$ est PERPENDICULAIRE aux plans de symétrie $\Pi$ ?<br>
+      [ ] Les lignes de champ de $\vec{B}$ forment-elles des boucles fermées sur elles-mêmes ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Si $M$ appartient à un plan d'antisymétrie de courants $\Pi^*$, comment est orienté $\vec{B}(M)$ ?<br>
+      2. Le champ $\vec{B}$ peut-il diverger depuis un point source comme le fait $\vec{E}$ ?<br>
+      3. Quel plan passant par un fil de courant rectiligne est un plan de symétrie $\Pi$ ?
+      <div class="quiz-answers">Réponses : 1. $\vec{B}(M)$ est contenu dans le plan ($\vec{B} \in \Pi^*$). | 2. Non, $\mathrm{div}\vec{B} = 0$, il n'y a pas de charge magnétique isolée. | 3. Tout plan contenant le fil et le point $M$ (plan méridien).</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 4.3 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 4.3 • THÉORÈME D'AMPÈRE</span>
+      <span class="card-title">Calculer $\vec{B}$ Pas à Pas par le Théorème d'Ampère</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« en utilisant le théorème d'Ampère »</em>, <em>« calculer le champ créé par un fil infini, un câble cylindrique, un solénoïde infini, une bobine torique »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formule officielle</div>
+      La circulation du champ magnétique le long d'une courbe fermée orientée $\mathcal{C}$ (appelée contour d'Ampère) est égale à la perméabilité du vide $\mu_0$ multipliée par la somme algébrique des courants qui traversent la surface délimitée par cette boucle :
+      $$\oint_{\mathcal{C}} \vec{B}\cdot d\vec{\ell} = \mu_0 I_{\text{enlacé}}$$
+      • $\mu_0 = 4\pi \times 10^{-7}\text{ H}\cdot\text{m}^{-1}$ (ou $\text{T}\cdot\text{m}\cdot\text{A}^{-1}$).<br>
+      • $I_{\text{enlacé}} = \iint_S \vec{\jmath}\cdot d\vec{S}$ : courant total qui « traverse » la boucle (sens donné par la règle de la main droite).
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le lasso du cowboy autour des taureaux</div>
+      <strong>Ce qui marche :</strong> Le contour d'Ampère est un lasso fermé. Le cowboy compte les taureaux électriques ($I$) qui traversent l'intérieur de sa boucle. Les taureaux qui courent en dehors du lasso ne contribuent absolument pas à la circulation nette le long de la corde !
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Les 4 étapes d'Ampère</div>
+      <ol class="steps-list">
+        <li><strong>Symétrie &amp; Direction :</strong> Démontrer que $\vec{B} = B(r)\,\vec{e}_\theta$ (Fiche 4.2).</li>
+        <li><strong>Choix du contour $\mathcal{C}$ :</strong> Choisir un cercle de rayon $r$ centré sur l'axe et orienté selon $\vec{e}_\theta$.
+          $$\oint_{\mathcal{C}} \vec{B}\cdot d\vec{\ell} = B(r) \oint d\ell = B(r) \cdot (2\pi r)$$</li>
+        <li><strong>Calcul de $I_{\text{enlacé}}$ :</strong>
+          • À l'intérieur d'un conducteur plein ($r < R$) : $I_{\text{enl}} = I \frac{\pi r^2}{\pi R^2} = I \frac{r^2}{R^2}$.<br>
+          • À l'extérieur ($r > R$) : Tout le courant traverse la boucle : $I_{\text{enl}} = I$.</li>
+        <li><strong>Égalité et conclusion :</strong> $B(r) \cdot 2\pi r = \mu_0 I_{\text{enl}} \implies$ isoler $B(r)$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 4.2 &amp; TD 6 – Fil infini parcouru par $I$)</div>
+      <strong>Énoncé :</strong> Calculer le champ $\vec{B}$ créé par un fil rectiligne infini parcouru par un courant $I$.<br>
+      <strong>Solution :</strong><br>
+      1. Symétrie : $\vec{B}(M) = B(r)\,\vec{e}_\theta$.<br>
+      2. Contour : Cercle de rayon $r$. Circulation $= B(r) \cdot 2\pi r$.<br>
+      3. Courant enlacé : Le cercle entoure le fil unique $\implies I_{\text{enlacé}} = I$.<br>
+      4. Théorème : $B(r) \cdot 2\pi r = \mu_0 I \implies B(r) = \frac{\mu_0 I}{2\pi r}$.
+      $$\vec{B}(M) = \frac{\mu_0 I}{2\pi r}\vec{e}_\theta$$
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Confondre contour fermé d'Ampère (courbe 1D) et surface fermée de Gauss (enveloppe 2D fermant un volume) !<br>
+      • Erreur de signe sur le courant : orienter la normale à la surface avec la main droite en suivant le sens de parcours de la boucle.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] L'unité de $\vec{B}$ est-elle bien en Tesla ($\text{T}$) ?<br>
+      [ ] Le champ décroît-il bien en $1/r$ à l'extérieur du câble ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Que vaut le champ magnétique à l'extérieur d'un câble coaxial parcouru par des courants opposés $+I$ et $-I$ ?<br>
+      2. Que vaut le champ magnétique à l'extérieur d'un solénoïde idéal infini ?<br>
+      3. Quelle forme locale dérive du théorème d'Ampère en statique ?
+      <div class="quiz-answers">Réponses : 1. Nul ($\vec{B} = \vec{0}$) car $I_{\text{enlacé}} = I - I = 0$. | 2. Rigoureusement nul ($\vec{B} = \vec{0}$). | 3. $\vec{\mathrm{rot}}\vec{B} = \mu_0 \vec{\jmath}$ (Maxwell-Ampère statique).</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 5.1 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 5.1 • INDUCTION &amp; MAXWELL</span>
+      <span class="card-title">Les 4 Équations de Maxwell &amp; Loi de Faraday</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« force électromotrice induite $e$ »</em>, <em>« variation de flux magnétique $d\Phi/dt$ »</em>, <em>« badge NFC »</em>, <em>« écrire les équations de Maxwell dans le vide ou la matière »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Les 4 Piliers Fondamentaux de l'Électromagnétisme</div>
+      <table class="data-table">
+        <tr>
+          <th>Nom de l'équation</th>
+          <th>Forme Locale (différentielle)</th>
+          <th>Sens Physique</th>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Gauss</strong></td>
+          <td>$\mathrm{div}\vec{E} = \frac{\rho}{\varepsilon_0}$</td>
+          <td>Les charges électriques sont les sources divergentes de $\vec{E}$.</td>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Thomson</strong></td>
+          <td>$\mathrm{div}\vec{B} = 0$</td>
+          <td>Pas de monopôles magnétiques isolés : flux conservatif.</td>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Faraday</strong></td>
+          <td>$\vec{\mathrm{rot}}\vec{E} = -\frac{\partial \vec{B}}{\partial t}$</td>
+          <td>Un champ magnétique variable crée un champ électrique tourbillonnaire (Induction).</td>
+        </tr>
+        <tr>
+          <td><strong>Maxwell-Ampère</strong></td>
+          <td>$\vec{\mathrm{rot}}\vec{B} = \mu_0 \vec{\jmath} + \mu_0\varepsilon_0 \frac{\partial \vec{E}}{\partial t}$</td>
+          <td>Les courants $\vec{\jmath}$ et les variations de $\vec{E}$ (courant de déplacement) créent du tourbillon de $\vec{B}$.</td>
+        </tr>
+      </table>
+      • <strong>Loi de Faraday (f.é.m. induite) :</strong> $e = -\frac{d\Phi_B}{dt}$ avec $\Phi_B = \iint_S \vec{B}\cdot d\vec{S}$. Le signe « $-$ » est la **loi de Lenz** (effet modérateur).
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le ressort élastique récalcitrant (Lenz)</div>
+      <strong>Ce qui marche :</strong> Quand tu tentes d'écraser un ressort, il pousse en sens inverse pour s'opposer à ton mouvement. La loi de Lenz fait exactement pareil : quand tu approches un aimant d'une spire, le courant induit crée son propre champ magnétique pour repousser l'aimant qui approche !
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Calculer la tension induite en 3 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Calculer le flux magnétique à travers le circuit :</strong> $\Phi_B(t) = B(t) \cdot S \cos\alpha$.</li>
+        <li><strong>Dériver par rapport au temps :</strong> Calculer $\frac{d\Phi_B}{dt}$.</li>
+        <li><strong>Appliquer Faraday :</strong> $e(t) = -\frac{d\Phi_B}{dt}$. Si la bobine comporte $N$ spires : $e = -N \frac{d\Phi_B}{dt}$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice TD 7 – Antenne badge NFC 13,56 MHz)</div>
+      <strong>Énoncé :</strong> Une antenne de badge NFC comporte $N = 4$ spires de surface $S = 15\text{ cm}^2$ plongée dans $B(t) = B_0 \cos(\omega t)$ avec $B_0 = 2\,\mu\text{T}$ et $f = 13{,}56\text{ MHz}$. Calculer l'amplitude de la f.é.m. induite.<br>
+      <strong>Solution :</strong> $\Phi_B(t) = N S B(t) = N S B_0 \cos(\omega t)$.<br>
+      $e(t) = -\frac{d\Phi_B}{dt} = N S B_0 \omega \sin(\omega t)$. Amplitude $E_{\text{max}} = N S B_0 (2\pi f)$.<br>
+      $E_{\text{max}} = 4 \times (15\cdot 10^{-4}) \times (2\cdot 10^{-6}) \times (2\pi \times 13{,}56\cdot 10^6) \approx 1{,}02\text{ V}$. Suffisant pour alimenter la puce sans batterie !
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Oublier de multiplier la surface par le nombre de spires $N$.<br>
+      • Oublier de convertir la fréquence en Hertz ($f$) vers la pulsation $\omega = 2\pi f$ ($\text{rad}\cdot\text{s}^{-1}$).
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La f.é.m. est-elle bien exprimée en Volts ($\text{V}$) ?<br>
+      [ ] Le courant induit s'oppose-t-il bien à la cause qui lui donne naissance (Lenz) ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Si le champ magnétique est stationnaire ($d\vec{B}/dt = \vec{0}$), y a-t-il de l'induction dans un circuit immobile ?<br>
+      2. Que représente le terme $\mu_0\varepsilon_0 \frac{\partial \vec{E}}{\partial t}$ ajouté par Maxwell ?<br>
+      3. Quel appareil du quotidien utilise l'induction de Faraday pour chauffer ?
+      <div class="quiz-answers">Réponses : 1. Non, le flux étant constant, $e = 0$. | 2. Le courant de déplacement (permettant la propagation des ondes). | 3. Les plaques de cuisson à induction.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 5.2 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 5.2 • PROPAGATION DES ONDES</span>
+      <span class="card-title">Onde Plane Progressive Harmonique (OPPH)</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« onde électromagnétique dans le vide »</em>, <em>« fréquence $f$ ou pulsation $\omega$ »</em>, <em>« trièdre $(\vec{E}, \vec{B}, \vec{k})$ »</em>, <em>« relation de structure »</em>, <em>« impédance d'onde $\eta_0$ »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      Dans le vide sans charges ni courants ($\rho=0, \vec{\jmath}=\vec{0}$), les champs obéissent à l'équation de D'Alembert se propageant à la vitesse de la lumière $c = \frac{1}{\sqrt{\varepsilon_0 \mu_0}} \approx 3 \times 10^8\text{ m}\cdot\text{s}^{-1}$ :
+      $$\Delta \vec{E} - \frac{1}{c^2}\frac{\partial^2 \vec{E}}{\partial t^2} = \vec{0}$$
+      Pour une OPPH se propageant selon le vecteur d'onde $\vec{k} = k\vec{u}_p$ ($k = \frac{\omega}{c} = \frac{2\pi}{\lambda}$) :
+      $$\vec{B} = \frac{\vec{k} \wedge \vec{E}}{\omega} = \frac{1}{c} \vec{u}_p \wedge \vec{E}$$
+      • $(\vec{E}, \vec{B}, \vec{k})$ forme un **trièdre orthogonal direct**.<br>
+      • L'onde est **strictement transversale** : $\vec{E} \perp \vec{k}$ et $\vec{B} \perp \vec{k}$.<br>
+      • Rapport des amplitudes : $\frac{E_0}{B_0} = c$.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le ruban ondulant d'une gymnaste</div>
+      <strong>Ce qui marche :</strong> Quand la gymnaste secoue verticalement son ruban, la vague avance horizontalement ($\vec{k}$ vers l'avant) tandis que le tissu vibre de haut en bas ($\vec{E}$ vertical). L'onde électromagnétique est double : elle a une composante électrique verticale et une composante magnétique horizontale, toutes deux perpendiculaires à la trajectoire d'avancement.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Trouver $\vec{B}$ connaissant $\vec{E}$ en 3 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Identifier la direction de propagation $\vec{u}_p$ :</strong> Si $\vec{E} = E_0 \cos(\omega t - k z)\vec{e}_x$, le signe « $-kz$ » indique une propagation vers les $+z$ ($\vec{u}_p = \vec{e}_z$).</li>
+        <li><strong>Calculer l'amplitude magnétique :</strong> $B_0 = E_0 / c$.</li>
+        <li><strong>Appliquer le produit vectoriel :</strong>
+          $$\vec{B} = \frac{1}{c} (\vec{e}_z \wedge \vec{E}) = \frac{E_0}{c} \cos(\omega t - kz) (\vec{e}_z \wedge \vec{e}_x) = \frac{E_0}{c} \cos(\omega t - kz)\,\vec{e}_y$$</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice 5.1 du cours – Onde Wi-Fi 2,4 GHz)</div>
+      <strong>Énoncé :</strong> Champ électrique Wi-Fi d'amplitude $E_0 = 1{,}5\text{ V}\cdot\text{m}^{-1}$ à $f = 2{,}4\text{ GHz}$ se propageant selon $+z$. Calculer la longueur d'onde $\lambda$ et l'amplitude $B_0$.<br>
+      <strong>Solution :</strong><br>
+      $\lambda = \frac{c}{f} = \frac{3 \times 10^8}{2{,}4 \times 10^9} = 0{,}125\text{ m} = 12{,}5\text{ cm}$.<br>
+      $B_0 = \frac{E_0}{c} = \frac{1{,}5}{3 \times 10^8} = 5 \times 10^{-9}\text{ T} = 5\text{ nT}$.
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Se tromper de sens de propagation : $\cos(\omega t - k z)$ va vers $+z$, alors que $\cos(\omega t + k z)$ va vers $-z$ !<br>
+      • Intervertir $\vec{E}$ et $\vec{B}$ dans le trièdre direct : $\vec{u}_p \wedge \vec{E} = c\vec{B}$, mais $\vec{u}_p \wedge \vec{B} = -\frac{1}{c}\vec{E}$.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] Les vecteurs $\vec{E}$, $\vec{B}$ et la direction de propagation sont-ils bien deux à deux perpendiculaires ?<br>
+      [ ] L'amplitude $B_0$ est-elle bien égale à $E_0 / c$ ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Pourquoi dit-on que l'onde électromagnétique dans le vide est transversale ?<br>
+      2. Quelle est la vitesse d'une onde radio dans l'espace vide ?<br>
+      3. Si $\vec{E}$ est selon $\vec{e}_x$ et que l'onde va selon $+y$, selon quel axe est $\vec{B}$ ?
+      <div class="quiz-answers">Réponses : 1. Car les champs oscillants $\vec{E}$ et $\vec{B}$ sont perpendiculaires à la direction de propagation $\vec{k}$. | 2. La vitesse de la lumière $c \approx 3 \times 10^8\text{ m/s}$. | 3. $\vec{u}_p \wedge \vec{e}_x = \vec{e}_y \wedge \vec{e}_x = -\vec{e}_z$. Donc $\vec{B}$ est selon $-\vec{e}_z$.</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE 5.3 -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE 5.3 • ÉNERGIE &amp; TÉLÉCOMS</span>
+      <span class="card-title">Vecteur de Poynting &amp; Bilan de Liaison (Friis)</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🎯 Quand l'utiliser ?</div>
+      <strong>Mots-clés :</strong> <em>« puissance rayonnée par une onde »</em>, <em>« vecteur de Poynting $\vec{\Pi}$ ou $\vec{R}$ »</em>, <em>« intensité ou éclairement $I = \langle\|\vec{\Pi}\|\rangle$ »</em>, <em>« formule de Friis »</em>, <em>« puissance reçue par une antenne réceptrice »</em>.
+    </div>
+
+    <div class="box box-def">
+      <div class="box-title">📖 Définition simple &amp; Formules officielles</div>
+      Le vecteur de Poynting $\vec{\Pi}$ représente le flux de puissance transporté par l'onde électromagnétique par unité de surface transversale ($\text{W}\cdot\text{m}^{-2}$) :
+      $$\vec{\Pi} = \frac{\vec{E}\wedge\vec{B}}{\mu_0}$$
+      • <strong>Moyenne temporelle pour une OPPH dans le vide :</strong>
+      $$\langle\vec{\Pi}\rangle = \frac{E_0^2}{2 \mu_0 c} \vec{u}_p = \frac{E_0^2}{2 \eta_0} \vec{u}_p \quad \text{avec l'impédance du vide } \eta_0 = \sqrt{\frac{\mu_0}{\varepsilon_0}} \approx 377\,\Omega \approx 120\pi\,\Omega$$
+      • <strong>Bilan de liaison en espace libre (Formule de Friis) :</strong>
+      $$P_r = P_t \, G_t \, G_r \left(\frac{\lambda}{4\pi d}\right)^2$$
+      $P_t, P_r$ : puissances émise et reçue ($\text{W}$) ; $G_t, G_r$ : gains des antennes ; $d$ : distance en mètres.
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-title">🖼️ Analogie : Le jet d'eau d'arrosage et le seau récepteur</div>
+      <strong>Ce qui marche :</strong> Le vecteur de Poynting est le débit d'eau par mètre carré propulsé par la lance à incendie (antenne d'émission). Plus on s'éloigne ($d$), plus le cône de jet s'élargit et se dilue sur une immense sphère : la puissance surfacique diminue comme $1/d^2$. Le seau de réception (l'antenne réceptrice) ne collecte que la fraction d'eau qui entre par son ouverture.
+    </div>
+
+    <div class="box box-method">
+      <div class="box-title">🪜 Calculer un bilan de liaison en 3 étapes</div>
+      <ol class="steps-list">
+        <li><strong>Calculer la longueur d'onde :</strong> $\lambda = c / f$.</li>
+        <li><strong>Convertir les gains dBi en facteurs linéaires si nécessaire :</strong> $G = 10^{G_{\text{dBi}}/10}$.</li>
+        <li><strong>Appliquer l'atténuation d'espace libre de Friis :</strong>
+          $$\frac{P_r}{P_t} = G_t G_r \left(\frac{\lambda}{4\pi d}\right)^2$$</li>
+      </ol>
+    </div>
+
+    <div class="box box-example">
+      <div class="box-title">🧪 Exemple type (Exercice TD 8 – Faisceau hertzien 5,8 GHz)</div>
+      <strong>Énoncé :</strong> Liaison rurale à $f = 5{,}8\text{ GHz}$ sur $d = 12\text{ km}$. Puissance $P_t = 500\text{ mW}$ ($27\text{ dBm}$), antennes paraboliques $G_t = G_r = 24\text{ dBi}$ ($G = 251{,}2$). Calculer la puissance reçue $P_r$.<br>
+      <strong>Solution :</strong><br>
+      $\lambda = \frac{3\cdot 10^8}{5{,}8\cdot 10^9} = 0{,}0517\text{ m} = 5{,}17\text{ cm}$.<br>
+      Atténuation en espace libre : $A = \left(\frac{\lambda}{4\pi d}\right)^2 = \left(\frac{0{,}0517}{4\pi \times 12\,000}\right)^2 = (3{,}43\cdot 10^{-7})^2 \approx 1{,}176\cdot 10^{-13}$.<br>
+      $P_r = 0{,}5 \times 251{,}2 \times 251{,}2 \times 1{,}176\cdot 10^{-13} \approx 3{,}71 \times 10^{-9}\text{ W} = 3{,}71\text{ nW}$ (soit $-54{,}3\text{ dBm}$, excellent signal !).
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">⚠️ Pièges classiques et erreurs fréquentes</div>
+      • Confondre décibels ($\text{dBm}$) et Watts linéaires : on ne multiplie JAMAIS des décibels entre eux ! Soit on additionne les dB ($P_r(\text{dBm}) = P_t(\text{dBm}) + G_t + G_r - \text{Pertes}$), soit on fait le produit des grandeurs linéaires en Watts.<br>
+      • Oublier le carré sur le terme $(\lambda / 4\pi d)^2$ dans la formule de Friis.
+    </div>
+
+    <div class="box box-checklist">
+      <div class="box-title">✅ Checklist « Ai-je fini ? »</div>
+      [ ] La puissance reçue $P_r$ est-elle bien très inférieure à la puissance émise $P_t$ ? OUI ($3{,}7\text{ nW} \ll 0{,}5\text{ W}$) !<br>
+      [ ] Le vecteur de Poynting est-il bien orienté dans la direction d'avancement de l'onde ?
+    </div>
+
+    <div class="box box-quiz">
+      <div class="box-title">⚡ Mini-quiz</div>
+      1. Quelle est l'unité du vecteur de Poynting $\vec{\Pi}$ ?<br>
+      2. Que vaut l'impédance caractéristique du vide $\eta_0$ ?<br>
+      3. Si on double la distance $d$ entre l'émetteur et le récepteur, par combien est divisée la puissance reçue ?
+      <div class="quiz-answers">Réponses : 1. En Watts par mètre carré ($\text{W}\cdot\text{m}^{-2}$). | 2. $\eta_0 \approx 377\,\Omega$ (ou $120\pi\,\Omega$). | 3. Divisée par $2^2 = 4$ (perte de $-6\text{ dB}$).</div>
+    </div>
+  </div>
+
+  \n<!-- FICHE BILAN : CARTE MENTALE & TABLEAU RÉFLEXE -->
+  <div class="card-container">
+    <div class="card-header">
+      <span class="card-id">FICHE SYNTHÈSE • CARTE MENTALE &amp; RÉFLEXES</span>
+      <span class="card-title">Tableau Réflexe : Si l'Énoncé Dit... $\to$ Je Pense À...</span>
+    </div>
+
+    <div class="box box-when">
+      <div class="box-title">🧠 La Boussole d'Examen : Quel chemin emprunter ?</div>
+      <table class="data-table">
+        <tr>
+          <th style="width:35%;">Si l'énoncé d'examen dit...</th>
+          <th style="width:30%;">La méthode / loi à dégainer</th>
+          <th style="width:35%;">La formule réflexe immédiate</th>
+        </tr>
+        <tr>
+          <td>« Charges ponctuelles isolées $q_i$ »</td>
+          <td>Principe de superposition</td>
+          <td>$\vec{E} = \sum \frac{q_i}{4\pi\varepsilon_0 r_i^2}\vec{u}_i$ (vectoriel !)</td>
+        </tr>
+        <tr>
+          <td>« Cylindre infini, fil infini, sphère pleine »</td>
+          <td>Théorème de Gauss</td>
+          <td>$\Phi = E(r)\cdot \text{Aire} = Q_{\text{int}}/\varepsilon_0$</td>
+        </tr>
+        <tr>
+          <td>« Objet fini (anneau, disque sur l'axe, segment) »</td>
+          <td>Intégration directe de Coulomb</td>
+          <td>$\vec{E} = \frac{1}{4\pi\varepsilon_0}\int \frac{dq}{r^2}\cos\alpha\,\vec{e}_z$</td>
+        </tr>
+        <tr>
+          <td>« Connaissant le potentiel $V(x,y,z)$ ou $V(r)$ »</td>
+          <td>Opérateur Gradient avec signe $-$</td>
+          <td>$\vec{E} = -\vec{\mathrm{grad}}\,V = -\vec{\nabla}V$</td>
+        </tr>
+        <tr>
+          <td>« Connaissant $\vec{E}$, trouver le potentiel $V$ »</td>
+          <td>Intégration de la circulation</td>
+          <td>$V(r) = -\int E(r)\,dr + \text{Cte}$</td>
+        </tr>
+        <tr>
+          <td>« Potentiel entre armatures sans charges libres »</td>
+          <td>Équation de Laplace 1D</td>
+          <td>$\Delta V = 0 \implies V(x)=Ax+B$ ou $A\ln r+B$</td>
+        </tr>
+        <tr>
+          <td>« Capacité d'un condensateur »</td>
+          <td>Rapport Charge / Tension</td>
+          <td>$C = Q/U = Q / \int \vec{E}\cdot d\vec{\ell}$</td>
+        </tr>
+        <tr>
+          <td>« Particule se déplaçant dans $\vec{B}$ uniforme »</td>
+          <td>Force de Lorentz magnétique</td>
+          <td>$R = \frac{m v}{|q|B}$ et travail nul</td>
+        </tr>
+        <tr>
+          <td>« Fil, câble, solénoïde avec courant stationnaire »</td>
+          <td>Théorème d'Ampère</td>
+          <td>$\oint \vec{B}\cdot d\vec{\ell} = B(r)\cdot 2\pi r = \mu_0 I_{\text{enl}}$</td>
+        </tr>
+        <tr>
+          <td>« Circuit dans un champ magnétique variable »</td>
+          <td>Loi de Faraday &amp; Lenz</td>
+          <td>$e(t) = -N \frac{d\Phi_B}{dt} = -N S \frac{dB}{dt}$</td>
+        </tr>
+        <tr>
+          <td>« Onde électromagnétique dans le vide »</td>
+          <td>Trièdre direct &amp; D'Alembert</td>
+          <td>$\vec{B} = \frac{\vec{u}_p \wedge \vec{E}}{c} \quad (E_0 = c B_0)$</td>
+        </tr>
+        <tr>
+          <td>« Puissance d'un émetteur radio reçue à distance $d$ »</td>
+          <td>Formule de Friis en espace libre</td>
+          <td>$P_r = P_t G_t G_r \left(\frac{\lambda}{4\pi d}\right)^2$</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="box box-traps">
+      <div class="box-title">🚨 Les 4 Règles d'Or pour Réussir son Épreuve</div>
+      1. <strong>Ne jamais additionner des normes :</strong> $\vec{E}$ et $\vec{B}$ sont des VECTEURS. On projette toujours sur les axes avant de sommer.<br>
+      2. <strong>Toujours justifier les symétries en 2 lignes :</strong> Même si le calcul est juste, l'examinateur retire des points si tu n'écris pas les plans $\Pi$ et les invariances.<br>
+      3. <strong>Vérifier les cas limites :</strong> Que devient ton résultat au centre ($r=0$) et à l'infini ($r \to \infty$) ? Ça prend 10 secondes et ça sauve un devoir !<br>
+      4. <strong>L'homogénéité des unités :</strong> $[\vec{E}] = \text{V/m}$, $[\vec{B}] = \text{T}$, $[V] = \text{V}$, $[C] = \text{F}$, $[P] = \text{W}$.
+    </div>
+  </div>
+
+\n</body>\n</html>\n
